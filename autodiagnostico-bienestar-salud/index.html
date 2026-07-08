@@ -1,0 +1,1385 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Autodiagnóstico de Bienestar y Salud</title>
+  <style>
+    :root {
+      --primary: #2b6cb0;
+      --primary-dark: #2c5282;
+      --secondary: #edf2f7;
+      --accent: #ed8936;
+      --success: #2f855a;
+      --warning: #b7791f;
+      --danger: #c53030;
+      --ink: #1a202c;
+      --muted: #718096;
+      --line: #e2e8f0;
+      --bg: #f7fafc;
+      --card: #ffffff;
+      --soft-blue: #ebf8ff;
+      --soft-green: #f0fff4;
+      --soft-yellow: #fffaf0;
+      --soft-red: #fff5f5;
+      --shadow: 0 10px 25px rgba(45, 55, 72, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background: radial-gradient(circle at top left, #ebf8ff 0, #f7fafc 38%, #f7fafc 100%);
+      color: var(--ink);
+      line-height: 1.55;
+    }
+
+    .app {
+      width: min(980px, calc(100% - 32px));
+      margin: 24px auto 40px;
+    }
+
+    .hero,
+    .section-card,
+    .result-card {
+      background: var(--card);
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--line);
+    }
+
+    .hero {
+      padding: 28px;
+      margin-bottom: 18px;
+    }
+
+    .eyebrow {
+      color: var(--primary);
+      font-weight: 700;
+      font-size: 0.85rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin: 0 0 6px;
+    }
+
+    h1 {
+      margin: 0;
+      color: var(--ink);
+      line-height: 1.15;
+      font-size: clamp(1.8rem, 3vw, 2.5rem);
+    }
+
+    .intro {
+      color: var(--muted);
+      margin: 12px 0 0;
+      max-width: 760px;
+    }
+
+    .notice-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 14px;
+      margin-top: 20px;
+    }
+
+    .notice {
+      border-radius: 14px;
+      padding: 15px 16px;
+      border-left: 5px solid var(--accent);
+      background: var(--soft-yellow);
+      font-size: 0.94rem;
+    }
+
+    .notice strong {
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .notice.blue {
+      border-left-color: var(--primary);
+      background: var(--soft-blue);
+    }
+
+    .progress-area {
+      background: var(--card);
+      border-radius: 18px;
+      border: 1px solid var(--line);
+      padding: 18px;
+      margin-bottom: 18px;
+      box-shadow: var(--shadow);
+    }
+
+    .progress-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+      margin-bottom: 10px;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .progress-track {
+      height: 12px;
+      background: var(--secondary);
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--primary), #38a169);
+      border-radius: 999px;
+      transition: width 0.25s ease;
+    }
+
+    .status-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .status-pill {
+      border: 1px solid var(--line);
+      background: #fff;
+      border-radius: 12px;
+      padding: 10px 12px;
+      font-size: 0.9rem;
+    }
+
+    .status-pill.active {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(43, 108, 176, 0.12);
+    }
+
+    .status-pill .label {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .status-pill .meta {
+      color: var(--muted);
+      font-size: 0.82rem;
+    }
+
+    .section-card {
+      padding: 26px;
+    }
+
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: flex-start;
+      margin-bottom: 18px;
+    }
+
+    .section-kicker {
+      color: var(--muted);
+      font-weight: 700;
+      font-size: 0.9rem;
+      margin: 0 0 6px;
+    }
+
+    .section-title {
+      margin: 0;
+      color: var(--primary);
+      font-size: clamp(1.4rem, 2vw, 1.8rem);
+    }
+
+    .section-description {
+      margin: 8px 0 0;
+      color: var(--muted);
+      max-width: 720px;
+    }
+
+    .badge {
+      flex: 0 0 auto;
+      border-radius: 999px;
+      padding: 8px 12px;
+      font-size: 0.82rem;
+      font-weight: 800;
+      background: var(--secondary);
+      color: var(--ink);
+      white-space: nowrap;
+    }
+
+    .badge.prioridad {
+      background: var(--soft-yellow);
+      color: #7b341e;
+    }
+
+    .question {
+      background: var(--secondary);
+      border: 1px solid transparent;
+      border-radius: 14px;
+      padding: 16px;
+      margin-bottom: 14px;
+      transition: border-color 0.2s, background 0.2s, transform 0.2s;
+    }
+
+    .question.missing {
+      border-color: var(--danger);
+      background: var(--soft-red);
+    }
+
+    .question-title {
+      margin: 0 0 12px;
+      font-weight: 800;
+      color: var(--ink);
+    }
+
+    .question-context {
+      color: var(--muted);
+      font-size: 0.9rem;
+      margin: -4px 0 12px;
+    }
+
+    .options {
+      display: grid;
+      gap: 9px;
+    }
+
+    .option-label {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 10px;
+      align-items: start;
+      padding: 10px 12px;
+      border-radius: 12px;
+      background: #fff;
+      border: 1px solid var(--line);
+      cursor: pointer;
+      transition: transform 0.15s, border-color 0.15s, box-shadow 0.15s;
+    }
+
+    .option-label:hover {
+      transform: translateY(-1px);
+      border-color: #bee3f8;
+      box-shadow: 0 4px 12px rgba(45, 55, 72, 0.07);
+    }
+
+    .option-label input {
+      margin-top: 4px;
+      transform: scale(1.15);
+    }
+
+    .inline-message {
+      display: none;
+      border-radius: 12px;
+      padding: 12px 14px;
+      margin: 14px 0;
+      background: var(--soft-red);
+      color: #742a2a;
+      border-left: 5px solid var(--danger);
+      font-weight: 700;
+    }
+
+    .inline-message.show {
+      display: block;
+    }
+
+    .section-insight {
+      display: none;
+      margin: 18px 0 0;
+      border-radius: 14px;
+      padding: 15px 16px;
+      background: var(--soft-blue);
+      border-left: 5px solid var(--primary);
+    }
+
+    .section-insight.show {
+      display: block;
+      animation: fadeIn 0.25s ease-in-out;
+    }
+
+    .section-insight strong {
+      display: block;
+      margin-bottom: 4px;
+      color: var(--primary-dark);
+    }
+
+    .controls {
+      display: flex;
+      gap: 12px;
+      justify-content: space-between;
+      margin-top: 22px;
+    }
+
+    button {
+      border: 0;
+      border-radius: 12px;
+      padding: 14px 16px;
+      font-size: 1rem;
+      font-weight: 800;
+      cursor: pointer;
+      transition: transform 0.15s, background 0.2s, opacity 0.2s;
+    }
+
+    button:hover {
+      transform: translateY(-1px);
+    }
+
+    button:disabled {
+      cursor: not-allowed;
+      opacity: 0.45;
+      transform: none;
+    }
+
+    .btn-secondary {
+      background: var(--secondary);
+      color: var(--ink);
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: #fff;
+      min-width: 190px;
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-dark);
+    }
+
+    .btn-danger {
+      background: var(--danger);
+      color: #fff;
+    }
+
+    .result-card {
+      display: none;
+      padding: 28px;
+      margin-top: 18px;
+      animation: fadeIn 0.35s ease-in-out;
+    }
+
+    .result-layout {
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      gap: 24px;
+      align-items: start;
+    }
+
+    .score-panel {
+      text-align: center;
+      padding: 18px;
+      border-radius: 18px;
+      background: var(--secondary);
+    }
+
+    .score-circle {
+      width: 128px;
+      height: 128px;
+      border-radius: 50%;
+      margin: 0 auto 14px;
+      display: grid;
+      place-items: center;
+      color: #fff;
+      font-size: 2.2rem;
+      font-weight: 900;
+      background: var(--primary);
+    }
+
+    .score-circle.green { background: var(--success); }
+    .score-circle.amber { background: var(--warning); }
+    .score-circle.red { background: var(--danger); }
+
+    .band-label {
+      display: inline-block;
+      border-radius: 999px;
+      padding: 7px 12px;
+      font-weight: 900;
+      font-size: 0.85rem;
+      background: #fff;
+      border: 1px solid var(--line);
+    }
+
+    .result-title {
+      margin: 0 0 8px;
+      color: var(--primary);
+    }
+
+    .result-summary {
+      color: var(--ink);
+      margin: 0 0 18px;
+      font-size: 1.04rem;
+    }
+
+    .dimension-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin: 18px 0;
+    }
+
+    .dimension-card {
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 14px;
+      background: #fff;
+    }
+
+    .dimension-card .topline {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 8px;
+      font-weight: 900;
+    }
+
+    .mini-bar {
+      height: 8px;
+      background: var(--secondary);
+      border-radius: 999px;
+      overflow: hidden;
+      margin-bottom: 8px;
+    }
+
+    .mini-fill {
+      height: 100%;
+      border-radius: 999px;
+      background: var(--primary);
+    }
+
+    .mini-fill.green { background: var(--success); }
+    .mini-fill.amber { background: var(--warning); }
+    .mini-fill.red { background: var(--danger); }
+
+    .dimension-card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .action-box,
+    .alert-box,
+    .investigation-box {
+      border-radius: 14px;
+      padding: 15px 16px;
+      margin-top: 14px;
+    }
+
+    .action-box {
+      background: var(--soft-green);
+      border-left: 5px solid var(--success);
+    }
+
+    .alert-box {
+      background: var(--soft-red);
+      border-left: 5px solid var(--danger);
+    }
+
+    .investigation-box {
+      background: var(--soft-blue);
+      border-left: 5px solid var(--primary);
+    }
+
+    .action-box h3,
+    .alert-box h3,
+    .investigation-box h3 {
+      margin: 0 0 8px;
+      font-size: 1rem;
+    }
+
+    .action-box ul,
+    .alert-box ul,
+    .investigation-box ul {
+      margin: 0;
+      padding-left: 20px;
+    }
+
+    .result-controls {
+      display: flex;
+      gap: 12px;
+      margin-top: 22px;
+      flex-wrap: wrap;
+    }
+
+    .factor-choice {
+      margin-top: 18px;
+      padding: 16px;
+      border-radius: 14px;
+      background: var(--secondary);
+      border: 1px solid var(--line);
+    }
+
+    .factor-choice label {
+      display: block;
+      font-weight: 900;
+      margin-bottom: 8px;
+    }
+
+    .factor-choice select {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      font: inherit;
+      background: #fff;
+    }
+
+    .small-note {
+      color: var(--muted);
+      font-size: 0.86rem;
+      margin-top: 8px;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 780px) {
+      .notice-grid,
+      .result-layout,
+      .dimension-grid,
+      .status-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .section-head,
+      .controls {
+        flex-direction: column;
+      }
+
+      .btn-primary {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="app">
+    <header class="hero">
+      <p class="eyebrow">Ciencias de la Ciudadanía · Unidad 4</p>
+      <h1>Mi Autodiagnóstico de Bienestar y Salud</h1>
+      <p class="intro">
+        Responde de forma honesta y privada. El objetivo es reconocer factores biológicos,
+        ambientales y sociales que influyen en la salud, con foco especial en alimentación,
+        estrés/salud mental y consumo de alcohol y drogas.
+      </p>
+
+      <div class="notice-grid">
+        <div class="notice">
+          <strong>🔒 Privacidad</strong>
+          Este cuestionario no envía respuestas a internet, no guarda datos y no lleva nota.
+          Todo el cálculo ocurre en este dispositivo.
+        </div>
+        <div class="notice blue">
+          <strong>🧭 Uso del resultado</strong>
+          El semáforo es una guía de reflexión, no un diagnóstico médico, psicológico ni nutricional.
+          En preguntas sensibles puedes elegir “prefiero no responder”.
+        </div>
+      </div>
+    </header>
+
+    <section class="progress-area" id="progress-area">
+      <div class="progress-top">
+        <span id="progress-label">0 de 24 preguntas respondidas</span>
+        <span id="section-label">Bloque 1 de 6</span>
+      </div>
+      <div class="progress-track">
+        <div class="progress-fill" id="progress-fill"></div>
+      </div>
+      <div class="status-grid" id="status-grid"></div>
+    </section>
+
+    <form id="quiz-form">
+      <section class="section-card" id="section-card">
+        <div class="section-head">
+          <div>
+            <p class="section-kicker" id="section-kicker"></p>
+            <h2 class="section-title" id="section-title"></h2>
+            <p class="section-description" id="section-description"></p>
+          </div>
+          <span class="badge" id="section-badge"></span>
+        </div>
+
+        <div id="questions-container"></div>
+
+        <div class="factor-choice" id="factor-choice" style="display: none;">
+          <label for="investigation-factor">Factor que te gustaría investigar en grupo</label>
+          <select id="investigation-factor">
+            <option value="">Selecciona una opción para conectar con la próxima clase</option>
+            <option>Alimentación y transgénicos</option>
+            <option>Estrés y salud mental</option>
+            <option>Alcohol y drogas</option>
+            <option>Actividad física</option>
+            <option>Radiación UV</option>
+            <option>Plaguicidas u otros químicos</option>
+            <option>Patógenos</option>
+            <option>Contaminantes ambientales</option>
+          </select>
+          <div class="small-note">
+            Esta elección no afecta tu puntaje. Solo te ayuda a pensar un foco de indagación.
+          </div>
+        </div>
+
+        <div class="inline-message" id="inline-message"></div>
+
+        <div class="section-insight" id="section-insight"></div>
+
+        <div class="controls">
+          <button type="button" class="btn-secondary" id="prev-btn">← Bloque anterior</button>
+          <button type="button" class="btn-primary" id="next-btn">Siguiente bloque →</button>
+          <button type="submit" class="btn-primary" id="submit-btn" style="display: none;">Ver mi semáforo</button>
+        </div>
+      </section>
+    </form>
+
+    <section class="result-card" id="result-card">
+      <div class="result-layout">
+        <aside class="score-panel">
+          <div class="score-circle" id="score-circle">0%</div>
+          <div class="band-label" id="band-label">Semáforo</div>
+          <p class="small-note" id="score-note"></p>
+        </aside>
+
+        <div>
+          <h2 class="result-title">Tu resultado personal</h2>
+          <p class="result-summary" id="result-summary"></p>
+
+          <div class="dimension-grid" id="dimension-grid"></div>
+
+          <div class="action-box" id="action-box"></div>
+          <div class="alert-box" id="alert-box" style="display: none;"></div>
+          <div class="investigation-box" id="investigation-box"></div>
+
+          <div class="result-controls">
+            <button type="button" class="btn-secondary" id="review-btn">Revisar respuestas</button>
+            <button type="button" class="btn-danger" id="reset-btn">Reiniciar cuestionario</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const SECTIONS = [
+      {
+        id: "alimentacion",
+        icon: "🍎",
+        title: "Alimentación, hidratación y evidencia",
+        priority: true,
+        description: "Explora hábitos alimentarios, consumo de agua y cómo evalúas información sobre alimentos.",
+        capsule: "La salud alimentaria no depende de un alimento aislado, sino de patrones sostenidos: variedad, regularidad, hidratación y decisiones basadas en evidencia.",
+        questions: [
+          {
+            id: "q1",
+            text: "En una semana típica, ¿con qué frecuencia consumes frutas y/o verduras frescas?",
+            options: [
+              ["Todos o casi todos los días.", 3],
+              ["Algunos días de la semana.", 2],
+              ["Rara vez o casi nunca.", 1]
+            ]
+          },
+          {
+            id: "q2",
+            text: "¿Con qué frecuencia reemplazas comidas o colaciones por productos muy altos en azúcar, sal o grasas?",
+            context: "Ejemplos: bebidas azucaradas, snacks, comida rápida, golosinas como base de la colación.",
+            options: [
+              ["Rara vez; suelen ser algo ocasional.", 3],
+              ["A veces; depende del día y del tiempo disponible.", 2],
+              ["Frecuentemente; es parte importante de mi rutina.", 1]
+            ]
+          },
+          {
+            id: "q3",
+            text: "¿Cuánta agua pura tomas en un día promedio?",
+            options: [
+              ["Más de 4 vasos al día.", 3],
+              ["Entre 1 y 3 vasos al día.", 2],
+              ["Casi nada; prefiero otras bebidas.", 1]
+            ]
+          },
+          {
+            id: "q4",
+            text: "¿Qué tan ordenados son tus horarios de comida durante una semana normal?",
+            options: [
+              ["Tengo una rutina relativamente estable.", 3],
+              ["Algunos días como muy tarde, salto comidas o improviso.", 2],
+              ["Frecuentemente salto comidas o como sin planificación.", 1]
+            ]
+          },
+          {
+            id: "q5",
+            text: "Cuando escuchas afirmaciones como «los transgénicos siempre son peligrosos», ¿cómo reaccionas?",
+            options: [
+              ["Busco evidencia y distingo entre riesgo real, percepción pública y fuente de información.", 3],
+              ["Me genera duda, pero no siempre reviso la fuente.", 2],
+              ["Lo doy por cierto si lo vi en redes o alguien cercano lo dijo.", 1]
+            ]
+          }
+        ]
+      },
+      {
+        id: "estres",
+        icon: "🧠",
+        title: "Estrés, sueño y salud mental",
+        priority: true,
+        description: "Distingue señales de estrés adaptativo, estrés sostenido, descanso y recursos de regulación.",
+        capsule: "El estrés puede ayudar a responder a desafíos puntuales. El problema aparece cuando se mantiene demasiado tiempo, afecta el sueño o limita la vida diaria.",
+        questions: [
+          {
+            id: "q6",
+            text: "¿Cómo evalúas tu calidad de sueño la mayoría de las noches?",
+            options: [
+              ["Duermo lo suficiente y despierto con energía la mayoría de los días.", 3],
+              ["Duermo de forma irregular o me cuesta descansar algunos días.", 2],
+              ["Duermo mal con frecuencia o despierto cansado/a casi siempre.", 1]
+            ]
+          },
+          {
+            id: "q7",
+            text: "Frente a exigencias académicas, familiares o sociales, ¿con qué frecuencia te sientes abrumado/a?",
+            options: [
+              ["Rara vez; suelo encontrar formas de manejarlo.", 3],
+              ["A veces; me cuesta, pero logro regularme.", 2],
+              ["Frecuentemente; siento que el estrés me supera.", 1]
+            ]
+          },
+          {
+            id: "q8",
+            text: "Cuando estás estresado/a, ¿qué tan claras tienes tus estrategias para calmarte o recuperar foco?",
+            options: [
+              ["Tengo estrategias concretas que me sirven.", 3],
+              ["Tengo algunas ideas, pero no siempre las aplico.", 2],
+              ["No tengo claro qué hacer o suelo reaccionar impulsivamente.", 1]
+            ]
+          },
+          {
+            id: "q9",
+            text: "¿Dedicas tiempo semanal a actividades que te relajan o te hacen bien?",
+            context: "Ejemplos: deporte, música, lectura, conversar, caminar, hobbies, descanso real.",
+            options: [
+              ["Sí, lo considero parte de mi rutina.", 3],
+              ["A veces, cuando me queda tiempo.", 2],
+              ["Casi nunca; siento que no tengo tiempo o energía.", 1]
+            ]
+          },
+          {
+            id: "q10",
+            text: "Si tú o una persona cercana tuviera estrés extremo durante varios días, ¿sabrías a quién pedir ayuda?",
+            options: [
+              ["Sí; tengo claro al menos un adulto, docente, familiar o red escolar.", 3],
+              ["Tal vez; se me ocurre alguien, pero no lo tengo tan claro.", 2],
+              ["No; no sabría con quién hablar.", 1]
+            ]
+          }
+        ]
+      },
+      {
+        id: "consumo",
+        icon: "🚫",
+        title: "Alcohol, drogas, presión social y factores protectores",
+        priority: true,
+        description: "Revisa límites, presión de grupo, riesgo/protección y decisiones informadas sin moralizar.",
+        capsule: "El consumo problemático no se explica por una sola causa: interactúan presión social, disponibilidad, salud mental, redes de apoyo y etapa del desarrollo.",
+        questions: [
+          {
+            id: "q11",
+            text: "¿Qué tan claro tienes que el alcohol, tabaco, vapeo u otras drogas pueden afectar el desarrollo adolescente?",
+            options: [
+              ["Lo tengo claro y puedo explicar al menos un efecto en el organismo o la conducta.", 3],
+              ["Sé que puede afectar, pero no podría explicar bien cómo.", 2],
+              ["No lo tengo claro o creo que no influye mucho.", 1]
+            ]
+          },
+          {
+            id: "q12",
+            text: "Cuando hay presión social para consumir algo que no quieres, ¿qué tan fácil te resulta poner límites?",
+            options: [
+              ["Me resulta relativamente fácil decir que no o retirarme.", 3],
+              ["Me incomoda, pero la mayoría de las veces logro poner límites.", 2],
+              ["Me cuesta mucho por miedo a quedar fuera o generar conflicto.", 1]
+            ]
+          },
+          {
+            id: "q13",
+            text: "Pensando en tu experiencia o entorno cercano, ¿el consumo de alcohol, tabaco, vapeo u otras drogas interfiere con bienestar, concentración o relaciones?",
+            options: [
+              ["No, no aparece o es muy excepcional y no interfiere.", 3],
+              ["A veces aparece como tema y podría influir en decisiones.", 2],
+              ["Sí, siento que ya interfiere o me preocupa.", 1],
+              ["Prefiero no responder esta pregunta.", null]
+            ]
+          },
+          {
+            id: "q14",
+            text: "Si una situación social se vuelve incómoda o riesgosa por consumo, ¿tienes un plan para salir de ahí?",
+            context: "Ejemplos: llamar a alguien, irte con un amigo/a, avisar a un adulto, moverte a un espacio seguro.",
+            options: [
+              ["Sí; tengo una idea concreta de qué haría.", 3],
+              ["Más o menos; dependería de la situación.", 2],
+              ["No; probablemente improvisaría sin un plan claro.", 1]
+            ]
+          },
+          {
+            id: "q15",
+            text: "¿Reconoces factores protectores que reducen el riesgo de consumo problemático?",
+            options: [
+              ["Sí; redes de apoyo, límites, actividades significativas e información confiable.", 3],
+              ["Reconozco algunos, pero no los tengo muy claros.", 2],
+              ["No; me cuesta identificar qué protegería a una persona.", 1]
+            ]
+          }
+        ]
+      },
+      {
+        id: "actividad",
+        icon: "🏃",
+        title: "Actividad física y sedentarismo",
+        priority: false,
+        description: "Ubica el movimiento corporal como factor biológico y social de salud.",
+        capsule: "La actividad física no es solo deporte competitivo: caminar, bailar, entrenar, desplazarse activamente o hacer pausas de movimiento también cuentan.",
+        questions: [
+          {
+            id: "q16",
+            text: "Durante una semana típica, ¿realizas actividad física o movimiento intencionado?",
+            options: [
+              ["Sí, varias veces por semana.", 3],
+              ["A veces, pero de forma irregular.", 2],
+              ["Casi nunca.", 1]
+            ]
+          },
+          {
+            id: "q17",
+            text: "¿Qué tan largas suelen ser tus jornadas sentado/a o frente a pantallas sin pausas?",
+            options: [
+              ["Suelo hacer pausas o moverme durante el día.", 3],
+              ["A veces paso muchas horas sin moverme.", 2],
+              ["Frecuentemente paso gran parte del día sin pausas activas.", 1]
+            ]
+          }
+        ]
+      },
+      {
+        id: "ambiente",
+        icon: "🌍",
+        title: "Ambiente: UV, plaguicidas, patógenos y contaminantes",
+        priority: false,
+        description: "Conecta hábitos y entorno con exposición a factores ambientales que influyen en la salud.",
+        capsule: "Los factores ambientales pueden aumentar o disminuir riesgos: radiación UV, contaminación, patógenos, plaguicidas y condiciones del entorno interactúan con decisiones personales y políticas públicas.",
+        questions: [
+          {
+            id: "q18",
+            text: "Cuando te expones al sol por tiempo prolongado, ¿cómo manejas el riesgo de radiación UV?",
+            options: [
+              ["Uso medidas de protección como sombra, gorro, lentes o bloqueador.", 3],
+              ["A veces me protejo, pero no siempre.", 2],
+              ["Casi nunca pienso en la radiación UV.", 1]
+            ]
+          },
+          {
+            id: "q19",
+            text: "Si estás cerca de productos químicos, plaguicidas, solventes o humo, ¿qué tan consciente eres del riesgo?",
+            options: [
+              ["Tomo distancia, ventilo o evito manipular sin protección.", 3],
+              ["Me doy cuenta, pero no siempre cambio mi conducta.", 2],
+              ["No suelo considerarlo un riesgo para la salud.", 1]
+            ]
+          },
+          {
+            id: "q20",
+            text: "Frente a patógenos o enfermedades contagiosas, ¿qué tan consistentes son tus medidas de prevención básica?",
+            context: "Ejemplos: lavado de manos, cubrirse al toser, ventilar, no compartir botellas si hay síntomas.",
+            options: [
+              ["Soy consistente con medidas básicas cuando corresponde.", 3],
+              ["Las aplico a veces, pero se me olvidan.", 2],
+              ["Casi no las considero en mi rutina.", 1]
+            ]
+          },
+          {
+            id: "q21",
+            text: "¿Relacionas contaminación del aire, agua o suelo con efectos concretos en la salud humana?",
+            options: [
+              ["Sí; puedo explicar al menos un ejemplo.", 3],
+              ["Lo relaciono de forma general, pero sin ejemplos claros.", 2],
+              ["No suelo conectar contaminación con salud humana.", 1]
+            ]
+          }
+        ]
+      },
+      {
+        id: "evidencia",
+        icon: "🔬",
+        title: "Clasificación de factores, fuentes y proyección investigativa",
+        priority: false,
+        description: "Cierra el autodiagnóstico conectando hábitos personales con análisis científico e investigación grupal.",
+        capsule: "Analizar salud requiere clasificar factores, buscar fuentes confiables y formular preguntas investigables, no solo opinar desde experiencias aisladas.",
+        questions: [
+          {
+            id: "q22",
+            text: "¿Puedes distinguir entre factores biológicos, ambientales y sociales que influyen en la salud?",
+            options: [
+              ["Sí; puedo clasificar ejemplos sin mayor dificultad.", 3],
+              ["Más o menos; entiendo la idea, pero me confundo en algunos casos.", 2],
+              ["No; todavía me cuesta diferenciar esas categorías.", 1]
+            ]
+          },
+          {
+            id: "q23",
+            text: "Cuando ves información de salud en redes sociales, ¿cómo evalúas si es confiable?",
+            options: [
+              ["Reviso fuente, evidencia, fecha y si coincide con instituciones o estudios confiables.", 3],
+              ["A veces reviso, pero también me guío por quién lo publicó.", 2],
+              ["Suelo creerlo si se ve convincente o se comparte mucho.", 1]
+            ]
+          },
+          {
+            id: "q24",
+            text: "Para una investigación grupal, ¿qué tan preparado/a estás para formular una pregunta sobre un factor de salud?",
+            options: [
+              ["Ya podría formular una pregunta concreta e investigable.", 3],
+              ["Tengo un tema, pero todavía necesito ordenar la pregunta.", 2],
+              ["No tengo claro qué factor elegir ni cómo investigarlo.", 1]
+            ]
+          }
+        ]
+      }
+    ];
+
+    const RECOMMENDATIONS = {
+      alimentacion: {
+        title: "Alimentación",
+        action: "Elige un cambio pequeño: sumar una fruta/verdura diaria, llevar agua, ordenar una comida clave o revisar la fuente antes de creer una afirmación sobre alimentos."
+      },
+      estres: {
+        title: "Estrés y sueño",
+        action: "Define una estrategia concreta para esta semana: horario de sueño más estable, pausa breve diaria, actividad que te regule o conversación con una persona de confianza."
+      },
+      consumo: {
+        title: "Consumo y presión social",
+        action: "Prepara una frase límite y un plan de salida para contextos de presión. Identifica quién podría ayudarte si una situación se vuelve incómoda."
+      },
+      actividad: {
+        title: "Actividad física",
+        action: "Agrega movimiento realista: caminar, entrenar, bailar o hacer pausas activas. No necesita ser perfecto; necesita repetirse."
+      },
+      ambiente: {
+        title: "Ambiente",
+        action: "Elige una exposición ambiental para reducir: sol intenso, humo, químicos, mala ventilación o prácticas que faciliten contagios."
+      },
+      evidencia: {
+        title: "Fuentes e investigación",
+        action: "Practica clasificar factores y contrastar información con fuentes confiables antes de usarla como evidencia."
+      }
+    };
+
+    const BAND_TEXT = {
+      green: {
+        label: "Verde",
+        summary: "Tus respuestas muestran varios factores protectores instalados. Mantén esos hábitos y elige un área para investigar con mayor profundidad."
+      },
+      amber: {
+        label: "Amarillo",
+        summary: "Tus respuestas muestran una mezcla de fortalezas y áreas mejorables. Elige una acción pequeña y concreta para esta semana."
+      },
+      red: {
+        label: "Rojo",
+        summary: "Tus respuestas muestran áreas que conviene mirar con más atención. No es un diagnóstico, pero sí una señal para pedir apoyo o ajustar hábitos."
+      }
+    };
+
+    const answers = {};
+    let currentSection = 0;
+
+    const quizForm = document.getElementById("quiz-form");
+    const sectionCard = document.getElementById("section-card");
+    const resultCard = document.getElementById("result-card");
+    const progressArea = document.getElementById("progress-area");
+    const progressLabel = document.getElementById("progress-label");
+    const sectionLabel = document.getElementById("section-label");
+    const progressFill = document.getElementById("progress-fill");
+    const statusGrid = document.getElementById("status-grid");
+    const questionsContainer = document.getElementById("questions-container");
+    const inlineMessage = document.getElementById("inline-message");
+    const sectionInsight = document.getElementById("section-insight");
+    const factorChoice = document.getElementById("factor-choice");
+    const factorSelect = document.getElementById("investigation-factor");
+    const prevBtn = document.getElementById("prev-btn");
+    const nextBtn = document.getElementById("next-btn");
+    const submitBtn = document.getElementById("submit-btn");
+
+    function totalQuestions() {
+      return SECTIONS.reduce((sum, section) => sum + section.questions.length, 0);
+    }
+
+    function answeredQuestions() {
+      return Object.keys(answers).length;
+    }
+
+    function getBand(percent) {
+      if (percent >= 80) return "green";
+      if (percent >= 60) return "amber";
+      return "red";
+    }
+
+    function sectionScore(section) {
+      let score = 0;
+      let max = 0;
+      let answered = 0;
+      let skipped = 0;
+
+      section.questions.forEach((question) => {
+        const answer = answers[question.id];
+        if (!answer) return;
+        answered += 1;
+        if (answer.score === null) {
+          skipped += 1;
+          return;
+        }
+        score += answer.score;
+        max += 3;
+      });
+
+      const percent = max > 0 ? Math.round((score / max) * 100) : null;
+      return { score, max, answered, skipped, percent };
+    }
+
+    function allScore() {
+      let score = 0;
+      let max = 0;
+      let skipped = 0;
+
+      SECTIONS.forEach((section) => {
+        const current = sectionScore(section);
+        score += current.score;
+        max += current.max;
+        skipped += current.skipped;
+      });
+
+      const percent = max > 0 ? Math.round((score / max) * 100) : 0;
+      return { score, max, skipped, percent };
+    }
+
+    function isSectionComplete(index) {
+      return SECTIONS[index].questions.every((question) => answers[question.id]);
+    }
+
+    function firstIncompleteSection() {
+      return SECTIONS.findIndex((_, index) => !isSectionComplete(index));
+    }
+
+    function renderStatusGrid() {
+      statusGrid.innerHTML = SECTIONS.map((section, index) => {
+        const score = sectionScore(section);
+        const complete = score.answered === section.questions.length;
+        const band = complete && score.percent !== null ? getBand(score.percent) : "";
+        const bandLabel = complete && score.percent !== null ? BAND_TEXT[band].label : "Pendiente";
+        const active = index === currentSection ? " active" : "";
+        const priority = section.priority ? " · foco" : "";
+        const percentText = complete && score.percent !== null ? ` · ${score.percent}%` : "";
+        return `
+          <div class="status-pill${active}">
+            <div class="label"><span>${section.icon} ${section.title.split(",")[0]}</span><span>${bandLabel}</span></div>
+            <div class="meta">${score.answered}/${section.questions.length} respondidas${priority}${percentText}</div>
+          </div>
+        `;
+      }).join("");
+    }
+
+    function updateProgress() {
+      const total = totalQuestions();
+      const answered = answeredQuestions();
+      const percent = Math.round((answered / total) * 100);
+
+      progressLabel.textContent = `${answered} de ${total} preguntas respondidas`;
+      sectionLabel.textContent = `Bloque ${currentSection + 1} de ${SECTIONS.length}`;
+      progressFill.style.width = `${percent}%`;
+      renderStatusGrid();
+    }
+
+    function renderSection() {
+      const section = SECTIONS[currentSection];
+
+      document.getElementById("section-kicker").textContent = `${section.icon} Bloque ${currentSection + 1} de ${SECTIONS.length}`;
+      document.getElementById("section-title").textContent = section.title;
+      document.getElementById("section-description").textContent = section.description;
+
+      const badge = document.getElementById("section-badge");
+      badge.textContent = section.priority ? "Factor priorizado" : "Panorama OA1";
+      badge.className = section.priority ? "badge prioridad" : "badge";
+
+      questionsContainer.innerHTML = section.questions.map((question, questionIndex) => {
+        const selected = answers[question.id]?.optionIndex;
+        const globalNumber = SECTIONS.slice(0, currentSection).reduce((sum, item) => sum + item.questions.length, 0) + questionIndex + 1;
+
+        const options = question.options.map((option, optionIndex) => {
+          const label = option[0];
+          const score = option[1];
+          const checked = selected === optionIndex ? "checked" : "";
+          const scoreAttr = score === null ? "skip" : String(score);
+          return `
+            <label class="option-label">
+              <input type="radio"
+                     name="${question.id}"
+                     value="${optionIndex}"
+                     data-score="${scoreAttr}"
+                     ${checked}>
+              <span>${label}</span>
+            </label>
+          `;
+        }).join("");
+
+        return `
+          <article class="question" data-question-id="${question.id}">
+            <p class="question-title">${globalNumber}. ${question.text}</p>
+            ${question.context ? `<p class="question-context">${question.context}</p>` : ""}
+            <div class="options">${options}</div>
+          </article>
+        `;
+      }).join("");
+
+      factorChoice.style.display = currentSection === SECTIONS.length - 1 ? "block" : "none";
+      prevBtn.disabled = currentSection === 0;
+      nextBtn.style.display = currentSection === SECTIONS.length - 1 ? "none" : "inline-block";
+      submitBtn.style.display = currentSection === SECTIONS.length - 1 ? "inline-block" : "none";
+
+      inlineMessage.classList.remove("show");
+      inlineMessage.textContent = "";
+      renderInsight();
+      updateProgress();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function renderInsight() {
+      const section = SECTIONS[currentSection];
+      const complete = isSectionComplete(currentSection);
+
+      if (!complete) {
+        sectionInsight.classList.remove("show");
+        sectionInsight.innerHTML = "";
+        return;
+      }
+
+      const score = sectionScore(section);
+      const band = score.percent !== null ? getBand(score.percent) : "amber";
+      const label = score.percent !== null ? BAND_TEXT[band].label : "Sin puntaje";
+
+      sectionInsight.innerHTML = `
+        <strong>Cápsula del bloque · Semáforo preliminar: ${label}${score.percent !== null ? ` (${score.percent}%)` : ""}</strong>
+        ${section.capsule}
+      `;
+      sectionInsight.classList.add("show");
+    }
+
+    function markMissing(index) {
+      const section = SECTIONS[index];
+      let missingCount = 0;
+
+      section.questions.forEach((question) => {
+        const node = questionsContainer.querySelector(`[data-question-id="${question.id}"]`);
+        if (!answers[question.id]) {
+          node?.classList.add("missing");
+          missingCount += 1;
+        } else {
+          node?.classList.remove("missing");
+        }
+      });
+
+      if (missingCount > 0) {
+        inlineMessage.textContent = `Faltan ${missingCount} pregunta(s) de este bloque. En preguntas sensibles puedes elegir «prefiero no responder».`;
+        inlineMessage.classList.add("show");
+      } else {
+        inlineMessage.classList.remove("show");
+      }
+
+      return missingCount;
+    }
+
+    questionsContainer.addEventListener("change", (event) => {
+      const input = event.target;
+      if (!input.matches("input[type='radio']")) return;
+
+      const scoreRaw = input.dataset.score;
+      answers[input.name] = {
+        optionIndex: Number(input.value),
+        score: scoreRaw === "skip" ? null : Number(scoreRaw)
+      };
+
+      const questionNode = input.closest(".question");
+      questionNode?.classList.remove("missing");
+      renderInsight();
+      updateProgress();
+    });
+
+    prevBtn.addEventListener("click", () => {
+      if (currentSection > 0) {
+        currentSection -= 1;
+        renderSection();
+      }
+    });
+
+    nextBtn.addEventListener("click", () => {
+      if (markMissing(currentSection) > 0) return;
+      currentSection += 1;
+      renderSection();
+    });
+
+    quizForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+
+      if (markMissing(currentSection) > 0) return;
+
+      const incomplete = firstIncompleteSection();
+      if (incomplete !== -1) {
+        currentSection = incomplete;
+        renderSection();
+        markMissing(currentSection);
+        return;
+      }
+
+      showResults();
+    });
+
+    function showResults() {
+      const global = allScore();
+      const band = getBand(global.percent);
+
+      quizForm.style.display = "none";
+      progressArea.style.display = "none";
+      resultCard.style.display = "block";
+
+      const scoreCircle = document.getElementById("score-circle");
+      scoreCircle.textContent = `${global.percent}%`;
+      scoreCircle.className = `score-circle ${band}`;
+
+      document.getElementById("band-label").textContent = `Semáforo ${BAND_TEXT[band].label}`;
+      document.getElementById("score-note").textContent = global.skipped > 0
+        ? `${global.skipped} pregunta(s) sensible(s) no se incluyeron en el cálculo.`
+        : "Todas las preguntas fueron consideradas en el cálculo.";
+
+      document.getElementById("result-summary").textContent = BAND_TEXT[band].summary;
+      renderDimensionGrid();
+      renderActions();
+      renderAlerts();
+      renderInvestigationBox();
+
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function renderDimensionGrid() {
+      const grid = document.getElementById("dimension-grid");
+
+      grid.innerHTML = SECTIONS.map((section) => {
+        const score = sectionScore(section);
+        const percent = score.percent ?? 0;
+        const band = score.percent === null ? "amber" : getBand(score.percent);
+        const label = score.percent === null ? "Sin puntaje" : BAND_TEXT[band].label;
+        const skippedText = score.skipped > 0 ? ` · ${score.skipped} omitida(s)` : "";
+
+        return `
+          <div class="dimension-card">
+            <div class="topline">
+              <span>${section.icon} ${RECOMMENDATIONS[section.id].title}</span>
+              <span>${score.percent === null ? "—" : `${score.percent}%`}</span>
+            </div>
+            <div class="mini-bar">
+              <div class="mini-fill ${band}" style="width: ${percent}%"></div>
+            </div>
+            <p>Semáforo ${label}${skippedText}</p>
+          </div>
+        `;
+      }).join("");
+    }
+
+    function renderActions() {
+      const ranked = SECTIONS
+        .map((section) => ({ section, score: sectionScore(section) }))
+        .filter((item) => item.score.percent !== null)
+        .sort((a, b) => a.score.percent - b.score.percent);
+
+      const focus = ranked.slice(0, 2);
+
+      const actionList = focus.map((item) => {
+        const recommendation = RECOMMENDATIONS[item.section.id];
+        return `<li><strong>${recommendation.title}:</strong> ${recommendation.action}</li>`;
+      }).join("");
+
+      document.getElementById("action-box").innerHTML = `
+        <h3>Dos focos de mejora posibles</h3>
+        <ul>${actionList}</ul>
+      `;
+    }
+
+    function renderAlerts() {
+      const alerts = [];
+
+      const stressAnswer = answers.q7?.score;
+      const helpAnswer = answers.q10?.score;
+      const consumptionAnswer = answers.q13?.score;
+      const pressureAnswer = answers.q12?.score;
+
+      if (stressAnswer === 1 || helpAnswer === 1) {
+        alerts.push("Si el estrés se siente frecuente, intenso o difícil de manejar, conviene hablarlo con un adulto de confianza, profesor jefe, orientación o convivencia escolar.");
+      }
+
+      if (consumptionAnswer === 1 || pressureAnswer === 1) {
+        alerts.push("Si el consumo propio o cercano preocupa, o si la presión social dificulta decir que no, es mejor no enfrentarlo solo/a: busca una red de apoyo concreta.");
+      }
+
+      const alertBox = document.getElementById("alert-box");
+
+      if (alerts.length === 0) {
+        alertBox.style.display = "none";
+        alertBox.innerHTML = "";
+        return;
+      }
+
+      alertBox.style.display = "block";
+      alertBox.innerHTML = `
+        <h3>Señales para no dejar pasar</h3>
+        <ul>${alerts.map((item) => `<li>${item}</li>`).join("")}</ul>
+      `;
+    }
+
+    function renderInvestigationBox() {
+      const selectedFactor = factorSelect.value;
+      const ranked = SECTIONS
+        .map((section) => ({ section, score: sectionScore(section) }))
+        .filter((item) => item.score.percent !== null)
+        .sort((a, b) => a.score.percent - b.score.percent);
+
+      const suggested = selectedFactor || RECOMMENDATIONS[ranked[0].section.id].title;
+
+      document.getElementById("investigation-box").innerHTML = `
+        <h3>Conexión con investigación grupal</h3>
+        <ul>
+          <li><strong>Factor sugerido:</strong> ${suggested}.</li>
+          <li><strong>Pregunta guía:</strong> ¿qué mecanismo explica que este factor influya en la salud humana?</li>
+          <li><strong>Próximo paso:</strong> trae una fuente o dato confiable que permita sostener una explicación, no solo una opinión.</li>
+        </ul>
+      `;
+    }
+
+    document.getElementById("review-btn").addEventListener("click", () => {
+      resultCard.style.display = "none";
+      quizForm.style.display = "block";
+      progressArea.style.display = "block";
+      renderSection();
+    });
+
+    document.getElementById("reset-btn").addEventListener("click", () => {
+      Object.keys(answers).forEach((key) => delete answers[key]);
+      factorSelect.value = "";
+      currentSection = 0;
+      resultCard.style.display = "none";
+      quizForm.style.display = "block";
+      progressArea.style.display = "block";
+      renderSection();
+    });
+
+    renderSection();
+  </script>
+</body>
+</html>
