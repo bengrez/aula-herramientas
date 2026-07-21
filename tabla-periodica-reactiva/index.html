@@ -16,6 +16,7 @@
   --tinta:#101826;     --papel:#FBFCFD;
   --gris:#63708A;      --linea:#DCE2EA;
   --metal:#E8A33D;     --metaloide:#4E9E77;   --nometal:#7B5EA7;
+  --bien:#3E9463;      --bien-suave:#E4F4EA;
   --r:10px;
   --sombra:0 1px 2px rgba(16,24,38,.08), 0 6px 18px rgba(16,24,38,.06);
 }
@@ -31,70 +32,52 @@ body{
 h1,h2,h3{font-family:"Space Grotesk",system-ui,sans-serif;margin:0;line-height:1.15}
 .envoltura{max-width:860px;margin:0 auto;padding:0 12px}
 
-/* ---------- Encabezado ---------- */
-header{
-  background:var(--tinta); color:#fff;
-  padding:14px 0 12px; position:relative; overflow:hidden;
-}
-header::after{
-  content:""; position:absolute; inset:auto 0 0 0; height:3px;
-  background:linear-gradient(90deg,var(--escudo) 0%,var(--escudo) 45%,var(--iman) 55%,var(--iman) 100%);
-}
+header{background:var(--tinta);color:#fff;padding:14px 0 12px;position:relative;overflow:hidden}
+header::after{content:"";position:absolute;inset:auto 0 0 0;height:3px;
+  background:linear-gradient(90deg,var(--escudo) 0%,var(--escudo) 45%,var(--iman) 55%,var(--iman) 100%)}
 .marca{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:#8FA0B8;font-family:"IBM Plex Mono",monospace}
 header h1{font-size:20px;font-weight:700;margin-top:3px;letter-spacing:-.01em}
 header p{margin:4px 0 0;font-size:12.5px;color:#A9B7CB}
 
-/* ---------- Barras de control ---------- */
 .controles{position:sticky;top:0;z-index:40;background:var(--papel);
   border-bottom:1px solid var(--linea);padding:9px 0 8px}
 .fila{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding-bottom:1px}
 .fila::-webkit-scrollbar{display:none}
-.chip{
-  flex:0 0 auto;border:1px solid var(--linea);background:#fff;color:var(--gris);
+.chip{flex:0 0 auto;border:1px solid var(--linea);background:#fff;color:var(--gris);
   font:500 12.5px/1 "IBM Plex Sans",sans-serif;padding:8px 11px;border-radius:999px;
-  cursor:pointer;white-space:nowrap;transition:.15s;
-}
+  cursor:pointer;white-space:nowrap;transition:.15s}
 .chip[aria-pressed="true"]{background:var(--tinta);border-color:var(--tinta);color:#fff}
 .chip:focus-visible,button:focus-visible,.celda:focus-visible{outline:2.5px solid var(--escudo);outline-offset:2px}
 .fila.secundaria{margin-top:6px}
 .fila.secundaria .chip{font-size:11.5px;padding:6px 10px}
 
-/* ---------- Tabla ---------- */
 .zona-tabla{padding:12px 0 4px}
 .grilla{display:grid;gap:2.5px;justify-content:center}
 .grilla.principales{grid-template-columns:repeat(8,minmax(0,1fr));max-width:430px;margin:0 auto}
 .grilla.completa{grid-template-columns:repeat(18,minmax(0,1fr))}
-.celda{
-  position:relative;aspect-ratio:1;border:0;padding:0;border-radius:4px;
+.celda{position:relative;aspect-ratio:1;border:0;padding:0;border-radius:4px;
   background:#EEF1F5;color:var(--tinta);cursor:pointer;
   display:flex;align-items:center;justify-content:center;
   font-family:"IBM Plex Mono",monospace;font-weight:600;
-  font-size:clamp(8px,2.4vw,15px);
-  transition:transform .12s, box-shadow .12s, background .2s;
-}
+  font-size:clamp(8px,2.4vw,15px);transition:transform .12s, box-shadow .12s, background .2s}
 .grilla.completa .celda{font-size:clamp(6.5px,1.55vw,12px);border-radius:3px}
 .celda:active{transform:scale(.9)}
 .celda[data-sel="1"]{box-shadow:0 0 0 2.5px var(--tinta);z-index:2}
 .celda[data-sel="a"]{box-shadow:0 0 0 2.5px var(--escudo);z-index:2}
 .celda[data-sel="b"]{box-shadow:0 0 0 2.5px var(--iman);z-index:2}
-.celda .num{position:absolute;top:1px;left:2px;font-size:7px;font-weight:500;opacity:.5;letter-spacing:-.02em}
+.celda .num{position:absolute;top:1px;left:2px;font-size:7px;font-weight:500;opacity:.5}
 .grilla.completa .celda .num{display:none}
 .hueco{aspect-ratio:1}
 .rotulo-f{grid-column:1/-1;font:500 10px/1 "IBM Plex Mono",monospace;color:var(--gris);
   text-align:center;padding:7px 0 3px;letter-spacing:.08em;text-transform:uppercase}
-
-/* Colores por zona */
 .z-metal{background:#FBEDD6}
 .z-metaloide{background:#DEF0E7}
 .z-nometal{background:#EDE6F6}
 
-/* Leyenda */
 .leyenda{display:flex;flex-wrap:wrap;gap:5px 14px;justify-content:center;padding:11px 4px 2px;
   font-size:11.5px;color:var(--gris)}
 .leyenda span{display:flex;align-items:center;gap:5px}
 .punto{width:11px;height:11px;border-radius:3px;flex:0 0 auto}
-
-/* Barra de gradiente para tendencias */
 .escala{display:none;align-items:center;gap:9px;padding:11px 8px 2px;font-size:11px;color:var(--gris)}
 .escala.on{display:flex}
 .escala .barra{flex:1;height:9px;border-radius:999px;
@@ -102,44 +85,81 @@ header p{margin:4px 0 0;font-size:12.5px;color:#A9B7CB}
 .escala b{font-weight:600;font-size:11px}
 .gana-escudo{color:var(--escudo)} .gana-iman{color:var(--iman)}
 
-/* ---------- Tarjetas ---------- */
 .tarjeta{background:#fff;border:1px solid var(--linea);border-radius:var(--r);
   padding:14px;margin:12px 0;box-shadow:var(--sombra)}
 .tarjeta h2{font-size:15px;font-weight:700;margin-bottom:8px}
 .eyebrow{font:500 10px/1 "IBM Plex Mono",monospace;letter-spacing:.14em;
   text-transform:uppercase;color:var(--gris);margin-bottom:7px}
 
-/* Ficha de elemento */
 .ficha-top{display:flex;align-items:center;gap:13px}
-.ficha-simbolo{
-  width:66px;height:66px;flex:0 0 auto;border-radius:9px;display:flex;
+.ficha-simbolo{width:66px;height:66px;flex:0 0 auto;border-radius:9px;display:flex;
   flex-direction:column;align-items:center;justify-content:center;
-  font-family:"IBM Plex Mono",monospace;font-weight:600;font-size:25px;line-height:1;
-}
+  font-family:"IBM Plex Mono",monospace;font-weight:600;font-size:25px;line-height:1}
 .ficha-simbolo small{font-size:10px;font-weight:500;opacity:.65;margin-top:3px}
 .ficha-nombre{font-family:"Space Grotesk";font-size:20px;font-weight:700}
 .ficha-meta{font-size:12.5px;color:var(--gris);margin-top:2px}
 .datos{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:12px}
 .dato{background:#F5F7F9;border-radius:7px;padding:8px 10px}
-.dato dt{font:500 9.5px/1 "IBM Plex Mono",monospace;letter-spacing:.1em;
-  text-transform:uppercase;color:var(--gris)}
+.dato dt{font:500 9.5px/1 "IBM Plex Mono",monospace;letter-spacing:.1em;text-transform:uppercase;color:var(--gris)}
 .dato dd{margin:4px 0 0;font-size:13.5px;font-weight:600}
 
-/* ---------- Balanza (elemento firma) ---------- */
-.balanza{margin-top:13px;background:#fff;border:1px solid var(--linea);border-radius:var(--r);padding:14px}
+/* ---------- Andamiaje: pasos ---------- */
+.paso{border:1px solid var(--linea);border-radius:var(--r);background:#fff;
+  padding:14px;margin:11px 0;box-shadow:var(--sombra)}
+.paso.espera{opacity:.45;filter:grayscale(.5)}
+.paso-cab{display:flex;align-items:center;gap:9px;margin-bottom:9px}
+.paso-num{width:24px;height:24px;flex:0 0 auto;border-radius:50%;background:var(--tinta);color:#fff;
+  display:flex;align-items:center;justify-content:center;
+  font:600 12px/1 "IBM Plex Mono",monospace}
+.paso.hecho .paso-num{background:var(--bien)}
+.paso-tit{font-family:"Space Grotesk";font-size:14.5px;font-weight:700}
+.paso-sub{font-size:12px;color:var(--gris);margin-top:1px}
+
+.eleccion{display:grid;gap:8px;margin-top:10px}
+.eleccion.doble{grid-template-columns:1fr 1fr}
+.opcion{text-align:left;background:#fff;border:1.5px solid var(--linea);border-radius:9px;
+  padding:12px 13px;font:500 14px/1.35 "IBM Plex Sans",sans-serif;color:var(--tinta);
+  cursor:pointer;transition:.13s}
+.opcion:hover:not(:disabled){border-color:var(--gris)}
+.opcion:disabled{cursor:default}
+.opcion.bien{background:var(--bien-suave);border-color:var(--bien)}
+.opcion.mal{background:var(--iman-suave);border-color:var(--iman)}
+.opcion .sub{display:block;font-size:11.5px;color:var(--gris);font-weight:400;margin-top:2px}
+
+.veredicto-pred{margin-top:11px;padding:11px 12px;border-radius:8px;font-size:13.5px;line-height:1.55}
+.veredicto-pred.acierto{background:var(--bien-suave);border-left:3px solid var(--bien)}
+.veredicto-pred.fallo{background:var(--iman-suave);border-left:3px solid var(--iman)}
+
+.explica{margin-top:11px;padding:11px 12px;background:#F2F5F8;border-left:3px solid var(--tinta);
+  border-radius:0 7px 7px 0;font-size:13px;line-height:1.55}
+.explica.porque{background:#EEF3F9;border-left-color:var(--escudo)}
+
+/* pistas graduales */
+.pistas{margin-top:10px}
+.pista-item{background:#F4F7FA;border-left:3px solid #B9C4D2;border-radius:0 7px 7px 0;
+  padding:9px 11px;font-size:12.5px;line-height:1.5;margin-bottom:6px}
+.pista-item b{font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--gris);display:block;margin-bottom:3px}
+.boton{background:var(--tinta);color:#fff;border:0;border-radius:8px;padding:11px 16px;
+  font:600 13.5px/1 "IBM Plex Sans",sans-serif;cursor:pointer;margin-top:11px}
+.boton.fantasma{background:#fff;color:var(--tinta);border:1.5px solid var(--linea)}
+.boton.chico{padding:8px 12px;font-size:12.5px;margin-top:8px}
+.boton:disabled{opacity:.4;cursor:default}
+.enlace-txt{background:0;border:0;color:var(--gris);text-decoration:underline;cursor:pointer;
+  font:400 12px/1 "IBM Plex Sans",sans-serif;padding:6px 0;margin-top:8px}
+
+/* balanza */
+.balanza{margin-top:12px}
 .balanza-cab{display:flex;justify-content:space-between;font-size:11.5px;font-weight:600;margin-bottom:8px}
-.pista{position:relative;height:34px;background:#F1F4F7;border-radius:8px;overflow:hidden}
-.pista .mitad{position:absolute;top:0;bottom:0;width:2px;left:50%;background:#C7D0DB;z-index:3}
+.pista-b{position:relative;height:34px;background:#F1F4F7;border-radius:8px;overflow:hidden}
+.pista-b .mitad{position:absolute;top:0;bottom:0;width:2px;left:50%;background:#C7D0DB;z-index:3}
 .rel{position:absolute;top:0;bottom:0;transition:left .5s cubic-bezier(.34,1.3,.5,1),right .5s cubic-bezier(.34,1.3,.5,1)}
 .rel.izq{left:0;background:linear-gradient(90deg,rgba(30,111,168,.20),rgba(30,111,168,.55))}
 .rel.der{right:0;background:linear-gradient(270deg,rgba(194,39,61,.20),rgba(194,39,61,.55))}
 .marcador{position:absolute;top:50%;transform:translate(-50%,-50%);z-index:4;
   font:600 11px/1 "IBM Plex Mono",monospace;background:#fff;border:1.5px solid var(--tinta);
   padding:5px 7px;border-radius:6px;transition:left .5s cubic-bezier(.34,1.3,.5,1);white-space:nowrap}
-.veredicto{margin-top:11px;font-size:13.5px;line-height:1.55}
-.veredicto strong{font-weight:600}
 
-/* Resultado de enlace */
 .enlace-res{border-radius:9px;padding:13px;margin-top:12px;border:1.5px solid}
 .e-ionico{background:#FDF0E6;border-color:#E8A33D}
 .e-covalente{background:#EDE6F6;border-color:#7B5EA7}
@@ -148,7 +168,6 @@ header p{margin:4px 0 0;font-size:12.5px;color:#A9B7CB}
 .enlace-tipo{font-family:"Space Grotesk";font-size:19px;font-weight:700}
 .enlace-por{font-size:13px;margin-top:6px;line-height:1.55}
 
-/* Selector de par */
 .par{display:grid;grid-template-columns:1fr auto 1fr;gap:9px;align-items:center;margin-bottom:4px}
 .ranura{border:1.5px dashed var(--linea);border-radius:9px;padding:11px 8px;text-align:center;min-height:74px;
   display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px}
@@ -160,54 +179,89 @@ header p{margin:4px 0 0;font-size:12.5px;color:#A9B7CB}
 .ranura .vacio{font-size:11.5px;color:var(--gris);line-height:1.35}
 .vs{font:600 11px/1 "IBM Plex Mono",monospace;color:var(--gris)}
 
-/* Practica */
-.pregunta{font-size:16px;font-weight:600;line-height:1.4;margin-bottom:12px}
-.opciones{display:grid;gap:7px}
-.opcion{text-align:left;background:#fff;border:1.5px solid var(--linea);border-radius:9px;
-  padding:12px 13px;font:500 14px/1.35 "IBM Plex Sans",sans-serif;color:var(--tinta);cursor:pointer;transition:.13s}
-.opcion:hover:not(:disabled){border-color:var(--gris)}
-.opcion:disabled{cursor:default}
-.opcion.bien{background:#E4F4EA;border-color:#3E9463}
-.opcion.mal{background:#FBE9EC;border-color:var(--iman)}
-.explica{margin-top:11px;padding:11px 12px;background:#F2F5F8;border-left:3px solid var(--tinta);
-  border-radius:0 7px 7px 0;font-size:13px;line-height:1.55}
+.tarjeta-pos{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:9px}
+.pos-caja{border-radius:8px;padding:10px;font-size:12.5px;line-height:1.5}
+.pos-caja.a{background:var(--escudo-suave);border:1px solid var(--escudo)}
+.pos-caja.b{background:var(--iman-suave);border:1px solid var(--iman)}
+.pos-caja .s{font-family:"IBM Plex Mono";font-size:19px;font-weight:600;display:block}
+.senal{margin-top:10px;padding:10px 12px;border-radius:8px;background:#FFF8E8;
+  border-left:3px solid var(--metal);font-size:12.5px;line-height:1.5}
+
 .marcador-p{display:flex;gap:14px;font:500 11.5px/1 "IBM Plex Mono",monospace;color:var(--gris);margin-bottom:10px}
 .marcador-p b{color:var(--tinta)}
-.boton{background:var(--tinta);color:#fff;border:0;border-radius:8px;padding:11px 16px;
-  font:600 13.5px/1 "IBM Plex Sans",sans-serif;cursor:pointer;margin-top:11px}
-.boton.fantasma{background:#fff;color:var(--tinta);border:1.5px solid var(--linea)}
 
-/* ---------- Navegación inferior ---------- */
-nav.inferior{
-  position:fixed;left:0;right:0;bottom:0;z-index:60;background:#fff;
-  border-top:1px solid var(--linea);display:grid;grid-template-columns:repeat(3,1fr);
-  padding-bottom:env(safe-area-inset-bottom);box-shadow:0 -2px 14px rgba(16,24,38,.07)
-}
-nav.inferior button{
-  background:0;border:0;padding:11px 4px 12px;cursor:pointer;color:var(--gris);
-  font:500 11px/1.25 "IBM Plex Sans",sans-serif;display:flex;flex-direction:column;
-  align-items:center;gap:4px;position:relative
-}
+nav.inferior{position:fixed;left:0;right:0;bottom:0;z-index:60;background:#fff;
+  border-top:1px solid var(--linea);display:grid;grid-template-columns:repeat(4,1fr);
+  padding-bottom:env(safe-area-inset-bottom);box-shadow:0 -2px 14px rgba(16,24,38,.07)}
+nav.inferior button{background:0;border:0;padding:11px 2px 12px;cursor:pointer;color:var(--gris);
+  font:500 10.5px/1.25 "IBM Plex Sans",sans-serif;display:flex;flex-direction:column;
+  align-items:center;gap:4px;position:relative}
 nav.inferior button[aria-current="page"]{color:var(--tinta);font-weight:600}
-nav.inferior button[aria-current="page"]::before{
-  content:"";position:absolute;top:0;left:50%;transform:translateX(-50%);
-  width:32px;height:2.5px;background:var(--tinta);border-radius:0 0 3px 3px}
-nav.inferior svg{width:21px;height:21px;stroke:currentColor;fill:none;stroke-width:1.7;
+nav.inferior button[aria-current="page"]::before{content:"";position:absolute;top:0;left:50%;
+  transform:translateX(-50%);width:32px;height:2.5px;background:var(--tinta);border-radius:0 0 3px 3px}
+nav.inferior svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.7;
   stroke-linecap:round;stroke-linejoin:round}
+nav.inferior button.docente{color:#8B6A1F}
+nav.inferior button.docente[aria-current="page"]{color:#7A5A12}
+nav.inferior button.docente[aria-current="page"]::before{background:var(--metal)}
 
 .vista{display:none}
 .vista.activa{display:block}
 .pista-uso{font-size:12.5px;color:var(--gris);text-align:center;padding:9px 12px 2px;line-height:1.45}
 footer{text-align:center;font-size:11px;color:var(--gris);padding:22px 12px 8px;line-height:1.6}
 
+/* ================= MODO DOCENTE ================= */
+#v-docente{--dc:1}
+.doc-barra{display:flex;gap:6px;flex-wrap:wrap;align-items:center;padding:10px 0}
+.doc-caso{flex:0 0 auto;border:1px solid var(--linea);background:#fff;color:var(--gris);
+  font:500 12px/1.25 "IBM Plex Sans",sans-serif;padding:7px 10px;border-radius:8px;cursor:pointer;text-align:left}
+.doc-caso[aria-pressed="true"]{background:var(--metal);border-color:var(--metal);color:#fff}
+.doc-caso small{display:block;font-size:9.5px;opacity:.75;font-family:"IBM Plex Mono",monospace}
+
+.pizarra{background:#fff;border:1px solid var(--linea);border-radius:12px;
+  padding:calc(18px * var(--dc)) calc(16px * var(--dc));min-height:250px;
+  box-shadow:var(--sombra);position:relative}
+.pizarra .etapa{font:500 calc(11px * var(--dc))/1 "IBM Plex Mono",monospace;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--gris);margin-bottom:calc(8px * var(--dc))}
+.pizarra h2{font-size:calc(24px * var(--dc));line-height:1.2;margin-bottom:calc(10px * var(--dc))}
+.pizarra .cuerpo{font-size:calc(16px * var(--dc));line-height:1.6}
+.pizarra .cuerpo p{margin:0 0 calc(9px * var(--dc))}
+.pizarra .grande{font-family:"IBM Plex Mono",monospace;font-size:calc(40px * var(--dc));
+  font-weight:600;line-height:1.1;letter-spacing:-.02em}
+.pizarra .balanza{margin-top:calc(14px * var(--dc))}
+.pizarra .pista-b{height:calc(34px * var(--dc))}
+.pizarra .marcador{font-size:calc(11px * var(--dc));padding:calc(5px * var(--dc)) calc(7px * var(--dc))}
+.pizarra .enlace-tipo{font-size:calc(19px * var(--dc))}
+.pizarra .enlace-por{font-size:calc(13px * var(--dc))}
+.pizarra .explica{font-size:calc(13px * var(--dc))}
+
+.prof{margin-top:14px;padding:11px 13px;border-radius:8px;background:#FFF8E8;
+  border-left:3px solid var(--metal);font-size:calc(13px * var(--dc));line-height:1.5}
+.prof b{font-family:"IBM Plex Mono",monospace;font-size:calc(10px * var(--dc));letter-spacing:.1em;
+  text-transform:uppercase;color:#8B6A1F;display:block;margin-bottom:3px}
+
+.doc-nav{display:flex;align-items:center;gap:10px;margin-top:12px;flex-wrap:wrap}
+.puntos{display:flex;gap:5px;flex:1}
+.punto-p{width:9px;height:9px;border-radius:50%;background:var(--linea);transition:.2s}
+.punto-p.on{background:var(--tinta)}
+.punto-p.visto{background:var(--gris)}
+.doc-ayuda{font-size:11.5px;color:var(--gris);padding:8px 0 0}
+
 @media (min-width:620px){
   body{font-size:16px}
   .grilla.principales{max-width:520px}
   header h1{font-size:24px}
+  #v-docente{--dc:1.25}
+  .doc-caso{font-size:13px}
 }
-@media (prefers-reduced-motion:reduce){
-  *{transition:none!important;animation:none!important}
-}
+@media (min-width:1000px){ #v-docente{--dc:1.5} }
+body.presentando{padding-bottom:0}
+body.presentando header,body.presentando nav.inferior,body.presentando footer{display:none}
+body.presentando #v-docente{--dc:2.1}
+body.presentando .envoltura{max-width:1500px}
+body.presentando .pizarra{min-height:70vh;display:flex;flex-direction:column;justify-content:center}
+
+@media (prefers-reduced-motion:reduce){ *{transition:none!important;animation:none!important} }
 </style>
 </head>
 <body>
@@ -236,43 +290,36 @@ footer{text-align:center;font-size:11px;color:var(--gris);padding:22px 12px 8px;
       </div>
     </div>
   </div>
-
   <div class="envoltura zona-tabla">
     <div class="grilla principales" id="grilla" role="grid" aria-label="Tabla periódica"></div>
-
     <div class="leyenda" id="leyenda">
-      <span><i class="punto z-metal" style="background:var(--metal)"></i>Metales</span>
+      <span><i class="punto" style="background:var(--metal)"></i>Metales</span>
       <span><i class="punto" style="background:var(--metaloide)"></i>Metaloides</span>
       <span><i class="punto" style="background:var(--nometal)"></i>No metales</span>
     </div>
-
     <div class="escala" id="escala">
       <b class="gana-escudo" id="esc-izq">Gana el Escudo</b>
       <span class="barra"></span>
       <b class="gana-iman" id="esc-der">Gana el Imán</b>
     </div>
-
-    <p class="pista-uso" id="pista-uso">Toca un elemento para ver su ficha.</p>
-
+    <p class="pista-uso">Toca un elemento para ver su ficha.</p>
     <div class="tarjeta" id="ficha" hidden></div>
   </div>
 </section>
 
-<!-- ============ COMPARAR ============ -->
+<!-- ============ COMPARAR (guiado) ============ -->
 <section class="vista" id="v-comparar">
   <div class="envoltura zona-tabla">
     <div class="tarjeta">
-      <div class="eyebrow">Paso 1 · Elige dos elementos</div>
+      <div class="eyebrow">Elige dos elementos</div>
       <div class="par">
         <div class="ranura a" id="ranura-a"><span class="vacio">Toca la tabla para elegir el primero</span></div>
         <span class="vs">vs</span>
         <div class="ranura b" id="ranura-b"><span class="vacio">…y luego el segundo</span></div>
       </div>
-      <button class="boton fantasma" id="limpiar">Empezar de nuevo</button>
+      <button class="boton fantasma chico" id="limpiar">Empezar de nuevo</button>
     </div>
-
-    <div id="resultados"></div>
-
+    <div id="pasos"></div>
     <div class="grilla principales" id="grilla2" role="grid" aria-label="Tabla periódica para comparar"></div>
     <div class="leyenda">
       <span><i class="punto" style="background:var(--metal)"></i>Metales</span>
@@ -292,12 +339,29 @@ footer{text-align:center;font-size:11px;color:var(--gris);padding:22px 12px 8px;
         <span>Respondidas <b id="p-total">0</b></span>
         <span>Racha <b id="p-racha">0</b></span>
       </div>
-      <div class="pregunta" id="p-texto">Cargando…</div>
-      <div class="opciones" id="p-opciones"></div>
+      <div class="paso-tit" id="p-texto" style="font-size:16px;line-height:1.4;margin-bottom:10px">Cargando…</div>
+      <div class="eleccion" id="p-opciones"></div>
+      <div class="pistas" id="p-pistas"></div>
+      <button class="boton fantasma chico" id="p-pista">Dame una pista</button>
       <div id="p-explica"></div>
       <button class="boton" id="p-siguiente" hidden>Siguiente pregunta</button>
     </div>
-    <p class="pista-uso">Mismo patrón que la Sumativa U3: comparación cruzada y predicción de enlace.</p>
+    <p class="pista-uso">Las pistas van de menos a más. Intenta con la primera antes de pedir otra.</p>
+  </div>
+</section>
+
+<!-- ============ MODO DOCENTE ============ -->
+<section class="vista" id="v-docente">
+  <div class="envoltura zona-tabla">
+    <div class="doc-barra" id="doc-casos" role="group" aria-label="Casos de la guía"></div>
+    <div class="pizarra" id="pizarra" aria-live="polite"></div>
+    <div class="doc-nav">
+      <button class="boton fantasma chico" id="doc-atras">← Atrás</button>
+      <button class="boton chico" id="doc-sig">Siguiente →</button>
+      <span class="puntos" id="doc-puntos"></span>
+      <button class="boton fantasma chico" id="doc-pantalla">Proyectar</button>
+    </div>
+    <p class="doc-ayuda">Flechas ← → o barra espaciadora para avanzar. «Proyectar» agranda todo y esconde el resto de la interfaz. Esc para salir.</p>
   </div>
 </section>
 
@@ -316,6 +380,9 @@ footer{text-align:center;font-size:11px;color:var(--gris);padding:22px 12px 8px;
   <button data-vista="v-practicar">
     <svg viewBox="0 0 24 24"><path d="M9 11l2.5 2.5L16 9"/><rect x="3" y="4" width="18" height="16" rx="2"/></svg>
     Practicar</button>
+  <button data-vista="v-docente" class="docente">
+    <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="12" rx="1.5"/><path d="M12 16v4"/><path d="M8 20h8"/></svg>
+    Docente</button>
 </nav>
 
 <script src="elementos.js"></script>
@@ -323,16 +390,13 @@ footer{text-align:center;font-size:11px;color:var(--gris);padding:22px 12px 8px;
 "use strict";
 const $ = s => document.querySelector(s);
 const crear = (t, c) => { const e = document.createElement(t); if (c) e.className = c; return e; };
+const NOMBRE_ZONA = { metal: "metal", metaloide: "metaloide", nometal: "no metal" };
 
-let modo = "zonas";
-let alcance = "principales";
-let elegido = null;
+let modo = "zonas", alcance = "principales", elegido = null;
 let parA = null, parB = null;
-
 const COLS_PRINCIPALES = [1, 2, 13, 14, 15, 16, 17, 18];
 
-/* ---------- Escala de color de tendencias ----------
-   Rojo = manda el Imán · Azul = manda el Escudo                */
+/* ---------- escala de color ---------- */
 function mezcla(t) {
   const az = [30, 111, 168], ro = [194, 39, 61], gr = [225, 231, 237];
   let c;
@@ -340,54 +404,40 @@ function mezcla(t) {
   else { const k = (t - 0.5) / 0.5; c = gr.map((v, i) => v + (ro[i] - v) * k); }
   return `rgb(${c.map(Math.round).join(",")})`;
 }
-
-function rango(clave) {
-  const vs = ELEMENTOS.map(e => e[clave]);
-  return [Math.min(...vs), Math.max(...vs)];
-}
+function rango(clave) { const vs = ELEMENTOS.map(e => e[clave]); return [Math.min(...vs), Math.max(...vs)]; }
 const R_RADIO = rango("radio"), R_FUERZA = rango("fuerza");
 
 function colorDe(e) {
   if (modo === "zonas") return null;
-  if (modo === "radio") {
-    const [a, b] = R_RADIO;
-    // radio grande -> gana el Escudo (azul)
-    return mezcla(1 - (e.radio - a) / (b - a));
-  }
-  const [a, b] = R_FUERZA;
-  // mucha fuerza de atraccion -> gana el Iman (rojo)
-  return mezcla((e.fuerza - a) / (b - a));
+  if (modo === "radio") { const [a, b] = R_RADIO; return mezcla(1 - (e.radio - a) / (b - a)); }
+  const [a, b] = R_FUERZA; return mezcla((e.fuerza - a) / (b - a));
 }
 
-/* ---------- Construcción de la tabla ---------- */
+/* ---------- tabla ---------- */
 function pintarGrilla(cont, soloPrincipales, alClic, marcador) {
   cont.innerHTML = "";
   cont.className = "grilla " + (soloPrincipales ? "principales" : "completa");
   const cols = soloPrincipales ? COLS_PRINCIPALES : Array.from({ length: 18 }, (_, i) => i + 1);
-
   for (let p = 1; p <= 7; p++) {
     cols.forEach(g => {
       const e = ELEMENTOS.find(x => x.periodo === p && x.grupo === g);
-      if (!e) { cont.appendChild(crear("div", "hueco")); return; }
-      cont.appendChild(celda(e, alClic, marcador));
+      cont.appendChild(e ? celda(e, alClic, marcador) : crear("div", "hueco"));
     });
   }
-
   if (!soloPrincipales) {
-    [["lan", "Lantánidos"], ["act", "Actínidos"]].forEach(([fam, rotulo]) => {
-      const r = crear("div", "rotulo-f"); r.textContent = rotulo; cont.appendChild(r);
+    [["lan", "Lantánidos"], ["act", "Actínidos"]].forEach(([fam, rot]) => {
+      const r = crear("div", "rotulo-f"); r.textContent = rot; cont.appendChild(r);
       cont.appendChild(crear("div", "hueco")); cont.appendChild(crear("div", "hueco"));
       ELEMENTOS.filter(x => x.familia === fam).forEach(e => cont.appendChild(celda(e, alClic, marcador)));
       cont.appendChild(crear("div", "hueco"));
     });
   }
 }
-
 function celda(e, alClic, marcador) {
   const b = crear("button", "celda z-" + e.zona);
   b.type = "button";
   b.innerHTML = `<span class="num">${e.z}</span>${e.simbolo}`;
-  b.setAttribute("aria-label", `${e.nombre}, número atómico ${e.z}, grupo ${e.grupo || "bloque f"}, período ${e.periodo}`);
+  b.setAttribute("aria-label", `${e.nombre}, grupo ${e.grupo || "bloque f"}, período ${e.periodo}`);
   const c = colorDe(e);
   if (c) { b.style.background = c; b.classList.remove("z-" + e.zona); }
   const m = marcador(e);
@@ -395,61 +445,46 @@ function celda(e, alClic, marcador) {
   b.addEventListener("click", () => alClic(e));
   return b;
 }
-
 function repintarExplorar() {
   pintarGrilla($("#grilla"), alcance === "principales", verFicha, e => (elegido && e.z === elegido.z) ? "1" : null);
-  const esTendencia = modo !== "zonas";
-  $("#escala").classList.toggle("on", esTendencia);
-  $("#leyenda").style.display = esTendencia ? "none" : "flex";
+  const t = modo !== "zonas";
+  $("#escala").classList.toggle("on", t);
+  $("#leyenda").style.display = t ? "none" : "flex";
   if (modo === "radio") { $("#esc-izq").textContent = "Radio grande · gana el Escudo"; $("#esc-der").textContent = "Radio chico · gana el Imán"; }
   if (modo === "ei") { $("#esc-izq").textContent = "Cuesta poco · gana el Escudo"; $("#esc-der").textContent = "Cuesta mucho · gana el Imán"; }
   if (modo === "en") { $("#esc-izq").textContent = "Atrae poco · gana el Escudo"; $("#esc-der").textContent = "Atrae mucho · gana el Imán"; }
 }
 
-/* ---------- Ficha de un elemento ---------- */
+/* ---------- ficha ---------- */
 const COLOR_ZONA = { metal: "var(--metal)", metaloide: "var(--metaloide)", nometal: "var(--nometal)" };
 const FONDO_ZONA = { metal: "#FBEDD6", metaloide: "#DEF0E7", nometal: "#EDE6F6" };
-
-function posicionTexto(e) {
-  return e.grupo === 0 ? `Bloque f · período ${e.periodo}` : `Grupo ${e.grupo} · período ${e.periodo}`;
-}
+const posicionTexto = e => e.grupo === 0 ? `Bloque f · período ${e.periodo}` : `Grupo ${e.grupo} · período ${e.periodo}`;
 
 function ordinalRadio(e) {
-  const mismoP = ELEMENTOS.filter(x => x.periodo === e.periodo && x.grupo > 0);
-  const mayores = mismoP.filter(x => x.radio > e.radio).length;
-  return { total: mismoP.length, puesto: mayores + 1 };
+  const m = ELEMENTOS.filter(x => x.periodo === e.periodo && x.grupo > 0);
+  return { total: m.length, puesto: m.filter(x => x.radio > e.radio).length + 1 };
 }
-
 function verFicha(e) {
   elegido = e;
-  const f = $("#ficha");
-  const rk = ordinalRadio(e);
-  const nivel = e.periodo;
+  const f = $("#ficha"), rk = ordinalRadio(e);
   f.hidden = false;
   f.innerHTML = `
     <div class="ficha-top">
-      <div class="ficha-simbolo" style="background:${FONDO_ZONA[e.zona]};color:${COLOR_ZONA[e.zona]}">
-        ${e.simbolo}<small>${e.z}</small>
-      </div>
-      <div>
-        <div class="ficha-nombre">${e.nombre}</div>
-        <div class="ficha-meta">${posicionTexto(e)} · ${NOMBRE_FAMILIA[e.familia]}</div>
-      </div>
+      <div class="ficha-simbolo" style="background:${FONDO_ZONA[e.zona]};color:${COLOR_ZONA[e.zona]}">${e.simbolo}<small>${e.z}</small></div>
+      <div><div class="ficha-nombre">${e.nombre}</div>
+      <div class="ficha-meta">${posicionTexto(e)} · ${NOMBRE_FAMILIA[e.familia]}</div></div>
     </div>
     <div class="datos">
-      <div class="dato"><dt>Zona</dt><dd style="color:${COLOR_ZONA[e.zona]}">${{ metal: "Metal", metaloide: "Metaloide", nometal: "No metal" }[e.zona]}</dd></div>
-      <div class="dato"><dt>Niveles (Escudo)</dt><dd>${nivel}</dd></div>
+      <div class="dato"><dt>Zona</dt><dd style="color:${COLOR_ZONA[e.zona]}">${NOMBRE_ZONA[e.zona][0].toUpperCase() + NOMBRE_ZONA[e.zona].slice(1)}</dd></div>
+      <div class="dato"><dt>Niveles (Escudo)</dt><dd>${e.periodo}</dd></div>
       <div class="dato"><dt>Radio en su período</dt><dd>${rk.puesto}° de ${rk.total}</dd></div>
       <div class="dato"><dt>Tirón del Imán</dt><dd>${e.grupo === 0 ? "medio" : (e.grupo >= 15 ? "fuerte" : e.grupo >= 13 ? "medio" : "débil")}</dd></div>
     </div>
     <div class="explica">${razonPosicion(e)}</div>`;
   repintarExplorar();
-  f.scrollIntoView({ behavior: "smooth", block: "nearest" });
 }
-
 function razonPosicion(e) {
-  const izq = e.grupo > 0 && e.grupo <= 2;
-  const der = e.grupo >= 15 && e.grupo <= 17;
+  const izq = e.grupo > 0 && e.grupo <= 2, der = e.grupo >= 15 && e.grupo <= 17;
   let t = `Está en el período ${e.periodo}, así que tiene <strong>${e.periodo} nivel${e.periodo > 1 ? "es" : ""}</strong> de electrones: ese es su Escudo. `;
   if (izq) t += `Como está muy a la izquierda, el Imán del núcleo tira poco del último electrón: por eso es <strong>grande</strong> y <strong>suelta</strong> electrones con facilidad.`;
   else if (der) t += `Como está a la derecha, el Imán del núcleo tira fuerte: por eso es <strong>chico</strong> y <strong>atrae</strong> electrones ajenos.`;
@@ -459,16 +494,104 @@ function razonPosicion(e) {
   return t;
 }
 
-/* ---------- Comparar ---------- */
+/* ================= NÚCLEO DE RAZONAMIENTO ================= */
+function analizar(a, b) {
+  const mismoGrupo = a.grupo === b.grupo && a.grupo !== 0;
+  const mismoPeriodo = a.periodo === b.periodo;
+  const iguales = a.z === b.z;
+  const mayor = a.radio >= b.radio ? a : b;
+  return { mismoGrupo, mismoPeriodo, iguales, mayor, menor: (a.radio >= b.radio ? b : a),
+           masFuerte: a.fuerza >= b.fuerza ? a : b, hayNoble: a.familia === "nob" || b.familia === "nob" };
+}
+
+/* Límites honestos del método: hay pares que la posición NO resuelve.
+   Radio: falla cuando uno está más abajo Y bastante más a la derecha
+   (las dos direcciones se contradicen), p. ej. Li vs Ga.
+   Electronegatividad: falla cuando quedan prácticamente empatados,
+   p. ej. Li vs Ca (0,98 contra 1,00 en valores reales). */
+function conflictoRadio(a, b) {
+  if (a.periodo === b.periodo || a.z === b.z) return false;
+  const bajo = a.periodo > b.periodo ? a : b;
+  const alto = bajo === a ? b : a;
+  if (bajo.grupo <= alto.grupo) return false;          // las dos fuerzas apuntan igual
+  const dGrupo = bajo.grupo - alto.grupo;
+  const dPeriodo = bajo.periodo - alto.periodo;
+  return dGrupo >= 3 || dPeriodo <= 1;                 // se contradicen y nadie gana claro
+}
+function ambiguoEN(a, b) {
+  if (a.z === b.z) return false;
+  return Math.abs(a.fuerza - b.fuerza) < 1.5;
+}
+const AVISO_RADIO = `Este par <strong>no se decide solo por posición</strong>. Uno está más abajo (más niveles, átomo más grande) pero también bastante más a la derecha (el núcleo tira más y lo encoge). Las dos fuerzas se contradicen y ninguna gana claramente. En la Sumativa no te van a preguntar casos así.`;
+const AVISO_EN = `Acá los dos quedan <strong>prácticamente empatados</strong> en electronegatividad: uno está más a la derecha, pero también más abajo. El método por posición no alcanza para separarlos, y no es un caso que entre en la prueba.`;
+
+function señalDe(a, b) {
+  const s = analizar(a, b);
+  if (s.iguales) return { titulo: "Es el mismo elemento", texto: `Los dos átomos son idénticos: mismo Imán, mismo Escudo. No hay nada que comparar — y eso es justamente lo interesante.` };
+  if (s.mismoGrupo) return { titulo: "Mismo grupo", texto: `Los dos están en la columna ${a.grupo}. El Imán tira parecido en ambos, así que <strong>el Escudo decide</strong>: gana el que tenga más niveles.` };
+  if (s.mismoPeriodo) return { titulo: "Mismo período", texto: `Los dos están en la fila ${a.periodo}, o sea que tienen los mismos niveles. El Escudo empata, así que <strong>el Imán decide</strong>: gana el que esté más a la izquierda.` };
+  return { titulo: "Distinto grupo y distinto período", texto: `Acá no hay empate: las dos fuerzas cambian a la vez. Empieza contando los <strong>niveles</strong> (el período), que pesa más.` };
+}
+
+function porQueRadio(a, b) {
+  const s = analizar(a, b);
+  if (s.iguales) return `Son el mismo elemento: tienen exactamente el mismo radio.`;
+  if (s.mismoGrupo) return `Mismo grupo, así que el Imán tira igual en los dos y decide el <strong class="gana-escudo">Escudo</strong>. ${s.mayor.simbolo} está más abajo (período ${s.mayor.periodo} contra ${s.menor.periodo}): más niveles, átomo más grande.`;
+  if (s.mismoPeriodo) return `Mismo período, así que los dos tienen ${a.periodo} niveles y el Escudo empata. Decide el <strong class="gana-iman">Imán</strong>: ${s.menor.simbolo} está más a la derecha (grupo ${s.menor.grupo} contra ${s.mayor.grupo}) y su núcleo tira más fuerte, encogiéndolo.`;
+  if (s.mayor.periodo > s.menor.periodo) return `${s.mayor.simbolo} tiene más niveles (${s.mayor.periodo} contra ${s.menor.periodo}) <em>y</em> está más a la izquierda. El <strong class="gana-escudo">Escudo</strong> gana por los dos lados.`;
+  return `Las dos fuerzas compiten, pero pesa más el <strong class="gana-escudo">Escudo</strong> de ${s.mayor.simbolo}.`;
+}
+
+function predecirEnlace(a, b) {
+  const za = a.zona, zb = b.zona;
+  const dist = Math.abs((a.grupo || 3) - (b.grupo || 3));
+  if (a.familia === "nob" || b.familia === "nob")
+    return { tipo: "Normalmente no forman enlace", clase: "e-neutro", corto: "No forman enlace",
+      porque: "Al menos uno es un gas noble: ya tiene su último nivel completo, así que no necesita ni ceder ni atraer electrones." };
+  if (za === "metaloide" || zb === "metaloide")
+    return { tipo: "Caso intermedio", clase: "e-neutro", corto: "Caso intermedio",
+      porque: "Hay un metaloide, que está justo en la línea escalonada. Su comportamiento queda a medio camino y por eso no se predice con la regla simple de zonas." };
+  if (za === "metal" && zb === "metal")
+    return { tipo: "Enlace metálico", clase: "e-metalico", corto: "Metálico",
+      porque: "Los dos son metales: ninguno atrae electrones con fuerza, así que comparten sus electrones sueltos en una nube común." };
+  if (za === "nometal" && zb === "nometal") {
+    const igual = a.z === b.z;
+    return { tipo: igual ? "Enlace covalente (apolar)" : "Enlace covalente", clase: "e-covalente", corto: "Covalente",
+      porque: igual
+        ? `Es el mismo elemento, así que los dos átomos tienen exactamente el mismo Imán: ninguno le puede quitar el electrón al otro, y no queda más que <strong>compartirlo en partes iguales</strong>.`
+        : "Los dos son no metales y ambos atraen electrones con fuerza: ninguno se los cede al otro, así que los <strong>comparten</strong>." };
+  }
+  const metal = za === "metal" ? a : b, nometal = za === "metal" ? b : a;
+  return { tipo: "Enlace iónico", clase: "e-ionico", corto: "Iónico",
+    porque: `${metal.nombre} es metal y está a la izquierda: <strong>suelta</strong> electrones. ${nometal.nombre} es no metal y está a la derecha: los <strong>atrae con fuerza</strong>. Están separados por ${dist} grupo${dist === 1 ? "" : "s"} en la tabla, zonas opuestas.` };
+}
+
+function balanzaHTML(a, b) {
+  const [mn, mx] = R_RADIO;
+  const pa = (a.radio - mn) / (mx - mn), pb = (b.radio - mn) / (mx - mn);
+  const izq = Math.round(Math.min(pa, pb) * 100), der = Math.round(Math.max(pa, pb) * 100);
+  return `<div class="balanza">
+    <div class="balanza-cab"><span class="gana-iman">← más chico</span><span class="gana-escudo">más grande →</span></div>
+    <div class="pista-b"><span class="mitad"></span>
+      <span class="rel izq" style="right:${100 - izq}%"></span>
+      <span class="rel der" style="left:${der}%"></span>
+      <span class="marcador" style="left:${Math.max(9, Math.min(91, pa * 100))}%;border-color:var(--escudo);color:var(--escudo)">${a.simbolo}</span>
+      <span class="marcador" style="left:${Math.max(9, Math.min(91, pb * 100))}%;border-color:var(--iman);color:var(--iman)">${b.simbolo}</span>
+    </div></div>`;
+}
+
+/* ================= COMPARAR GUIADO ================= */
+let etapa = 0, predRadio = null, predEnlace = null;
+
 function alElegirPar(e) {
-  if (parA && parA.z === e.z) { parA = null; }
-  else if (parB && parB.z === e.z) { parB = null; }
+  if (parA && parA.z === e.z) parA = null;
+  else if (parB && parB.z === e.z) parB = null;
   else if (!parA) parA = e;
   else if (!parB) parB = e;
   else { parA = e; parB = null; }
+  etapa = 0; predRadio = null; predEnlace = null;
   dibujarPar();
 }
-
 function ranuraHTML(el, cual) {
   const r = $("#ranura-" + cual);
   r.className = "ranura " + cual + (el ? " lleno" : "");
@@ -482,142 +605,181 @@ function dibujarPar() {
   ranuraHTML(parA, "a"); ranuraHTML(parB, "b");
   pintarGrilla($("#grilla2"), true, alElegirPar,
     e => (parA && e.z === parA.z) ? "a" : (parB && e.z === parB.z) ? "b" : null);
-  const cont = $("#resultados");
-  cont.innerHTML = "";
+  const c = $("#pasos"); c.innerHTML = "";
   if (!parA || !parB) return;
-  cont.appendChild(bloqueBalanza(parA, parB));
-  cont.appendChild(bloqueEnlace(parA, parB));
-}
+  const a = parA, b = parB, s = analizar(a, b);
 
-function bloqueBalanza(a, b) {
-  const t = crear("div", "tarjeta");
-  const mayorRadio = a.radio >= b.radio ? a : b;
-  const menorRadio = mayorRadio === a ? b : a;
-  const mismoGrupo = a.grupo === b.grupo && a.grupo !== 0;
-  const mismoPeriodo = a.periodo === b.periodo;
-
-  let causa;
-  if (mismoGrupo) causa = `Mismo grupo: el Imán tira igual en los dos, así que decide el <strong class="gana-escudo">Escudo</strong>. ${mayorRadio.simbolo} está más abajo y tiene más niveles.`;
-  else if (mismoPeriodo) causa = `Mismo período: los dos tienen ${a.periodo} niveles, así que el Escudo empata y decide el <strong class="gana-iman">Imán</strong>. ${menorRadio.simbolo} está más a la derecha y su núcleo tira más fuerte.`;
-  else if (mayorRadio.periodo > menorRadio.periodo) causa = `Distinto grupo y distinto período. ${mayorRadio.simbolo} tiene más niveles (${mayorRadio.periodo} contra ${menorRadio.periodo}) y además está más a la izquierda: el <strong class="gana-escudo">Escudo</strong> gana por los dos lados.`;
-  else causa = `Distinto grupo y distinto período: acá las dos fuerzas compiten, y pesa más el efecto del <strong class="gana-escudo">Escudo</strong> de ${mayorRadio.simbolo}.`;
-
-  const [mn, mx] = R_RADIO;
-  const pa = (a.radio - mn) / (mx - mn), pb = (b.radio - mn) / (mx - mn);
-  const izq = Math.round(Math.min(pa, pb) * 100), der = Math.round(Math.max(pa, pb) * 100);
-
-  t.innerHTML = `
-    <div class="eyebrow">Paso 2 · Comparación cruzada</div>
-    <h2>¿Cuál tiene mayor radio atómico?</h2>
-    <div class="balanza">
-      <div class="balanza-cab"><span class="gana-iman">← más chico</span><span class="gana-escudo">más grande →</span></div>
-      <div class="pista">
-        <span class="mitad"></span>
-        <span class="rel izq" style="right:${100 - izq}%"></span>
-        <span class="rel der" style="left:${der}%"></span>
-        <span class="marcador" style="left:${Math.max(9, Math.min(91, pa * 100))}%;border-color:var(--escudo);color:var(--escudo)">${a.simbolo}</span>
-        <span class="marcador" style="left:${Math.max(9, Math.min(91, pb * 100))}%;border-color:var(--iman);color:var(--iman)">${b.simbolo}</span>
-      </div>
-      <div class="veredicto"><strong>${mayorRadio.nombre} (${mayorRadio.simbolo})</strong> es el más grande. ${causa}</div>
+  /* Paso 1 — ubicar */
+  const sen = señalDe(a, b);
+  c.appendChild(bloquePaso(1, "Ubica a los dos", "Antes de comparar nada, mira dónde viven.", true, `
+    <div class="tarjeta-pos">
+      <div class="pos-caja a"><span class="s">${a.simbolo}</span>${a.nombre}<br>Grupo ${a.grupo || "f"} · período ${a.periodo}<br><b>${NOMBRE_ZONA[a.zona]}</b></div>
+      <div class="pos-caja b"><span class="s">${b.simbolo}</span>${b.nombre}<br>Grupo ${b.grupo || "f"} · período ${b.periodo}<br><b>${NOMBRE_ZONA[b.zona]}</b></div>
     </div>
-    <div class="explica"><strong>Electronegatividad y energía de ionización:</strong> van al revés del radio, así que gana
-      <strong>${(a.fuerza >= b.fuerza ? a : b).simbolo}</strong>${(a.familia === "nob" || b.familia === "nob") ? " — ojo: los gases nobles casi no forman enlaces, así que esta comparación es teórica." : "."}</div>`;
-  return t;
-}
+    <div class="senal"><strong>${sen.titulo}.</strong> ${sen.texto}</div>`));
 
-function bloqueEnlace(a, b) {
-  const t = crear("div", "tarjeta");
-  const r = predecirEnlace(a, b);
-  t.innerHTML = `
-    <div class="eyebrow">Paso 3 · Del átomo al enlace</div>
-    <h2>¿Qué enlace forman ${a.simbolo} y ${b.simbolo}?</h2>
-    <div class="enlace-res ${r.clase}">
-      <div class="enlace-tipo">${r.tipo}</div>
-      <div class="enlace-por">${r.porque}</div>
-    </div>`;
-  return t;
-}
-
-function predecirEnlace(a, b) {
-  const za = a.zona, zb = b.zona;
-  const dist = Math.abs((a.grupo || 3) - (b.grupo || 3));
-  if (a.familia === "nob" || b.familia === "nob")
-    return { tipo: "Normalmente no forman enlace", clase: "e-neutro",
-      porque: "Al menos uno es un gas noble: ya tiene su último nivel completo, así que no necesita ni ceder ni atraer electrones." };
-  if (za === "metaloide" || zb === "metaloide")
-    return { tipo: "Caso intermedio", clase: "e-neutro",
-      porque: "Hay un metaloide, que está justo en la línea escalonada. Su comportamiento queda a medio camino y por eso no se predice con la regla simple de zonas." };
-  if (za === "metal" && zb === "metal")
-    return { tipo: "Enlace metálico", clase: "e-metalico",
-      porque: "Los dos son metales: ninguno atrae electrones con fuerza, así que comparten sus electrones sueltos en una nube común." };
-  if (za === "nometal" && zb === "nometal") {
-    const igual = a.z === b.z;
-    return { tipo: igual ? "Enlace covalente (apolar)" : "Enlace covalente", clase: "e-covalente",
-      porque: igual
-        ? `Es el mismo elemento, así que los dos átomos tienen exactamente el mismo Imán: ninguno le puede quitar el electrón al otro, y no queda más que <strong>compartirlo en partes iguales</strong>.`
-        : "Los dos son no metales y ambos atraen electrones con fuerza: ninguno se los cede al otro, así que los <strong>comparten</strong>." };
+  /* Paso 2 — predecir radio */
+  if (s.iguales) {
+    etapa = Math.max(etapa, 1);
+  } else if (conflictoRadio(a, b)) {
+    const pX = bloquePaso(2, "¿Cuál es más grande?", "Este par se sale del método.", true,
+      `<div class="senal"><strong>Sin respuesta por posición.</strong> ${AVISO_RADIO}</div>
+       <div class="explica">Prueba con dos elementos del <strong>mismo período</strong> (misma fila) o del <strong>mismo grupo</strong> (misma columna): ahí el método siempre funciona, porque una de las dos fuerzas queda empatada.</div>`);
+    c.appendChild(pX);
+  } else {
+    const p2 = bloquePaso(2, "¿Cuál es más grande?", "Decídelo tú antes de mirar la respuesta.", true, "");
+    const cont = p2.querySelector(".contenido");
+    if (predRadio === null) {
+      const el = crear("div", "eleccion doble");
+      [a, b].forEach(x => {
+        const btn = crear("button", "opcion");
+        btn.type = "button";
+        btn.innerHTML = `<strong>${x.simbolo}</strong><span class="sub">${x.nombre}</span>`;
+        btn.addEventListener("click", () => { predRadio = x.z; etapa = 2; dibujarPar(); });
+        el.appendChild(btn);
+      });
+      cont.appendChild(el);
+    } else {
+      const acerto = predRadio === s.mayor.z;
+      cont.innerHTML = `
+        <div class="eleccion doble">
+          ${[a, b].map(x => `<button class="opcion ${x.z === s.mayor.z ? "bien" : (x.z === predRadio ? "mal" : "")}" disabled><strong>${x.simbolo}</strong><span class="sub">${x.nombre}</span></button>`).join("")}
+        </div>
+        <div class="veredicto-pred ${acerto ? "acierto" : "fallo"}">
+          <strong>${acerto ? "Bien pensado." : "No es esa."}</strong> El más grande es <strong>${s.mayor.nombre} (${s.mayor.simbolo})</strong>.
+        </div>
+        ${balanzaHTML(a, b)}
+        <div class="explica porque"><strong>¿Por qué?</strong> ${porQueRadio(a, b)}</div>
+        ${ambiguoEN(a, b)
+          ? `<div class="senal"><strong>Y la electronegatividad:</strong> ${AVISO_EN}</div>`
+          : `<div class="explica"><strong>Y la electronegatividad:</strong> va al revés del radio, así que gana <strong>${s.masFuerte.simbolo}</strong>${s.hayNoble ? " — ojo: los gases nobles casi no forman enlaces, así que esta comparación es teórica." : "."}</div>`}`;
+    }
+    c.appendChild(p2);
+    if (predRadio === null) { pintarPasoEspera(c, 3, "Del átomo al enlace"); return; }
   }
-  const metal = za === "metal" ? a : b, nometal = za === "metal" ? b : a;
-  return { tipo: "Enlace iónico", clase: "e-ionico",
-    porque: `${metal.nombre} es metal y está a la izquierda: <strong>suelta</strong> electrones. ${nometal.nombre} es no metal y está a la derecha: los <strong>atrae con fuerza</strong>. Están separados por ${dist} grupo${dist === 1 ? "" : "s"} en la tabla, zonas opuestas.` };
+
+  /* Paso 3 — predecir enlace */
+  const r = predecirEnlace(a, b);
+  const n3 = s.iguales ? 2 : 3;
+  const p3 = bloquePaso(n3, "Del átomo al enlace", "Mismo método: primero apuestas, después compruebas.", true, "");
+  const c3 = p3.querySelector(".contenido");
+  if (predEnlace === null) {
+    const el = crear("div", "eleccion");
+    ["Iónico", "Covalente", "Metálico"].forEach(op => {
+      const btn = crear("button", "opcion");
+      btn.type = "button"; btn.textContent = "Enlace " + op.toLowerCase();
+      btn.addEventListener("click", () => { predEnlace = op; dibujarPar(); });
+      el.appendChild(btn);
+    });
+    c3.appendChild(el);
+    const nota = crear("div", "explica");
+    nota.innerHTML = `<strong>Recuerda la regla de zonas:</strong> metal + no metal → iónico · no metal + no metal → covalente · metal + metal → metálico.`;
+    c3.appendChild(nota);
+  } else {
+    const acerto = r.corto.toLowerCase() === predEnlace.toLowerCase();
+    c3.innerHTML = `
+      <div class="eleccion">
+        ${["Iónico", "Covalente", "Metálico"].map(op => {
+          const esCorrecta = r.corto.toLowerCase() === op.toLowerCase();
+          return `<button class="opcion ${esCorrecta ? "bien" : (op === predEnlace ? "mal" : "")}" disabled>Enlace ${op.toLowerCase()}</button>`;
+        }).join("")}
+      </div>
+      <div class="veredicto-pred ${acerto ? "acierto" : "fallo"}"><strong>${acerto ? "Correcto." : "Todavía no."}</strong> ${!["Iónico","Covalente","Metálico"].some(o=>o.toLowerCase()===r.corto.toLowerCase()) ? "Este par es un caso especial." : ""}</div>
+      <div class="enlace-res ${r.clase}">
+        <div class="enlace-tipo">${r.tipo}</div>
+        <div class="enlace-por">${r.porque}</div>
+      </div>`;
+  }
+  c.appendChild(p3);
 }
 
-/* ---------- Practicar ---------- */
-const BANCO = [3, 4, 6, 7, 8, 9, 11, 12, 13, 14, 15, 16, 17, 19, 20, 35, 53, 56, 38, 5, 34, 52, 37, 55].map(z => PORZ[z]);
-let pBien = 0, pTotal = 0, pRacha = 0, respondida = false;
+function bloquePaso(n, titulo, sub, activo, html) {
+  const d = crear("div", "paso" + (activo ? "" : " espera"));
+  d.innerHTML = `<div class="paso-cab"><span class="paso-num">${n}</span>
+    <div><div class="paso-tit">${titulo}</div><div class="paso-sub">${sub}</div></div></div>
+    <div class="contenido">${html}</div>`;
+  return d;
+}
+function pintarPasoEspera(cont, n, titulo) {
+  const d = bloquePaso(n, titulo, "Responde el paso anterior para desbloquearlo.", false, "");
+  cont.appendChild(d);
+}
 
-function elegirAlAzar(lista, n) {
+/* ================= PRACTICAR con pistas graduales ================= */
+const BANCO = [3, 4, 6, 7, 8, 9, 11, 12, 13, 14, 15, 16, 17, 19, 20, 35, 53, 56, 38, 5, 34, 52, 37, 55].map(z => PORZ[z]);
+let pBien = 0, pTotal = 0, pRacha = 0, respondida = false, pistasVistas = 0, pistasActuales = [];
+
+function alAzar(lista, n) {
   const c = [...lista];
   for (let i = c.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [c[i], c[j]] = [c[j], c[i]]; }
   return c.slice(0, n);
 }
 
 function nuevaPregunta() {
-  respondida = false;
-  $("#p-explica").innerHTML = "";
+  respondida = false; pistasVistas = 0;
+  $("#p-explica").innerHTML = ""; $("#p-pistas").innerHTML = "";
   $("#p-siguiente").hidden = true;
-  const tipos = ["radio", "en", "enlace", "zona"];
-  const tipo = tipos[Math.floor(Math.random() * tipos.length)];
+  $("#p-pista").hidden = false; $("#p-pista").disabled = false;
+  $("#p-pista").textContent = "Dame una pista";
+
+  const tipo = ["radio", "en", "enlace", "zona"][Math.floor(Math.random() * 4)];
   let texto, opciones, correcta, explica;
 
   if (tipo === "radio" || tipo === "en") {
-    let [a, b] = elegirAlAzar(BANCO.filter(e => e.familia !== "nob"), 2);
-    let intentos = 0;
-    while (Math.abs(a.radio - b.radio) < 3 && intentos++ < 30) { [a, b] = elegirAlAzar(BANCO.filter(e => e.familia !== "nob"), 2); }
     const esRadio = tipo === "radio";
-    const gana = esRadio ? (a.radio > b.radio ? a : b) : (a.fuerza > b.fuerza ? a : b);
+    const aptos = BANCO.filter(e => e.familia !== "nob");
+    // solo se pregunta lo que el razonamiento por posición resuelve de verdad
+    const sirve = (x, y) => esRadio
+      ? (Math.abs(x.radio - y.radio) >= 3 && !conflictoRadio(x, y))
+      : !ambiguoEN(x, y);
+    let [a, b] = alAzar(aptos, 2), i = 0;
+    while (!sirve(a, b) && i++ < 60) [a, b] = alAzar(aptos, 2);
+    const s = analizar(a, b);
+    const gana = esRadio ? s.mayor : s.masFuerte;
     texto = esRadio
       ? `¿Cuál tiene <em>mayor radio atómico</em>: ${a.nombre} (${a.simbolo}) o ${b.nombre} (${b.simbolo})?`
       : `¿Cuál tiene <em>mayor electronegatividad</em>: ${a.nombre} (${a.simbolo}) o ${b.nombre} (${b.simbolo})?`;
     opciones = [`${a.nombre} (${a.simbolo})`, `${b.nombre} (${b.simbolo})`];
     correcta = gana === a ? 0 : 1;
-    const otro = gana === a ? b : a;
-    explica = esRadio
-      ? `${gana.simbolo} está en el período ${gana.periodo} y grupo ${gana.grupo}; ${otro.simbolo}, en el período ${otro.periodo} y grupo ${otro.grupo}. ${gana.periodo > otro.periodo ? "Más períodos, más niveles: gana el <strong>Escudo</strong>." : "Está más a la izquierda, el núcleo tira menos: pierde el <strong>Imán</strong>."}`
-      : `La electronegatividad va al revés del radio: sube hacia la <strong>derecha</strong> y hacia <strong>arriba</strong>. ${gana.simbolo} (grupo ${gana.grupo}, período ${gana.periodo}) está mejor ubicado que ${otro.simbolo} para que gane el <strong>Imán</strong>.`;
+    explica = esRadio ? porQueRadio(a, b)
+      : `La electronegatividad va al revés del radio: sube hacia la <strong>derecha</strong> y hacia <strong>arriba</strong>. ${gana.simbolo} (grupo ${gana.grupo}, período ${gana.periodo}) está mejor ubicado para que gane el <strong>Imán</strong>.`;
+    const sen = señalDe(a, b);
+    pistasActuales = [
+      "Anota el grupo y el período de cada uno. Todo sale de ahí, no hay que buscar valores.",
+      `<strong>${sen.titulo}.</strong> ${sen.texto}`,
+      esRadio
+        ? `Los datos: ${a.simbolo} está en el grupo ${a.grupo}, período ${a.periodo}. ${b.simbolo}, en el grupo ${b.grupo}, período ${b.periodo}. Ahora decide tú.`
+        : `Recuerda que es la tendencia <em>inversa</em> al radio. ${a.simbolo}: grupo ${a.grupo}, período ${a.periodo}. ${b.simbolo}: grupo ${b.grupo}, período ${b.periodo}.`
+    ];
   } else if (tipo === "enlace") {
     const pares = [[11, 17], [20, 17], [12, 8], [3, 9], [19, 35], [17, 17], [8, 8], [26, 29], [11, 12], [6, 8], [7, 7], [1, 17]];
     const [z1, z2] = pares[Math.floor(Math.random() * pares.length)];
-    const a = PORZ[z1], b = PORZ[z2];
-    const r = predecirEnlace(a, b);
+    const a = PORZ[z1], b = PORZ[z2], r = predecirEnlace(a, b);
     texto = `¿Qué tipo de enlace forman <strong>${a.nombre} (${a.simbolo})</strong> y <strong>${b.nombre} (${b.simbolo})</strong>?`;
     const base = ["Enlace iónico", "Enlace covalente", "Enlace metálico"];
     let etq = r.tipo.startsWith("Enlace covalente") ? "Enlace covalente" : r.tipo;
     if (!base.includes(etq)) etq = "Enlace covalente";
-    opciones = base;
-    correcta = base.indexOf(etq);
-    explica = r.porque;
+    opciones = base; correcta = base.indexOf(etq); explica = r.porque;
+    pistasActuales = [
+      "No mires las propiedades todavía. Primero clasifica cada uno: ¿metal o no metal?",
+      `${a.simbolo} es <strong>${NOMBRE_ZONA[a.zona]}</strong> y ${b.simbolo} es <strong>${NOMBRE_ZONA[b.zona]}</strong>.`,
+      "La regla: metal + no metal → uno cede y el otro atrapa. No metal + no metal → los dos tiran, comparten. Metal + metal → nadie tira fuerte, nube de electrones."
+    ];
   } else {
-    const e = elegirAlAzar(BANCO, 1)[0];
+    const e = alAzar(BANCO, 1)[0];
     texto = `¿A qué zona de la tabla pertenece <strong>${e.nombre} (${e.simbolo})</strong>?`;
     opciones = ["Metal", "Metaloide", "No metal"];
     correcta = { metal: 0, metaloide: 1, nometal: 2 }[e.zona];
     explica = `Está en el grupo ${e.grupo}, período ${e.periodo}. ${e.zona === "metal" ? "Los metales ocupan la izquierda y el centro de la tabla." : e.zona === "nometal" ? "Los no metales ocupan la derecha de la tabla." : "Los metaloides están sobre la línea escalonada, entre metales y no metales."}`;
+    pistasActuales = [
+      "Búscalo en tu tabla y fíjate en la línea escalonada.",
+      `Está en el <strong>grupo ${e.grupo}</strong>, período ${e.periodo}.`,
+      "Izquierda y centro: metales. Derecha: no metales. Justo sobre la escalera: metaloides."
+    ];
   }
 
   $("#p-texto").innerHTML = texto;
-  const cont = $("#p-opciones");
-  cont.innerHTML = "";
+  const cont = $("#p-opciones"); cont.innerHTML = "";
   opciones.forEach((o, i) => {
     const b = crear("button", "opcion");
     b.type = "button"; b.innerHTML = o;
@@ -626,23 +788,119 @@ function nuevaPregunta() {
   });
 }
 
+function mostrarPista() {
+  if (pistasVistas >= pistasActuales.length) return;
+  const d = crear("div", "pista-item");
+  d.innerHTML = `<b>Pista ${pistasVistas + 1} de ${pistasActuales.length}</b>${pistasActuales[pistasVistas]}`;
+  $("#p-pistas").appendChild(d);
+  pistasVistas++;
+  const btn = $("#p-pista");
+  if (pistasVistas >= pistasActuales.length) { btn.disabled = true; btn.textContent = "No quedan más pistas"; }
+  else btn.textContent = `Otra pista (${pistasVistas} de ${pistasActuales.length} usadas)`;
+}
+
 function responder(i, correcta, explica, cont) {
   if (respondida) return;
-  respondida = true;
-  pTotal++;
+  respondida = true; pTotal++;
   const btns = [...cont.children];
   btns.forEach(b => b.disabled = true);
   btns[correcta].classList.add("bien");
-  if (i === correcta) { pBien++; pRacha++; }
-  else { btns[i].classList.add("mal"); pRacha = 0; }
-  $("#p-bien").textContent = pBien;
-  $("#p-total").textContent = pTotal;
-  $("#p-racha").textContent = pRacha;
-  $("#p-explica").innerHTML = `<div class="explica"><strong>${i === correcta ? "Correcto." : "Todavía no."}</strong> ${explica}</div>`;
+  if (i === correcta) { pBien++; pRacha++; } else { btns[i].classList.add("mal"); pRacha = 0; }
+  $("#p-bien").textContent = pBien; $("#p-total").textContent = pTotal; $("#p-racha").textContent = pRacha;
+  $("#p-pista").hidden = true;
+  const conPistas = pistasVistas > 0 ? ` <em>(con ${pistasVistas} pista${pistasVistas > 1 ? "s" : ""})</em>` : "";
+  $("#p-explica").innerHTML = `<div class="explica porque"><strong>${i === correcta ? "Correcto." : "Todavía no."}</strong>${conPistas} ${explica}</div>`;
   $("#p-siguiente").hidden = false;
 }
 
-/* ---------- Cableado ---------- */
+/* ================= MODO DOCENTE ================= */
+const CASOS = [
+  { a: 11, b: 17, rot: "Ejemplo resuelto", sub: "Modelado en clase" },
+  { a: 20, b: 17, rot: "En clase · Ej. 1 y 2", sub: "Ca vs Cl" },
+  { a: 3, b: 20, rot: "Práctica 1", sub: "Li vs Ca" },
+  { a: 3, b: 9, rot: "Práctica 2", sub: "Li y F" },
+  { a: 12, b: 19, rot: "Práctica 3", sub: "Mg vs K" },
+  { a: 12, b: 8, rot: "Práctica 4", sub: "Mg y O" },
+  { a: 17, b: 17, rot: "Práctica 5", sub: "Contraste: Cl y Cl" },
+];
+let casoIdx = 0, pasoIdx = 0, pasosDoc = [];
+
+function construirPasos(a, b) {
+  const s = analizar(a, b), sen = señalDe(a, b), r = predecirEnlace(a, b);
+  const P = [];
+  P.push({ etapa: "El caso", h2: `${a.nombre} y ${b.nombre}`,
+    cuerpo: `<p class="grande">${a.simbolo} &nbsp;vs&nbsp; ${b.simbolo}</p>
+             <p>Vamos a decidir dos cosas, sin buscar ningún valor: cuál es más grande, y qué enlace forman.</p>`,
+    prof: "Pide que anoten su predicción en el cuaderno antes de avanzar. Que se comprometan con una respuesta." });
+
+  P.push({ etapa: "Paso 1 · Ubicar", h2: "¿Dónde vive cada uno?",
+    cuerpo: `<p><strong>${a.simbolo}</strong> — grupo ${a.grupo || "f"}, período ${a.periodo}, ${NOMBRE_ZONA[a.zona]}.</p>
+             <p><strong>${b.simbolo}</strong> — grupo ${b.grupo || "f"}, período ${b.periodo}, ${NOMBRE_ZONA[b.zona]}.</p>`,
+    prof: "Pregunta a la clase: ¿qué tienen en común y qué los diferencia? No des tú la respuesta." });
+
+  P.push({ etapa: "Paso 2 · Qué empata", h2: sen.titulo,
+    cuerpo: `<p>${sen.texto}</p>`,
+    prof: "Esta es la bisagra de todo el método. Si entienden qué fuerza queda neutralizada, el resto sale solo." });
+
+  if (!s.iguales) {
+    P.push({ etapa: "Paso 3 · Radio atómico", h2: `Gana ${s.mayor.nombre}`,
+      cuerpo: balanzaHTML(a, b) + `<div class="explica">${porQueRadio(a, b)}</div>`,
+      prof: "Levanta manos antes de revelar: ¿quién dijo " + a.simbolo + "? ¿quién dijo " + b.simbolo + "? Después muestra." });
+
+    P.push(ambiguoEN(a, b)
+      ? { etapa: "Paso 4 · Electronegatividad", h2: "Acá el método no alcanza",
+          cuerpo: `<p>${AVISO_EN}</p>
+                   <p>${a.simbolo} está en el grupo ${a.grupo}, período ${a.periodo}. ${b.simbolo}, en el grupo ${b.grupo}, período ${b.periodo}: más a la derecha, pero también más abajo.</p>`,
+          prof: "Vale la pena mostrarlo: que el método tenga límites no lo invalida, lo hace honesto. Aclara que en la Sumativa solo entran pares que sí se resuelven por posición." }
+      : { etapa: "Paso 4 · Electronegatividad", h2: `Gana ${s.masFuerte.nombre}`,
+          cuerpo: `<p>La electronegatividad va <strong>al revés</strong> del radio: crece hacia la derecha y hacia arriba.</p>
+                   <p>Por eso el más electronegativo es <strong>${s.masFuerte.simbolo}</strong>, justo el contrario del más grande.</p>`,
+          prof: "Insiste en el «al revés». Es el error más común de la prueba: aplicar la misma dirección a las tres propiedades." });
+  }
+
+  P.push({ etapa: "Paso final · El enlace", h2: r.tipo,
+    cuerpo: `<p><strong>${a.simbolo}</strong> es ${NOMBRE_ZONA[a.zona]} · <strong>${b.simbolo}</strong> es ${NOMBRE_ZONA[b.zona]}</p>
+             <div class="enlace-res ${r.clase}"><div class="enlace-tipo">${r.tipo}</div><div class="enlace-por">${r.porque}</div></div>`,
+    prof: "Cierra pidiendo que escriban la respuesta en el orden de la guía: dónde están → qué fuerza gana → nombre del enlace." });
+  return P;
+}
+
+function pintarCasos() {
+  const c = $("#doc-casos"); c.innerHTML = "";
+  CASOS.forEach((cs, i) => {
+    const b = crear("button", "doc-caso");
+    b.type = "button";
+    b.setAttribute("aria-pressed", String(i === casoIdx));
+    b.innerHTML = `${PORZ[cs.a].simbolo} + ${PORZ[cs.b].simbolo}<small>${cs.rot}</small>`;
+    b.addEventListener("click", () => { casoIdx = i; pasoIdx = 0; cargarCaso(); });
+    c.appendChild(b);
+  });
+}
+function cargarCaso() {
+  const cs = CASOS[casoIdx];
+  pasosDoc = construirPasos(PORZ[cs.a], PORZ[cs.b]);
+  pintarCasos(); pintarPizarra();
+}
+function pintarPizarra() {
+  const p = pasosDoc[pasoIdx];
+  $("#pizarra").innerHTML = `<div class="etapa">${p.etapa}</div><h2>${p.h2}</h2>
+    <div class="cuerpo">${p.cuerpo}</div>
+    <div class="prof"><b>Para el profesor</b>${p.prof}</div>`;
+  const pts = $("#doc-puntos"); pts.innerHTML = "";
+  pasosDoc.forEach((_, i) => {
+    const d = crear("span", "punto-p" + (i === pasoIdx ? " on" : i < pasoIdx ? " visto" : ""));
+    pts.appendChild(d);
+  });
+  $("#doc-atras").disabled = pasoIdx === 0;
+  $("#doc-sig").disabled = pasoIdx === pasosDoc.length - 1;
+}
+function avanzar(d) {
+  const n = pasoIdx + d;
+  if (n < 0 || n >= pasosDoc.length) return;
+  pasoIdx = n; pintarPizarra();
+}
+
+/* ---------- cableado ---------- */
 document.querySelectorAll("[data-modo]").forEach(b => b.addEventListener("click", () => {
   modo = b.dataset.modo;
   document.querySelectorAll("[data-modo]").forEach(x => x.setAttribute("aria-pressed", String(x === b)));
@@ -660,12 +918,30 @@ document.querySelectorAll("nav.inferior button").forEach(b => b.addEventListener
   $("#" + b.dataset.vista).classList.add("activa");
   window.scrollTo({ top: 0, behavior: "instant" });
 }));
-$("#limpiar").addEventListener("click", () => { parA = null; parB = null; dibujarPar(); });
+$("#limpiar").addEventListener("click", () => { parA = null; parB = null; predRadio = null; predEnlace = null; dibujarPar(); });
 $("#p-siguiente").addEventListener("click", nuevaPregunta);
+$("#p-pista").addEventListener("click", mostrarPista);
+$("#doc-sig").addEventListener("click", () => avanzar(1));
+$("#doc-atras").addEventListener("click", () => avanzar(-1));
+$("#doc-pantalla").addEventListener("click", () => {
+  if (!document.fullscreenElement) {
+    document.documentElement.requestFullscreen?.();
+    document.body.classList.add("presentando");
+  } else { document.exitFullscreen?.(); }
+});
+document.addEventListener("fullscreenchange", () => {
+  if (!document.fullscreenElement) document.body.classList.remove("presentando");
+});
+document.addEventListener("keydown", e => {
+  if (!$("#v-docente").classList.contains("activa")) return;
+  if (e.key === "ArrowRight" || e.key === " ") { e.preventDefault(); avanzar(1); }
+  if (e.key === "ArrowLeft") { e.preventDefault(); avanzar(-1); }
+});
 
 repintarExplorar();
 dibujarPar();
 nuevaPregunta();
+cargarCaso();
 </script>
 </body>
 </html>
