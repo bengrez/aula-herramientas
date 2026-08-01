@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "plantilla_id": "ancla-habilidades-12",
+  "version": "1",
+  "tipo": "ancla_supervisada",
+  "marco_id": "paes-ciencias",
+  "marco_version": "admision-2027.v1",
+  "banco_id": "ancla-placeholder",
+  "banco_version": "1",
+  "perfil_evidencia_id": "ancla-habilidades-v1-provisional",
+  "reglas": {
+    "orden_fijo": true,
+    "permite_retroceso": false,
+    "muestra_feedback": false,
+    "permite_omitir": true,
+    "maximo_zonas_foco": 1
+  },
+  "orden_foco_estados": [
+    "requiere_refuerzo",
+    "evidencia_inicial"
+  ],
+  "estructura_esperada": {
+    "cantidad_items": 12,
+    "criterios": ["HC-02.C6", "HC-03.C1", "HC-03.C3", "HC-04.C1"],
+    "ejes": ["Biología", "Física", "Química"],
+    "repeticiones_por_criterio": 3
+  },
+  "items": [
+    { "item_id": "ANCLA-P01", "item_version": "placeholder.1", "orden": 1 },
+    { "item_id": "ANCLA-P02", "item_version": "placeholder.1", "orden": 2 },
+    { "item_id": "ANCLA-P03", "item_version": "placeholder.1", "orden": 3 },
+    { "item_id": "ANCLA-P04", "item_version": "placeholder.1", "orden": 4 },
+    { "item_id": "ANCLA-P05", "item_version": "placeholder.1", "orden": 5 },
+    { "item_id": "ANCLA-P06", "item_version": "placeholder.1", "orden": 6 },
+    { "item_id": "ANCLA-P07", "item_version": "placeholder.1", "orden": 7 },
+    { "item_id": "ANCLA-P08", "item_version": "placeholder.1", "orden": 8 },
+    { "item_id": "ANCLA-P09", "item_version": "placeholder.1", "orden": 9 },
+    { "item_id": "ANCLA-P10", "item_version": "placeholder.1", "orden": 10 },
+    { "item_id": "ANCLA-P11", "item_version": "placeholder.1", "orden": 11 },
+    { "item_id": "ANCLA-P12", "item_version": "placeholder.1", "orden": 12 }
+  ]
+}

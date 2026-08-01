@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data: blob:; connect-src 'self' https://*.supabase.co; object-src 'none'; base-uri 'self'; form-action 'self'">
+  <title>Transcribir respuestas en papel</title>
+  <link rel="icon" href="./assets/icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./src/styles.css">
+</head>
+<body class="utility-page">
+  <main class="utility-shell">
+    <a class="back-link" href="./print.html">← Volver a la versión imprimible</a>
+    <p class="eyebrow">Herramienta local para el docente</p>
+    <h1>Transcribir una hoja de respuestas</h1>
+    <p class="lede">Registra solo el código y las marcas del papel. La herramienta crea 12 filas crudas; no calcula aciertos, puntajes ni diagnósticos.</p>
+
+    <div data-ui="paper-status" aria-live="polite">
+      <p>Preparando la plantilla…</p>
+    </div>
+    <form class="utility-card" data-form="paper" hidden></form>
+    <section class="utility-card" data-ui="paper-result" hidden></section>
+
+    <aside class="privacy-note">
+      <strong>No transcribas nombres.</strong> Conserva la relación entre persona y código solo en el registro restringido del curso. El CSV local contiene el código seudónimo y respuestas crudas.
+    </aside>
+  </main>
+  <script type="module" src="./src/paper-tool.mjs"></script>
+</body>
+</html>

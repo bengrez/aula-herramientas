@@ -1,0 +1,3166 @@
+{
+  "schema_version": 1,
+  "marco_id": "paes-ciencias",
+  "version": "admision-2027.v1",
+  "titulo": "PAES Regular de Ciencias — Admisión 2027",
+  "estado": "alcance_completo_etiquetas_provisionales",
+  "autoridad": {
+    "tipo": "temario_oficial",
+    "entidad": "DEMRE",
+    "publicado": "2026-03-19",
+    "proceso": "Admisión 2027",
+    "url": "https://demre.cl/publicaciones/pdf/2027-26-03-19-temario-paes-regular-ciencias.pdf"
+  },
+  "fuente_local": {
+    "archivo": "ref-paes-ciencias-admision-2027-scope-diagnostico.md",
+    "sha256": "08b1c79840cc7c22fcfc60e9ff0d8ad9c5f7196d5ffe21b870ab111bf75a3654",
+    "generado_en": "2026-07-31"
+  },
+  "avisos": [
+    "El alcance oficial, la descomposición diagnóstica del proyecto y la evidencia del ensayo aplicado son capas distintas.",
+    "Las prioridades de diagnóstico no constituyen una partición oficial de contenidos por módulo.",
+    "Las etiquetas públicas y la tabla de inferencia son provisionales hasta validación docente."
+  ],
+  "habilidades": [
+    {
+      "id": "HC-01",
+      "etiqueta": "Observar y plantear preguntas",
+      "alcance_oficial_resumido": "Formular preguntas o hipótesis investigables a partir de observaciones, lecturas o discusiones, considerando las variables.",
+      "lectura_diagnostica_proyecto": "Reconoce qué puede investigarse y formula una relación comprobable sin convertir una opinión en hipótesis.",
+      "criterios": [
+        {
+          "id": "HC-01.C1",
+          "etiqueta": "Distinguir una pregunta medible de una opinión, definición o juicio de valor",
+          "descripcion": "Distinguir una pregunta medible de una opinión, definición o juicio de valor.",
+          "criterio_oficial_parafraseado": "Identificar preguntas científicas investigables.",
+          "evidencia_esperada": "Selecciona la pregunta que puede responderse con datos definidos.",
+          "error_distinguible": "Elige una pregunta amplia, normativa o sin variables observables.",
+          "formatos_estimulo": [
+            "Situación problema",
+            "observación",
+            "noticia científica."
+          ],
+          "etiqueta_estado": "provisional_docente",
+          "prioridad_foco": 99
+        },
+        {
+          "id": "HC-01.C2",
+          "etiqueta": "Relacionar variables mediante una predicción contrastable",
+          "descripcion": "Relacionar variables mediante una predicción contrastable.",
+          "criterio_oficial_parafraseado": "Identificar una hipótesis explicativa validable con evidencia.",
+          "evidencia_esperada": "Selecciona o completa una hipótesis coherente con el problema.",
+          "error_distinguible": "Repite el objetivo, anticipa un resultado sin relación causal o formula una afirmación no comprobable.",
+          "formatos_estimulo": [
+            "Problema + variables",
+            "resultados preliminares."
+          ],
+          "etiqueta_estado": "provisional_docente",
+          "prioridad_foco": 99
+        }
+      ]
+    },
+    {
+      "id": "HC-02",
+      "etiqueta": "Planificar y conducir una investigación",
+      "alcance_oficial_resumido": "Diseñar pasos para obtener evidencia en investigaciones experimentales, no experimentales, documentales o bibliográficas.",
+      "lectura_diagnostica_proyecto": "Conecta problema, objetivo, variables, evidencia, instrumentos y procedimiento en un diseño coherente.",
+      "criterios": [
+        {
+          "id": "HC-02.C1",
+          "etiqueta": "Vincular una afirmación científica con el dato que realmente la respalda",
+          "descripcion": "Vincular una afirmación científica con el dato que realmente la respalda.",
+          "criterio_oficial_parafraseado": "Seleccionar evidencia que sustente leyes, teorías o modelos.",
+          "evidencia_esperada": "Elige evidencia pertinente y suficiente para el marco presentado.",
+          "error_distinguible": "Prefiere una anécdota, autoridad o dato relacionado pero no probatorio.",
+          "formatos_estimulo": [
+            "Tabla",
+            "observaciones",
+            "modelos comparados."
+          ],
+          "etiqueta_estado": "provisional_docente",
+          "prioridad_foco": 99
+        },
+        {
+          "id": "HC-02.C2",
+          "etiqueta": "Diferenciar marco, objetivo, pregunta, hipótesis, variable, procedimiento, resultado, inferencia y conclusión",
+          "descripcion": "Diferenciar marco, objetivo, pregunta, hipótesis, variable, procedimiento, resultado, inferencia y conclusión.",
+          "criterio_oficial_parafraseado": "Identificar componentes de una investigación.",
+          "evidencia_esperada": "Clasifica correctamente el rol de una frase o elemento del estudio.",
+          "error_distinguible": "Confunde resultado con inferencia, objetivo con procedimiento o hipótesis con conclusión.",
+          "formatos_estimulo": [
+            "Fragmento de informe",
+            "diagrama de investigación."
+          ],
+          "etiqueta_estado": "provisional_docente",
+          "prioridad_foco": 99
+        },
+        {
+          "id": "HC-02.C3",
+          "etiqueta": "Elegir una secuencia capaz de producir evidencia pertinente y controlar comparaciones",
+          "descripcion": "Elegir una secuencia capaz de producir evidencia pertinente y controlar comparaciones.",
+          "criterio_oficial_parafraseado": "Seleccionar un procedimiento para resolver un problema científico.",
+          "evidencia_esperada": "Selecciona el diseño que cambia lo necesario y mantiene comparables los grupos.",
+          "error_distinguible": "Agrega mediciones sin control, cambia varias variables o mide algo distinto del problema.",
+          "formatos_estimulo": [
+            "Protocolos alternativos",
+            "esquemas experimentales."
+          ],
+          "etiqueta_estado": "provisional_docente",
+          "prioridad_foco": 99
+        },
+        {
+          "id": "HC-02.C4",
+          "etiqueta": "Formular qué se busca establecer sin adelantar el resultado",
+          "descripcion": "Formular qué se busca establecer sin adelantar el resultado.",
+          "criterio_oficial_parafraseado": "Determinar el objetivo de una investigación.",
+          "evidencia_esperada": "Vincula objetivo con problema, población, variables y alcance.",
+          "error_distinguible": "Formula una actividad, una conclusión o una intención demasiado amplia.",
+          "formatos_estimulo": [
+            "Pregunta + procedimiento",
+            "caso investigativo."
+          ],
+          "etiqueta_estado": "provisional_docente",
+          "prioridad_foco": 99
+        },
+        {
+          "id": "HC-02.C5",
+          "etiqueta": "Elegir un instrumento por magnitud, rango, precisión y función",
+          "descripcion": "Elegir un instrumento por magnitud, rango, precisión y función.",
+          "criterio_oficial_parafraseado": "Asociar instrumentos o materiales con las variables.",
+          "evidencia_esperada": "Selecciona el recurso que mide o manipula la variable requerida.",
+          "error_distinguible": "Elige por familiaridad temática o por apariencia, sin atender la variable.",
+          "formatos_estimulo": [
+            "Montaje",
+            "catálogo de instrumentos",
+            "tabla de especificaciones."
+          ],
+          "etiqueta_estado": "provisional_docente",
+          "prioridad_foco": 99
+        },
+        {
+          "id": "HC-02.C6",
+          "etiqueta": "Distinguir qué se cambia, qué se mide y qué se mantiene",
+          "descripcion": "Reconocer variable independiente, dependiente y controladas.",
+          "criterio_oficial_parafraseado": "Distinguir variables de una investigación.",
+          "evidencia_esperada": "Identifica qué se manipula, qué se mide y qué se mantiene.",
+          "error_distinguible": "Confunde el resultado con la variable independiente o trata un control como respuesta.",
+          "formatos_estimulo": [
+            "Diseño experimental",
+            "tabla de grupos."
+          ],
+          "etiqueta_estado": "provisional_docente",
+          "prioridad_foco": 1
+        }
+      ]
+    },
+    {
+      "id": "HC-03",
+      "etiqueta": "Procesar y analizar la evidencia",
+      "alcance_oficial_resumido": "Organizar e interpretar resultados, relaciones, patrones y tendencias para elaborar predicciones, conclusiones o inferencias.",
+      "lectura_diagnostica_proyecto": "Lee datos antes de elegir una explicación; distingue descripción, cálculo e inferencia.",
+      "criterios": [
+        {
+          "id": "HC-03.C1",
+          "etiqueta": "Leer ejes, unidades y tendencias antes de interpretar",
+          "descripcion": "Leer ejes, unidades, variación conjunta y proporcionalidad antes de interpretar.",
+          "criterio_oficial_parafraseado": "Identificar relaciones, patrones o tendencias, usando matemáticas cuando corresponda.",
+          "evidencia_esperada": "Describe el patrón y realiza la operación mínima pertinente.",
+          "error_distinguible": "Compara números brutos, ignora escala/unidad o se fija en un único dato.",
+          "formatos_estimulo": [
+            "Gráfico",
+            "tabla",
+            "serie temporal",
+            "relaciones algebraicas."
+          ],
+          "etiqueta_estado": "provisional_docente",
+          "prioridad_foco": 2
+        },
+        {
+          "id": "HC-03.C2",
+          "etiqueta": "Distinguir dato observado, proyección y mecanismo explicativo",
+          "descripcion": "Distinguir dato observado, proyección y mecanismo explicativo.",
+          "criterio_oficial_parafraseado": "Identificar predicciones, resultados o explicaciones.",
+          "evidencia_esperada": "Clasifica cada afirmación según su relación con la evidencia.",
+          "error_distinguible": "Presenta una inferencia como resultado o una opinión como explicación causal.",
+          "formatos_estimulo": [
+            "Informe breve",
+            "tabla + afirmaciones."
+          ],
+          "etiqueta_estado": "provisional_docente",
+          "prioridad_foco": 99
+        },
+        {
+          "id": "HC-03.C3",
+          "etiqueta": "Sacar conclusiones sin ir más allá de los datos",
+          "descripcion": "Elegir la afirmación de alcance compatible con los datos.",
+          "criterio_oficial_parafraseado": "Identificar conclusiones o inferencias a partir de resultados.",
+          "evidencia_esperada": "Concluye sin exceder población, variables ni condiciones estudiadas.",
+          "error_distinguible": "Generaliza más allá de la muestra o infiere causalidad desde asociación.",
+          "formatos_estimulo": [
+            "Resultados experimentales o correlacionales."
+          ],
+          "etiqueta_estado": "provisional_docente",
+          "prioridad_foco": 3
+        }
+      ]
+    },
+    {
+      "id": "HC-04",
+      "etiqueta": "Evaluar",
+      "alcance_oficial_resumido": "Analizar validez, confiabilidad, replicabilidad, reproducibilidad, coherencia interna y aplicaciones tecnológicas de una investigación.",
+      "lectura_diagnostica_proyecto": "Detecta límites, sesgos, variables confundidas y conclusiones que exceden la evidencia.",
+      "criterios": [
+        {
+          "id": "HC-04.C1",
+          "etiqueta": "Detectar límites, sesgos y comparaciones débiles",
+          "descripcion": "Detectar sesgo, ausencia de control, medición inadecuada o extrapolación.",
+          "criterio_oficial_parafraseado": "Evaluar validez, confiabilidad, alcance o limitaciones.",
+          "evidencia_esperada": "Explica qué limita la interpretación y cómo afecta la conclusión.",
+          "error_distinguible": "Evalúa por si “le gusta” el resultado o confunde tamaño de efecto con validez.",
+          "formatos_estimulo": [
+            "Diseño + conclusión",
+            "estudio de caso."
+          ],
+          "etiqueta_estado": "provisional_docente",
+          "prioridad_foco": 4
+        },
+        {
+          "id": "HC-04.C2",
+          "etiqueta": "Juzgar si el método puede repetirse y si resultados independientes concuerdan",
+          "descripcion": "Juzgar si el método puede repetirse y si resultados independientes concuerdan.",
+          "criterio_oficial_parafraseado": "Evaluar replicabilidad del procedimiento o reproducibilidad de los resultados.",
+          "evidencia_esperada": "Distingue falta de detalle procedural de variabilidad entre réplicas.",
+          "error_distinguible": "Usa replicabilidad y reproducibilidad como sinónimos o exige resultados idénticos.",
+          "formatos_estimulo": [
+            "Dos protocolos",
+            "resultados de laboratorios distintos."
+          ],
+          "etiqueta_estado": "provisional_docente",
+          "prioridad_foco": 99
+        },
+        {
+          "id": "HC-04.C3",
+          "etiqueta": "Contrastar pregunta, hipótesis, variables, método, evidencia y conclusión",
+          "descripcion": "Contrastar pregunta, hipótesis, variables, método, evidencia y conclusión.",
+          "criterio_oficial_parafraseado": "Evaluar coherencia entre componentes de una investigación.",
+          "evidencia_esperada": "Localiza la incompatibilidad concreta dentro de la cadena investigativa.",
+          "error_distinguible": "Acepta un estudio porque cada parte parece plausible de forma aislada.",
+          "formatos_estimulo": [
+            "Investigación completa abreviada",
+            "diagrama causal."
+          ],
+          "etiqueta_estado": "provisional_docente",
+          "prioridad_foco": 99
+        },
+        {
+          "id": "HC-04.C4",
+          "etiqueta": "Vincular evidencia científica, restricción técnica y mejora funcional",
+          "descripcion": "Vincular evidencia científica, restricción técnica y mejora funcional.",
+          "criterio_oficial_parafraseado": "Evaluar contribuciones de una investigación a una tecnología.",
+          "evidencia_esperada": "Identifica qué hallazgo permite o limita una aplicación tecnológica.",
+          "error_distinguible": "Supone que toda asociación científica produce inmediatamente una tecnología útil.",
+          "formatos_estimulo": [
+            "Caso histórico",
+            "prototipo",
+            "comparación antes/después."
+          ],
+          "etiqueta_estado": "provisional_docente",
+          "prioridad_foco": 99
+        }
+      ]
+    },
+    {
+      "id": "HC-05",
+      "etiqueta": "Comunicar",
+      "alcance_oficial_resumido": "Elegir una forma adecuada de presentar información científica según un objetivo.",
+      "lectura_diagnostica_proyecto": "Selecciona entre tabla, gráfico, modelo u otro recurso por su capacidad de responder al propósito.",
+      "criterios": [
+        {
+          "id": "HC-05.C1",
+          "etiqueta": "Elegir formato por tipo de variable, comparación y audiencia",
+          "descripcion": "Elegir formato por tipo de variable, comparación y audiencia.",
+          "criterio_oficial_parafraseado": "Seleccionar un recurso para comunicar información según un objetivo.",
+          "evidencia_esperada": "Selecciona tabla, gráfico, modelo o esquema que hace visible la relación relevante.",
+          "error_distinguible": "Elige el recurso más vistoso, usa ejes incompatibles o representa categorías como continuidad.",
+          "formatos_estimulo": [
+            "Objetivo comunicativo + alternativas de representación."
+          ],
+          "etiqueta_estado": "provisional_docente",
+          "prioridad_foco": 99
+        }
+      ]
+    }
+  ],
+  "areas": [
+    {
+      "id": "BIO-01",
+      "eje": "Biología",
+      "etiqueta": "Organización, estructura y actividad celular",
+      "unidades": [
+        {
+          "id": "BIO-01.01",
+          "etiqueta": "Límites y cubiertas celulares",
+          "operacion_diagnostica": "distinguir cápsula, pared y membrana por localización y función.",
+          "conocimiento_oficial_origen": "D27:BIO-01",
+          "conceptos_relaciones": "distinguir cápsula, pared y membrana por localización y función.",
+          "procedimientos": "distinguir cápsula, pared y membrana por localización y función.",
+          "prerrequisitos": [
+            "Concepto de célula",
+            "interior/exterior."
+          ],
+          "representaciones": [
+            "Esquema",
+            "micrografía",
+            "tabla presencia/ausencia."
+          ],
+          "limite_diagnostico": "No inferir composición molecular detallada de la membrana.",
+          "criterios_compatibles": [
+            "HC-03.C1",
+            "HC-05.C1"
+          ],
+          "prioridad_diagnostico_v1": "alta",
+          "evidencia_prioridad": [
+            "D27",
+            "E54-Q13"
+          ],
+          "procedencia": "descomposicion_diagnostica_proyecto"
+        },
+        {
+          "id": "BIO-01.02",
+          "etiqueta": "Información y síntesis/traslado de proteínas",
+          "operacion_diagnostica": "relacionar núcleo, nucléolo, ribosomas, RE y Golgi en una ruta funcional.",
+          "conocimiento_oficial_origen": "D27:BIO-01",
+          "conceptos_relaciones": "relacionar núcleo, nucléolo, ribosomas, RE y Golgi en una ruta funcional.",
+          "procedimientos": "relacionar núcleo, nucléolo, ribosomas, RE y Golgi en una ruta funcional.",
+          "prerrequisitos": [
+            "ADN como información",
+            "proteína como producto celular."
+          ],
+          "representaciones": [
+            "Diagrama de flujo",
+            "célula rotulada",
+            "experimento de marcaje."
+          ],
+          "limite_diagnostico": "No exigir regulación molecular de la expresión génica fuera del temario.",
+          "criterios_compatibles": [
+            "HC-02.C1",
+            "HC-03.C3"
+          ],
+          "prioridad_diagnostico_v1": "alta",
+          "evidencia_prioridad": [
+            "D27",
+            "FUND"
+          ],
+          "procedencia": "descomposicion_diagnostica_proyecto"
+        },
+        {
+          "id": "BIO-01.03",
+          "etiqueta": "Energía, digestión, detoxificación y almacenamiento",
+          "operacion_diagnostica": "diferenciar mitocondrias, cloroplastos, lisosomas, peroxisomas y vacuolas.",
+          "conocimiento_oficial_origen": "D27:BIO-01",
+          "conceptos_relaciones": "diferenciar mitocondrias, cloroplastos, lisosomas, peroxisomas y vacuolas.",
+          "procedimientos": "diferenciar mitocondrias, cloroplastos, lisosomas, peroxisomas y vacuolas.",
+          "prerrequisitos": [
+            "Eucarionte",
+            "función general de organelo."
+          ],
+          "representaciones": [
+            "Tabla comparativa",
+            "esquema",
+            "caso de falla celular."
+          ],
+          "limite_diagnostico": "No equiparar “doble membrana” con bicapa lipídica; no diagnosticar rutas bioquímicas no listadas.",
+          "criterios_compatibles": [
+            "HC-03.C2",
+            "HC-05.C1"
+          ],
+          "prioridad_diagnostico_v1": "alta",
+          "evidencia_prioridad": [
+            "D27",
+            "E54-Q15"
+          ],
+          "procedencia": "descomposicion_diagnostica_proyecto"
+        },
+        {
+          "id": "BIO-01.04",
+          "etiqueta": "Soporte, división y movimiento",
+          "operacion_diagnostica": "relacionar citoesqueleto, centriolos, cilios y flagelos con su función.",
+          "conocimiento_oficial_origen": "D27:BIO-01",
+          "conceptos_relaciones": "relacionar citoesqueleto, centriolos, cilios y flagelos con su función.",
+          "procedimientos": "relacionar citoesqueleto, centriolos, cilios y flagelos con su función.",
+          "prerrequisitos": [
+            "Forma y movimiento celular."
+          ],
+          "representaciones": [
+            "Secuencia",
+            "micrografía",
+            "modelo estructural."
+          ],
+          "limite_diagnostico": "No exigir ultraestructura molecular ni dinámica avanzada del citoesqueleto.",
+          "criterios_compatibles": [
+            "HC-03.C3"
+          ],
+          "prioridad_diagnostico_v1": "media",
+          "evidencia_prioridad": [
+            "D27"
+          ],
+          "procedencia": "descomposicion_diagnostica_proyecto"
+        },
+        {
+          "id": "BIO-01.05",
+          "etiqueta": "Comparación de tipos celulares",
+          "operacion_diagnostica": "clasificar procarionte, eucarionte animal y vegetal usando varias evidencias.",
+          "conocimiento_oficial_origen": "D27:BIO-01",
+          "conceptos_relaciones": "clasificar procarionte, eucarionte animal y vegetal usando varias evidencias.",
+          "procedimientos": "clasificar procarionte, eucarionte animal y vegetal usando varias evidencias.",
+          "prerrequisitos": [
+            "Unidades BIO-01.01 a .04."
+          ],
+          "representaciones": [
+            "Matriz presencia/ausencia",
+            "dibujo",
+            "micrografía."
+          ],
+          "limite_diagnostico": "Una sola forma externa no basta para clasificar.",
+          "criterios_compatibles": [
+            "HC-03.C1",
+            "HC-05.C1"
+          ],
+          "prioridad_diagnostico_v1": "alta",
+          "evidencia_prioridad": [
+            "D27",
+            "E54-Q13"
+          ],
+          "procedencia": "descomposicion_diagnostica_proyecto"
+        },
+        {
+          "id": "BIO-01.06",
+          "etiqueta": "Especialización celular",
+          "operacion_diagnostica": "inferir cómo una estructura favorece la función de enterocito, músculo esquelético, neurona o célula pancreática secretora.",
+          "conocimiento_oficial_origen": "D27:BIO-01",
+          "conceptos_relaciones": "inferir cómo una estructura favorece la función de enterocito, músculo esquelético, neurona o célula pancreática secretora.",
+          "procedimientos": "inferir cómo una estructura favorece la función de enterocito, músculo esquelético, neurona o célula pancreática secretora.",
+          "prerrequisitos": [
+            "Organelos",
+            "relación forma-función."
+          ],
+          "representaciones": [
+            "Caso funcional",
+            "micrografía",
+            "comparación entre células."
+          ],
+          "limite_diagnostico": "No generalizar una adaptación a todos los tipos celulares.",
+          "criterios_compatibles": [
+            "HC-01.C2",
+            "HC-03.C3"
+          ],
+          "prioridad_diagnostico_v1": "alta",
+          "evidencia_prioridad": [
+            "D27",
+            "FUND"
+          ],
+          "procedencia": "descomposicion_diagnostica_proyecto"
+        }
+      ]
+    },
+    {
+      "id": "BIO-02",
+      "eje": "Biología",
+      "etiqueta": "Procesos y funciones biológicas",
+      "unidades": [
+        {
+          "id": "BIO-02.01",
+          "etiqueta": "Organización nerviosa",
+          "operacion_diagnostica": "relacionar estructura neuronal con recepción, integración y transmisión de señales.",
+          "conocimiento_oficial_origen": "D27:BIO-02",
+          "conceptos_relaciones": "relacionar estructura neuronal con recepción, integración y transmisión de señales.",
+          "procedimientos": "relacionar estructura neuronal con recepción, integración y transmisión de señales.",
+          "prerrequisitos": [
+            "Célula",
+            "estructura-función."
+          ],
+          "representaciones": [
+            "Neurona rotulada",
+            "recorrido de señal",
+            "caso de lesión."
+          ],
+          "limite_diagnostico": "No exigir neuroanatomía regional avanzada.",
+          "criterios_compatibles": [
+            "HC-03.C2",
+            "HC-05.C1"
+          ],
+          "prioridad_diagnostico_v1": "media",
+          "evidencia_prioridad": [
+            "D27",
+            "FUND"
+          ],
+          "procedencia": "descomposicion_diagnostica_proyecto"
+        },
+        {
+          "id": "BIO-02.02",
+          "etiqueta": "Impulso y sinapsis química",
+          "operacion_diagnostica": "ordenar generación, propagación y transmisión de la señal nerviosa.",
+          "conocimiento_oficial_origen": "D27:BIO-02",
+          "conceptos_relaciones": "ordenar generación, propagación y transmisión de la señal nerviosa.",
+          "procedimientos": "ordenar generación, propagación y transmisión de la señal nerviosa.",
+          "prerrequisitos": [
+            "Membrana",
+            "neurona."
+          ],
+          "representaciones": [
+            "Secuencia",
+            "gráfico cualitativo",
+            "esquema sináptico."
+          ],
+          "limite_diagnostico": "No exigir ecuaciones electroquímicas ni farmacología molecular.",
+          "criterios_compatibles": [
+            "HC-03.C1",
+            "HC-03.C3"
+          ],
+          "prioridad_diagnostico_v1": "media",
+          "evidencia_prioridad": [
+            "D27"
+          ],
+          "procedencia": "descomposicion_diagnostica_proyecto"
+        },
+        {
+          "id": "BIO-02.03",
+          "etiqueta": "Arco reflejo simple",
+          "operacion_diagnostica": "identificar receptor, vías, centro integrador y efector.",
+          "conocimiento_oficial_origen": "D27:BIO-02",
+          "conceptos_relaciones": "identificar receptor, vías, centro integrador y efector.",
+          "procedimientos": "identificar receptor, vías, centro integrador y efector.",
+          "prerrequisitos": [
+            "Estímulo/respuesta",
+            "neurona."
+          ],
+          "representaciones": [
+            "Diagrama",
+            "situación cotidiana",
+            "secuencia."
+          ],
+          "limite_diagnostico": "No confundir rapidez refleja con ausencia total de participación encefálica posterior.",
+          "criterios_compatibles": [
+            "HC-03.C2",
+            "HC-05.C1"
+          ],
+          "prioridad_diagnostico_v1": "media",
+          "evidencia_prioridad": [
+            "D27"
+          ],
+          "procedencia": "descomposicion_diagnostica_proyecto"
+        },
+        {
+          "id": "BIO-02.04",
+          "etiqueta": "Sustancias y cuidado del sistema nervioso",
+          "operacion_diagnostica": "evaluar consecuencias generales de café, alcohol y drogas de abuso, sueño y prevención de traumatismos.",
+          "conocimiento_oficial_origen": "D27:BIO-02",
+          "conceptos_relaciones": "evaluar consecuencias generales de café, alcohol y drogas de abuso, sueño y prevención de traumatismos.",
+          "procedimientos": "evaluar consecuencias generales de café, alcohol y drogas de abuso, sueño y prevención de traumatismos.",
+          "prerrequisitos": [
+            "Sistema nervioso general",
+            "riesgo/protección."
+          ],
+          "representaciones": [
+            "Caso",
+            "datos comparativos",
+            "recomendación basada en evidencia."
+          ],
+          "limite_diagnostico": "No convertir el resultado en diagnóstico clínico ni inferir consumo personal.",
+          "criterios_compatibles": [
+            "HC-02.C1",
+            "HC-04.C1"
+          ],
+          "prioridad_diagnostico_v1": "media",
+          "evidencia_prioridad": [
+            "D27"
+          ],
+          "procedencia": "descomposicion_diagnostica_proyecto"
+        },
+        {
+          "id": "BIO-02.05",
+          "etiqueta": "Gametos y fecundación",
+          "operacion_diagnostica": "relacionar estructuras de ovocito y espermatozoide con su participación en la fecundación.",
+          "conocimiento_oficial_origen": "D27:BIO-02",
+          "conceptos_relaciones": "relacionar estructuras de ovocito y espermatozoide con su participación en la fecundación.",
+          "procedimientos": "relacionar estructuras de ovocito y espermatozoide con su participación en la fecundación.",
+          "prerrequisitos": [
+            "Célula",
+            "reproducción sexual."
+          ],
+          "representaciones": [
+            "Esquema",
+            "experimento clásico",
+            "secuencia."
+          ],
+          "limite_diagnostico": "No reducir fecundación a cercanía sin considerar la variable estudiada.",
+          "criterios_compatibles": [
+            "HC-02.C2",
+            "HC-03.C3"
+          ],
+          "prioridad_diagnostico_v1": "alta",
+          "evidencia_prioridad": [
+            "D27",
+            "E54-Q4",
+            "E54-Q16"
+          ],
+          "procedencia": "descomposicion_diagnostica_proyecto"
+        },
+        {
+          "id": "BIO-02.06",
+          "etiqueta": "Ciclos ovárico y uterino",
+          "operacion_diagnostica": "ordenar fases y relacionar eventos sin tratarlos como ciclos idénticos.",
+          "conocimiento_oficial_origen": "D27:BIO-02",
+          "conceptos_relaciones": "ordenar fases y relacionar eventos sin tratarlos como ciclos idénticos.",
+          "procedimientos": "ordenar fases y relacionar eventos sin tratarlos como ciclos idénticos.",
+          "prerrequisitos": [
+            "Tiempo cíclico",
+            "órganos reproductores."
+          ],
+          "representaciones": [
+            "Línea temporal",
+            "gráfico hormonal cualitativo",
+            "esquema."
+          ],
+          "limite_diagnostico": "No diagnosticar fertilidad individual ni exigir endocrinología fuera del temario.",
+          "criterios_compatibles": [
+            "HC-03.C1",
+            "HC-03.C2"
+          ],
+          "prioridad_diagnostico_v1": "alta",
+          "evidencia_prioridad": [
+            "D27",
+            "E54-Q5",
+            "E54-Q17"
+          ],
+          "procedencia": "descomposicion_diagnostica_proyecto"
+        },
+        {
+          "id": "BIO-02.07",
+          "etiqueta": "Control de la natalidad",
+          "operacion_diagnostica": "clasificar métodos naturales, reversibles artificiales y quirúrgicos parcialmente reversibles por mecanismo general.",
+          "conocimiento_oficial_origen": "D27:BIO-02",
+          "conceptos_relaciones": "clasificar métodos naturales, reversibles artificiales y quirúrgicos parcialmente reversibles por mecanismo general.",
+          "procedimientos": "clasificar métodos naturales, reversibles artificiales y quirúrgicos parcialmente reversibles por mecanismo general.",
+          "prerrequisitos": [
+            "Fecundación y ciclos."
+          ],
+          "representaciones": [
+            "Tabla",
+            "caso de selección",
+            "mecanismo esquemático."
+          ],
+          "limite_diagnostico": "No formular recomendaciones médicas personales ni medir eficacia con cifras no aportadas.",
+          "criterios_compatibles": [
+            "HC-03.C2",
+            "HC-04.C1"
+          ],
+          "prioridad_diagnostico_v1": "media",
+          "evidencia_prioridad": [
+            "D27"
+          ],
+          "procedencia": "descomposicion_diagnostica_proyecto"
+        },
+        {
+          "id": "BIO-02.08",
+          "etiqueta": "ITS",
+          "operacion_diagnostica": "relacionar VIH, herpes, gonorrea y clamidia con tipo de agente, transmisión, síntomas generales y prevención.",
+          "conocimiento_oficial_origen": "D27:BIO-02",
+          "conceptos_relaciones": "relacionar VIH, herpes, gonorrea y clamidia con tipo de agente, transmisión, síntomas generales y prevención.",
+          "procedimientos": "relacionar VIH, herpes, gonorrea y clamidia con tipo de agente, transmisión, síntomas generales y prevención.",
+          "prerrequisitos": [
+            "Agente patógeno",
+            "transmisión."
+          ],
+          "representaciones": [
+            "Tabla comparativa",
+            "caso preventivo",
+            "cadena de transmisión."
+          ],
+          "limite_diagnostico": "No inferir diagnóstico, conducta personal ni estigma a partir de una respuesta.",
+          "criterios_compatibles": [
+            "HC-02.C1",
+            "HC-03.C3",
+            "HC-05.C1"
+          ],
+          "prioridad_diagnostico_v1": "media",
+          "evidencia_prioridad": [
+            "D27"
+          ],
+          "procedencia": "descomposicion_diagnostica_proyecto"
+        },
+        {
+          "id": "BIO-02.09",
+          "etiqueta": "Sexualidad y reproducción multidimensional",
+          "operacion_diagnostica": "integrar estructura/función reproductiva con cuidado, respeto y responsabilidad.",
+          "conocimiento_oficial_origen": "D27:BIO-02",
+          "conceptos_relaciones": "integrar estructura/función reproductiva con cuidado, respeto y responsabilidad.",
+          "procedimientos": "integrar estructura/función reproductiva con cuidado, respeto y responsabilidad.",
+          "prerrequisitos": [
+            "Sistemas reproductores",
+            "noción de bienestar."
+          ],
+          "representaciones": [
+            "Caso",
+            "modelo biopsicosocial",
+            "decisión fundamentada."
+          ],
+          "limite_diagnostico": "No evaluar valores íntimos, identidad u orientación; solo relaciones conceptuales del temario.",
+          "criterios_compatibles": [
+            "HC-04.C1",
+            "HC-05.C1"
+          ],
+          "prioridad_diagnostico_v1": "diferida",
+          "evidencia_prioridad": [
+            "D27"
+          ],
+          "procedencia": "descomposicion_diagnostica_proyecto"
+        }
+      ]
+    },
+    {
+      "id": "BIO-03",
+      "eje": "Biología",
+      "etiqueta": "Herencia y evolución",
+      "unidades": [
+        {
+          "id": "BIO-03.01",
+          "etiqueta": "Cromatina y compactación",
+          "operacion_diagnostica": "relacionar estados de compactación con etapas del ciclo celular.",
+          "conocimiento_oficial_origen": "D27:BIO-03",
+          "conceptos_relaciones": "relacionar estados de compactación con etapas del ciclo celular.",
+          "procedimientos": "relacionar estados de compactación con etapas del ciclo celular.",
+          "prerrequisitos": [
+            "ADN",
+            "cromosoma",
+            "núcleo."
+          ],
+          "representaciones": [
+            "Secuencia",
+            "micrografía",
+            "modelo."
+          ],
+          "limite_diagnostico": "No confundir cantidad de ADN con grado de compactación.",
+          "criterios_compatibles": [
+            "HC-03.C1",
+            "HC-03.C2"
+          ],
+          "prioridad_diagnostico_v1": "alta",
+          "evidencia_prioridad": [
+            "D27",
+            "E54-Q18",
+            "FUND"
+          ],
+          "procedencia": "descomposicion_diagnostica_proyecto"
+        },
+        {
+          "id": "BIO-03.02",
+          "etiqueta": "Interfase y mitosis",
+          "operacion_diagnostica": "ordenar G1, S, G2, profase, metafase, anafase y telofase, asociando eventos principales.",
+          "conocimiento_oficial_origen": "D27:BIO-03",
+          "conceptos_relaciones": "ordenar G1, S, G2, profase, metafase, anafase y telofase, asociando eventos principales.",
+          "procedimientos": "ordenar G1, S, G2, profase, metafase, anafase y telofase, asociando eventos principales.",
+          "prerrequisitos": [
+            "Cromatina",
+            "duplicación."
+          ],
+          "representaciones": [
+            "Línea temporal",
+            "células esquemáticas",
+            "tabla."
+          ],
+          "limite_diagnostico": "No asumir que toda anafase separa las mismas estructuras.",
+          "criterios_compatibles": [
+            "HC-03.C1",
+            "HC-05.C1"
+          ],
+          "prioridad_diagnostico_v1": "alta",
+          "evidencia_prioridad": [
+            "D27",
+            "E54-Q18"
+          ],
+          "procedencia": "descomposicion_diagnostica_proyecto"
+        },
+        {
+          "id": "BIO-03.03",
+          "etiqueta": "Puntos de control",
+          "operacion_diagnostica": "distinguir G1-S, G2-M y metafase por la condición que verifican.",
+          "conocimiento_oficial_origen": "D27:BIO-03",
+          "conceptos_relaciones": "distinguir G1-S, G2-M y metafase por la condición que verifican.",
+          "procedimientos": "distinguir G1-S, G2-M y metafase por la condición que verifican.",
+          "prerrequisitos": [
+            "Fases del ciclo."
+          ],
+          "representaciones": [
+            "Diagrama de decisión",
+            "caso de detención."
+          ],
+          "limite_diagnostico": "No atribuir a un punto de control la función de otro.",
+          "criterios_compatibles": [
+            "HC-02.C2",
+            "HC-03.C3"
+          ],
+          "prioridad_diagnostico_v1": "alta",
+          "evidencia_prioridad": [
+            "D27",
+            "E54-Q7"
+          ],
+          "procedencia": "descomposicion_diagnostica_proyecto"
+        },
+        {
+          "id": "BIO-03.04",
+          "etiqueta": "Significado biológico de la mitosis",
+          "operacion_diagnostica": "conectar conservación genética con crecimiento, desarrollo, reparación y cáncer.",
+          "conocimiento_oficial_origen": "D27:BIO-03",
+          "conceptos_relaciones": "conectar conservación genética con crecimiento, desarrollo, reparación y cáncer.",
+          "procedimientos": "conectar conservación genética con crecimiento, desarrollo, reparación y cáncer.",
+          "prerrequisitos": [
+            "Mitosis",
+            "control celular."
+          ],
+          "representaciones": [
+            "Caso",
+            "tejido",
+            "comparación normal/alterada."
+          ],
+          "limite_diagnostico": "No inferir que toda proliferación es cáncer ni exigir mecanismos oncogénicos.",
+          "criterios_compatibles": [
+            "HC-01.C2",
+            "HC-04.C3"
+          ],
+          "prioridad_diagnostico_v1": "media",
+          "evidencia_prioridad": [
+            "D27"
+          ],
+          "procedencia": "descomposicion_diagnostica_proyecto"
+        },
+        {
+          "id": "BIO-03.05",
+          "etiqueta": "Etapas de meiosis I y II",
+          "operacion_diagnostica": "reconocer qué se separa y cuál es el resultado celular de cada división.",
+          "conocimiento_oficial_origen": "D27:BIO-03",
+          "conceptos_relaciones": "reconocer qué se separa y cuál es el resultado celular de cada división.",
+          "procedimientos": "reconocer qué se separa y cuál es el resultado celular de cada división.",
+          "prerrequisitos": [
+            "Cromosomas homólogos y cromátidas."
+          ],
+          "representaciones": [
+            "Secuencia",
+            "esquema cromosómico",
+            "tabla."
+          ],
+          "limite_diagnostico": "No usar “anafase” sin especificar I o II.",
+          "criterios_compatibles": [
+            "HC-03.C1",
+            "HC-05.C1"
+          ],
+          "prioridad_diagnostico_v1": "alta",
+          "evidencia_prioridad": [
+            "D27",
+            "E54-Q8"
+          ],
+          "procedencia": "descomposicion_diagnostica_proyecto"
+        },
+        {
+          "id": "BIO-03.06",
+          "etiqueta": "Meiosis y variabilidad",
+          "operacion_diagnostica": "explicar cómo el proceso contribuye a combinaciones genéticas diferentes.",
+          "conocimiento_oficial_origen": "D27:BIO-03",
+          "conceptos_relaciones": "explicar cómo el proceso contribuye a combinaciones genéticas diferentes.",
+          "procedimientos": "explicar cómo el proceso contribuye a combinaciones genéticas diferentes.",
+          "prerrequisitos": [
+            "Meiosis",
+            "homólogos."
+          ],
+          "representaciones": [
+            "Modelo",
+            "descendencia hipotética",
+            "comparación."
+          ],
+          "limite_diagnostico": "No atribuir toda variabilidad exclusivamente a meiosis.",
+          "criterios_compatibles": [
+            "HC-01.C2",
+            "HC-03.C3"
+          ],
+          "prioridad_diagnostico_v1": "media",
+          "evidencia_prioridad": [
+            "D27"
+          ],
+          "procedencia": "descomposicion_diagnostica_proyecto"
+        },
+        {
+          "id": "BIO-03.07",
+          "etiqueta": "Manipulación genética",
+          "operacion_diagnostica": "relacionar una modificación con aplicaciones en alimentos, detergentes, vestuario o fármacos.",
+          "conocimiento_oficial_origen": "D27:BIO-03",
+          "conceptos_relaciones": "relacionar una modificación con aplicaciones en alimentos, detergentes, vestuario o fármacos.",
+          "procedimientos": "relacionar una modificación con aplicaciones en alimentos, detergentes, vestuario o fármacos.",
+          "prerrequisitos": [
+            "ADN como información",
+            "producto biológico."
+          ],
+          "representaciones": [
+            "Caso tecnológico",
+            "diagrama de proceso",
+            "evidencia de aplicación."
+          ],
+          "limite_diagnostico": "No evaluar opinión moral como conocimiento científico ni exigir técnicas moleculares no listadas.",
+          "criterios_compatibles": [
+            "HC-04.C4",
+            "HC-05.C1"
+          ],
+          "prioridad_diagnostico_v1": "diferida",
+          "evidencia_prioridad": [
+            "D27"
+          ],
+          "procedencia": "descomposicion_diagnostica_proyecto"
+        },
+        {
+          "id": "BIO-03.08",
+          "etiqueta": "Evidencias evolutivas",
+          "operacion_diagnostica": "comparar anatomía, embriología, biología molecular y fósiles como líneas de evidencia.",
+          "conocimiento_oficial_origen": "D27:BIO-03",
+          "conceptos_relaciones": "comparar anatomía, embriología, biología molecular y fósiles como líneas de evidencia.",
+          "procedimientos": "comparar anatomía, embriología, biología molecular y fósiles como líneas de evidencia.",
+          "prerrequisitos": [
+            "Especie",
+            "semejanza",
+            "tiempo geológico básico."
+          ],
+          "representaciones": [
+            "Matriz",
+            "porcentajes de similitud",
+            "fósiles",
+            "estructuras."
+          ],
+          "limite_diagnostico": "Similitud aislada no demuestra por sí sola una historia completa.",
+          "criterios_compatibles": [
+            "HC-02.C1",
+            "HC-03.C1"
+          ],
+          "prioridad_diagnostico_v1": "alta",
+          "evidencia_prioridad": [
+            "D27",
+            "E54-Q11"
+          ],
+          "procedencia": "descomposicion_diagnostica_proyecto"
+        },
+        {
+          "id": "BIO-03.09",
+          "etiqueta": "Aportes de Lamarck, Darwin y Wallace",
+          "operacion_diagnostica": "diferenciar sus explicaciones y contribuciones históricas.",
+          "conocimiento_oficial_origen": "D27:BIO-03",
+          "conceptos_relaciones": "diferenciar sus explicaciones y contribuciones históricas.",
+          "procedimientos": "diferenciar sus explicaciones y contribuciones históricas.",
+          "prerrequisitos": [
+            "Cambio poblacional",
+            "herencia general."
+          ],
+          "representaciones": [
+            "Textos breves",
+            "comparación de modelos",
+            "caso histórico."
+          ],
+          "limite_diagnostico": "No presentar todas las ideas históricas como igualmente vigentes.",
+          "criterios_compatibles": [
+            "HC-02.C1",
+            "HC-04.C3"
+          ],
+          "prioridad_diagnostico_v1": "media",
+          "evidencia_prioridad": [
+            "D27"
+          ],
+          "procedencia": "descomposicion_diagnostica_proyecto"
+        },
+        {
+          "id": "BIO-03.10",
+          "etiqueta": "Selección natural",
+          "operacion_diagnostica": "aplicar variación, presión selectiva y reproducción diferencial para explicar cambio poblacional.",
+          "conocimiento_oficial_origen": "D27:BIO-03",
+          "conceptos_relaciones": "aplicar variación, presión selectiva y reproducción diferencial para explicar cambio poblacional.",
+          "procedimientos": "aplicar variación, presión selectiva y reproducción diferencial para explicar cambio poblacional.",
+          "prerrequisitos": [
+            "Población",
+            "variabilidad",
+            "herencia."
+          ],
+          "representaciones": [
+            "Serie temporal",
+            "tabla de frecuencias",
+            "caso de resistencia."
+          ],
+          "limite_diagnostico": "No explicar el cambio como intención, necesidad individual o aparición dirigida del rasgo.",
+          "criterios_compatibles": [
+            "HC-01.C2",
+            "HC-03.C1",
+            "HC-03.C3"
+          ],
+          "prioridad_diagnostico_v1": "alta",
+          "evidencia_prioridad": [
+            "D27",
+            "E54-Q10"
+          ],
+          "procedencia": "descomposicion_diagnostica_proyecto"
+        }
+      ]
+    },
+    {
+      "id": "BIO-04",
+      "eje": "Biología",
+      "etiqueta": "Organismo y ambiente",
+      "unidades": [
+        {
+          "id": "BIO-04.01",
+          "etiqueta": "Nutrición autótrofa y heterótrofa",
+          "operacion_diagnostica": "comparar fuente de carbono y obtención de materia/energía.",
+          "conocimiento_oficial_origen": "D27:BIO-04",
+          "conceptos_relaciones": "comparar fuente de carbono y obtención de materia/energía.",
+          "procedimientos": "comparar fuente de carbono y obtención de materia/energía.",
+          "prerrequisitos": [
+            "Materia orgánica",
+            "organismo."
+          ],
+          "representaciones": [
+            "Tabla",
+            "red trófica simple",
+            "caso."
+          ],
+          "limite_diagnostico": "No usar “produce ATP” como rasgo exclusivo de autótrofos.",
+          "criterios_compatibles": [
+            "HC-03.C2",
+            "HC-05.C1"
+          ],
+          "prioridad_diagnostico_v1": "alta",
+          "evidencia_prioridad": [
+            "D27",
+            "E54-Q14",
+            "FUND"
+          ],
+          "procedencia": "descomposicion_diagnostica_proyecto"
+        },
+        {
+          "id": "BIO-04.02",
+          "etiqueta": "Etapas de la fotosíntesis",
+          "operacion_diagnostica": "ubicar etapas, reactantes, productos y moléculas participantes a nivel del temario.",
+          "conocimiento_oficial_origen": "D27:BIO-04",
+          "conceptos_relaciones": "ubicar etapas, reactantes, productos y moléculas participantes a nivel del temario.",
+          "procedimientos": "ubicar etapas, reactantes, productos y moléculas participantes a nivel del temario.",
+          "prerrequisitos": [
+            "Cloroplasto",
+            "transformación de materia/energía."
+          ],
+          "representaciones": [
+            "Diagrama",
+            "tabla entrada/salida",
+            "experimento."
+          ],
+          "limite_diagnostico": "No exigir rutas moleculares más detalladas que las explicitadas por DEMRE.",
+          "criterios_compatibles": [
+            "HC-02.C2",
+            "HC-03.C1"
+          ],
+          "prioridad_diagnostico_v1": "media",
+          "evidencia_prioridad": [
+            "D27"
+          ],
+          "procedencia": "descomposicion_diagnostica_proyecto"
+        },
+        {
+          "id": "BIO-04.03",
+          "etiqueta": "Respiración celular",
+          "operacion_diagnostica": "relacionar su rol energético con fotosíntesis y funcionamiento de autótrofos y heterótrofos.",
+          "conocimiento_oficial_origen": "D27:BIO-04",
+          "conceptos_relaciones": "relacionar su rol energético con fotosíntesis y funcionamiento de autótrofos y heterótrofos.",
+          "procedimientos": "relacionar su rol energético con fotosíntesis y funcionamiento de autótrofos y heterótrofos.",
+          "prerrequisitos": [
+            "Mitocondria",
+            "materia orgánica."
+          ],
+          "representaciones": [
+            "Modelo comparativo",
+            "balance cualitativo",
+            "caso."
+          ],
+          "limite_diagnostico": "No confundir respiración celular con ventilación pulmonar.",
+          "criterios_compatibles": [
+            "HC-03.C2",
+            "HC-03.C3"
+          ],
+          "prioridad_diagnostico_v1": "media",
+          "evidencia_prioridad": [
+            "D27",
+            "FUND"
+          ],
+          "procedencia": "descomposicion_diagnostica_proyecto"
+        },
+        {
+          "id": "BIO-04.04",
+          "etiqueta": "Flujo de energía y reciclaje de materia",
+          "operacion_diagnostica": "explicar el rol conjunto de fotosíntesis y respiración en ecosistemas.",
+          "conocimiento_oficial_origen": "D27:BIO-04",
+          "conceptos_relaciones": "explicar el rol conjunto de fotosíntesis y respiración en ecosistemas.",
+          "procedimientos": "explicar el rol conjunto de fotosíntesis y respiración en ecosistemas.",
+          "prerrequisitos": [
+            "Unidades .01 a .03",
+            "productor/consumidor."
+          ],
+          "representaciones": [
+            "Modelo de flujo",
+            "cadena/red",
+            "ciclos C/O."
+          ],
+          "limite_diagnostico": "La energía fluye; el carbono y el oxígeno se reciclan. No tratarlos como procesos idénticos.",
+          "criterios_compatibles": [
+            "HC-03.C1",
+            "HC-05.C1"
+          ],
+          "prioridad_diagnostico_v1": "alta",
+          "evidencia_prioridad": [
+            "D27",
+            "E54-Q12",
+            "FUND"
+          ],
+          "procedencia": "descomposicion_diagnostica_proyecto"
+        },
+        {
+          "id": "BIO-04.05",
+          "etiqueta": "Variables ambientales y fotosíntesis",
+          "operacion_diagnostica": "predecir y analizar efectos de cambios ambientales a partir de evidencia.",
+          "conocimiento_oficial_origen": "D27:BIO-04",
+          "conceptos_relaciones": "predecir y analizar efectos de cambios ambientales a partir de evidencia.",
+          "procedimientos": "predecir y analizar efectos de cambios ambientales a partir de evidencia.",
+          "prerrequisitos": [
+            "Fotosíntesis",
+            "variable independiente/dependiente."
+          ],
+          "representaciones": [
+            "Gráfico",
+            "tabla",
+            "diseño experimental."
+          ],
+          "limite_diagnostico": "No generalizar fuera del intervalo observado ni asumir causalidad con variables confundidas.",
+          "criterios_compatibles": [
+            "HC-01.C2",
+            "HC-02.C6",
+            "HC-03.C1",
+            "HC-04.C1"
+          ],
+          "prioridad_diagnostico_v1": "alta",
+          "evidencia_prioridad": [
+            "D27",
+            "FUND"
+          ],
+          "procedencia": "descomposicion_diagnostica_proyecto"
+        }
+      ]
+    },
+    {
+      "id": "FIS-01",
+      "eje": "Física",
+      "etiqueta": "Ondas",
+      "unidades": [
+        {
+          "id": "FIS-01.01",
+          "etiqueta": "Magnitudes de una onda",
+          "operacion_diagnostica": "identificar longitud de onda, frecuencia, período y amplitud.",
+          "conocimiento_oficial_origen": "D27:FIS-01",
+          "conceptos_relaciones": "identificar longitud de onda, frecuencia, período y amplitud.",
+          "procedimientos": "identificar longitud de onda, frecuencia, período y amplitud.",
+          "prerrequisitos": [
+            "Unidades",
+            "lectura de ejes",
+            "ciclo."
+          ],
+          "representaciones": [
+            "Perfil de onda",
+            "gráfico temporal/espacial",
+            "tabla."
+          ],
+          "limite_diagnostico": "No intercambiar período con frecuencia ni amplitud con longitud de onda.",
+          "criterios_compatibles": [
+            "HC-03.C1",
+            "HC-05.C1"
+          ],
+          "prioridad_diagnostico_v1": "alta",
+          "evidencia_prioridad": [
+            "D27",
+            "E54-Q19",
+            "FUND"
+          ],
+          "procedencia": "descomposicion_diagnostica_proyecto"
+        },
+        {
+          "id": "FIS-01.02",
+          "etiqueta": "Relación onda-rapidez",
+          "operacion_diagnostica": "usar cualitativa o cuantitativamente rapidez, frecuencia, período y longitud de onda.",
+          "conocimiento_oficial_origen": "D27:FIS-01",
+          "conceptos_relaciones": "usar cualitativa o cuantitativamente rapidez, frecuencia, período y longitud de onda.",
+          "procedimientos": "usar cualitativa o cuantitativamente rapidez, frecuencia, período y longitud de onda.",
+          "prerrequisitos": [
+            "Proporcionalidad",
+            "despeje básico."
+          ],
+          "representaciones": [
+            "Ecuación",
+            "tabla",
+            "gráfico."
+          ],
+          "limite_diagnostico": "No asumir que la frecuencia cambia automáticamente al pasar de medio.",
+          "criterios_compatibles": [
+            "HC-03.C1"
+          ],
+          "prioridad_diagnostico_v1": "alta",
+          "evidencia_prioridad": [
+            "D27",
+            "E54-Q19",
+            "FUND"
+          ],
+          "procedencia": "descomposicion_diagnostica_proyecto"
+        },
+        {
+          "id": "FIS-01.03",
+          "etiqueta": "Interacción y propagación de la luz",
+          "operacion_diagnostica": "distinguir absorción, reflexión, refracción y propagación rectilínea.",
+          "conocimiento_oficial_origen": "D27:FIS-01",
+          "conceptos_relaciones": "distinguir absorción, reflexión, refracción y propagación rectilínea.",
+          "procedimientos": "distinguir absorción, reflexión, refracción y propagación rectilínea.",
+          "prerrequisitos": [
+            "Rayo",
+            "medio",
+            "interfaz."
+          ],
+          "representaciones": [
+            "Diagrama de rayos",
+            "situación cotidiana",
+            "montaje."
+          ],
+          "limite_diagnostico": "No atribuir todo cambio de dirección al mismo fenómeno.",
+          "criterios_compatibles": [
+            "HC-03.C2",
+            "HC-05.C1"
+          ],
+          "prioridad_diagnostico_v1": "alta",
+          "evidencia_prioridad": [
+            "D27",
+            "E54-Q20",
+            "E54-Q33"
+          ],
+          "procedencia": "descomposicion_diagnostica_proyecto"
+        },
+        {
+          "id": "FIS-01.04",
+          "etiqueta": "Doppler, interferencia y difracción",
+          "operacion_diagnostica": "reconocer sus rasgos cualitativos en ondas electromagnéticas.",
+          "conocimiento_oficial_origen": "D27:FIS-01",
+          "conceptos_relaciones": "reconocer sus rasgos cualitativos en ondas electromagnéticas.",
+          "procedimientos": "reconocer sus rasgos cualitativos en ondas electromagnéticas.",
+          "prerrequisitos": [
+            "Frecuencia",
+            "superposición",
+            "obstáculo/abertura."
+          ],
+          "representaciones": [
+            "Patrón",
+            "esquema",
+            "situación tecnológica."
+          ],
+          "limite_diagnostico": "No exigir formalismo matemático no indicado por el temario.",
+          "criterios_compatibles": [
+            "HC-03.C2",
+            "HC-03.C3"
+          ],
+          "prioridad_diagnostico_v1": "media",
+          "evidencia_prioridad": [
+            "D27"
+          ],
+          "procedencia": "descomposicion_diagnostica_proyecto"
+        },
+        {
+          "id": "FIS-01.05",
+          "etiqueta": "Espectro electromagnético",
+          "operacion_diagnostica": "ordenar regiones por frecuencia y longitud de onda y vincular usos.",
+          "conocimiento_oficial_origen": "D27:FIS-01",
+          "conceptos_relaciones": "ordenar regiones por frecuencia y longitud de onda y vincular usos.",
+          "procedimientos": "ordenar regiones por frecuencia y longitud de onda y vincular usos.",
+          "prerrequisitos": [
+            "Relación inversa frecuencia-longitud."
+          ],
+          "representaciones": [
+            "Escala",
+            "tabla",
+            "caso tecnológico."
+          ],
+          "limite_diagnostico": "Energía alta no implica automáticamente mayor penetración en cualquier medio.",
+          "criterios_compatibles": [
+            "HC-03.C1",
+            "HC-04.C4"
+          ],
+          "prioridad_diagnostico_v1": "alta",
+          "evidencia_prioridad": [
+            "D27",
+            "E54-Q19",
+            "E54-Q34"
+          ],
+          "procedencia": "descomposicion_diagnostica_proyecto"
+        },
+        {
+          "id": "FIS-01.06",
+          "etiqueta": "Color y dispersión",
+          "operacion_diagnostica": "explicar formación de colores y separación espectral.",
+          "conocimiento_oficial_origen": "D27:FIS-01",
+          "conceptos_relaciones": "explicar formación de colores y separación espectral.",
+          "procedimientos": "explicar formación de colores y separación espectral.",
+          "prerrequisitos": [
+            "Luz visible",
+            "longitud de onda."
+          ],
+          "representaciones": [
+            "Prisma",
+            "espectro",
+            "mezcla de luz."
+          ],
+          "limite_diagnostico": "No confundir dispersión con reflexión o absorción selectiva.",
+          "criterios_compatibles": [
+            "HC-01.C2",
+            "HC-03.C3"
+          ],
+          "prioridad_diagnostico_v1": "alta",
+          "evidencia_prioridad": [
+            "D27",
+            "E54-Q20"
+          ],
+          "procedencia": "descomposicion_diagnostica_proyecto"
+        },
+        {
+          "id": "FIS-01.07",
+          "etiqueta": "Espejos",
+          "operacion_diagnostica": "predecir cualidades de imágenes en espejos planos, cóncavos y convexos.",
+          "conocimiento_oficial_origen": "D27:FIS-01",
+          "conceptos_relaciones": "predecir cualidades de imágenes en espejos planos, cóncavos y convexos.",
+          "procedimientos": "predecir cualidades de imágenes en espejos planos, cóncavos y convexos.",
+          "prerrequisitos": [
+            "Reflexión",
+            "trazado de rayos."
+          ],
+          "representaciones": [
+            "Diagrama de rayos",
+            "posición objeto-imagen."
+          ],
+          "limite_diagnostico": "No asumir que todo espejo produce el mismo tipo o tamaño de imagen.",
+          "criterios_compatibles": [
+            "HC-03.C1",
+            "HC-05.C1"
+          ],
+          "prioridad_diagnostico_v1": "media",
+          "evidencia_prioridad": [
+            "D27"
+          ],
+          "procedencia": "descomposicion_diagnostica_proyecto"
+        },
+        {
+          "id": "FIS-01.08",
+          "etiqueta": "Lentes",
+          "operacion_diagnostica": "predecir cualidades de imágenes en lentes convergentes y divergentes según posición.",
+          "conocimiento_oficial_origen": "D27:FIS-01",
+          "conceptos_relaciones": "predecir cualidades de imágenes en lentes convergentes y divergentes según posición.",
+          "procedimientos": "predecir cualidades de imágenes en lentes convergentes y divergentes según posición.",
+          "prerrequisitos": [
+            "Refracción",
+            "foco",
+            "trazado de rayos."
+          ],
+          "representaciones": [
+            "Diagrama",
+            "banco óptico",
+            "comparación geométrica."
+          ],
+          "limite_diagnostico": "“Dentro del foco” y “entre f y 2f” no son equivalentes.",
+          "criterios_compatibles": [
+            "HC-03.C1",
+            "HC-04.C3"
+          ],
+          "prioridad_diagnostico_v1": "alta",
+          "evidencia_prioridad": [
+            "D27",
+            "E54-Q21",
+            "E54-Q22",
+            "E54-Q36"
+          ],
+          "procedencia": "descomposicion_diagnostica_proyecto"
+        },
+        {
+          "id": "FIS-01.09",
+          "etiqueta": "Dispositivos de ondas EM",
+          "operacion_diagnostica": "inferir el principio relevante en radar, prismáticos, comunicaciones, láser, telescopios, fibra óptica u otros listados.",
+          "conocimiento_oficial_origen": "D27:FIS-01",
+          "conceptos_relaciones": "inferir el principio relevante en radar, prismáticos, comunicaciones, láser, telescopios, fibra óptica u otros listados.",
+          "procedimientos": "inferir el principio relevante en radar, prismáticos, comunicaciones, láser, telescopios, fibra óptica u otros listados.",
+          "prerrequisitos": [
+            "Unidades .01 a .08."
+          ],
+          "representaciones": [
+            "Caso tecnológico",
+            "diagrama funcional",
+            "comparación."
+          ],
+          "limite_diagnostico": "No exigir ingeniería interna; evaluar el principio físico pertinente.",
+          "criterios_compatibles": [
+            "HC-04.C4",
+            "HC-05.C1"
+          ],
+          "prioridad_diagnostico_v1": "media",
+          "evidencia_prioridad": [
+            "D27"
+          ],
+          "procedencia": "descomposicion_diagnostica_proyecto"
+        }
+      ]
+    },
+    {
+      "id": "FIS-02",
+      "eje": "Física",
+      "etiqueta": "Mecánica",
+      "unidades": [
+        {
+          "id": "FIS-02.01",
+          "etiqueta": "Descripción del movimiento",
+          "operacion_diagnostica": "distinguir sistema de referencia, trayectoria, posición, distancia, desplazamiento, rapidez, velocidad y aceleración.",
+          "conocimiento_oficial_origen": "D27:FIS-02",
+          "conceptos_relaciones": "distinguir sistema de referencia, trayectoria, posición, distancia, desplazamiento, rapidez, velocidad y aceleración.",
+          "procedimientos": "distinguir sistema de referencia, trayectoria, posición, distancia, desplazamiento, rapidez, velocidad y aceleración.",
+          "prerrequisitos": [
+            "Magnitud",
+            "dirección",
+            "intervalo de tiempo."
+          ],
+          "representaciones": [
+            "Trayectoria",
+            "mapa",
+            "tabla",
+            "gráfico."
+          ],
+          "limite_diagnostico": "Dirección y sentido no son sinónimos; distancia no equivale a desplazamiento.",
+          "criterios_compatibles": [
+            "HC-03.C1",
+            "HC-05.C1"
+          ],
+          "prioridad_diagnostico_v1": "alta",
+          "evidencia_prioridad": [
+            "D27",
+            "E54-Q24",
+            "FUND"
+          ],
+          "procedencia": "descomposicion_diagnostica_proyecto"
+        },
+        {
+          "id": "FIS-02.02",
+          "etiqueta": "Relatividad de Galileo",
+          "operacion_diagnostica": "comparar medidas de MRU desde distintos sistemas de referencia.",
+          "conocimiento_oficial_origen": "D27:FIS-02",
+          "conceptos_relaciones": "comparar medidas de MRU desde distintos sistemas de referencia.",
+          "procedimientos": "comparar medidas de MRU desde distintos sistemas de referencia.",
+          "prerrequisitos": [
+            "MRU",
+            "suma/resta de velocidades."
+          ],
+          "representaciones": [
+            "Escena móvil",
+            "tabla de observadores",
+            "diagrama."
+          ],
+          "limite_diagnostico": "No extrapolar a relatividad especial.",
+          "criterios_compatibles": [
+            "HC-03.C1",
+            "HC-03.C3"
+          ],
+          "prioridad_diagnostico_v1": "media",
+          "evidencia_prioridad": [
+            "D27"
+          ],
+          "procedencia": "descomposicion_diagnostica_proyecto"
+        },
+        {
+          "id": "FIS-02.03",
+          "etiqueta": "MRU",
+          "operacion_diagnostica": "usar ecuación de itinerario y gráficos de posición/velocidad en movimiento uniforme.",
+          "conocimiento_oficial_origen": "D27:FIS-02",
+          "conceptos_relaciones": "usar ecuación de itinerario y gráficos de posición/velocidad en movimiento uniforme.",
+          "procedimientos": "usar ecuación de itinerario y gráficos de posición/velocidad en movimiento uniforme.",
+          "prerrequisitos": [
+            "Álgebra",
+            "pendiente",
+            "unidades."
+          ],
+          "representaciones": [
+            "Gráficos x-t/v-t",
+            "tabla",
+            "ecuación."
+          ],
+          "limite_diagnostico": "Una línea ascendente en cualquier gráfico no significa aceleración.",
+          "criterios_compatibles": [
+            "HC-03.C1",
+            "HC-05.C1"
+          ],
+          "prioridad_diagnostico_v1": "alta",
+          "evidencia_prioridad": [
+            "D27",
+            "FUND"
+          ],
+          "procedencia": "descomposicion_diagnostica_proyecto"
+        },
+        {
+          "id": "FIS-02.04",
+          "etiqueta": "MRUA",
+          "operacion_diagnostica": "usar ecuaciones y gráficos para movimiento con aceleración constante.",
+          "conocimiento_oficial_origen": "D27:FIS-02",
+          "conceptos_relaciones": "usar ecuaciones y gráficos para movimiento con aceleración constante.",
+          "procedimientos": "usar ecuaciones y gráficos para movimiento con aceleración constante.",
+          "prerrequisitos": [
+            "MRU",
+            "cuadrado y pendiente/área."
+          ],
+          "representaciones": [
+            "Gráficos x-t/v-t/a-t",
+            "tabla",
+            "ecuación."
+          ],
+          "limite_diagnostico": "No aplicar ecuaciones de aceleración constante a cualquier trayectoria.",
+          "criterios_compatibles": [
+            "HC-03.C1",
+            "HC-05.C1"
+          ],
+          "prioridad_diagnostico_v1": "alta",
+          "evidencia_prioridad": [
+            "D27",
+            "FUND"
+          ],
+          "procedencia": "descomposicion_diagnostica_proyecto"
+        },
+        {
+          "id": "FIS-02.05",
+          "etiqueta": "Leyes de Newton y DCL",
+          "operacion_diagnostica": "relacionar fuerza neta con movimiento constante o acelerado.",
+          "conocimiento_oficial_origen": "D27:FIS-02",
+          "conceptos_relaciones": "relacionar fuerza neta con movimiento constante o acelerado.",
+          "procedimientos": "relacionar fuerza neta con movimiento constante o acelerado.",
+          "prerrequisitos": [
+            "Vectores",
+            "masa",
+            "aceleración."
+          ],
+          "representaciones": [
+            "Diagrama de cuerpo libre",
+            "caso",
+            "ecuación."
+          ],
+          "limite_diagnostico": "No confundir pares acción-reacción con fuerzas que se cancelan sobre el mismo cuerpo.",
+          "criterios_compatibles": [
+            "HC-02.C2",
+            "HC-03.C3"
+          ],
+          "prioridad_diagnostico_v1": "alta",
+          "evidencia_prioridad": [
+            "D27",
+            "E54-Q23",
+            "E54-Q24"
+          ],
+          "procedencia": "descomposicion_diagnostica_proyecto"
+        },
+        {
+          "id": "FIS-02.06",
+          "etiqueta": "Fuerzas específicas",
+          "operacion_diagnostica": "reconocer peso, fuerza elástica, tensión y normal y determinar su papel.",
+          "conocimiento_oficial_origen": "D27:FIS-02",
+          "conceptos_relaciones": "reconocer peso, fuerza elástica, tensión y normal y determinar su papel.",
+          "procedimientos": "reconocer peso, fuerza elástica, tensión y normal y determinar su papel.",
+          "prerrequisitos": [
+            "DCL",
+            "interacción."
+          ],
+          "representaciones": [
+            "Montaje",
+            "cuerpo en superficie",
+            "resorte."
+          ],
+          "limite_diagnostico": "La fuerza normal no es siempre igual al peso.",
+          "criterios_compatibles": [
+            "HC-03.C1",
+            "HC-05.C1"
+          ],
+          "prioridad_diagnostico_v1": "alta",
+          "evidencia_prioridad": [
+            "D27",
+            "E54-Q25",
+            "E54-Q26"
+          ],
+          "procedencia": "descomposicion_diagnostica_proyecto"
+        },
+        {
+          "id": "FIS-02.07",
+          "etiqueta": "Roce",
+          "operacion_diagnostica": "diferenciar roce estático y cinético y razonar cualitativamente sobre roce con el aire.",
+          "conocimiento_oficial_origen": "D27:FIS-02",
+          "conceptos_relaciones": "diferenciar roce estático y cinético y razonar cualitativamente sobre roce con el aire.",
+          "procedimientos": "diferenciar roce estático y cinético y razonar cualitativamente sobre roce con el aire.",
+          "prerrequisitos": [
+            "Fuerza",
+            "contacto",
+            "movimiento relativo."
+          ],
+          "representaciones": [
+            "Gráfico",
+            "DCL",
+            "comparación de superficies."
+          ],
+          "limite_diagnostico": "No asumir que el roce siempre iguala una fuerza aplicada ni que siempre “se opone al movimiento” sin especificar tendencia relativa.",
+          "criterios_compatibles": [
+            "HC-01.C2",
+            "HC-03.C3"
+          ],
+          "prioridad_diagnostico_v1": "media",
+          "evidencia_prioridad": [
+            "D27"
+          ],
+          "procedencia": "descomposicion_diagnostica_proyecto"
+        },
+        {
+          "id": "FIS-02.08",
+          "etiqueta": "Modelos del sistema solar",
+          "operacion_diagnostica": "diferenciar modelos geocéntricos y heliocéntrico y relacionar aportes de Aristóteles, Ptolomeo, Copérnico, Galileo y Kepler.",
+          "conocimiento_oficial_origen": "D27:FIS-02",
+          "conceptos_relaciones": "diferenciar modelos geocéntricos y heliocéntrico y relacionar aportes de Aristóteles, Ptolomeo, Copérnico, Galileo y Kepler.",
+          "procedimientos": "diferenciar modelos geocéntricos y heliocéntrico y relacionar aportes de Aristóteles, Ptolomeo, Copérnico, Galileo y Kepler.",
+          "prerrequisitos": [
+            "Observación astronómica básica",
+            "modelo científico."
+          ],
+          "representaciones": [
+            "Comparación de modelos",
+            "evidencia histórica",
+            "órbitas."
+          ],
+          "limite_diagnostico": "No evaluar memorización biográfica aislada de la evidencia/modelo.",
+          "criterios_compatibles": [
+            "HC-02.C1",
+            "HC-04.C3"
+          ],
+          "prioridad_diagnostico_v1": "diferida",
+          "evidencia_prioridad": [
+            "D27"
+          ],
+          "procedencia": "descomposicion_diagnostica_proyecto"
+        },
+        {
+          "id": "FIS-02.09",
+          "etiqueta": "Origen y evolución del universo",
+          "operacion_diagnostica": "comparar Big Bang, Big Crunch u otros modelos del temario mediante las evidencias que los sustentan.",
+          "conocimiento_oficial_origen": "D27:FIS-02",
+          "conceptos_relaciones": "comparar Big Bang, Big Crunch u otros modelos del temario mediante las evidencias que los sustentan.",
+          "procedimientos": "comparar Big Bang, Big Crunch u otros modelos del temario mediante las evidencias que los sustentan.",
+          "prerrequisitos": [
+            "Modelo",
+            "expansión",
+            "evidencia observacional."
+          ],
+          "representaciones": [
+            "Datos astronómicos",
+            "texto",
+            "comparación de modelos."
+          ],
+          "limite_diagnostico": "No presentar hipótesis especulativas y modelos respaldados como equivalentes.",
+          "criterios_compatibles": [
+            "HC-02.C1",
+            "HC-04.C1"
+          ],
+          "prioridad_diagnostico_v1": "diferida",
+          "evidencia_prioridad": [
+            "D27",
+            "E54-Q35"
+          ],
+          "procedencia": "descomposicion_diagnostica_proyecto"
+        }
+      ]
+    },
+    {
+      "id": "FIS-03",
+      "eje": "Física",
+      "etiqueta": "Energía–Tierra",
+      "unidades": [
+        {
+          "id": "FIS-03.01",
+          "etiqueta": "Deriva continental",
+          "operacion_diagnostica": "relacionar la teoría con evidencias geológicas, paleontológicas y geométricas.",
+          "conocimiento_oficial_origen": "D27:FIS-03",
+          "conceptos_relaciones": "relacionar la teoría con evidencias geológicas, paleontológicas y geométricas.",
+          "procedimientos": "relacionar la teoría con evidencias geológicas, paleontológicas y geométricas.",
+          "prerrequisitos": [
+            "Continente",
+            "fósil",
+            "correspondencia espacial."
+          ],
+          "representaciones": [
+            "Mapas",
+            "distribución fósil/rocas",
+            "reconstrucción."
+          ],
+          "limite_diagnostico": "Coincidencia visual aislada no basta como evidencia completa.",
+          "criterios_compatibles": [
+            "HC-02.C1",
+            "HC-03.C1"
+          ],
+          "prioridad_diagnostico_v1": "alta",
+          "evidencia_prioridad": [
+            "D27",
+            "E54-Q29"
+          ],
+          "procedencia": "descomposicion_diagnostica_proyecto"
+        },
+        {
+          "id": "FIS-03.02",
+          "etiqueta": "Tectónica de placas",
+          "operacion_diagnostica": "interpretar bordes y movimientos para explicar sismos, volcanismo y relieve.",
+          "conocimiento_oficial_origen": "D27:FIS-03",
+          "conceptos_relaciones": "interpretar bordes y movimientos para explicar sismos, volcanismo y relieve.",
+          "procedimientos": "interpretar bordes y movimientos para explicar sismos, volcanismo y relieve.",
+          "prerrequisitos": [
+            "Placa",
+            "vector",
+            "límite."
+          ],
+          "representaciones": [
+            "Mapa con vectores",
+            "corte geológico",
+            "distribución de eventos."
+          ],
+          "limite_diagnostico": "No inferir el borde usando el movimiento global de una placa si los vectores locales contradicen esa lectura.",
+          "criterios_compatibles": [
+            "HC-03.C1",
+            "HC-03.C3"
+          ],
+          "prioridad_diagnostico_v1": "alta",
+          "evidencia_prioridad": [
+            "D27",
+            "E54-Q27",
+            "E54-Q28"
+          ],
+          "procedencia": "descomposicion_diagnostica_proyecto"
+        },
+        {
+          "id": "FIS-03.03",
+          "etiqueta": "Interior terrestre y tectónica",
+          "operacion_diagnostica": "relacionar capas/modelo físico de la geosfera con movimiento de placas y liberación de energía.",
+          "conocimiento_oficial_origen": "D27:FIS-03",
+          "conceptos_relaciones": "relacionar capas/modelo físico de la geosfera con movimiento de placas y liberación de energía.",
+          "procedimientos": "relacionar capas/modelo físico de la geosfera con movimiento de placas y liberación de energía.",
+          "prerrequisitos": [
+            "Capas terrestres",
+            "transferencia de energía."
+          ],
+          "representaciones": [
+            "Corte de Tierra",
+            "modelo",
+            "datos sísmicos."
+          ],
+          "limite_diagnostico": "No exigir composición geoquímica detallada fuera de la relación física solicitada.",
+          "criterios_compatibles": [
+            "HC-01.C2",
+            "HC-04.C3"
+          ],
+          "prioridad_diagnostico_v1": "media",
+          "evidencia_prioridad": [
+            "D27"
+          ],
+          "procedencia": "descomposicion_diagnostica_proyecto"
+        }
+      ]
+    },
+    {
+      "id": "FIS-04",
+      "eje": "Física",
+      "etiqueta": "Electricidad",
+      "unidades": [
+        {
+          "id": "FIS-04.01",
+          "etiqueta": "Corriente eléctrica",
+          "operacion_diagnostica": "interpretar corriente como flujo de carga en un circuito continuo.",
+          "conocimiento_oficial_origen": "D27:FIS-04",
+          "conceptos_relaciones": "interpretar corriente como flujo de carga en un circuito continuo.",
+          "procedimientos": "interpretar corriente como flujo de carga en un circuito continuo.",
+          "prerrequisitos": [
+            "Carga",
+            "tiempo",
+            "circuito cerrado."
+          ],
+          "representaciones": [
+            "Esquema",
+            "analogía controlada",
+            "medición."
+          ],
+          "limite_diagnostico": "No confundir dirección convencional con movimiento de electrones.",
+          "criterios_compatibles": [
+            "HC-02.C2",
+            "HC-03.C2"
+          ],
+          "prioridad_diagnostico_v1": "alta",
+          "evidencia_prioridad": [
+            "D27",
+            "E54-Q30",
+            "FUND"
+          ],
+          "procedencia": "descomposicion_diagnostica_proyecto"
+        },
+        {
+          "id": "FIS-04.02",
+          "etiqueta": "Ley de Ohm y asociación de resistores",
+          "operacion_diagnostica": "resolver y comparar circuitos serie, paralelo y mixtos.",
+          "conocimiento_oficial_origen": "D27:FIS-04",
+          "conceptos_relaciones": "resolver y comparar circuitos serie, paralelo y mixtos.",
+          "procedimientos": "resolver y comparar circuitos serie, paralelo y mixtos.",
+          "prerrequisitos": [
+            "Proporcionalidad",
+            "voltaje",
+            "corriente",
+            "resistencia."
+          ],
+          "representaciones": [
+            "Diagrama",
+            "tabla de mediciones",
+            "ecuación."
+          ],
+          "limite_diagnostico": "No usar una regla de serie en paralelo ni detener el razonamiento antes de la variable solicitada.",
+          "criterios_compatibles": [
+            "HC-03.C1",
+            "HC-05.C1"
+          ],
+          "prioridad_diagnostico_v1": "alta",
+          "evidencia_prioridad": [
+            "D27",
+            "E54-Q31"
+          ],
+          "procedencia": "descomposicion_diagnostica_proyecto"
+        },
+        {
+          "id": "FIS-04.03",
+          "etiqueta": "Potencia y energía eléctrica",
+          "operacion_diagnostica": "relacionar potencia, voltaje, corriente, resistencia, tiempo y energía.",
+          "conocimiento_oficial_origen": "D27:FIS-04",
+          "conceptos_relaciones": "relacionar potencia, voltaje, corriente, resistencia, tiempo y energía.",
+          "procedimientos": "relacionar potencia, voltaje, corriente, resistencia, tiempo y energía.",
+          "prerrequisitos": [
+            "Ley de Ohm",
+            "unidades."
+          ],
+          "representaciones": [
+            "Etiqueta de artefacto",
+            "circuito",
+            "tabla",
+            "cálculo."
+          ],
+          "limite_diagnostico": "Potencia y energía no son equivalentes; incorporar tiempo cuando corresponda.",
+          "criterios_compatibles": [
+            "HC-03.C1"
+          ],
+          "prioridad_diagnostico_v1": "alta",
+          "evidencia_prioridad": [
+            "D27",
+            "E54-Q31",
+            "FUND"
+          ],
+          "procedencia": "descomposicion_diagnostica_proyecto"
+        },
+        {
+          "id": "FIS-04.04",
+          "etiqueta": "Consumo y eficiencia",
+          "operacion_diagnostica": "comparar dispositivos usando energía consumida, potencia y desempeño útil.",
+          "conocimiento_oficial_origen": "D27:FIS-04",
+          "conceptos_relaciones": "comparar dispositivos usando energía consumida, potencia y desempeño útil.",
+          "procedimientos": "comparar dispositivos usando energía consumida, potencia y desempeño útil.",
+          "prerrequisitos": [
+            "Potencia/energía",
+            "porcentaje."
+          ],
+          "representaciones": [
+            "Etiqueta energética",
+            "boleta",
+            "tabla comparativa."
+          ],
+          "limite_diagnostico": "Menor potencia instantánea no garantiza menor consumo total sin considerar uso.",
+          "criterios_compatibles": [
+            "HC-03.C1",
+            "HC-04.C4",
+            "HC-05.C1"
+          ],
+          "prioridad_diagnostico_v1": "media",
+          "evidencia_prioridad": [
+            "D27"
+          ],
+          "procedencia": "descomposicion_diagnostica_proyecto"
+        },
+        {
+          "id": "FIS-04.05",
+          "etiqueta": "Instalación domiciliaria",
+          "operacion_diagnostica": "reconocer componentes y funciones de seguridad/distribución.",
+          "conocimiento_oficial_origen": "D27:FIS-04",
+          "conceptos_relaciones": "reconocer componentes y funciones de seguridad/distribución.",
+          "procedimientos": "reconocer componentes y funciones de seguridad/distribución.",
+          "prerrequisitos": [
+            "Circuito",
+            "corriente",
+            "riesgo eléctrico."
+          ],
+          "representaciones": [
+            "Plano simple",
+            "esquema de tablero",
+            "caso."
+          ],
+          "limite_diagnostico": "No convertir el diagnóstico en instrucciones de intervención eléctrica práctica.",
+          "criterios_compatibles": [
+            "HC-02.C5",
+            "HC-04.C1"
+          ],
+          "prioridad_diagnostico_v1": "media",
+          "evidencia_prioridad": [
+            "D27"
+          ],
+          "procedencia": "descomposicion_diagnostica_proyecto"
+        }
+      ]
+    },
+    {
+      "id": "QUI-01",
+      "eje": "Química",
+      "etiqueta": "Estructura atómica",
+      "unidades": [
+        {
+          "id": "QUI-01.01",
+          "etiqueta": "Clasificación de la materia",
+          "operacion_diagnostica": "distinguir elementos, compuestos, mezclas homogéneas y heterogéneas por composición.",
+          "conocimiento_oficial_origen": "D27:QUI-01",
+          "conceptos_relaciones": "distinguir elementos, compuestos, mezclas homogéneas y heterogéneas por composición.",
+          "procedimientos": "distinguir elementos, compuestos, mezclas homogéneas y heterogéneas por composición.",
+          "prerrequisitos": [
+            "Sustancia",
+            "componente",
+            "fase observable."
+          ],
+          "representaciones": [
+            "Caso",
+            "diagrama particulado",
+            "tabla de propiedades."
+          ],
+          "limite_diagnostico": "“Puro”, “transparente” o “insoluble” no son criterios equivalentes.",
+          "criterios_compatibles": [
+            "HC-03.C2",
+            "HC-05.C1"
+          ],
+          "prioridad_diagnostico_v1": "alta",
+          "evidencia_prioridad": [
+            "D27",
+            "E54-Q37",
+            "FUND"
+          ],
+          "procedencia": "descomposicion_diagnostica_proyecto"
+        },
+        {
+          "id": "QUI-01.02",
+          "etiqueta": "Separación de mezclas",
+          "operacion_diagnostica": "seleccionar decantación, filtración, tamizado o destilación según propiedad y componentes.",
+          "conocimiento_oficial_origen": "D27:QUI-01",
+          "conceptos_relaciones": "seleccionar decantación, filtración, tamizado o destilación según propiedad y componentes.",
+          "procedimientos": "seleccionar decantación, filtración, tamizado o destilación según propiedad y componentes.",
+          "prerrequisitos": [
+            "Mezcla",
+            "tamaño de partícula",
+            "densidad",
+            "ebullición."
+          ],
+          "representaciones": [
+            "Montaje",
+            "secuencia",
+            "caso aplicado."
+          ],
+          "limite_diagnostico": "No incluir técnicas no listadas como requisito ni aplicar una misma regla a mezclas diferentes.",
+          "criterios_compatibles": [
+            "HC-02.C3",
+            "HC-02.C5"
+          ],
+          "prioridad_diagnostico_v1": "alta",
+          "evidencia_prioridad": [
+            "D27",
+            "E54-Q38",
+            "E54-Q48"
+          ],
+          "procedencia": "descomposicion_diagnostica_proyecto"
+        },
+        {
+          "id": "QUI-01.03",
+          "etiqueta": "Propiedades físicas",
+          "operacion_diagnostica": "interpretar temperatura de fusión/ebullición, masa, volumen y densidad para comparar sustancias.",
+          "conocimiento_oficial_origen": "D27:QUI-01",
+          "conceptos_relaciones": "interpretar temperatura de fusión/ebullición, masa, volumen y densidad para comparar sustancias.",
+          "procedimientos": "interpretar temperatura de fusión/ebullición, masa, volumen y densidad para comparar sustancias.",
+          "prerrequisitos": [
+            "Unidades",
+            "razón masa/volumen",
+            "números con signo."
+          ],
+          "representaciones": [
+            "Tabla",
+            "gráfico de cambio de estado",
+            "medición."
+          ],
+          "limite_diagnostico": "No inferir identidad absoluta desde una sola propiedad ni agregar cambios de estado como contenido independiente.",
+          "criterios_compatibles": [
+            "HC-03.C1",
+            "HC-04.C1"
+          ],
+          "prioridad_diagnostico_v1": "alta",
+          "evidencia_prioridad": [
+            "D27",
+            "E54-Q49"
+          ],
+          "procedencia": "descomposicion_diagnostica_proyecto"
+        },
+        {
+          "id": "QUI-01.04",
+          "etiqueta": "Modelos atómicos",
+          "operacion_diagnostica": "relacionar Dalton, Thomson, Rutherford y Bohr con evidencia, estructura propuesta y limitaciones.",
+          "conocimiento_oficial_origen": "D27:QUI-01",
+          "conceptos_relaciones": "relacionar Dalton, Thomson, Rutherford y Bohr con evidencia, estructura propuesta y limitaciones.",
+          "procedimientos": "relacionar Dalton, Thomson, Rutherford y Bohr con evidencia, estructura propuesta y limitaciones.",
+          "prerrequisitos": [
+            "Modelo científico",
+            "carga y materia."
+          ],
+          "representaciones": [
+            "Línea histórica",
+            "experimento",
+            "comparación de modelos."
+          ],
+          "limite_diagnostico": "No tratar un modelo como fotografía literal del átomo ni atribuirle características de otro.",
+          "criterios_compatibles": [
+            "HC-02.C1",
+            "HC-04.C3"
+          ],
+          "prioridad_diagnostico_v1": "alta",
+          "evidencia_prioridad": [
+            "D27",
+            "E54-Q39",
+            "E54-Q51"
+          ],
+          "procedencia": "descomposicion_diagnostica_proyecto"
+        },
+        {
+          "id": "QUI-01.05",
+          "etiqueta": "Partículas y números atómicos",
+          "operacion_diagnostica": "relacionar electrón, protón, neutrón, Z y A en representaciones atómicas.",
+          "conocimiento_oficial_origen": "D27:QUI-01",
+          "conceptos_relaciones": "relacionar electrón, protón, neutrón, Z y A en representaciones atómicas.",
+          "procedimientos": "relacionar electrón, protón, neutrón, Z y A en representaciones atómicas.",
+          "prerrequisitos": [
+            "Suma/resta",
+            "carga eléctrica."
+          ],
+          "representaciones": [
+            "Símbolo nuclear",
+            "modelo de Bohr",
+            "tabla."
+          ],
+          "limite_diagnostico": "Iones e isótopos pueden usarse como contexto solo si la información necesaria está dada; el temario no los enumera como unidad separada.",
+          "criterios_compatibles": [
+            "HC-03.C1",
+            "HC-05.C1"
+          ],
+          "prioridad_diagnostico_v1": "alta",
+          "evidencia_prioridad": [
+            "D27",
+            "E54-Q51",
+            "E54-Q52",
+            "FUND"
+          ],
+          "procedencia": "descomposicion_diagnostica_proyecto"
+        }
+      ]
+    },
+    {
+      "id": "QUI-02",
+      "eje": "Química",
+      "etiqueta": "Química orgánica",
+      "unidades": [
+        {
+          "id": "QUI-02.01",
+          "etiqueta": "Tetravalencia e hibridación del carbono",
+          "operacion_diagnostica": "usar capacidad de enlace e hibridación para interpretar estructura.",
+          "conocimiento_oficial_origen": "D27:QUI-02",
+          "conceptos_relaciones": "usar capacidad de enlace e hibridación para interpretar estructura.",
+          "procedimientos": "usar capacidad de enlace e hibridación para interpretar estructura.",
+          "prerrequisitos": [
+            "Electrones de valencia",
+            "enlace covalente."
+          ],
+          "representaciones": [
+            "Fórmula",
+            "geometría",
+            "modelo de orbital simplificado."
+          ],
+          "limite_diagnostico": "No exigir teoría de orbitales moleculares avanzada.",
+          "criterios_compatibles": [
+            "HC-03.C2",
+            "HC-05.C1"
+          ],
+          "prioridad_diagnostico_v1": "media",
+          "evidencia_prioridad": [
+            "D27",
+            "FUND"
+          ],
+          "procedencia": "descomposicion_diagnostica_proyecto"
+        },
+        {
+          "id": "QUI-02.02",
+          "etiqueta": "Enlaces carbono-carbono",
+          "operacion_diagnostica": "relacionar enlace simple, doble o triple con energía y longitud de enlace.",
+          "conocimiento_oficial_origen": "D27:QUI-02",
+          "conceptos_relaciones": "relacionar enlace simple, doble o triple con energía y longitud de enlace.",
+          "procedimientos": "relacionar enlace simple, doble o triple con energía y longitud de enlace.",
+          "prerrequisitos": [
+            "Orden de enlace",
+            "comparación."
+          ],
+          "representaciones": [
+            "Tabla",
+            "estructura",
+            "gráfico."
+          ],
+          "limite_diagnostico": "Mayor longitud y mayor energía no varían en el mismo sentido.",
+          "criterios_compatibles": [
+            "HC-03.C1",
+            "HC-03.C3"
+          ],
+          "prioridad_diagnostico_v1": "media",
+          "evidencia_prioridad": [
+            "D27"
+          ],
+          "procedencia": "descomposicion_diagnostica_proyecto"
+        },
+        {
+          "id": "QUI-02.03",
+          "etiqueta": "Geometría y ángulos",
+          "operacion_diagnostica": "vincular hibridación/enlaces con organización espacial y ángulo general.",
+          "conocimiento_oficial_origen": "D27:QUI-02",
+          "conceptos_relaciones": "vincular hibridación/enlaces con organización espacial y ángulo general.",
+          "procedimientos": "vincular hibridación/enlaces con organización espacial y ángulo general.",
+          "prerrequisitos": [
+            "Unidad .01",
+            "representación espacial."
+          ],
+          "representaciones": [
+            "Modelo de esferas y varillas",
+            "fórmula",
+            "esquema."
+          ],
+          "limite_diagnostico": "No exigir excepciones o geometrías no derivables del alcance indicado.",
+          "criterios_compatibles": [
+            "HC-03.C2",
+            "HC-05.C1"
+          ],
+          "prioridad_diagnostico_v1": "media",
+          "evidencia_prioridad": [
+            "D27"
+          ],
+          "procedencia": "descomposicion_diagnostica_proyecto"
+        },
+        {
+          "id": "QUI-02.04",
+          "etiqueta": "Representaciones orgánicas",
+          "operacion_diagnostica": "traducir entre fórmulas molecular, empírica, desarrollada, condensada, semidesarrollada, lineal/topológica y modelos 3D.",
+          "conocimiento_oficial_origen": "D27:QUI-02",
+          "conceptos_relaciones": "traducir entre fórmulas molecular, empírica, desarrollada, condensada, semidesarrollada, lineal/topológica y modelos 3D.",
+          "procedimientos": "traducir entre fórmulas molecular, empírica, desarrollada, condensada, semidesarrollada, lineal/topológica y modelos 3D.",
+          "prerrequisitos": [
+            "Símbolos químicos",
+            "valencia."
+          ],
+          "representaciones": [
+            "Pares de representaciones",
+            "modelo",
+            "conteo."
+          ],
+          "limite_diagnostico": "En fórmula topológica deben considerarse carbonos e hidrógenos implícitos.",
+          "criterios_compatibles": [
+            "HC-03.C1",
+            "HC-05.C1"
+          ],
+          "prioridad_diagnostico_v1": "alta",
+          "evidencia_prioridad": [
+            "D27",
+            "E54-Q53",
+            "E54-Q54"
+          ],
+          "procedencia": "descomposicion_diagnostica_proyecto"
+        },
+        {
+          "id": "QUI-02.05",
+          "etiqueta": "Hidrocarburos",
+          "operacion_diagnostica": "clasificar alifáticos, cíclicos y aromáticos a partir de estructura.",
+          "conocimiento_oficial_origen": "D27:QUI-02",
+          "conceptos_relaciones": "clasificar alifáticos, cíclicos y aromáticos a partir de estructura.",
+          "procedimientos": "clasificar alifáticos, cíclicos y aromáticos a partir de estructura.",
+          "prerrequisitos": [
+            "Carbono",
+            "enlace",
+            "cadena/anillo."
+          ],
+          "representaciones": [
+            "Fórmula topológica",
+            "tabla",
+            "modelo."
+          ],
+          "limite_diagnostico": "No clasificar solo por cantidad de carbonos o apariencia del dibujo.",
+          "criterios_compatibles": [
+            "HC-03.C2"
+          ],
+          "prioridad_diagnostico_v1": "media",
+          "evidencia_prioridad": [
+            "D27"
+          ],
+          "procedencia": "descomposicion_diagnostica_proyecto"
+        },
+        {
+          "id": "QUI-02.06",
+          "etiqueta": "Grupos funcionales",
+          "operacion_diagnostica": "reconocer haluros, éteres, alcoholes, sulfuros, aminas, cetonas, aldehídos, ácidos carboxílicos, anhídridos, ésteres, amidas, fenoles y nitrilos.",
+          "conocimiento_oficial_origen": "D27:QUI-02",
+          "conceptos_relaciones": "reconocer haluros, éteres, alcoholes, sulfuros, aminas, cetonas, aldehídos, ácidos carboxílicos, anhídridos, ésteres, amidas, fenoles y nitrilos.",
+          "procedimientos": "reconocer haluros, éteres, alcoholes, sulfuros, aminas, cetonas, aldehídos, ácidos carboxílicos, anhídridos, ésteres, amidas, fenoles y nitrilos.",
+          "prerrequisitos": [
+            "Representaciones",
+            "heteroátomos",
+            "carbonilo."
+          ],
+          "representaciones": [
+            "Fórmula",
+            "resaltado estructural",
+            "tabla."
+          ],
+          "limite_diagnostico": "Un oxígeno aislado no identifica el grupo; se debe mapear su entorno de enlace.",
+          "criterios_compatibles": [
+            "HC-03.C1",
+            "HC-05.C1"
+          ],
+          "prioridad_diagnostico_v1": "alta",
+          "evidencia_prioridad": [
+            "D27",
+            "E54-Q40",
+            "E54-Q41"
+          ],
+          "procedencia": "descomposicion_diagnostica_proyecto"
+        },
+        {
+          "id": "QUI-02.07",
+          "etiqueta": "Formulación y nomenclatura",
+          "operacion_diagnostica": "relacionar nombre común o IUPAC con estructura y fórmula de los compuestos del alcance.",
+          "conocimiento_oficial_origen": "D27:QUI-02",
+          "conceptos_relaciones": "relacionar nombre común o IUPAC con estructura y fórmula de los compuestos del alcance.",
+          "procedimientos": "relacionar nombre común o IUPAC con estructura y fórmula de los compuestos del alcance.",
+          "prerrequisitos": [
+            "Hidrocarburos",
+            "grupos funcionales."
+          ],
+          "representaciones": [
+            "Nombre↔fórmula",
+            "tabla",
+            "estructura."
+          ],
+          "limite_diagnostico": "No ampliar la nomenclatura a familias no listadas ni usarla como único indicador de comprensión funcional.",
+          "criterios_compatibles": [
+            "HC-03.C2",
+            "HC-05.C1"
+          ],
+          "prioridad_diagnostico_v1": "media",
+          "evidencia_prioridad": [
+            "D27"
+          ],
+          "procedencia": "descomposicion_diagnostica_proyecto"
+        },
+        {
+          "id": "QUI-02.08",
+          "etiqueta": "Características y aplicaciones",
+          "operacion_diagnostica": "inferir propiedades o usos generales desde estructura y grupo funcional, usando evidencia aportada.",
+          "conocimiento_oficial_origen": "D27:QUI-02",
+          "conceptos_relaciones": "inferir propiedades o usos generales desde estructura y grupo funcional, usando evidencia aportada.",
+          "procedimientos": "inferir propiedades o usos generales desde estructura y grupo funcional, usando evidencia aportada.",
+          "prerrequisitos": [
+            "Unidades .05 a .07."
+          ],
+          "representaciones": [
+            "Caso",
+            "tabla de propiedades",
+            "aplicación tecnológica."
+          ],
+          "limite_diagnostico": "No derivar toxicidad, seguridad o uso clínico sin datos suficientes.",
+          "criterios_compatibles": [
+            "HC-02.C1",
+            "HC-04.C4"
+          ],
+          "prioridad_diagnostico_v1": "diferida",
+          "evidencia_prioridad": [
+            "D27",
+            "E54-Q40"
+          ],
+          "procedencia": "descomposicion_diagnostica_proyecto"
+        }
+      ]
+    },
+    {
+      "id": "QUI-03",
+      "eje": "Química",
+      "etiqueta": "Reacciones químicas y estequiometría",
+      "unidades": [
+        {
+          "id": "QUI-03.01",
+          "etiqueta": "Conservación de la materia",
+          "operacion_diagnostica": "aplicar conservación a sistemas y reacciones químicas.",
+          "conocimiento_oficial_origen": "D27:QUI-03",
+          "conceptos_relaciones": "aplicar conservación a sistemas y reacciones químicas.",
+          "procedimientos": "aplicar conservación a sistemas y reacciones químicas.",
+          "prerrequisitos": [
+            "Sistema",
+            "masa",
+            "reactante/producto."
+          ],
+          "representaciones": [
+            "Ecuación",
+            "tabla de masas",
+            "diagrama particulado."
+          ],
+          "limite_diagnostico": "No asumir igualdad entre masa de un reactante individual y un producto individual.",
+          "criterios_compatibles": [
+            "HC-03.C1",
+            "HC-03.C3"
+          ],
+          "prioridad_diagnostico_v1": "alta",
+          "evidencia_prioridad": [
+            "D27",
+            "E54-Q43",
+            "FUND"
+          ],
+          "procedencia": "descomposicion_diagnostica_proyecto"
+        },
+        {
+          "id": "QUI-03.02",
+          "etiqueta": "Proporciones definidas y múltiples",
+          "operacion_diagnostica": "reconocer relaciones constantes de composición entre elementos.",
+          "conocimiento_oficial_origen": "D27:QUI-03",
+          "conceptos_relaciones": "reconocer relaciones constantes de composición entre elementos.",
+          "procedimientos": "reconocer relaciones constantes de composición entre elementos.",
+          "prerrequisitos": [
+            "Razón",
+            "múltiplos",
+            "compuesto."
+          ],
+          "representaciones": [
+            "Tabla de masas",
+            "proporciones",
+            "comparación."
+          ],
+          "limite_diagnostico": "No comparar valores brutos sin normalizar la relación.",
+          "criterios_compatibles": [
+            "HC-03.C1"
+          ],
+          "prioridad_diagnostico_v1": "media",
+          "evidencia_prioridad": [
+            "D27",
+            "FUND"
+          ],
+          "procedencia": "descomposicion_diagnostica_proyecto"
+        },
+        {
+          "id": "QUI-03.03",
+          "etiqueta": "Componentes y balance",
+          "operacion_diagnostica": "distinguir reactantes/productos y balancear ecuaciones conservando átomos.",
+          "conocimiento_oficial_origen": "D27:QUI-03",
+          "conceptos_relaciones": "distinguir reactantes/productos y balancear ecuaciones conservando átomos.",
+          "procedimientos": "distinguir reactantes/productos y balancear ecuaciones conservando átomos.",
+          "prerrequisitos": [
+            "Fórmula química",
+            "conteo."
+          ],
+          "representaciones": [
+            "Ecuación",
+            "modelo particulado",
+            "tabla."
+          ],
+          "limite_diagnostico": "Balancear cambia coeficientes, no subíndices de las sustancias.",
+          "criterios_compatibles": [
+            "HC-02.C2",
+            "HC-03.C1",
+            "HC-05.C1"
+          ],
+          "prioridad_diagnostico_v1": "alta",
+          "evidencia_prioridad": [
+            "D27",
+            "FUND"
+          ],
+          "procedencia": "descomposicion_diagnostica_proyecto"
+        },
+        {
+          "id": "QUI-03.04",
+          "etiqueta": "Masa, masa molar y mol",
+          "operacion_diagnostica": "convertir y relacionar estas magnitudes en contexto estequiométrico.",
+          "conocimiento_oficial_origen": "D27:QUI-03",
+          "conceptos_relaciones": "convertir y relacionar estas magnitudes en contexto estequiométrico.",
+          "procedimientos": "convertir y relacionar estas magnitudes en contexto estequiométrico.",
+          "prerrequisitos": [
+            "Proporcionalidad",
+            "unidades",
+            "fórmula."
+          ],
+          "representaciones": [
+            "Cálculo",
+            "tabla",
+            "ecuación química."
+          ],
+          "limite_diagnostico": "No omitir unidades ni tratar masa molar como masa de cualquier muestra.",
+          "criterios_compatibles": [
+            "HC-03.C1"
+          ],
+          "prioridad_diagnostico_v1": "alta",
+          "evidencia_prioridad": [
+            "D27",
+            "E54-Q42",
+            "E54-Q43",
+            "E54-Q44"
+          ],
+          "procedencia": "descomposicion_diagnostica_proyecto"
+        },
+        {
+          "id": "QUI-03.05",
+          "etiqueta": "Reactivo limitante y exceso",
+          "operacion_diagnostica": "identificar qué reactivo determina el máximo producto.",
+          "conocimiento_oficial_origen": "D27:QUI-03",
+          "conceptos_relaciones": "identificar qué reactivo determina el máximo producto.",
+          "procedimientos": "identificar qué reactivo determina el máximo producto.",
+          "prerrequisitos": [
+            "Balance",
+            "mol",
+            "proporción estequiométrica."
+          ],
+          "representaciones": [
+            "Tabla inicial/final",
+            "ecuación",
+            "gráfico."
+          ],
+          "limite_diagnostico": "La menor masa inicial no es necesariamente el reactivo limitante.",
+          "criterios_compatibles": [
+            "HC-03.C1",
+            "HC-03.C3"
+          ],
+          "prioridad_diagnostico_v1": "alta",
+          "evidencia_prioridad": [
+            "D27",
+            "FUND"
+          ],
+          "procedencia": "descomposicion_diagnostica_proyecto"
+        },
+        {
+          "id": "QUI-03.06",
+          "etiqueta": "Composición porcentual",
+          "operacion_diagnostica": "calcular o interpretar contribución másica de elementos en un compuesto.",
+          "conocimiento_oficial_origen": "D27:QUI-03",
+          "conceptos_relaciones": "calcular o interpretar contribución másica de elementos en un compuesto.",
+          "procedimientos": "calcular o interpretar contribución másica de elementos en un compuesto.",
+          "prerrequisitos": [
+            "Porcentaje",
+            "masa molar."
+          ],
+          "representaciones": [
+            "Fórmula",
+            "tabla",
+            "muestra dada."
+          ],
+          "limite_diagnostico": "Se debe escalar a la muestra cuando la pregunta no está formulada por mol.",
+          "criterios_compatibles": [
+            "HC-03.C1"
+          ],
+          "prioridad_diagnostico_v1": "alta",
+          "evidencia_prioridad": [
+            "D27",
+            "E54-Q44"
+          ],
+          "procedencia": "descomposicion_diagnostica_proyecto"
+        },
+        {
+          "id": "QUI-03.07",
+          "etiqueta": "Fórmulas empírica y molecular",
+          "operacion_diagnostica": "derivar o comparar razón mínima y composición molecular real.",
+          "conocimiento_oficial_origen": "D27:QUI-03",
+          "conceptos_relaciones": "derivar o comparar razón mínima y composición molecular real.",
+          "procedimientos": "derivar o comparar razón mínima y composición molecular real.",
+          "prerrequisitos": [
+            "Mol",
+            "porcentaje",
+            "subíndices."
+          ],
+          "representaciones": [
+            "Datos de composición",
+            "fórmula",
+            "tabla."
+          ],
+          "limite_diagnostico": "Fórmula empírica y molecular pueden coincidir, pero no son sinónimos.",
+          "criterios_compatibles": [
+            "HC-03.C1",
+            "HC-03.C3"
+          ],
+          "prioridad_diagnostico_v1": "media",
+          "evidencia_prioridad": [
+            "D27"
+          ],
+          "procedencia": "descomposicion_diagnostica_proyecto"
+        },
+        {
+          "id": "QUI-03.08",
+          "etiqueta": "Soluciones y componentes",
+          "operacion_diagnostica": "distinguir soluto/solvente y relacionar composición con propiedades generales.",
+          "conocimiento_oficial_origen": "D27:QUI-03",
+          "conceptos_relaciones": "distinguir soluto/solvente y relacionar composición con propiedades generales.",
+          "procedimientos": "distinguir soluto/solvente y relacionar composición con propiedades generales.",
+          "prerrequisitos": [
+            "Mezcla homogénea",
+            "proporción."
+          ],
+          "representaciones": [
+            "Modelo particulado",
+            "caso",
+            "tabla."
+          ],
+          "limite_diagnostico": "No inferir concentración solo por intensidad visual sin escala o evidencia.",
+          "criterios_compatibles": [
+            "HC-03.C2",
+            "HC-05.C1"
+          ],
+          "prioridad_diagnostico_v1": "media",
+          "evidencia_prioridad": [
+            "D27",
+            "FUND"
+          ],
+          "procedencia": "descomposicion_diagnostica_proyecto"
+        },
+        {
+          "id": "QUI-03.09",
+          "etiqueta": "Concentraciones químicas",
+          "operacion_diagnostica": "aplicar concentración molar, molal y fracción molar atendiendo a denominador y unidades.",
+          "conocimiento_oficial_origen": "D27:QUI-03",
+          "conceptos_relaciones": "aplicar concentración molar, molal y fracción molar atendiendo a denominador y unidades.",
+          "procedimientos": "aplicar concentración molar, molal y fracción molar atendiendo a denominador y unidades.",
+          "prerrequisitos": [
+            "Mol",
+            "masa",
+            "volumen",
+            "fracción."
+          ],
+          "representaciones": [
+            "Fórmula",
+            "tabla",
+            "preparación de solución."
+          ],
+          "limite_diagnostico": "Las tres unidades no son intercambiables; identificar primero la base de cada razón.",
+          "criterios_compatibles": [
+            "HC-03.C1"
+          ],
+          "prioridad_diagnostico_v1": "media",
+          "evidencia_prioridad": [
+            "D27"
+          ],
+          "procedencia": "descomposicion_diagnostica_proyecto"
+        },
+        {
+          "id": "QUI-03.10",
+          "etiqueta": "Concentraciones físicas",
+          "operacion_diagnostica": "aplicar %m/m, %m/v, %v/v y ppm según las magnitudes dadas.",
+          "conocimiento_oficial_origen": "D27:QUI-03",
+          "conceptos_relaciones": "aplicar %m/m, %m/v, %v/v y ppm según las magnitudes dadas.",
+          "procedimientos": "aplicar %m/m, %m/v, %v/v y ppm según las magnitudes dadas.",
+          "prerrequisitos": [
+            "Porcentaje",
+            "masa",
+            "volumen."
+          ],
+          "representaciones": [
+            "Etiqueta",
+            "receta de laboratorio",
+            "tabla."
+          ],
+          "limite_diagnostico": "No mezclar denominadores ni tratar ppm como porcentaje sin conversión.",
+          "criterios_compatibles": [
+            "HC-03.C1",
+            "HC-05.C1"
+          ],
+          "prioridad_diagnostico_v1": "media",
+          "evidencia_prioridad": [
+            "D27"
+          ],
+          "procedencia": "descomposicion_diagnostica_proyecto"
+        },
+        {
+          "id": "QUI-03.11",
+          "etiqueta": "Dilución",
+          "operacion_diagnostica": "determinar concentración o volumen antes/después de agregar solvente.",
+          "conocimiento_oficial_origen": "D27:QUI-03",
+          "conceptos_relaciones": "determinar concentración o volumen antes/después de agregar solvente.",
+          "procedimientos": "determinar concentración o volumen antes/después de agregar solvente.",
+          "prerrequisitos": [
+            "Concentración",
+            "conservación de soluto",
+            "proporción."
+          ],
+          "representaciones": [
+            "Esquema antes/después",
+            "tabla",
+            "cálculo."
+          ],
+          "limite_diagnostico": "Diluir no cambia la cantidad de soluto si no se pierde muestra.",
+          "criterios_compatibles": [
+            "HC-03.C1",
+            "HC-03.C3"
+          ],
+          "prioridad_diagnostico_v1": "media",
+          "evidencia_prioridad": [
+            "D27"
+          ],
+          "procedencia": "descomposicion_diagnostica_proyecto"
+        },
+        {
+          "id": "QUI-03.12",
+          "etiqueta": "Mezcla de soluciones",
+          "operacion_diagnostica": "determinar concentración resultante considerando cantidades aportadas.",
+          "conocimiento_oficial_origen": "D27:QUI-03",
+          "conceptos_relaciones": "determinar concentración resultante considerando cantidades aportadas.",
+          "procedimientos": "determinar concentración resultante considerando cantidades aportadas.",
+          "prerrequisitos": [
+            "Concentración",
+            "volumen total",
+            "cantidad de soluto."
+          ],
+          "representaciones": [
+            "Tabla",
+            "diagrama",
+            "cálculo."
+          ],
+          "limite_diagnostico": "No promediar concentraciones sin ponderar cantidades.",
+          "criterios_compatibles": [
+            "HC-03.C1",
+            "HC-04.C3"
+          ],
+          "prioridad_diagnostico_v1": "media",
+          "evidencia_prioridad": [
+            "D27"
+          ],
+          "procedencia": "descomposicion_diagnostica_proyecto"
+        },
+        {
+          "id": "QUI-03.13",
+          "etiqueta": "Solubilidad",
+          "operacion_diagnostica": "interpretar concepto y efecto de variables sobre la cantidad que puede disolverse.",
+          "conocimiento_oficial_origen": "D27:QUI-03",
+          "conceptos_relaciones": "interpretar concepto y efecto de variables sobre la cantidad que puede disolverse.",
+          "procedimientos": "interpretar concepto y efecto de variables sobre la cantidad que puede disolverse.",
+          "prerrequisitos": [
+            "Soluto/solvente",
+            "temperatura",
+            "saturación."
+          ],
+          "representaciones": [
+            "Curva",
+            "tabla",
+            "diseño experimental."
+          ],
+          "limite_diagnostico": "Rapidez de disolución y solubilidad de equilibrio no son equivalentes.",
+          "criterios_compatibles": [
+            "HC-01.C2",
+            "HC-02.C6",
+            "HC-03.C1",
+            "HC-04.C1"
+          ],
+          "prioridad_diagnostico_v1": "media",
+          "evidencia_prioridad": [
+            "D27"
+          ],
+          "procedencia": "descomposicion_diagnostica_proyecto"
+        }
+      ]
+    }
+  ],
+  "matriz_contenido_habilidad": [
+    {
+      "area_id": "BIO-01",
+      "habilidad_id": "HC-01",
+      "condicion": "evidencia_multiple",
+      "codigo_fuente": "C",
+      "lectura_principal": "Clasificación, estructura-función y selección de representaciones."
+    },
+    {
+      "area_id": "BIO-01",
+      "habilidad_id": "HC-02",
+      "condicion": "evidencia_multiple",
+      "codigo_fuente": "C",
+      "lectura_principal": "Clasificación, estructura-función y selección de representaciones."
+    },
+    {
+      "area_id": "BIO-01",
+      "habilidad_id": "HC-03",
+      "condicion": "medible",
+      "codigo_fuente": "D",
+      "lectura_principal": "Clasificación, estructura-función y selección de representaciones."
+    },
+    {
+      "area_id": "BIO-01",
+      "habilidad_id": "HC-04",
+      "condicion": "evidencia_multiple",
+      "codigo_fuente": "C",
+      "lectura_principal": "Clasificación, estructura-función y selección de representaciones."
+    },
+    {
+      "area_id": "BIO-01",
+      "habilidad_id": "HC-05",
+      "condicion": "medible",
+      "codigo_fuente": "D",
+      "lectura_principal": "Clasificación, estructura-función y selección de representaciones."
+    },
+    {
+      "area_id": "BIO-02",
+      "habilidad_id": "HC-01",
+      "condicion": "evidencia_multiple",
+      "codigo_fuente": "C",
+      "lectura_principal": "Secuencias, mecanismos y evaluación de evidencia en salud/reproducción."
+    },
+    {
+      "area_id": "BIO-02",
+      "habilidad_id": "HC-02",
+      "condicion": "evidencia_multiple",
+      "codigo_fuente": "C",
+      "lectura_principal": "Secuencias, mecanismos y evaluación de evidencia en salud/reproducción."
+    },
+    {
+      "area_id": "BIO-02",
+      "habilidad_id": "HC-03",
+      "condicion": "medible",
+      "codigo_fuente": "D",
+      "lectura_principal": "Secuencias, mecanismos y evaluación de evidencia en salud/reproducción."
+    },
+    {
+      "area_id": "BIO-02",
+      "habilidad_id": "HC-04",
+      "condicion": "medible",
+      "codigo_fuente": "D",
+      "lectura_principal": "Secuencias, mecanismos y evaluación de evidencia en salud/reproducción."
+    },
+    {
+      "area_id": "BIO-02",
+      "habilidad_id": "HC-05",
+      "condicion": "evidencia_multiple",
+      "codigo_fuente": "C",
+      "lectura_principal": "Secuencias, mecanismos y evaluación de evidencia en salud/reproducción."
+    },
+    {
+      "area_id": "BIO-03",
+      "habilidad_id": "HC-01",
+      "condicion": "medible",
+      "codigo_fuente": "D",
+      "lectura_principal": "Evidencia evolutiva, comparación de modelos y procesos temporales."
+    },
+    {
+      "area_id": "BIO-03",
+      "habilidad_id": "HC-02",
+      "condicion": "evidencia_multiple",
+      "codigo_fuente": "C",
+      "lectura_principal": "Evidencia evolutiva, comparación de modelos y procesos temporales."
+    },
+    {
+      "area_id": "BIO-03",
+      "habilidad_id": "HC-03",
+      "condicion": "medible",
+      "codigo_fuente": "D",
+      "lectura_principal": "Evidencia evolutiva, comparación de modelos y procesos temporales."
+    },
+    {
+      "area_id": "BIO-03",
+      "habilidad_id": "HC-04",
+      "condicion": "medible",
+      "codigo_fuente": "D",
+      "lectura_principal": "Evidencia evolutiva, comparación de modelos y procesos temporales."
+    },
+    {
+      "area_id": "BIO-03",
+      "habilidad_id": "HC-05",
+      "condicion": "medible",
+      "codigo_fuente": "D",
+      "lectura_principal": "Evidencia evolutiva, comparación de modelos y procesos temporales."
+    },
+    {
+      "area_id": "BIO-04",
+      "habilidad_id": "HC-01",
+      "condicion": "medible",
+      "codigo_fuente": "D",
+      "lectura_principal": "Variables ambientales, flujos, diseños y modelos integradores."
+    },
+    {
+      "area_id": "BIO-04",
+      "habilidad_id": "HC-02",
+      "condicion": "medible",
+      "codigo_fuente": "D",
+      "lectura_principal": "Variables ambientales, flujos, diseños y modelos integradores."
+    },
+    {
+      "area_id": "BIO-04",
+      "habilidad_id": "HC-03",
+      "condicion": "medible",
+      "codigo_fuente": "D",
+      "lectura_principal": "Variables ambientales, flujos, diseños y modelos integradores."
+    },
+    {
+      "area_id": "BIO-04",
+      "habilidad_id": "HC-04",
+      "condicion": "medible",
+      "codigo_fuente": "D",
+      "lectura_principal": "Variables ambientales, flujos, diseños y modelos integradores."
+    },
+    {
+      "area_id": "BIO-04",
+      "habilidad_id": "HC-05",
+      "condicion": "medible",
+      "codigo_fuente": "D",
+      "lectura_principal": "Variables ambientales, flujos, diseños y modelos integradores."
+    },
+    {
+      "area_id": "FIS-01",
+      "habilidad_id": "HC-01",
+      "condicion": "medible",
+      "codigo_fuente": "D",
+      "lectura_principal": "Gráficos, rayos, relaciones entre variables y dispositivos."
+    },
+    {
+      "area_id": "FIS-01",
+      "habilidad_id": "HC-02",
+      "condicion": "medible",
+      "codigo_fuente": "D",
+      "lectura_principal": "Gráficos, rayos, relaciones entre variables y dispositivos."
+    },
+    {
+      "area_id": "FIS-01",
+      "habilidad_id": "HC-03",
+      "condicion": "medible",
+      "codigo_fuente": "D",
+      "lectura_principal": "Gráficos, rayos, relaciones entre variables y dispositivos."
+    },
+    {
+      "area_id": "FIS-01",
+      "habilidad_id": "HC-04",
+      "condicion": "medible",
+      "codigo_fuente": "D",
+      "lectura_principal": "Gráficos, rayos, relaciones entre variables y dispositivos."
+    },
+    {
+      "area_id": "FIS-01",
+      "habilidad_id": "HC-05",
+      "condicion": "medible",
+      "codigo_fuente": "D",
+      "lectura_principal": "Gráficos, rayos, relaciones entre variables y dispositivos."
+    },
+    {
+      "area_id": "FIS-02",
+      "habilidad_id": "HC-01",
+      "condicion": "medible",
+      "codigo_fuente": "D",
+      "lectura_principal": "Modelos, gráficos, sistemas de referencia y coherencia explicativa."
+    },
+    {
+      "area_id": "FIS-02",
+      "habilidad_id": "HC-02",
+      "condicion": "evidencia_multiple",
+      "codigo_fuente": "C",
+      "lectura_principal": "Modelos, gráficos, sistemas de referencia y coherencia explicativa."
+    },
+    {
+      "area_id": "FIS-02",
+      "habilidad_id": "HC-03",
+      "condicion": "medible",
+      "codigo_fuente": "D",
+      "lectura_principal": "Modelos, gráficos, sistemas de referencia y coherencia explicativa."
+    },
+    {
+      "area_id": "FIS-02",
+      "habilidad_id": "HC-04",
+      "condicion": "medible",
+      "codigo_fuente": "D",
+      "lectura_principal": "Modelos, gráficos, sistemas de referencia y coherencia explicativa."
+    },
+    {
+      "area_id": "FIS-02",
+      "habilidad_id": "HC-05",
+      "condicion": "medible",
+      "codigo_fuente": "D",
+      "lectura_principal": "Modelos, gráficos, sistemas de referencia y coherencia explicativa."
+    },
+    {
+      "area_id": "FIS-03",
+      "habilidad_id": "HC-01",
+      "condicion": "medible",
+      "codigo_fuente": "D",
+      "lectura_principal": "Evidencias históricas, mapas, vectores y modelos terrestres."
+    },
+    {
+      "area_id": "FIS-03",
+      "habilidad_id": "HC-02",
+      "condicion": "medible",
+      "codigo_fuente": "D",
+      "lectura_principal": "Evidencias históricas, mapas, vectores y modelos terrestres."
+    },
+    {
+      "area_id": "FIS-03",
+      "habilidad_id": "HC-03",
+      "condicion": "medible",
+      "codigo_fuente": "D",
+      "lectura_principal": "Evidencias históricas, mapas, vectores y modelos terrestres."
+    },
+    {
+      "area_id": "FIS-03",
+      "habilidad_id": "HC-04",
+      "condicion": "medible",
+      "codigo_fuente": "D",
+      "lectura_principal": "Evidencias históricas, mapas, vectores y modelos terrestres."
+    },
+    {
+      "area_id": "FIS-03",
+      "habilidad_id": "HC-05",
+      "condicion": "medible",
+      "codigo_fuente": "D",
+      "lectura_principal": "Evidencias históricas, mapas, vectores y modelos terrestres."
+    },
+    {
+      "area_id": "FIS-04",
+      "habilidad_id": "HC-01",
+      "condicion": "evidencia_multiple",
+      "codigo_fuente": "C",
+      "lectura_principal": "Circuitos, instrumentos, consumo y aplicaciones tecnológicas."
+    },
+    {
+      "area_id": "FIS-04",
+      "habilidad_id": "HC-02",
+      "condicion": "medible",
+      "codigo_fuente": "D",
+      "lectura_principal": "Circuitos, instrumentos, consumo y aplicaciones tecnológicas."
+    },
+    {
+      "area_id": "FIS-04",
+      "habilidad_id": "HC-03",
+      "condicion": "medible",
+      "codigo_fuente": "D",
+      "lectura_principal": "Circuitos, instrumentos, consumo y aplicaciones tecnológicas."
+    },
+    {
+      "area_id": "FIS-04",
+      "habilidad_id": "HC-04",
+      "condicion": "medible",
+      "codigo_fuente": "D",
+      "lectura_principal": "Circuitos, instrumentos, consumo y aplicaciones tecnológicas."
+    },
+    {
+      "area_id": "FIS-04",
+      "habilidad_id": "HC-05",
+      "condicion": "medible",
+      "codigo_fuente": "D",
+      "lectura_principal": "Circuitos, instrumentos, consumo y aplicaciones tecnológicas."
+    },
+    {
+      "area_id": "QUI-01",
+      "habilidad_id": "HC-01",
+      "condicion": "evidencia_multiple",
+      "codigo_fuente": "C",
+      "lectura_principal": "Clasificación, procedimientos de separación y evaluación de modelos."
+    },
+    {
+      "area_id": "QUI-01",
+      "habilidad_id": "HC-02",
+      "condicion": "medible",
+      "codigo_fuente": "D",
+      "lectura_principal": "Clasificación, procedimientos de separación y evaluación de modelos."
+    },
+    {
+      "area_id": "QUI-01",
+      "habilidad_id": "HC-03",
+      "condicion": "medible",
+      "codigo_fuente": "D",
+      "lectura_principal": "Clasificación, procedimientos de separación y evaluación de modelos."
+    },
+    {
+      "area_id": "QUI-01",
+      "habilidad_id": "HC-04",
+      "condicion": "medible",
+      "codigo_fuente": "D",
+      "lectura_principal": "Clasificación, procedimientos de separación y evaluación de modelos."
+    },
+    {
+      "area_id": "QUI-01",
+      "habilidad_id": "HC-05",
+      "condicion": "medible",
+      "codigo_fuente": "D",
+      "lectura_principal": "Clasificación, procedimientos de separación y evaluación de modelos."
+    },
+    {
+      "area_id": "QUI-02",
+      "habilidad_id": "HC-01",
+      "condicion": "evidencia_multiple",
+      "codigo_fuente": "C",
+      "lectura_principal": "Traducción de representaciones, reconocimiento y aplicaciones."
+    },
+    {
+      "area_id": "QUI-02",
+      "habilidad_id": "HC-02",
+      "condicion": "evidencia_multiple",
+      "codigo_fuente": "C",
+      "lectura_principal": "Traducción de representaciones, reconocimiento y aplicaciones."
+    },
+    {
+      "area_id": "QUI-02",
+      "habilidad_id": "HC-03",
+      "condicion": "medible",
+      "codigo_fuente": "D",
+      "lectura_principal": "Traducción de representaciones, reconocimiento y aplicaciones."
+    },
+    {
+      "area_id": "QUI-02",
+      "habilidad_id": "HC-04",
+      "condicion": "medible",
+      "codigo_fuente": "D",
+      "lectura_principal": "Traducción de representaciones, reconocimiento y aplicaciones."
+    },
+    {
+      "area_id": "QUI-02",
+      "habilidad_id": "HC-05",
+      "condicion": "medible",
+      "codigo_fuente": "D",
+      "lectura_principal": "Traducción de representaciones, reconocimiento y aplicaciones."
+    },
+    {
+      "area_id": "QUI-03",
+      "habilidad_id": "HC-01",
+      "condicion": "medible",
+      "codigo_fuente": "D",
+      "lectura_principal": "Relaciones cuantitativas, soluciones, variables y consistencia interna."
+    },
+    {
+      "area_id": "QUI-03",
+      "habilidad_id": "HC-02",
+      "condicion": "medible",
+      "codigo_fuente": "D",
+      "lectura_principal": "Relaciones cuantitativas, soluciones, variables y consistencia interna."
+    },
+    {
+      "area_id": "QUI-03",
+      "habilidad_id": "HC-03",
+      "condicion": "medible",
+      "codigo_fuente": "D",
+      "lectura_principal": "Relaciones cuantitativas, soluciones, variables y consistencia interna."
+    },
+    {
+      "area_id": "QUI-03",
+      "habilidad_id": "HC-04",
+      "condicion": "medible",
+      "codigo_fuente": "D",
+      "lectura_principal": "Relaciones cuantitativas, soluciones, variables y consistencia interna."
+    },
+    {
+      "area_id": "QUI-03",
+      "habilidad_id": "HC-05",
+      "condicion": "medible",
+      "codigo_fuente": "D",
+      "lectura_principal": "Relaciones cuantitativas, soluciones, variables y consistencia interna."
+    }
+  ],
+  "mapa_evidencia": {
+    "perfil_id": "ancla-habilidades-v1-provisional",
+    "estado_parametros": "provisional_docente",
+    "estados": [
+      {
+        "id": "evidencia_consistente",
+        "orden": 4,
+        "etiqueta": "Evidencia consistente",
+        "descripcion": "Varias señales apuntan en la misma dirección.",
+        "simbolo": "◆"
+      },
+      {
+        "id": "evidencia_inicial",
+        "orden": 3,
+        "etiqueta": "Evidencia inicial",
+        "descripcion": "Hay una señal útil, pero todavía depende del contexto.",
+        "simbolo": "△"
+      },
+      {
+        "id": "sin_evidencia",
+        "orden": 2,
+        "etiqueta": "Territorio aún no medido",
+        "descripcion": "Las respuestas disponibles no alcanzan para interpretar esta zona.",
+        "simbolo": "…"
+      },
+      {
+        "id": "requiere_refuerzo",
+        "orden": 1,
+        "etiqueta": "Conviene volver a mirar",
+        "descripcion": "Varias respuestas sugieren que esta zona merece una revisión guiada.",
+        "simbolo": "↺"
+      }
+    ],
+    "tabla_inferencia": [
+      {
+        "evidencias_evaluables": 0,
+        "aciertos": 0,
+        "estado": "sin_evidencia"
+      },
+      {
+        "evidencias_evaluables": 1,
+        "aciertos": 0,
+        "estado": "sin_evidencia"
+      },
+      {
+        "evidencias_evaluables": 1,
+        "aciertos": 1,
+        "estado": "sin_evidencia"
+      },
+      {
+        "evidencias_evaluables": 2,
+        "aciertos": 0,
+        "estado": "requiere_refuerzo"
+      },
+      {
+        "evidencias_evaluables": 2,
+        "aciertos": 1,
+        "estado": "evidencia_inicial"
+      },
+      {
+        "evidencias_evaluables": 2,
+        "aciertos": 2,
+        "estado": "evidencia_inicial"
+      },
+      {
+        "evidencias_evaluables": 3,
+        "aciertos": 0,
+        "estado": "requiere_refuerzo"
+      },
+      {
+        "evidencias_evaluables": 3,
+        "aciertos": 1,
+        "estado": "requiere_refuerzo"
+      },
+      {
+        "evidencias_evaluables": 3,
+        "aciertos": 2,
+        "estado": "evidencia_inicial"
+      },
+      {
+        "evidencias_evaluables": 3,
+        "aciertos": 3,
+        "estado": "evidencia_consistente"
+      }
+    ]
+  }
+}

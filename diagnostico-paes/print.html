@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'">
+  <title>Sesión imprimible</title>
+  <link rel="icon" href="./assets/icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./src/print.css">
+</head>
+<body>
+  <div class="print-toolbar" role="region" aria-label="Opciones de impresión">
+    <a href="./">Volver a la aplicación</a>
+    <a href="./paper.html">Transcribir una hoja</a>
+    <button type="button" data-action="print">Imprimir o guardar PDF</button>
+  </div>
+  <main id="print-root" aria-live="polite">
+    <p>Preparando la versión imprimible…</p>
+  </main>
+  <script type="module" src="./src/print.mjs"></script>
+</body>
+</html>

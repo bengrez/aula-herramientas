@@ -1,0 +1,117 @@
+{
+  "active": {
+    "schema_version": 1,
+    "deployment_url": "deployment.json",
+    "framework_url": "framework.json",
+    "bank_url": "bank.json",
+    "session_url": "session.json",
+    "offline_assets": ["index.html"]
+  },
+  "framework": {
+    "schema_version": 1,
+    "marco_id": "marco-ejemplo",
+    "version": "1",
+    "titulo": "Marco de ejemplo",
+    "habilidades": [{
+      "id": "H-01",
+      "etiqueta": "Explorar información",
+      "criterios": [{
+        "id": "H-01.C1",
+        "etiqueta": "Encontrar una relación visible",
+        "descripcion": "Reconocer una relación en los datos.",
+        "prioridad_foco": 1
+      }]
+    }],
+    "areas": [{
+      "id": "AREA-01",
+      "eje": "Ejemplo",
+      "etiqueta": "Área de ejemplo",
+      "unidades": [{
+        "id": "AREA-01.01",
+        "etiqueta": "Unidad mínima",
+        "operacion_diagnostica": "Comparar dos valores.",
+        "prerrequisitos": [],
+        "representaciones": ["tabla"],
+        "limite_diagnostico": "No generalizar más allá de los datos.",
+        "criterios_compatibles": ["H-01.C1"],
+        "prioridad_diagnostico_v1": "alta"
+      }]
+    }],
+    "matriz_contenido_habilidad": [{
+      "area_id": "AREA-01",
+      "habilidad_id": "H-01",
+      "condicion": "medible"
+    }],
+    "mapa_evidencia": {
+      "perfil_id": "perfil-1",
+      "estados": [
+        { "id": "evidencia_consistente", "orden": 4, "etiqueta": "Consistente", "descripcion": "Varias señales.", "simbolo": "◆" },
+        { "id": "evidencia_inicial", "orden": 3, "etiqueta": "Inicial", "descripcion": "Una señal.", "simbolo": "△" },
+        { "id": "sin_evidencia", "orden": 2, "etiqueta": "Pendiente", "descripcion": "Sin señal suficiente.", "simbolo": "…" },
+        { "id": "requiere_refuerzo", "orden": 1, "etiqueta": "Revisar", "descripcion": "Conviene volver.", "simbolo": "↺" }
+      ],
+      "tabla_inferencia": [
+        { "evidencias_evaluables": 0, "aciertos": 0, "estado": "sin_evidencia" },
+        { "evidencias_evaluables": 1, "aciertos": 0, "estado": "requiere_refuerzo" },
+        { "evidencias_evaluables": 1, "aciertos": 1, "estado": "evidencia_inicial" }
+      ]
+    }
+  },
+  "bank": {
+    "schema_version": 1,
+    "banco_id": "banco-ejemplo",
+    "version": "1",
+    "estado_autoria": "contenido_docente_revisado",
+    "marco_id": "marco-ejemplo",
+    "marco_version": "1",
+    "items": [{
+      "item_id": "ITEM-01",
+      "version": "1",
+      "marco_id": "marco-ejemplo",
+      "marco_version": "1",
+      "unidad_id": "AREA-01.01",
+      "criterio_id": "H-01.C1",
+      "eje": "Ejemplo",
+      "formato_estimulo": "texto",
+      "estimulo": { "tipo": "texto", "texto": "Dato mínimo.", "texto_alternativo": "Dato mínimo en texto." },
+      "enunciado": "¿Qué opción corresponde?",
+      "alternativas": [{ "id": "A", "texto": "Primera" }, { "id": "B", "texto": "Segunda" }],
+      "clave": "A",
+      "estado_clave": "ok"
+    }]
+  },
+  "session": {
+    "schema_version": 1,
+    "plantilla_id": "sesion-ejemplo",
+    "version": "1",
+    "tipo": "fija",
+    "marco_id": "marco-ejemplo",
+    "marco_version": "1",
+    "banco_id": "banco-ejemplo",
+    "banco_version": "1",
+    "perfil_evidencia_id": "perfil-1",
+    "reglas": { "orden_fijo": true, "permite_retroceso": false, "muestra_feedback": false, "permite_omitir": true },
+    "orden_foco_estados": ["requiere_refuerzo", "evidencia_inicial"],
+    "items": [{ "item_id": "ITEM-01", "item_version": "1", "orden": 1 }]
+  },
+  "deployment": {
+    "schema_version": 1,
+    "deployment_id": "deployment-ejemplo",
+    "version": "1",
+    "release_status": "placeholder",
+    "pilot_ready": false,
+    "administracion": { "administracion_id": "admin-ejemplo", "plantilla_id": "sesion-ejemplo", "plantilla_version": "1" },
+    "ui": { "marca": "Ejemplo", "titulo": "Recorrido", "subtitulo": "Subtítulo", "bienvenida": "Bienvenida", "duracion_humana": "un momento" },
+    "enrolamiento": { "alfabeto": "ABCDEFGH", "longitud_carga": 3, "multiplicador": 3, "grupos": [2, 2], "hashes_permitidos": [], "hashes_demo": [] },
+    "backend": { "enabled": false, "url": "", "publishable_key": "", "rpc_name": "", "schema": "" },
+    "release_gates": {
+      "contenido_real_revisado": false,
+      "criterios_y_reglas_aprobados": false,
+      "telefono_offline_validado": false,
+      "qr_respaldo_validado": false,
+      "impresion_validada": false,
+      "operacion_sala_validada": false
+    },
+    "operacion": { "url_publica": "https://example.test/diagnostico/" }
+  }
+}

@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'">
+  <title>Recuperar respaldo local</title>
+  <link rel="icon" href="./assets/icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./src/styles.css">
+</head>
+<body class="utility-page">
+  <main class="utility-shell">
+    <a class="back-link" href="./">← Volver</a>
+    <p class="eyebrow">Herramienta local para el docente</p>
+    <h1>Recuperar un respaldo</h1>
+    <p class="lede">Pega el código mostrado al final de una sesión. La conversión ocurre en este navegador: el código no se envía a ningún servicio.</p>
+
+    <form class="utility-card" data-form="backup">
+      <label for="backup-code">Código de respaldo</label>
+      <textarea id="backup-code" name="backup" rows="8" spellcheck="false" autocomplete="off" placeholder="DX2.…" required></textarea>
+      <p class="field-help">También se aceptan respaldos anteriores que comiencen con DX1.</p>
+      <div class="button-row">
+        <button class="primary-button" type="submit">Verificar y convertir</button>
+        <button class="secondary-button" type="reset">Limpiar</button>
+      </div>
+    </form>
+
+    <section class="utility-card" data-ui="backup-result" hidden></section>
+    <aside class="privacy-note">
+      <strong>Importante.</strong> El CSV recuperado contiene respuestas crudas y un código opaco. No contiene claves, diagnósticos ni nombres.
+    </aside>
+    <p><a href="./paper.html">Transcribir una hoja de respuestas en papel</a></p>
+  </main>
+  <script type="module" src="./src/backup-tool.mjs"></script>
+</body>
+</html>

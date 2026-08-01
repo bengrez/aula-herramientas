@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
+  <title id="title">Brújula</title>
+  <desc id="desc">Una brújula blanca y coral sobre fondo azul petróleo.</desc>
+  <rect width="512" height="512" rx="108" fill="#143642"/>
+  <circle cx="256" cy="256" r="154" fill="none" stroke="#f3eddf" stroke-width="20"/>
+  <path d="M315 197 277 277l-80 38 38-80z" fill="#e45c43" stroke="#f3eddf" stroke-width="12" stroke-linejoin="round"/>
+  <circle cx="256" cy="256" r="14" fill="#f3eddf"/>
+  <path d="M256 73v35M256 404v35M73 256h35M404 256h35" stroke="#f3eddf" stroke-width="16" stroke-linecap="round"/>
+</svg>

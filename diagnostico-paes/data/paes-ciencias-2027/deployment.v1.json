@@ -1,0 +1,72 @@
+{
+  "schema_version": 1,
+  "deployment_id": "paes-ciencias-ancla-ivb-2026",
+  "version": "1",
+  "release_status": "placeholder",
+  "pilot_ready": false,
+  "administracion": {
+    "administracion_id": "ivb-2026-08-17-ancla-01",
+    "plantilla_id": "ancla-habilidades-12",
+    "plantilla_version": "1",
+    "fecha_objetivo": "2026-08-17",
+    "duracion_efectiva_minutos": 25
+  },
+  "ui": {
+    "marca": "Atlas",
+    "titulo": "Tu mapa para seguir aprendiendo",
+    "subtitulo": "Una exploración breve de cómo trabajas con evidencia científica.",
+    "bienvenida": "No lleva nota. Equivocarse no tiene costo: cada respuesta ayuda a decidir qué vale la pena practicar después.",
+    "duracion_humana": "cerca de 25 minutos",
+    "etiqueta_sesion": "Sesión ancla · línea base",
+    "aviso_placeholder": "Esta es una versión técnica con ítems de relleno. No debe aplicarse todavía a estudiantes.",
+    "instrucciones": [
+      "Lee cada estímulo antes de elegir.",
+      "Avanza hacia adelante: no podrás volver a un ítem anterior.",
+      "Si no puedes responder, marca “Prefiero dejarla sin responder”.",
+      "No verás aciertos ni errores durante el recorrido."
+    ],
+    "privacidad_breve": "La aplicación no pide nombre, RUN ni correo. Tu código es opaco y las respuestas se guardan primero en este teléfono. El alojamiento web y, al respaldar, el servicio de datos pueden registrar información técnica como la dirección IP."
+  },
+  "impresion": {
+    "institucion": "Instituto Domingo Eyzaguirre",
+    "unidad": "Unidad Técnico-Pedagógica",
+    "nivel_eje": "IV° B medio · Ciencias",
+    "docente": "Profesor: Benjamín Moreira",
+    "caracter": "FORMATIVA — SIN NOTA",
+    "logo_url": "./assets/escudo-ide.svg",
+    "logo_alt": "Escudo del Instituto Domingo Eyzaguirre"
+  },
+  "enrolamiento": {
+    "alfabeto": "23456789ABCDEFGHJKMNPQRSTUVWXYZ",
+    "longitud_carga": 8,
+    "multiplicador": 7,
+    "grupos": [3, 3, 3],
+    "hashes_permitidos": [],
+    "hashes_demo": [
+      "ee053e4a228135548a8e364fd5dbaadd4380f08be3510bbd82817fac651a3ce1"
+    ],
+    "codigo_demo_visible": "TES-TPA-ESB"
+  },
+  "backend": {
+    "enabled": false,
+    "url": "",
+    "publishable_key": "",
+    "schema": "api",
+    "rpc_name": "submit_session_v1"
+  },
+  "release_gates": {
+    "contenido_real_revisado": false,
+    "criterios_y_reglas_aprobados": false,
+    "telefono_offline_validado": false,
+    "qr_respaldo_validado": false,
+    "impresion_validada": false,
+    "operacion_sala_validada": false
+  },
+  "operacion": {
+    "url_publica": "",
+    "modo_offline": true,
+    "reintento_al_reabrir": true,
+    "respaldo_manual": true,
+    "contacto_soporte": "Adulto a cargo de la sala"
+  }
+}

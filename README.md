@@ -1,12 +1,16 @@
 # aula-herramientas
 
-Herramientas HTML interactivas para uso en clase — autocontenidas, sin backend, sin envío ni
-almacenamiento de datos (todo el cálculo ocurre en el navegador del estudiante).
+Herramientas web estáticas para uso en clase. Cada carpeta documenta por separado su tratamiento
+de datos; las herramientas existentes que no lo indiquen trabajan solo en el navegador.
 
 Publicado con GitHub Pages: https://bengrez.github.io/aula-herramientas/
 
 ## Herramientas
 
+- [`diagnostico-paes/`](diagnostico-paes/) — Atlas, diagnóstico formativo PAES Ciencias. PWA
+  offline-first con sesión versionada, mapa cualitativo, impresión y recuperación CSV. La versión
+  preparada actualmente es una demostración técnica bloqueada: los ítems son de relleno y no debe
+  aplicarse a estudiantes. Su backend Supabase opcional todavía no está configurado.
 - [`autodiagnostico-bienestar-salud/`](autodiagnostico-bienestar-salud/) — Autodiagnóstico de
   Bienestar y Salud (III° B medio, Cs. Ciudadanía, Unidad 4). Cuestionario de 24 preguntas en 6
   bloques, semáforo de resultado, sin envío de datos.
@@ -17,6 +21,6 @@ Publicado con GitHub Pages: https://bengrez.github.io/aula-herramientas/
 
 ## Convención
 
-Cada herramienta nueva vive en su propia carpeta con un `index.html` autocontenido (CSS y JS
-inline, sin dependencias externas), enlazada desde este README y desde `index.html` (landing page
-raíz).
+Cada herramienta vive en su propia carpeta y se enlaza desde este README y desde `index.html`.
+Debe poder publicarse como archivos estáticos sin un paso de compilación; puede ser autocontenida o
+usar módulos y datos locales cuando eso facilite versionado, pruebas y funcionamiento offline.

@@ -1,0 +1,5 @@
+output/
+tmp/
+.playwright-cli/
+supabase/seed-enrollment-hashes.sql
+data/**/*.private.json
