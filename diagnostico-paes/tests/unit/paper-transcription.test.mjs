@@ -12,7 +12,7 @@ test("la transcripción de papel conserva omisiones y no inventa tiempos", async
   const [deployment, framework, bank, session] = await Promise.all([
     readJson("data/paes-ciencias-2027/deployment.v1.json"),
     readJson("data/paes-ciencias-2027/framework.v1.json"),
-    readJson("data/paes-ciencias-2027/bank-anchor-placeholder.v1.json"),
+    readJson("data/paes-ciencias-2027/bank-anchor.v0.3.json"),
     readJson("data/paes-ciencias-2027/session-anchor-2026-08-17.v1.json"),
   ]);
   const bundle = { deployment, framework, bank, session };
@@ -36,7 +36,7 @@ test("rechaza respuestas fuera del contrato del banco", async () => {
   const [deployment, framework, bank, session] = await Promise.all([
     readJson("data/paes-ciencias-2027/deployment.v1.json"),
     readJson("data/paes-ciencias-2027/framework.v1.json"),
-    readJson("data/paes-ciencias-2027/bank-anchor-placeholder.v1.json"),
+    readJson("data/paes-ciencias-2027/bank-anchor.v0.3.json"),
     readJson("data/paes-ciencias-2027/session-anchor-2026-08-17.v1.json"),
   ]);
   assert.throws(

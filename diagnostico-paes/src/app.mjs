@@ -1,6 +1,5 @@
 import { assertBundle } from "./engine/contracts.mjs";
 import { loadBundle, orderedItems } from "./engine/loader.mjs";
-import { validateEnrollmentCode } from "./engine/enrollment-code.mjs";
 import { buildEvidenceMap } from "./engine/evidence-map.mjs";
 import { newAttempt, beginAttempt, createRawResponse, advanceAttempt, assertAttemptComplete } from "./engine/session-machine.mjs";
 import { encodeBackup } from "./engine/backup-code.mjs";
@@ -8,6 +7,7 @@ import { LocalStore, snapshotFromBundle } from "./infra/storage.mjs";
 import { ensureQueued, syncOutbox } from "./infra/sync.mjs";
 import { registerServiceWorker } from "./infra/sw-client.mjs";
 import { SupabaseHttp } from "./infra/supabase-http.mjs";
+import { authorizeEnrollment } from "./infra/enrollment.mjs";
 import { drawQr } from "./infra/qr.mjs";
 import { assessReleaseReadiness } from "./engine/release-readiness.mjs";
 import { buildDemoBundle, DEMO_DATABASE_NAME } from "./engine/demo-isolation.mjs";
@@ -96,36 +96,80 @@ async function showWelcome() {
     hasProfile: Boolean(profile),
     offlineReady,
     onStart: async () => {
-      if (profile) await createAttempt(profile.enrollment_code);
-      else renderEnrollment(root, bundle, { demo: demoMode, onSubmit: enroll });
+      if (!profile) return renderEnrollment(root, bundle, { demo: demoMode, onSubmit: enroll });
+      const validation = await refreshProvisionalProfile(profile);
+      if (!validation.ok) {
+        await store.deleteProfile(bundle.deployment.deployment_id);
+        profile = null;
+        return renderEnrollment(root, bundle, { demo: demoMode, onSubmit: enroll, initialError: validation.reason });
+      }
+      await createAttempt(profile);
     },
   });
 }
 
+async function refreshProvisionalProfile(enrollmentProfile) {
+  if (enrollmentProfile.enrollment_status === "confirmed") return { ok: true };
+  const validation = await authorizeEnrollment(enrollmentProfile.enrollment_code, bundle, { demo: demoMode });
+  if (!validation.ok) return validation;
+  profile = {
+    ...enrollmentProfile,
+    enrollment_status: validation.enrollment_status,
+    enrollment_checked_at: validation.checked_at,
+    provisional_reason: validation.provisional_reason ?? null,
+  };
+  await store.putProfile(profile);
+  return validation;
+}
+
 async function enroll(rawCode) {
-  const validation = await validateEnrollmentCode(rawCode, bundle.deployment.enrolamiento, { demo: demoMode });
+  const validation = await authorizeEnrollment(rawCode, bundle, { demo: demoMode });
   if (!validation.ok) return validation;
   profile = {
     deployment_id: bundle.deployment.deployment_id,
     enrollment_code: validation.formatted,
-    enrollment_hash: validation.digest,
+    enrollment_status: validation.enrollment_status,
+    enrollment_checked_at: validation.checked_at,
+    provisional_reason: validation.provisional_reason ?? null,
     demo: demoMode,
     enrolled_at: new Date().toISOString(),
   };
   await store.putProfile(profile);
   navigator.storage?.persist?.().catch(() => false);
-  await createAttempt(profile.enrollment_code);
+  await createAttempt(profile);
   return validation;
 }
 
-async function createAttempt(enrollmentCode) {
-  attempt = newAttempt(bundle, enrollmentCode);
+async function createAttempt(enrollmentProfile) {
+  attempt = newAttempt(bundle, enrollmentProfile.enrollment_code, {
+    enrollmentStatus: enrollmentProfile.enrollment_status ?? "provisional",
+  });
   await store.createAttempt(attempt, snapshotFromBundle(bundle));
   responses = [];
-  renderInstructions(root, bundle, startAttempt);
+  renderInstructions(root, bundle, startAttempt, { enrollmentStatus: attempt.enrollment_status });
 }
 
 async function startAttempt() {
+  if (attempt.enrollment_status === "provisional") {
+    const validation = await refreshProvisionalProfile(profile ?? {
+      deployment_id: bundle.deployment.deployment_id,
+      enrollment_code: attempt.enrollment_code,
+      enrollment_status: attempt.enrollment_status,
+      demo: demoMode,
+    });
+    if (!validation.ok) {
+      await store.discardInstructionAttempt({
+        attemptId: attempt.attempt_id,
+        deploymentId: bundle.deployment.deployment_id,
+      });
+      attempt = null;
+      responses = [];
+      profile = null;
+      renderEnrollment(root, bundle, { demo: demoMode, onSubmit: enroll, initialError: validation.reason });
+      return;
+    }
+    attempt = { ...attempt, enrollment_status: profile.enrollment_status };
+  }
   attempt = beginAttempt(attempt);
   await store.putAttempt(attempt);
   showCurrentItem();
@@ -182,8 +226,10 @@ async function copyBackup(code) {
 async function runSync({ rerender = true } = {}) {
   syncState = await syncOutbox(store, bundle.deployment.backend, {
     onChange: (state) => { syncState = state; },
+    attemptId: attempt.attempt_id,
+    administrationId: attempt.administration_id,
   });
-  if (syncState.state === "synced") {
+  if (["synced", "orphaned"].includes(syncState.state)) {
     attempt = await store.getAttemptByAdministration(attempt.administration_id);
   }
   if (rerender && ["completed", "synced"].includes(attempt.status)) await showMap({ sync: false });
@@ -248,7 +294,7 @@ async function resume() {
   bundle = await restoreSnapshotIfNeeded(attempt);
   setBranding();
   responses = await store.getResponses(attempt.attempt_id);
-  if (attempt.status === "instructions") return renderInstructions(root, bundle, startAttempt);
+  if (attempt.status === "instructions") return renderInstructions(root, bundle, startAttempt, { enrollmentStatus: attempt.enrollment_status });
   if (attempt.status === "in_progress") return showCurrentItem();
   if (["completed", "synced"].includes(attempt.status)) return showMap();
   throw new Error("El estado local de la sesión no es reconocible");

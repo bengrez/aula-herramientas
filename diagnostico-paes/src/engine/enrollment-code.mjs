@@ -58,9 +58,9 @@ export async function sha256Hex(value) {
 export async function validateEnrollmentCode(raw, config, { demo = false } = {}) {
   const shape = validateCodeShape(raw, config);
   if (!shape.ok) return shape;
+  if (!demo) return shape;
   const digest = await sha256Hex(shape.normalized);
-  const allowed = demo ? config.hashes_demo : config.hashes_permitidos;
-  if (!allowed.includes(digest)) {
+  if (!config.hashes_demo.includes(digest)) {
     return { ...shape, ok: false, reason: "Este código no pertenece a esta sesión. Pide al adulto a cargo que revise tu tarjeta." };
   }
   return { ...shape, digest };

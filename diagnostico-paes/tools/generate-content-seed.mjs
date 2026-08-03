@@ -9,7 +9,7 @@ const readJson = async (path) => JSON.parse(await readFile(join(root, path), "ut
 const bundle = assertBundle({
   active: await readJson("data/active.json"),
   framework: await readJson("data/paes-ciencias-2027/framework.v1.json"),
-  bank: await readJson("data/paes-ciencias-2027/bank-anchor-placeholder.v1.json"),
+  bank: await readJson("data/paes-ciencias-2027/bank-anchor.v0.3.json"),
   session: await readJson("data/paes-ciencias-2027/session-anchor-2026-08-17.v1.json"),
   deployment: await readJson("data/paes-ciencias-2027/deployment.v1.json"),
 });
@@ -18,7 +18,7 @@ const quote = (value) => value === null || value === undefined ? "null" : `'${St
 const json = (value) => `${quote(JSON.stringify(value))}::jsonb`;
 const statements = [
   "-- Generated from the versioned public data files. Do not hand-edit.",
-  "-- Placeholder content remains disabled until pedagogical review.",
+  "-- Draft content remains disabled until the nine pending items receive teacher review.",
   "begin;",
 ];
 
@@ -69,12 +69,12 @@ on conflict (framework_id, framework_version, unit_code) do update set area_code
 
 const bank = bundle.bank;
 statements.push(`insert into private.item_banks (bank_id, bank_version, framework_id, framework_version, status, metadata)
-values (${quote(bank.banco_id)}, ${quote(bank.version)}, ${quote(bank.marco_id)}, ${quote(bank.marco_version)}, 'placeholder', ${json({ estado_autoria: bank.estado_autoria, aviso: bank.aviso })})
+values (${quote(bank.banco_id)}, ${quote(bank.version)}, ${quote(bank.marco_id)}, ${quote(bank.marco_version)}, 'review', ${json({ estado_autoria: bank.estado_autoria, aviso: bank.aviso, fuente_local: bank.fuente_local })})
 on conflict (bank_id, bank_version) do update set status = excluded.status, metadata = excluded.metadata;`);
 
 bank.items.forEach((item, index) => {
   statements.push(`insert into private.items (framework_id, framework_version, item_id, item_version, unit_code, criterion_code, axis_code, stimulus_format, stimulus, prompt, alternatives, answer_key, answer_key_status, metadata)
-values (${quote(item.marco_id)}, ${quote(item.marco_version)}, ${quote(item.item_id)}, ${quote(item.version)}, ${quote(item.unidad_id)}, ${quote(item.criterio_id)}, ${quote(item.eje)}, ${quote(item.formato_estimulo)}, ${json(item.estimulo)}, ${quote(item.enunciado)}, ${json(item.alternativas)}, ${quote(item.clave)}, ${quote(item.estado_clave)}, ${json({ placeholder: true })})
+values (${quote(item.marco_id)}, ${quote(item.marco_version)}, ${quote(item.item_id)}, ${quote(item.version)}, ${quote(item.unidad_id)}, ${quote(item.criterio_id)}, ${quote(item.eje)}, ${quote(item.formato_estimulo)}, ${json(item.estimulo)}, ${quote(item.enunciado)}, ${json(item.alternativas)}, ${quote(item.clave)}, ${quote(item.estado_clave)}, ${json({ unidad_rol: item.unidad_rol, estado_revision: item.estado_revision, razonamiento_esperado: item.razonamiento_esperado, por_que_no_mide_contenido: item.por_que_no_mide_contenido })})
 on conflict (framework_id, framework_version, item_id, item_version) do update set unit_code = excluded.unit_code, criterion_code = excluded.criterion_code, axis_code = excluded.axis_code, stimulus_format = excluded.stimulus_format, stimulus = excluded.stimulus, prompt = excluded.prompt, alternatives = excluded.alternatives, answer_key = excluded.answer_key, answer_key_status = excluded.answer_key_status, metadata = excluded.metadata;`);
   statements.push(`insert into private.bank_items (bank_id, bank_version, framework_id, framework_version, item_id, item_version, position)
 values (${quote(bank.banco_id)}, ${quote(bank.version)}, ${quote(item.marco_id)}, ${quote(item.marco_version)}, ${quote(item.item_id)}, ${quote(item.version)}, ${index + 1})

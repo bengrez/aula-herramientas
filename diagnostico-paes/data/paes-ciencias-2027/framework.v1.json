@@ -139,8 +139,8 @@
         },
         {
           "id": "HC-02.C6",
-          "etiqueta": "Distinguir qué se cambia, qué se mide y qué se mantiene",
-          "descripcion": "Reconocer variable independiente, dependiente y controladas.",
+          "etiqueta": "Distinguir las variables de un experimento",
+          "descripcion": "Ver qué se cambia, qué se mide y qué se mantiene igual.",
           "criterio_oficial_parafraseado": "Distinguir variables de una investigación.",
           "evidencia_esperada": "Identifica qué se manipula, qué se mide y qué se mantiene.",
           "error_distinguible": "Confunde el resultado con la variable independiente o trata un control como respuesta.",
@@ -161,8 +161,8 @@
       "criterios": [
         {
           "id": "HC-03.C1",
-          "etiqueta": "Leer ejes, unidades y tendencias antes de interpretar",
-          "descripcion": "Leer ejes, unidades, variación conjunta y proporcionalidad antes de interpretar.",
+          "etiqueta": "Leer bien un gráfico o una tabla",
+          "descripcion": "Mirar los ejes, las unidades y la escala antes de sacar conclusiones.",
           "criterio_oficial_parafraseado": "Identificar relaciones, patrones o tendencias, usando matemáticas cuando corresponda.",
           "evidencia_esperada": "Describe el patrón y realiza la operación mínima pertinente.",
           "error_distinguible": "Compara números brutos, ignora escala/unidad o se fija en un único dato.",
@@ -191,8 +191,8 @@
         },
         {
           "id": "HC-03.C3",
-          "etiqueta": "Sacar conclusiones sin ir más allá de los datos",
-          "descripcion": "Elegir la afirmación de alcance compatible con los datos.",
+          "etiqueta": "Concluir sin decir de más",
+          "descripcion": "Que la conclusión no vaya más allá de lo que los datos probaron.",
           "criterio_oficial_parafraseado": "Identificar conclusiones o inferencias a partir de resultados.",
           "evidencia_esperada": "Concluye sin exceder población, variables ni condiciones estudiadas.",
           "error_distinguible": "Generaliza más allá de la muestra o infiere causalidad desde asociación.",
@@ -212,8 +212,8 @@
       "criterios": [
         {
           "id": "HC-04.C1",
-          "etiqueta": "Detectar límites, sesgos y comparaciones débiles",
-          "descripcion": "Detectar sesgo, ausencia de control, medición inadecuada o extrapolación.",
+          "etiqueta": "Encontrar la falla de un estudio",
+          "descripcion": "Reconocer variables confundidas, falta de comparación o muestras sesgadas.",
           "criterio_oficial_parafraseado": "Evaluar validez, confiabilidad, alcance o limitaciones.",
           "evidencia_esperada": "Explica qué limita la interpretación y cómo afecta la conclusión.",
           "error_distinguible": "Evalúa por si “le gusta” el resultado o confunde tamaño de efecto con validez.",
@@ -3161,6 +3161,12 @@
         "aciertos": 3,
         "estado": "evidencia_consistente"
       }
-    ]
+    ],
+    "respuestas_rapidas": {
+      "umbral_ms": 10000,
+      "sesion_ancla": "marcar_sin_excluir",
+      "modo_autonomo": "excluir_de_cobertura",
+      "recalibrar_con_datos_reales": true
+    }
   }
 }

@@ -54,9 +54,11 @@ begin
   if has_table_privilege('authenticated', 'private.responses', 'update') then raise exception 'authenticated can update responses'; end if;
   if has_table_privilege('authenticated', 'private.responses', 'delete') then raise exception 'authenticated can delete responses'; end if;
   if has_schema_privilege('authenticated', 'private', 'usage') then raise exception 'authenticated can use private schema'; end if;
-  if has_function_privilege('authenticated', 'private.submit_session_v1_internal(text,uuid,text,text,text,text,text,timestamptz,timestamptz,jsonb)', 'execute') then raise exception 'authenticated can execute internal submission function'; end if;
-  if has_function_privilege('anon', 'api.submit_session_v1(text,uuid,text,text,text,text,text,timestamptz,timestamptz,jsonb)', 'execute') then raise exception 'anon can execute submission RPC'; end if;
-  if not has_function_privilege('authenticated', 'api.submit_session_v1(text,uuid,text,text,text,text,text,timestamptz,timestamptz,jsonb)', 'execute') then raise exception 'authenticated cannot execute submission RPC'; end if;
+  if has_function_privilege('authenticated', 'private.submit_session_v1_internal(text,uuid,text,text,text,text,text,text,timestamptz,timestamptz,jsonb)', 'execute') then raise exception 'authenticated can execute internal submission function'; end if;
+  if has_function_privilege('anon', 'api.submit_session_v1(text,uuid,text,text,text,text,text,text,timestamptz,timestamptz,jsonb)', 'execute') then raise exception 'anon can execute submission RPC'; end if;
+  if has_function_privilege('anon', 'api.enroll_session_v1(text,text,text,text)', 'execute') then raise exception 'anon can execute enrollment RPC'; end if;
+  if not has_function_privilege('authenticated', 'api.submit_session_v1(text,uuid,text,text,text,text,text,text,timestamptz,timestamptz,jsonb)', 'execute') then raise exception 'authenticated cannot execute submission RPC'; end if;
+  if not has_function_privilege('authenticated', 'api.enroll_session_v1(text,text,text,text)', 'execute') then raise exception 'authenticated cannot execute enrollment RPC'; end if;
 
   if exists (
     select 1
@@ -86,7 +88,10 @@ begin
     join pg_namespace n on n.oid = p.pronamespace
     where n.nspname = 'api'
       and has_function_privilege('authenticated', p.oid, 'execute')
-      and p.oid <> 'api.submit_session_v1(text,uuid,text,text,text,text,text,timestamptz,timestamptz,jsonb)'::regprocedure
+      and p.oid not in (
+        'api.submit_session_v1(text,uuid,text,text,text,text,text,text,timestamptz,timestamptz,jsonb)'::regprocedure,
+        'api.enroll_session_v1(text,text,text,text)'::regprocedure
+      )
   ) then raise exception 'authenticated can execute unexpected api function'; end if;
 end $$;
 

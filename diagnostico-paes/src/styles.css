@@ -437,6 +437,15 @@ h3 { margin-bottom: 8px; font-size: 1.18rem; }
 .stimulus > :last-child { margin-bottom: 0; }
 .stimulus-title { font-weight: 900; }
 .stimulus-note { color: var(--grey); font-size: 0.82rem; }
+.stimulus-text { white-space: pre-line; }
+.chart-range { padding: 7px 10px; color: var(--ink); background: #fff4cf; border: 2px solid #8f6910; border-radius: 8px; font-weight: 900; }
+.chart-grid { stroke: #aebbbd; stroke-width: 1; }
+.chart-axis { stroke: currentColor; stroke-width: 3; }
+.chart-axis-break { fill: none; stroke: currentColor; stroke-width: 3; }
+.chart-line { fill: none; stroke: #006c65; stroke-width: 5; stroke-linecap: round; stroke-linejoin: round; }
+.chart-point { fill: #fff; stroke: #006c65; stroke-width: 4; }
+.chart-tick { fill: currentColor; font-size: 17px; font-weight: 750; }
+.chart-label { fill: currentColor; font-size: 19px; font-weight: 900; }
 
 .stimulus { min-width: 0; max-width: 100%; }
 .table-scroll { max-width: 100%; overflow-x: auto; overscroll-behavior-inline: contain; }
@@ -445,6 +454,7 @@ h3 { margin-bottom: 8px; font-size: 1.18rem; }
 .stimulus th, .stimulus td { padding: 8px; border: 1px solid var(--line); text-align: left; }
 .stimulus th { color: #fff; background: var(--ink); }
 .stimulus svg { display: block; width: 100%; max-height: 310px; }
+.stimulus svg.line-chart { max-height: none; }
 
 .question-text { margin: 24px 0 18px; font-size: 1.1rem; font-weight: 900; }
 

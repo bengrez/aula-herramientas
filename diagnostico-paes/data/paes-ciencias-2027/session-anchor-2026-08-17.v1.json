@@ -5,15 +5,16 @@
   "tipo": "ancla_supervisada",
   "marco_id": "paes-ciencias",
   "marco_version": "admision-2027.v1",
-  "banco_id": "ancla-placeholder",
-  "banco_version": "1",
+  "banco_id": "ancla-paes-ciencias",
+  "banco_version": "0.3",
   "perfil_evidencia_id": "ancla-habilidades-v1-provisional",
   "reglas": {
     "orden_fijo": true,
     "permite_retroceso": false,
     "muestra_feedback": false,
     "permite_omitir": true,
-    "maximo_zonas_foco": 1
+    "maximo_zonas_foco": 1,
+    "tratamiento_respuestas_rapidas": "marcar_sin_excluir"
   },
   "orden_foco_estados": [
     "requiere_refuerzo",
@@ -26,17 +27,17 @@
     "repeticiones_por_criterio": 3
   },
   "items": [
-    { "item_id": "ANCLA-P01", "item_version": "placeholder.1", "orden": 1 },
-    { "item_id": "ANCLA-P02", "item_version": "placeholder.1", "orden": 2 },
-    { "item_id": "ANCLA-P03", "item_version": "placeholder.1", "orden": 3 },
-    { "item_id": "ANCLA-P04", "item_version": "placeholder.1", "orden": 4 },
-    { "item_id": "ANCLA-P05", "item_version": "placeholder.1", "orden": 5 },
-    { "item_id": "ANCLA-P06", "item_version": "placeholder.1", "orden": 6 },
-    { "item_id": "ANCLA-P07", "item_version": "placeholder.1", "orden": 7 },
-    { "item_id": "ANCLA-P08", "item_version": "placeholder.1", "orden": 8 },
-    { "item_id": "ANCLA-P09", "item_version": "placeholder.1", "orden": 9 },
-    { "item_id": "ANCLA-P10", "item_version": "placeholder.1", "orden": 10 },
-    { "item_id": "ANCLA-P11", "item_version": "placeholder.1", "orden": 11 },
-    { "item_id": "ANCLA-P12", "item_version": "placeholder.1", "orden": 12 }
+    { "item_id": "A-01", "item_version": "0.3", "orden": 1 },
+    { "item_id": "B-02", "item_version": "0.3", "orden": 2 },
+    { "item_id": "C-03", "item_version": "0.3", "orden": 3 },
+    { "item_id": "D-01", "item_version": "0.3", "orden": 4 },
+    { "item_id": "A-02", "item_version": "0.3", "orden": 5 },
+    { "item_id": "B-03", "item_version": "0.3", "orden": 6 },
+    { "item_id": "C-01", "item_version": "0.3", "orden": 7 },
+    { "item_id": "D-02", "item_version": "0.3", "orden": 8 },
+    { "item_id": "A-03", "item_version": "0.3", "orden": 9 },
+    { "item_id": "B-01", "item_version": "0.3", "orden": 10 },
+    { "item_id": "C-02", "item_version": "0.3", "orden": 11 },
+    { "item_id": "D-03", "item_version": "0.3", "orden": 12 }
   ]
 }

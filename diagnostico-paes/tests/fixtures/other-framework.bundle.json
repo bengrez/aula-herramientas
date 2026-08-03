@@ -70,12 +70,14 @@
       "marco_id": "marco-ejemplo",
       "marco_version": "1",
       "unidad_id": "AREA-01.01",
+      "unidad_rol": "medicion",
       "criterio_id": "H-01.C1",
       "eje": "Ejemplo",
       "formato_estimulo": "texto",
+      "estado_revision": "aprobado_piloto",
       "estimulo": { "tipo": "texto", "texto": "Dato mínimo.", "texto_alternativo": "Dato mínimo en texto." },
       "enunciado": "¿Qué opción corresponde?",
-      "alternativas": [{ "id": "A", "texto": "Primera" }, { "id": "B", "texto": "Segunda" }],
+      "alternativas": [{ "id": "A", "texto": "Primera", "diagnostico": "Clave." }, { "id": "B", "texto": "Segunda", "diagnostico": "Distractor de ejemplo." }],
       "clave": "A",
       "estado_clave": "ok"
     }]
@@ -90,7 +92,7 @@
     "banco_id": "banco-ejemplo",
     "banco_version": "1",
     "perfil_evidencia_id": "perfil-1",
-    "reglas": { "orden_fijo": true, "permite_retroceso": false, "muestra_feedback": false, "permite_omitir": true },
+    "reglas": { "orden_fijo": true, "permite_retroceso": false, "muestra_feedback": false, "permite_omitir": true, "maximo_zonas_foco": 1, "tratamiento_respuestas_rapidas": "marcar_sin_excluir" },
     "orden_foco_estados": ["requiere_refuerzo", "evidencia_inicial"],
     "items": [{ "item_id": "ITEM-01", "item_version": "1", "orden": 1 }]
   },

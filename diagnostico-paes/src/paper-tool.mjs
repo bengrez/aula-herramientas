@@ -134,7 +134,11 @@ async function renderSubmission(submission, formattedCode) {
           await client.rpc(bundle.deployment.backend.rpc_name, createSubmissionPayload(submission.attempt, submission.responses)),
           submission.attempt.attempt_id,
         );
-        syncStatus.textContent = receipt?.status === "already_synced" ? "Este respaldo ya había sido recibido." : "Respaldo recibido por la base de datos.";
+        syncStatus.textContent = ["orphaned", "already_orphaned"].includes(receipt?.status)
+          ? "Respaldo recibido para conciliación: el adulto deberá asociarlo a la tarjeta."
+          : receipt?.status === "already_synced"
+            ? "Este respaldo ya había sido recibido."
+            : "Respaldo recibido por la base de datos.";
       } catch (error) {
         syncStatus.textContent = `No se pudo enviar: ${error.message}. El CSV y el código siguen disponibles.`;
         event.currentTarget.disabled = false;

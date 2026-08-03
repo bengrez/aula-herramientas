@@ -13,7 +13,7 @@ async function productionBundle() {
   return assertBundle({
     active: await readJson("data/active.json"),
     framework: await readJson("data/paes-ciencias-2027/framework.v1.json"),
-    bank: await readJson("data/paes-ciencias-2027/bank-anchor-placeholder.v1.json"),
+    bank: await readJson("data/paes-ciencias-2027/bank-anchor.v0.3.json"),
     session: await readJson("data/paes-ciencias-2027/session-anchor-2026-08-17.v1.json"),
     deployment: await readJson("data/paes-ciencias-2027/deployment.v1.json"),
   });
@@ -22,8 +22,6 @@ async function productionBundle() {
 test("la demostración usa identidad, administración, códigos y backend aislados", async () => {
   const production = await productionBundle();
   assert.deepEqual(production.deployment.enrolamiento.hashes_permitidos, []);
-  const syntheticProductionHash = "a".repeat(64);
-  production.deployment.enrolamiento.hashes_permitidos = [syntheticProductionHash];
   const demo = buildDemoBundle(production);
 
   assert.match(DEMO_DATABASE_NAME, /demo/);
@@ -35,5 +33,5 @@ test("la demostración usa identidad, administración, códigos y backend aislad
   assert.equal(demo.deployment.backend.url, "");
   assert.equal(demo.deployment.backend.publishable_key, "");
   assert.equal(demo.deployment.pilot_ready, false);
-  assert.deepEqual(production.deployment.enrolamiento.hashes_permitidos, [syntheticProductionHash]);
+  assert.deepEqual(production.deployment.enrolamiento.hashes_permitidos, []);
 });

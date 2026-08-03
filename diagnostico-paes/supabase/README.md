@@ -2,27 +2,29 @@
 
 Este directorio contiene un backend de recepción de respuestas crudas. No calcula puntajes ni perfiles y no expone lectura de tablas al navegador.
 
-> **Estado actual: no desplegado y NO-GO.** No hay URL ni clave real configuradas en los datos públicos, el contenido sigue siendo de relleno y `private.administrations.enabled` se siembra como `false`.
+> **Estado actual: no desplegado y NO-GO.** No hay URL ni clave real configuradas en los datos públicos, nueve de los 12 ítems ancla siguen pendientes de revisión docente y `private.administrations.enabled` se siembra como `false`.
 
 ## Modelo de seguridad
 
 La migración crea:
 
 - `private`: marco, contenido, códigos hash, autorizaciones, intentos, respuestas y exportación administrativa;
-- `api`: solo el wrapper `submit_session_v1` expuesto a PostgREST;
+- `api`: solo los wrappers `enroll_session_v1` y `submit_session_v1` expuestos a PostgREST;
 - RLS habilitado en todas las tablas y privilegios de tabla revocados a `public`, `anon` y `authenticated`;
 - una función interna `security definer`, con `search_path` vacío y validación completa del payload;
 - un wrapper `security definer` mínimo en el esquema expuesto, con `search_path` vacío;
 - permisos de ejecución solo para usuarios `authenticated`;
 - una comprobación adicional de `auth.jwt().is_anonymous = true`;
+- validación de pertenencia al abrir la sesión, sin publicar hashes de cohorte en el cliente;
 - idempotencia por `attempt_id` y hash del payload;
+- recepción provisional de una entrega cuyo código aún no existe como `orphaned`, seguida de conciliación administrativa explícita;
 - recepción uniforme de lotes `device` o `paper`, con reglas temporales específicas para cada procedencia;
 - unicidad de estudiante seudónimo + administración;
 - `private.raw_response_export_v1`, sin permiso para clientes.
 
 Los accesos anónimos crean un usuario real de Auth que usa el rol `authenticated`, no el rol `anon`. La distinción mediante `is_anonymous` sigue la [documentación oficial de Supabase](https://supabase.com/docs/guides/auth/auth-anonymous). Si se modifica la política, revisar también [RLS](https://supabase.com/docs/guides/database/postgres/row-level-security) y las recomendaciones para [funciones de base de datos](https://supabase.com/docs/guides/database/functions).
 
-La clave publicable de Supabase puede estar en un cliente estático; su seguridad depende de RLS y de los privilegios del RPC. El rol cliente solo puede ejecutar `api.submit_session_v1`: no tiene `USAGE` sobre `private` ni permiso para invocar la función interna. **Nunca** incorporar al sitio una clave `service_role`, contraseña de base de datos, token personal ni cadena de conexión.
+La clave publicable de Supabase puede estar en un cliente estático; su seguridad depende de RLS y de los privilegios de los RPC. El rol cliente solo puede ejecutar `api.enroll_session_v1` y `api.submit_session_v1`: no tiene `USAGE` sobre `private` ni permiso para invocar funciones internas. **Nunca** incorporar al sitio una clave `service_role`, contraseña de base de datos, token personal ni cadena de conexión.
 
 `api` es un esquema dedicado a este contrato. La migración retira privilegios cliente de cualquier
 objeto previo en `api` y `private`, y fija privilegios predeterminados restrictivos para los objetos que
@@ -31,9 +33,10 @@ propios `ALTER DEFAULT PRIVILEGES` y volver a ejecutar el contrato de esquema an
 
 ## Archivos y orden de aplicación
 
-1. `migrations/202607310001_diagnostic_engine.sql`: esquema, tablas, restricciones, RLS, funciones, privilegios y vista de exportación.
-2. `seed-content-placeholder.sql`: marco, banco, plantilla y administración de relleno. Deja todo como borrador y la administración deshabilitada.
-3. `seed-enrollment-hashes.example.sql`: ejemplo público deliberadamente vacío. El archivo privado `seed-enrollment-hashes.sql` está ignorado por Git y no debe vivir en el árbol que se publica.
+1. `migrations/202607310001_diagnostic_engine.sql`: esquema, tablas, restricciones, RLS y contrato inicial.
+2. `migrations/202608020001_enrollment_authority_and_orphans.sql`: autoridad de enrolamiento, sesiones provisionales, entregas huérfanas, conciliación y contrato RPC vigente.
+3. `seed-content-placeholder.sql`: marco, banco ancla v0.3, plantilla y administración. El nombre se conserva por compatibilidad histórica; el seed mantiene el banco pendiente de revisión y la administración deshabilitada.
+4. `seed-enrollment-hashes.example.sql`: ejemplo público deliberadamente vacío. El archivo privado `seed-enrollment-hashes.sql` está ignorado por Git y no debe vivir en el árbol que se publica.
 
 Los seeds de contenido son repetibles sobre los mismos IDs, pero no deben usarse para mutar una versión que ya recibió respuestas. Para un nuevo instrumento o aplicación, crear IDs/versiones y seeds nuevos. El enrolamiento real se provisiona desde una fuente restringida controlada por el docente, nunca desde el repositorio público.
 
@@ -53,6 +56,7 @@ Aplicar como propietario desde SQL Editor o una conexión administrativa, en est
 
 ```text
 supabase/migrations/202607310001_diagnostic_engine.sql
+supabase/migrations/202608020001_enrollment_authority_and_orphans.sql
 supabase/seed-content-placeholder.sql
 supabase/seed-enrollment-hashes.example.sql
 ```
@@ -92,7 +96,7 @@ El generador rechaza destinos dentro del repositorio y no sobrescribe archivos e
 - el seed de hashes/UUID que se aplica directamente al backend privado;
 - las tarjetas o sobres individuales con el código en claro.
 
-La asociación entre `ALN-NN`/UUID y una persona vuelve identificable el conjunto. Mantener esa correspondencia separada de las respuestas y limitar quién puede unir ambas fuentes. El despliegue público mantiene `hashes_permitidos: []`; por ello, el modo real permanece cerrado hasta que se defina una validación de pertenencia que no exponga la cohorte en GitHub Pages.
+La asociación entre `ALN-NN`/UUID y una persona vuelve identificable el conjunto. Mantener esa correspondencia separada de las respuestas y limitar quién puede unir ambas fuentes. El despliegue público mantiene `hashes_permitidos: []` de forma permanente. El cliente comprueba solo forma y checksum; con red, `api.enroll_session_v1` determina la pertenencia. Sin red o ante una falla transitoria, la sesión continúa como provisional y se concilia al respaldar. Un rechazo definitivo de pertenencia no permite comenzar.
 
 ## Validación local de PostgreSQL
 
@@ -110,6 +114,8 @@ docker exec -i paes-sql-check psql -v ON_ERROR_STOP=1 -U postgres \
 docker exec -i paes-sql-check psql -v ON_ERROR_STOP=1 -U postgres \
   < supabase/migrations/202607310001_diagnostic_engine.sql
 docker exec -i paes-sql-check psql -v ON_ERROR_STOP=1 -U postgres \
+  < supabase/migrations/202608020001_enrollment_authority_and_orphans.sql
+docker exec -i paes-sql-check psql -v ON_ERROR_STOP=1 -U postgres \
   < supabase/seed-content-placeholder.sql
 docker exec -i paes-sql-check psql -v ON_ERROR_STOP=1 -U postgres \
   < supabase/tests/schema-contract.sql
@@ -124,7 +130,7 @@ Al terminar, eliminar **solo** ese contenedor temporal:
 docker rm -f paes-sql-check
 ```
 
-El test RPC inyecta transitoriamente tres registros desde el ledger restringido, habilita la administración solo dentro del contenedor y no escribe esos valores en el repositorio. Comprueba: rechazo de código inválido y JWT no anónimo; rechazo de lote incompleto, alternativa inexistente y marco inconsistente; entrega de 12 respuestas de dispositivo con tiempos; forma exacta de los recibos; reintento idempotente con la misma identidad, después de perder la sesión Auth y después de cerrar la administración/vencer el código; conservación de la identidad Auth original; rechazo de un intento nuevo desde la identidad de reemplazo, de un segundo intento para la misma administración y de un payload conflictivo; y entrega de 12 respuestas de papel sin tiempos.
+El test RPC inyecta transitoriamente registros desde el ledger restringido, habilita la administración solo dentro del contenedor y no escribe esos valores en el repositorio. Comprueba: enrolamiento conocido y rechazo genérico de código ajeno; rechazo de JWT no anónimo; rechazo de lote incompleto, alternativa inexistente y marco inconsistente; entrega de 12 respuestas de dispositivo con tiempos; forma exacta de los recibos; reintento idempotente con la misma identidad, después de perder la sesión Auth y después de cerrar la administración/vencer el código; conservación de la identidad Auth original; rechazo de un intento nuevo desde la identidad de reemplazo, de un segundo intento para la misma administración y de un payload conflictivo; entrega de 12 respuestas de papel sin tiempos; y recepción, reintento y conciliación privada de una entrega huérfana.
 
 ## Activación del cliente
 
@@ -137,6 +143,7 @@ Solo después del GO pedagógico, legal y técnico, editar una nueva versión de
     "url": "https://ID-REAL.supabase.co",
     "publishable_key": "CLAVE_PUBLICABLE_REAL",
     "schema": "api",
+    "enrollment_rpc_name": "enroll_session_v1",
     "rpc_name": "submit_session_v1"
   }
 }
@@ -144,7 +151,7 @@ Solo después del GO pedagógico, legal y técnico, editar una nueva versión de
 
 Los valores anteriores son marcadores explicativos, no credenciales. No copiarlos literalmente. Preferir una nueva versión del despliegue y actualizar `data/active.json` para conservar trazabilidad.
 
-Configurar el backend no basta para abrir el modo real: el cliente actual falla de forma cerrada mientras `hashes_permitidos` esté vacío. No publicar esa lista para sortear el bloqueo. Antes del GO debe resolverse la validación de pertenencia en el backend o mediante otro canal que mantenga la cohorte fuera del sitio estático.
+Configurar el backend no basta para abrir el modo real. La cohorte y sus hashes se cargan únicamente en el backend privado; `hashes_permitidos` debe seguir vacío. Antes del GO hay que probar la consulta de enrolamiento, el inicio provisional sin red, el rechazo definitivo, la recepción huérfana y su conciliación desde la URL publicada.
 
 Cuando el proyecto final ya pasó el ensayo extremo a extremo, el propietario puede habilitar exclusivamente la administración aprobada:
 
@@ -156,13 +163,15 @@ where administration_id = 'ivb-2026-08-17-ancla-01';
 
 Antes de hacerlo, verificar que contenido y plantilla en base coincidan byte/versión con los publicados. Para detener ingresos, ejecutar el mismo cambio con `enabled = false`; no es necesario retirar GitHub Pages para cerrar el RPC.
 
-## Qué valida el RPC
+## Qué validan los RPC
+
+`api.enroll_session_v1` se consulta al abrir una sesión con red. Verifica la identidad Auth anónima, la administración, la forma y el checksum, y la pertenencia del código al ledger privado. Si autoriza, liga el código a esa identidad. Los rechazos de pertenencia usan un mensaje genérico para no revelar qué códigos existen. Una indisponibilidad transitoria no se interpreta como rechazo: el cliente marca la sesión como provisional.
 
 `api.submit_session_v1` rechaza:
 
 - llamadas sin sesión Auth o con usuario no anónimo;
 - administración inactiva o fuera de ventana;
-- código con forma/checksum inválido, no autorizado, deshabilitado, prematuro o vencido;
+- código con forma/checksum inválido; si el código ya existe, autorización deshabilitada, prematura o vencida;
 - un código ligado antes a otro usuario Auth;
 - plantilla, versión o marco distintos de la administración;
 - cantidad incompleta de respuestas;
@@ -173,16 +182,15 @@ Antes de hacerlo, verificar que contenido y plantilla en base coincidan byte/ver
 - un segundo intento del mismo código en la administración;
 - reutilización de `attempt_id` con un payload distinto.
 
-Un reintento idéntico devuelve `already_synced` y no duplica filas.
+Si una sesión provisional presenta un código todavía ausente del ledger, el RPC conserva el intento y sus respuestas con `reconciliation_status = 'orphaned'`, `enrollment_code_id = null` y solo el hash del código presentado. Devuelve `orphaned`; un reintento idéntico devuelve `already_orphaned`. La función privada `private.reconcile_orphaned_attempt` permite asociarlo después de provisionar la autorización correcta. No está expuesta al cliente.
 
-Ese acuse idempotente sigue disponible si el primer intento quedó confirmado pero luego se cerró o
-deshabilitó la administración, venció el código o se perdió la identidad Auth local. No crea una
-escritura nueva: exige el mismo código autorizado, `attempt_id` y payload exacto. Las puertas mutables
-de administración, ventana y vigencia del código continúan aplicándose a todo intento nuevo.
+Para un código conocido, un reintento idéntico devuelve `already_synced` y no duplica filas.
+
+Ese acuse idempotente sigue disponible si el primer intento quedó confirmado pero luego se cerró o deshabilitó la administración, venció el código o se perdió la identidad Auth local. No crea una escritura nueva: exige el mismo código, `attempt_id` y payload exacto. Las puertas mutables de administración, ventana y vigencia del código continúan aplicándose a todo intento nuevo.
 
 ## Exportación cruda
 
-La vista administrativa tiene una fila por respuesta y las mismas columnas permitidas por el CSV local:
+La vista administrativa tiene una fila por respuesta y las mismas columnas permitidas por el CSV local. Incluye `reconciliation_status`; una entrega huérfana conserva `participant_ref = null` hasta su conciliación:
 
 ```sql
 select *
@@ -206,7 +214,7 @@ La exportación cruda no es todavía una guía de reforzamiento. Cualquier anál
 
 ## Papel y respaldos manuales
 
-El código/QR final puede convertirse a CSV local desde `backup.html`; esa herramienta no escribe en Supabase. El formato compacto `DX2` conserva los identificadores crudos para idempotencia y solo se reconstruye contra la versión exacta del paquete activo; el recuperador también acepta el formato legado `DX1`. La hoja de `print.html` puede asociarse a un código opaco y `paper.html` permite transcribir sus 12 marcas, validarlas y generar CSV/código/QR sin inventar tiempos.
+El código/QR final puede convertirse a CSV local desde `backup.html`; esa herramienta no escribe en Supabase. El formato compacto `DX3` conserva el estado confirmado/provisional y los identificadores crudos para idempotencia, y solo se reconstruye contra la versión exacta del paquete activo; el recuperador también acepta los formatos legados `DX1` y `DX2`. La hoja de `print.html` puede asociarse a un código opaco y `paper.html` permite transcribir sus 12 marcas, validarlas y generar CSV/código/QR sin inventar tiempos.
 
 El mismo `api.submit_session_v1` admite el envío desde `paper.html`, pero somete ambos orígenes a reglas distintas:
 
@@ -243,13 +251,14 @@ Los proyectos Free con poca actividad durante siete días pueden [pausarse autom
 
 ### GO solo si
 
-- [ ] contenido real, claves y reglas están aprobados y versionados;
+- [ ] los 12 ítems, claves, distractores y reglas están aprobados y versionados;
 - [ ] el docente registró su decisión de privacidad y definió el aviso final;
 - [ ] ledger, hashes y UUID derivados permanecen fuera del repositorio y del sitio público;
 - [ ] migración, seeds y privilegios fueron auditados en el proyecto correcto;
 - [ ] Auth anónimo, esquema `api`, límite por IP y mitigación de abuso fueron configurados;
 - [ ] cliente publicado usa solo URL y clave publicable reales;
 - [ ] prueba desde GitHub Pages confirmó `synced`, `already_synced` y 12 filas únicas para dispositivo;
+- [ ] otra prueba confirmó apertura provisional, recibos `orphaned`/`already_orphaned` y conciliación privada sin pérdida ni duplicación;
 - [ ] si habrá papel, otra prueba confirmó envío `paper`, tiempos nulos y conciliación sin duplicados;
 - [ ] prueba offline confirmó cola, reintento y recuperación manual;
 - [ ] exportación, retención, eliminación y cierre de administración tienen responsables;
@@ -257,7 +266,7 @@ Los proyectos Free con poca actividad durante siete días pueden [pausarse autom
 
 ### NO-GO automático si
 
-- persisten ítems de relleno, etiquetas provisionales o banderas de bloqueo;
+- persisten ítems pendientes de revisión, etiquetas provisionales o banderas de bloqueo;
 - falta proyecto/credencial real o la administración sigue deshabilitada;
 - se pretende usar `service_role` en el sitio;
 - los 26 dispositivos no pueden autenticarse desde la red real;

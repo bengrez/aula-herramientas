@@ -7,21 +7,27 @@ import { generatedContentSeed } from "../../tools/generate-content-seed.mjs";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "../..");
 const migrationPath = join(root, "supabase/migrations/202607310001_diagnostic_engine.sql");
+const authorityMigrationPath = join(root, "supabase/migrations/202608020001_enrollment_authority_and_orphans.sql");
 const contractPath = join(root, "supabase/tests/schema-contract.sql");
 const harnessPath = join(root, "supabase/tests/run-local-rpc-test.mjs");
 const seedPath = join(root, "supabase/seed-content-placeholder.sql");
 
 test("Supabase SQL preserves the closed-schema and relational-integrity contract", async () => {
-  const [migration, contract] = await Promise.all([
+  const [baseMigration, authorityMigration, contract] = await Promise.all([
     readFile(migrationPath, "utf8"),
+    readFile(authorityMigrationPath, "utf8"),
     readFile(contractPath, "utf8"),
   ]);
+  const migration = baseMigration + "\n" + authorityMigration;
 
   assert.match(migration, /revoke all on all functions in schema api from public, anon, authenticated;/);
   assert.match(migration, /alter default privileges in schema api revoke all on functions from public, anon, authenticated;/);
   assert.match(contract, /from information_schema\.table_privileges/);
   assert.doesNotMatch(contract, /information_schema\.role_table_grants/);
   assert.match(contract, /authenticated can execute unexpected api function/);
+  assert.match(authorityMigration, /create or replace function api\.enroll_session_v1/);
+  assert.match(authorityMigration, /receipt_status := 'orphaned'/);
+  assert.match(authorityMigration, /left join private\.enrollment_codes/);
 
   assert.match(migration, /foreign key \(bank_id, bank_version, framework_id, framework_version\)[\s\S]*?references private\.item_banks \(bank_id, bank_version, framework_id, framework_version\)/);
   assert.match(migration, /references private\.session_templates \([\s\S]*?framework_id, framework_version,[\s\S]*?bank_id, bank_version/);
@@ -39,6 +45,8 @@ test("the generated content seed matches the checked-in SQL", async () => {
 
   const sessionInsertCount = [...seed.matchAll(/insert into private\.session_items \([^\n]+bank_id, bank_version/g)].length;
   assert.equal(sessionInsertCount, 12);
+  assert.equal([...seed.matchAll(/"unidad_rol":"contexto"/g)].length, 12);
+  assert.doesNotMatch(seed, /"placeholder":true/);
 });
 
 test("the local RPC harness asserts receipts, closed retries, and original Auth binding", async () => {
@@ -48,4 +56,7 @@ test("the local RPC harness asserts receipts, closed retries, and original Auth 
   assert.match(harness, /original auth identity changed/);
   assert.match(harness, /code binding changed/);
   assert.match(harness, /session_framework_mismatch/);
+  assert.match(harness, /expected_enrollment_receipt[\s\S]*?"confirmed"/);
+  assert.match(harness, /expected_orphan_receipt[\s\S]*?"orphaned"/);
+  assert.match(harness, /reconcile_orphaned_attempt/);
 });

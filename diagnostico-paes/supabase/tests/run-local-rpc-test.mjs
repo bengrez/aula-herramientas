@@ -4,6 +4,7 @@ import { readFile } from "node:fs/promises";
 import { spawnSync } from "node:child_process";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
+import { createCode } from "../../src/engine/enrollment-code.mjs";
 
 const ledgerPath = process.argv[2];
 const container = process.argv[3];
@@ -26,7 +27,8 @@ const paperEnrollmentCode = enrollmentFixtures[1].enrollmentCode;
 const validationEnrollmentCode = enrollmentFixtures[2].enrollmentCode;
 const deployment = JSON.parse(await readFile(join(root, "data/paes-ciencias-2027/deployment.v1.json"), "utf8"));
 const session = JSON.parse(await readFile(join(root, "data/paes-ciencias-2027/session-anchor-2026-08-17.v1.json"), "utf8"));
-const bank = JSON.parse(await readFile(join(root, "data/paes-ciencias-2027/bank-anchor-placeholder.v1.json"), "utf8"));
+const bank = JSON.parse(await readFile(join(root, "data/paes-ciencias-2027/bank-anchor.v0.3.json"), "utf8"));
+const orphanEnrollmentCode = createCode("ZZZZZZZZ", deployment.enrolamiento);
 const itemById = new Map(bank.items.map((item) => [item.item_id, item]));
 const attemptId = randomUUID();
 const competingAttemptId = randomUUID();
@@ -34,6 +36,7 @@ const incompleteAttemptId = randomUUID();
 const invalidOptionAttemptId = randomUUID();
 const frameworkMismatchAttemptId = randomUUID();
 const paperAttemptId = randomUUID();
+const orphanAttemptId = randomUUID();
 const authId = randomUUID();
 const replacementAuthId = randomUUID();
 const responses = session.items.map((ref) => {
@@ -64,6 +67,7 @@ const paperResponses = session.items.map((ref) => {
     source: "paper",
   };
 });
+const orphanResponses = responses.map((response) => ({ ...response, response_id: randomUUID() }));
 const invalidOptionResponses = structuredClone(responses);
 invalidOptionResponses[0].selected_option = "OPTION-DOES-NOT-EXIST";
 const quote = (value) => `'${String(value).replaceAll("'", "''")}'`;
@@ -95,8 +99,9 @@ const call = `api.submit_session_v1(
   ${quote(session.plantilla_id)},
   ${quote(session.version)},
   ${quote(session.marco_id)},
-  ${quote(session.marco_version)},
-  '2026-08-17T11:40:00.000Z'::timestamptz,
+ ${quote(session.marco_version)},
+  'confirmed',
+ '2026-08-17T11:40:00.000Z'::timestamptz,
   '2026-08-17T12:00:00.000Z'::timestamptz,
   ${quote(JSON.stringify(responses))}::jsonb
 )`;
@@ -107,10 +112,30 @@ const paperCall = `api.submit_session_v1(
   ${quote(session.plantilla_id)},
   ${quote(session.version)},
   ${quote(session.marco_id)},
-  ${quote(session.marco_version)},
-  null,
+ ${quote(session.marco_version)},
+  'confirmed',
+ null,
   '2026-08-17T12:00:00.000Z'::timestamptz,
   ${quote(JSON.stringify(paperResponses))}::jsonb
+)`;
+const orphanCall = `api.submit_session_v1(
+  ${quote(orphanEnrollmentCode)},
+  ${quote(orphanAttemptId)}::uuid,
+  ${quote(deployment.administracion.administracion_id)},
+  ${quote(session.plantilla_id)},
+  ${quote(session.version)},
+  ${quote(session.marco_id)},
+  ${quote(session.marco_version)},
+  'provisional',
+  '2026-08-17T11:40:00.000Z'::timestamptz,
+  '2026-08-17T12:00:00.000Z'::timestamptz,
+  ${quote(JSON.stringify(orphanResponses))}::jsonb
+)`;
+const enrollCall = `api.enroll_session_v1(
+  ${quote(enrollmentCode)},
+  ${quote(deployment.administracion.administracion_id)},
+  ${quote(session.plantilla_id)},
+  ${quote(session.version)}
 )`;
 const competingCall = call.replace(attemptId, competingAttemptId);
 const conflictCall = call.replace(JSON.stringify(responses), JSON.stringify(invalidOptionResponses));
@@ -121,8 +146,9 @@ const incompleteCall = `api.submit_session_v1(
   ${quote(session.plantilla_id)},
   ${quote(session.version)},
   ${quote(session.marco_id)},
-  ${quote(session.marco_version)},
-  '2026-08-17T11:40:00.000Z'::timestamptz,
+ ${quote(session.marco_version)},
+  'confirmed',
+ '2026-08-17T11:40:00.000Z'::timestamptz,
   '2026-08-17T12:00:00.000Z'::timestamptz,
   ${quote(JSON.stringify(responses.slice(0, -1)))}::jsonb
 )`;
@@ -133,8 +159,9 @@ const invalidOptionCall = `api.submit_session_v1(
   ${quote(session.plantilla_id)},
   ${quote(session.version)},
   ${quote(session.marco_id)},
-  ${quote(session.marco_version)},
-  '2026-08-17T11:40:00.000Z'::timestamptz,
+ ${quote(session.marco_version)},
+  'confirmed',
+ '2026-08-17T11:40:00.000Z'::timestamptz,
   '2026-08-17T12:00:00.000Z'::timestamptz,
   ${quote(JSON.stringify(invalidOptionResponses))}::jsonb
 )`;
@@ -157,6 +184,19 @@ begin
   end if;
 end
 $${tag}$;`;
+const assertEnrollmentReceiptSql = (tag, expectedStatus) => `
+do $${tag}$
+declare
+  receipt jsonb;
+begin
+  select ${enrollCall} into receipt;
+  if receipt is null
+     or receipt ->> 'status' is distinct from ${quote(expectedStatus)}
+     or (select count(*) from jsonb_object_keys(receipt)) <> 1 then
+    raise exception 'unexpected enrollment receipt: %', receipt;
+  end if;
+end
+$${tag}$;`;
 const sql = `
 \\set ON_ERROR_STOP on
 ${restrictedEnrollmentSeed}
@@ -164,6 +204,8 @@ update private.administrations set enabled = true where administration_id = ${qu
 set role authenticated;
 select set_config('request.jwt.claim.sub', ${quote(authId)}, false);
 select set_config('request.jwt.claims', ${quote(JSON.stringify({ sub: authId, is_anonymous: true }))}, false);
+${assertEnrollmentReceiptSql("expected_enrollment_receipt", "confirmed")}
+${assertEnrollmentReceiptSql("expected_enrollment_retry_receipt", "already_confirmed")}
 do $expected_invalid_code$
 begin
   perform ${call.replace(enrollmentCode, "BAD-CODE")};
@@ -213,6 +255,8 @@ end
 $expected_framework_mismatch$;
 ${assertReceiptSql("expected_first_receipt", call, "synced", attemptId)}
 ${assertReceiptSql("expected_retry_receipt", call, "already_synced", attemptId)}
+${assertReceiptSql("expected_orphan_receipt", orphanCall, "orphaned", orphanAttemptId)}
+${assertReceiptSql("expected_orphan_retry_receipt", orphanCall, "already_orphaned", orphanAttemptId)}
 select set_config('request.jwt.claim.sub', ${quote(replacementAuthId)}, false);
 select set_config('request.jwt.claims', ${quote(JSON.stringify({ sub: replacementAuthId, is_anonymous: true }))}, false);
 ${assertReceiptSql("expected_auth_loss_receipt", call, "already_synced", attemptId)}
@@ -222,7 +266,7 @@ begin
   raise exception 'new attempt unexpectedly accepted after auth replacement';
 exception
   when sqlstate '42501' then
-    if sqlerrm <> 'enrollment_code_bound_to_another_device' then raise; end if;
+    if sqlerrm <> 'enrollment_not_accepted' then raise; end if;
 end
 $expected_bound_error$;
 select set_config('request.jwt.claim.sub', ${quote(authId)}, false);
@@ -266,8 +310,17 @@ begin
   if (select bound_auth_user_id from private.enrollment_codes where code_hash = extensions.digest(private.normalize_enrollment_code(${quote(enrollmentCode)}), 'sha256')) is distinct from ${quote(authId)}::uuid then raise exception 'code binding changed'; end if;
   if (select source from private.session_attempts where attempt_id = ${quote(paperAttemptId)}::uuid) <> 'paper' then raise exception 'paper attempt source'; end if;
   if (select count(*) from private.responses where attempt_id = ${quote(paperAttemptId)}::uuid and source = 'paper' and response_time_ms is null) <> 12 then raise exception 'paper response shape'; end if;
+  if (select reconciliation_status from private.session_attempts where attempt_id = ${quote(orphanAttemptId)}::uuid) <> 'orphaned' then raise exception 'orphan status'; end if;
+  if (select enrollment_code_id from private.session_attempts where attempt_id = ${quote(orphanAttemptId)}::uuid) is not null then raise exception 'orphan unexpectedly matched'; end if;
+  if (select count(*) from private.responses where attempt_id = ${quote(orphanAttemptId)}::uuid) <> 12 then raise exception 'orphan response count'; end if;
+  if (select count(*) from private.raw_response_export_v1 where attempt_id = ${quote(orphanAttemptId)}::uuid and participant_ref is null) <> 12 then raise exception 'orphan export count'; end if;
+  perform private.reconcile_orphaned_attempt(
+    ${quote(orphanAttemptId)}::uuid,
+    ${quote(enrollmentFixtures[2].enrollmentCodeId)}::uuid
+  );
+  if (select reconciliation_status from private.session_attempts where attempt_id = ${quote(orphanAttemptId)}::uuid) <> 'resolved' then raise exception 'orphan reconciliation'; end if;
 end $$;
-select 'rpc-device-and-paper-ok' as result;
+select 'rpc-enrollment-device-paper-orphan-ok' as result;
 `;
 
 const child = spawnSync("docker", ["exec", "-i", container, "psql", "-v", "ON_ERROR_STOP=1", "-U", "postgres"], {

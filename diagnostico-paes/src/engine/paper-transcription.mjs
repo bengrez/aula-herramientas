@@ -23,6 +23,7 @@ export function buildPaperSubmission(bundle, enrollmentCode, selections, applied
     framework_id: bundle.framework.marco_id,
     framework_version: bundle.framework.version,
     enrollment_code: enrollmentCode,
+    enrollment_status: "provisional",
     status: "completed",
     position: items.length,
     started_at: null,

@@ -60,6 +60,12 @@ export class LocalStore {
     return profile;
   }
 
+  async deleteProfile(deploymentId) {
+    const transaction = this.database.transaction("profiles", "readwrite");
+    transaction.objectStore("profiles").delete(deploymentId);
+    await transactionDone(transaction);
+  }
+
   async getAttemptByAdministration(administrationId) {
     const transaction = this.database.transaction("attempts", "readonly");
     return requestAsPromise(transaction.objectStore("attempts").index("administration_id").get(administrationId));
@@ -90,6 +96,26 @@ export class LocalStore {
     return attempt;
   }
 
+  async discardInstructionAttempt({ attemptId, deploymentId }) {
+    const transaction = this.database.transaction(["profiles", "attempts", "responses", "outbox", "snapshots"], "readwrite");
+    const attempts = transaction.objectStore("attempts");
+    const responses = transaction.objectStore("responses");
+    const outbox = transaction.objectStore("outbox");
+    const [storedAttempt, responseKeys, queued] = await Promise.all([
+      requestAsPromise(attempts.get(attemptId)),
+      requestAsPromise(responses.index("attempt_id").getAllKeys(attemptId)),
+      requestAsPromise(outbox.get(attemptId)),
+    ]);
+    if (!storedAttempt || storedAttempt.status !== "instructions" || responseKeys.length || queued) {
+      transaction.abort();
+      throw new Error("Solo se puede retirar una sesión provisional que todavía no comenzó");
+    }
+    attempts.delete(attemptId);
+    transaction.objectStore("snapshots").delete(attemptId);
+    transaction.objectStore("profiles").delete(deploymentId);
+    await transactionDone(transaction);
+  }
+
   async recordResponseAndAdvance(response, attempt) {
     const transaction = this.database.transaction(["responses", "attempts"], "readwrite");
     transaction.objectStore("responses").add(response);
@@ -111,7 +137,7 @@ export class LocalStore {
     store.put({
       attempt_id: attemptId,
       payload,
-      status: existing?.status === "synced" ? "synced" : "pending",
+      status: ["synced", "orphaned"].includes(existing?.status) ? existing.status : "pending",
       attempts: existing?.attempts ?? 0,
       last_error: existing?.last_error ?? null,
       queued_at: existing?.queued_at ?? new Date().toISOString(),
@@ -128,7 +154,13 @@ export class LocalStore {
   async listPendingOutbox() {
     const transaction = this.database.transaction("outbox", "readonly");
     const rows = await requestAsPromise(transaction.objectStore("outbox").getAll());
-    return rows.filter((row) => row.status !== "synced");
+    return rows.filter((row) => row.status === "pending");
+  }
+
+  async listOrphanedOutbox() {
+    const transaction = this.database.transaction("outbox", "readonly");
+    const rows = await requestAsPromise(transaction.objectStore("outbox").getAll());
+    return rows.filter((row) => row.status === "orphaned");
   }
 
   async updateOutbox(entry) {
@@ -147,6 +179,19 @@ export class LocalStore {
     ]);
     outbox.put({ ...entry, status: "synced", receipt, last_error: null, updated_at: new Date().toISOString() });
     attempts.put({ ...attempt, status: "synced", sync_status: "synced", synced_at: new Date().toISOString(), updated_at: new Date().toISOString() });
+    await transactionDone(transaction);
+  }
+
+  async markOrphaned(attemptId, receipt) {
+    const transaction = this.database.transaction(["outbox", "attempts"], "readwrite");
+    const outbox = transaction.objectStore("outbox");
+    const attempts = transaction.objectStore("attempts");
+    const [entry, attempt] = await Promise.all([
+      requestAsPromise(outbox.get(attemptId)),
+      requestAsPromise(attempts.get(attemptId)),
+    ]);
+    outbox.put({ ...entry, status: "orphaned", receipt, last_error: null, updated_at: new Date().toISOString() });
+    attempts.put({ ...attempt, sync_status: "orphaned", updated_at: new Date().toISOString() });
     await transactionDone(transaction);
   }
 

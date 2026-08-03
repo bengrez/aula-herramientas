@@ -21,7 +21,7 @@ async function productionBundle() {
   return assertBundle({
     active: await readJson("data/active.json"),
     framework: await readJson("data/paes-ciencias-2027/framework.v1.json"),
-    bank: await readJson("data/paes-ciencias-2027/bank-anchor-placeholder.v1.json"),
+    bank: await readJson("data/paes-ciencias-2027/bank-anchor.v0.3.json"),
     session: await readJson("data/paes-ciencias-2027/session-anchor-2026-08-17.v1.json"),
     deployment: await readJson("data/paes-ciencias-2027/deployment.v1.json"),
   });
@@ -50,6 +50,7 @@ test("una liberación exige contenido, backend, gates y banderas coordinadas", a
     url: "https://project.supabase.co/",
     publishable_key: "sb_publishable_00000000000000000000",
     schema: "api",
+    enrollment_rpc_name: "enroll_session_v1",
     rpc_name: "submit_session_v1",
   };
   for (const id of RELEASE_GATE_IDS) bundle.deployment.release_gates[id] = true;
@@ -72,6 +73,7 @@ test("la autoría ausente o un backend que no sea Supabase nunca producen GO", a
     url: "x",
     publishable_key: "publishable-test-key",
     schema: "api",
+    enrollment_rpc_name: "enroll_session_v1",
     rpc_name: "submit_session_v1",
   };
   assert.throws(() => assertBundle(invalidBackend), /URL HTTPS de proyecto Supabase/);

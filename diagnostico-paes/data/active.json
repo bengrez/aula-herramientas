@@ -2,7 +2,7 @@
   "schema_version": 1,
   "deployment_url": "./paes-ciencias-2027/deployment.v1.json",
   "framework_url": "./paes-ciencias-2027/framework.v1.json",
-  "bank_url": "./paes-ciencias-2027/bank-anchor-placeholder.v1.json",
+  "bank_url": "./paes-ciencias-2027/bank-anchor.v0.3.json",
   "session_url": "./paes-ciencias-2027/session-anchor-2026-08-17.v1.json",
   "validation": {
     "abilities": 5,
@@ -41,6 +41,7 @@
     "../src/engine/release-readiness.mjs",
     "../src/engine/demo-isolation.mjs",
     "../src/infra/storage.mjs",
+    "../src/infra/enrollment.mjs",
     "../src/infra/supabase-http.mjs",
     "../src/infra/sync.mjs",
     "../src/infra/sw-client.mjs",
@@ -52,7 +53,7 @@
     "./active.json",
     "./paes-ciencias-2027/deployment.v1.json",
     "./paes-ciencias-2027/framework.v1.json",
-    "./paes-ciencias-2027/bank-anchor-placeholder.v1.json",
+    "./paes-ciencias-2027/bank-anchor.v0.3.json",
     "./paes-ciencias-2027/session-anchor-2026-08-17.v1.json"
   ]
 }

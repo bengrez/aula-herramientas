@@ -11,13 +11,13 @@ const readJson = async (path) => JSON.parse(await readFile(join(root, path), "ut
 const bundle = assertBundle({
   active: await readJson("data/active.json"),
   framework: await readJson("data/paes-ciencias-2027/framework.v1.json"),
-  bank: await readJson("data/paes-ciencias-2027/bank-anchor-placeholder.v1.json"),
+  bank: await readJson("data/paes-ciencias-2027/bank-anchor.v0.3.json"),
   session: await readJson("data/paes-ciencias-2027/session-anchor-2026-08-17.v1.json"),
   deployment: await readJson("data/paes-ciencias-2027/deployment.v1.json"),
 });
 
 function responseFor(item, index, selected = item.clave) {
-  return { item_id: item.item_id, item_version: item.version, selected_option: selected, presentation_order: index + 1 };
+  return { item_id: item.item_id, item_version: item.version, selected_option: selected, response_time_ms: 10000, presentation_order: index + 1 };
 }
 
 test("ordena zonas por estados cualitativos sin exponer números", () => {
@@ -28,6 +28,52 @@ test("ordena zonas por estados cualitativos sin exponer números", () => {
   assert.equal(map.pending.length, 12);
   assert.ok(map.pending.every((zone) => zone.state_id === "sin_evidencia"));
   assert.ok(map.pending.every((zone) => zone.label && !zone.label.includes("HC-")));
+  assert.deepEqual(map.content_zones, []);
+});
+
+test("una unidad usada como contexto nunca aparece en el mapa de contenido", () => {
+  const responses = bundle.bank.items.map((item, index) => responseFor(item, index));
+  const map = buildEvidenceMap(bundle, responses);
+  assert.equal(bundle.bank.items.every((item) => item.unidad_rol === "contexto"), true);
+  assert.deepEqual(map.content_zones, []);
+});
+
+test("aplica de forma exhaustiva la tabla configurable de 0 a 3 evidencias", () => {
+  const criterionId = "HC-02.C6";
+  const items = bundle.bank.items.filter((item) => item.criterio_id === criterionId);
+  const cases = new Map(bundle.framework.mapa_evidencia.tabla_inferencia.map((row) => [
+    row.evidencias_evaluables + ":" + row.aciertos,
+    row.estado,
+  ]));
+  for (const [key, expectedState] of cases) {
+    const [evidenceCount, correctCount] = key.split(":").map(Number);
+    if (evidenceCount > items.length) continue;
+    const responses = items.slice(0, evidenceCount).map((item, index) => responseFor(
+      item,
+      index,
+      index < correctCount ? item.clave : item.alternativas.find((alternative) => alternative.id !== item.clave).id,
+    ));
+    const zone = buildEvidenceMap(bundle, responses).zones.find((entry) => entry.criterion_id === criterionId);
+    assert.equal(zone.state_id, expectedState, key);
+  }
+});
+
+test("marca respuestas bajo 10 segundos sin excluirlas en ancla y las excluye en modo autónomo", () => {
+  const responses = bundle.bank.items.map((item, index) => ({
+    ...responseFor(item, index, item.item_id === "B-01" ? null : item.clave),
+    response_time_ms: ["A-01", "B-01"].includes(item.item_id) ? 9999 : 10000,
+  }));
+  const anchorZone = buildEvidenceMap(bundle, responses).zones.find((zone) => zone.criterion_id === "HC-02.C6");
+  assert.equal(anchorZone.quick_response_count, 1);
+  assert.equal(anchorZone.evidence_count, 3);
+  assert.equal(anchorZone.state_id, "evidencia_consistente");
+  assert.equal(buildEvidenceMap(bundle, responses).zones.find((zone) => zone.criterion_id === "HC-03.C1").quick_response_count, 0);
+
+  const autonomous = structuredClone(bundle);
+  autonomous.session.reglas.tratamiento_respuestas_rapidas = "excluir_de_cobertura";
+  const autonomousZone = buildEvidenceMap(autonomous, responses).zones.find((zone) => zone.criterion_id === "HC-02.C6");
+  assert.equal(autonomousZone.evidence_count, 2);
+  assert.equal(autonomousZone.state_id, "evidencia_inicial");
 });
 
 test("distingue falta de evidencia de dificultad", () => {

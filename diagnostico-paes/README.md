@@ -2,7 +2,7 @@
 
 Aplicación web estática, instalable y *offline-first* para una sesión diagnóstica breve de Ciencias. Presenta una secuencia fija sin nota ni retroalimentación por ítem, conserva el avance en el dispositivo y, al terminar, muestra un mapa cualitativo de evidencia. La misma aplicación puede dejar una entrega pendiente para sincronizar con Supabase o producir un respaldo manual recuperable como CSV crudo.
 
-> **Estado actual: demostración técnica, NO-GO para estudiantes.** El banco contiene 12 ítems de relleno, las etiquetas y reglas de inferencia siguen siendo provisionales, `pilot_ready` es `false`, el backend está desactivado y la administración de base de datos se crea deshabilitada. `?demo=1` permite revisar un flujo aislado; no convierte esta versión en un piloto válido.
+> **Estado actual: demostración técnica, NO-GO para estudiantes.** El banco ancla v0.3 contiene los 12 ítems definidos para esta sesión, pero nueve siguen pendientes de revisión docente. Los 12 tienen rol de `contexto`, por lo que no producen evidencia de contenido en el mapa. `pilot_ready` es `false`, el backend está desactivado y la administración de base de datos se crea deshabilitada. `?demo=1` permite revisar un flujo aislado; no convierte esta versión en un piloto válido.
 
 Fecha objetivo declarada en los datos: **17 de agosto de 2026**. Esa fecha no reemplaza el checklist de liberación de este documento.
 
@@ -11,12 +11,13 @@ Fecha objetivo declarada en los datos: **17 de agosto de 2026**. Esa fecha no re
 La versión v1:
 
 - solicita un código opaco, no nombre, RUN ni correo;
+- comprueba localmente solo la forma y el checksum del código; la pertenencia a la administración es autoridad exclusiva del backend;
 - ejecuta una sesión ancla de orden fijo, sin retroceso y con omisión explícita;
 - guarda perfil, intento, respuestas, instantánea de datos y cola de envío en IndexedDB;
 - mantiene los recursos esenciales en caché mediante un *service worker*;
 - reanuda una sesión interrumpida en el mismo navegador;
 - evita repetir la misma administración en ese navegador;
-- calcula en el cliente un mapa cualitativo desde reglas versionadas;
+- calcula en el cliente un mapa cualitativo desde reglas versionadas, sin persistir ese resultado;
 - guarda y exporta respuestas crudas, sin puntaje, nota, porcentaje, ranking ni diagnóstico persistido;
 - después de un respaldo en nube confirmado, permite borrar código, respuestas, instantánea, cola y token locales, conservando solo una marca de cierre sin identificador personal;
 - permite imprimir la sesión y recuperar un código/QR de respaldo como CSV.
@@ -41,9 +42,17 @@ El motor carga cuatro documentos enlazados por `data/active.json`:
 1. `framework`: habilidades, criterios, áreas, unidades, matriz contenido × habilidad y tabla cualitativa de inferencia.
 2. `bank`: estímulos, alternativas, claves y referencias al marco.
 3. `session`: versión del banco, orden fijo y reglas de navegación.
-4. `deployment`: textos de interfaz, administración, códigos permitidos, fecha, modo de publicación y conexión opcional al backend.
+4. `deployment`: textos de interfaz, administración, fecha, modo de publicación y conexión opcional al backend. `hashes_permitidos` permanece vacío por contrato: los hashes reales nunca se publican en el cliente.
 
 Los intentos guardan una instantánea de esos cuatro documentos. Por eso una actualización posterior del sitio no debe reinterpretar una sesión ya iniciada.
+
+### Contrato del banco ancla v0.3
+
+La sesión presenta exactamente este orden: `A-01`, `B-02`, `C-03`, `D-01`, `A-02`, `B-03`, `C-01`, `D-02`, `A-03`, `B-01`, `C-02`, `D-03`. Los contratos comprueban además que no se repitan consecutivamente criterio ni eje y que las claves queden balanceadas en tres A, tres B, tres C y tres D.
+
+Los 12 ítems son anclas de habilidad con `unidad_rol: "contexto"`. Sus referencias de contenido sirven para describir el estímulo, pero se excluyen deliberadamente de `content_zones`; por eso este banco, por sí solo, deja el mapa de contenido como territorio pendiente. Una futura sesión que busque medir contenido deberá incorporar unidades con rol `medicion` y evidencia suficiente.
+
+Una respuesta visible por menos de 10 segundos se marca como rápida. En la sesión ancla conserva su evidencia, porque el tiempo es una señal de revisión y no una razón automática para descartarla; en un modo autónomo se excluye de la cobertura. El umbral y ambas decisiones son configuración explícita y deben recalibrarse con datos reales.
 
 ## Ejecución local
 
@@ -96,11 +105,11 @@ No se editan `src/`, `index.html` ni `sw.js` para cambiar de asignatura, marco o
 
 1. Crear archivos nuevos y versionados dentro de `data/<proyecto>/`. No sobrescribir una versión que ya haya sido utilizada.
 2. Mantener `schema_version: 1` y asignar identificadores/versiones nuevos.
-3. En el banco, referir un `unidad_id` y un `criterio_id` existentes en el marco. Cada alternativa debe tener ID único y la `clave` debe apuntar a una de ellas.
+3. En el banco, referir un `unidad_id` y un `criterio_id` existentes en el marco, y declarar `unidad_rol: "medicion" | "contexto"`. Cada alternativa debe tener ID único, diagnóstico de distractor y la `clave` debe apuntar a una de ellas. Solo `medicion` aporta evidencia de contenido; `contexto` puede aportar evidencia de habilidad.
 4. En la sesión, referir exactamente `banco_id`, `banco_version`, `marco_id` y `marco_version`; usar órdenes correlativos desde 1.
 5. En el despliegue, referir la plantilla y versión activas. Mientras falte revisión, conservar `release_status: "placeholder"` y `pilot_ready: false`.
 6. Actualizar las cuatro URL, el inventario esperado de `validation` y todos los recursos necesarios en `data/active.json`. Todo archivo requerido sin red debe aparecer en `offline_assets`. Al detectar un `active.json` distinto, el *service worker* solo activa ese manifiesto después de precargar correctamente su conjunto offline; una falla deja la nueva versión fuera de servicio en vez de anunciarla como lista sin red. Si cambia el propio código, el nuevo controlador toma control y fuerza una única recarga antes de iniciar, evitando mezclar módulos antiguos y nuevos.
-7. Regenerar `supabase/seed-content-placeholder.sql` con `node tools/generate-content-seed.mjs` y revisar el resultado. El generador actual deja contenido, plantilla y administración como borrador/deshabilitados a propósito.
+7. Regenerar `supabase/seed-content-placeholder.sql` con `node tools/generate-content-seed.mjs` y revisar el resultado. El nombre del archivo se conserva por compatibilidad histórica; su contenido refleja el banco ancla v0.3, mantiene su estado pendiente de revisión y deja la administración deshabilitada.
 8. Ejecutar las pruebas automáticas y el recorrido manual completo.
 
 Para regenerar el marco desde su documento maestro:
@@ -115,11 +124,11 @@ El comando escribe JSON en la salida estándar. Revisarlo y guardarlo como una *
 
 ### Sin conexión
 
-Después de una primera carga completa, los recursos declarados en `offline_assets` quedan disponibles y las respuestas se acumulan en IndexedDB. Si el backend está habilitado, la cola vuelve a intentarlo al reabrir o mediante el control de reintento. No borrar datos del sitio, cambiar de navegador ni desinstalar la aplicación antes de confirmar el envío o guardar el respaldo: la identidad anónima y el intento pertenecen a ese almacenamiento local.
+Después de una primera carga completa, los recursos declarados en `offline_assets` quedan disponibles y las respuestas se acumulan en IndexedDB. Una tarjeta aceptada provisionalmente se vuelve a consultar si la red está disponible antes de crear o comenzar el intento. Si el backend está habilitado, la cola vuelve a intentarlo al reabrir o mediante el control de reintento; cada ejecución queda acotada al intento y administración activos, de modo que no envía colas históricas a otro despliegue. No borrar datos del sitio, cambiar de navegador ni desinstalar la aplicación antes de confirmar el envío o guardar el respaldo: la identidad anónima y el intento pertenecen a ese almacenamiento local.
 
 ### Código y QR de respaldo
 
-Al finalizar, la aplicación representa el intento y sus respuestas en un código compacto `DX2` con control de integridad y en un QR del mismo contenido. Conserva los UUID y datos crudos necesarios para una entrega idempotente, pero deriva del paquete activo los metadatos repetidos de sesión e ítem; por eso `backup.html` exige que el respaldo corresponda exactamente a la versión publicada. La herramienta mantiene compatibilidad de lectura con el formato anterior `DX1`.
+Al finalizar, la aplicación representa el intento y sus respuestas en un código compacto `DX3` con control de integridad y en un QR del mismo contenido. Conserva el estado de enrolamiento confirmado/provisional, los UUID y los datos crudos necesarios para una entrega idempotente, pero deriva del paquete activo los metadatos repetidos de sesión e ítem; por eso `backup.html` exige que el respaldo corresponda exactamente a la versión publicada. La herramienta mantiene compatibilidad de lectura con los formatos anteriores `DX1` y `DX2`.
 
 El docente puede pegar el texto en `backup.html` y descargar un CSV de respuestas crudas. La conversión ocurre localmente; `backup.html` no envía el contenido a Supabase. El caso papel sintético actual bajó de 2.217 a 745 caracteres y de 157 a 93 módulos QR; una simulación de dispositivo de 25 minutos produjo 851 caracteres y 97 módulos. El render usa tres píxeles nativos por módulo y conserva su zona silenciosa dentro del lienzo. Esto reduce sustancialmente la densidad, pero el escaneo con la cámara y condiciones reales de luz sigue siendo un gate del piloto.
 
@@ -135,7 +144,7 @@ El mismo RPC `api.submit_session_v1` acepta lotes homogéneos de dispositivo o p
 
 El diseño previsto es **seudonimizado, no anónimo**. La aplicación no solicita nombres, RUN, correo ni teléfono, pero el código permite vincular respuestas con una referencia de estudiante si existe una tabla de correspondencia separada. Los códigos reales, sus hashes, los UUID de enrolamiento y cualquier correspondencia deben mantenerse fuera de este repositorio, con acceso restringido. En el estado NO-GO actual, el despliegue público y el seed versionado contienen cero registros de cohorte. La única excepción es el código sintético de demostración, que es público por diseño y no debe autorizar una administración real; nunca se debe publicar el ledger del curso.
 
-En el dispositivo quedan temporalmente el código, la sesión anónima, la instantánea y las respuestas en IndexedDB/localStorage. El cliente no contacta a Supabase mientras se responde: crea o recupera la identidad de Auth recién al intentar sincronizar una sesión terminada. Tras recibir confirmación, el control “Borrar copia de este teléfono” elimina perfil/código, intento, respuestas, instantánea, cola y token Auth; conserva únicamente administración, fechas de término/purga y estado `local_copy_purged` para impedir una repetición accidental. Esa acción no borra la entrega en Supabase.
+En el dispositivo quedan temporalmente el código, la sesión anónima, la instantánea y las respuestas en IndexedDB/localStorage. Al abrir una sesión con red y backend activos, el cliente crea o recupera la identidad anónima de Auth y consulta `api.enroll_session_v1`; el servidor decide si el código pertenece a la administración. Sin red, con backend desactivado o ante una falla transitoria, la sesión queda marcada como `provisional` y puede continuar. Al respaldarla, un código aún desconocido se conserva como entrega huérfana para conciliación privada, sin inventar una asociación de estudiante. Tras recibir confirmación, el control “Borrar copia de este teléfono” elimina perfil/código, intento, respuestas, instantánea, cola y token Auth; conserva únicamente administración, fechas de término/purga y estado `local_copy_purged` para impedir una repetición accidental. Esa acción no borra la entrega en Supabase.
 
 En Supabase, `private.responses` conserva solo respuesta seleccionada u omisión, tiempos, orden, versiones e identificadores opacos. No incluye clave, acierto/error, puntaje, nivel ni diagnóstico. La vista `private.raw_response_export_v1` está revocada para clientes y es solo administrativa.
 
@@ -173,8 +182,8 @@ El recurso es una herramienta docente personal. Este checklist no exige aprobaci
 
 ### Contenido y medición
 
-- [ ] Los 12 ítems reales reemplazaron todo `ANCLA-P*` y fueron revisados por contenido, lenguaje, accesibilidad, clave y distractores.
-- [ ] No queda `estado_autoria: relleno_tecnico_no_aplicar` ni aviso de relleno.
+- [ ] Los nueve ítems pendientes del banco ancla v0.3 fueron revisados por contenido, lenguaje, accesibilidad, clave y distractores; los tres ya aprobados conservaron su aprobación.
+- [ ] El banco pasó de `estado_autoria: contenido_docente_pendiente_revision` al estado final aprobado, sin perder la trazabilidad por ítem.
 - [ ] Las etiquetas públicas, estados y tabla de inferencia fueron aprobados por el docente responsable.
 - [ ] Cada criterio objetivo tiene evidencia suficiente; “territorio aún no medido” sigue siendo distinto de desempeño débil.
 - [ ] La versión impresa coincide exactamente con la versión digital aprobada.

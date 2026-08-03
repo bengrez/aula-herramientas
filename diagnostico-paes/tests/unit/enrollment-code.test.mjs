@@ -22,7 +22,7 @@ test("rechaza caracteres ambiguos antes de cualquier consulta externa", () => {
   assert.equal(validateCodeShape("TES-TPA-EO1", config).ok, false);
 });
 
-test("comprueba pertenencia mediante hash local", async () => {
+test("el modo demostración comprueba solo el hash sintético local", async () => {
   const code = createCode("TESTPAES", config);
   const digest = await sha256Hex(normalizeCode(code));
   const accepted = await validateEnrollmentCode(code, { ...config, hashes_demo: [digest] }, { demo: true });
@@ -31,15 +31,15 @@ test("comprueba pertenencia mediante hash local", async () => {
   assert.equal(rejected.ok, false);
 });
 
-test("el modo demostración acepta solo hashes demo, nunca códigos reales", async () => {
+test("el modo real valida forma sin consultar pertenencia y demostración queda aislada", async () => {
   const demoCode = createCode("TESTPAES", config);
   const realCode = createCode("R3A2PAES", config);
   const demoDigest = await sha256Hex(normalizeCode(demoCode));
-  const realDigest = await sha256Hex(normalizeCode(realCode));
-  const isolated = { ...config, hashes_demo: [demoDigest], hashes_permitidos: [realDigest] };
+  const isolated = { ...config, hashes_demo: [demoDigest] };
 
   assert.equal((await validateEnrollmentCode(demoCode, isolated, { demo: true })).ok, true);
   assert.equal((await validateEnrollmentCode(realCode, isolated, { demo: true })).ok, false);
   assert.equal((await validateEnrollmentCode(realCode, isolated)).ok, true);
-  assert.equal((await validateEnrollmentCode(demoCode, isolated)).ok, false);
+  assert.equal((await validateEnrollmentCode(demoCode, isolated)).ok, true);
+  assert.equal("digest" in await validateEnrollmentCode(realCode, isolated), false);
 });

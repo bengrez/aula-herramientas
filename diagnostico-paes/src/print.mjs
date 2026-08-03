@@ -49,7 +49,12 @@ async function render() {
   const selectedCriteria = new Set(items.map((item) => item.criterio_id));
   const publicLabels = flattenCriteria(bundle.framework).filter((criterion) => selectedCriteria.has(criterion.id)).map((criterion) => criterion.etiqueta);
   const fragment = document.createDocumentFragment();
-  if (!assessReleaseReadiness(bundle).ready) fragment.append(element("div", { className: "draft-banner", text: "BORRADOR TÉCNICO — ÍTEMS DE RELLENO — NO APLICAR" }));
+  if (!assessReleaseReadiness(bundle).ready) {
+    const reason = bundle.bank.estado_autoria === "relleno_tecnico_no_aplicar"
+      ? "ÍTEMS DE RELLENO"
+      : "CONTENIDO PENDIENTE DE REVISIÓN";
+    fragment.append(element("div", { className: "draft-banner", text: "BORRADOR TÉCNICO — " + reason + " — NO APLICAR" }));
+  }
   fragment.append(
     element("header", { className: "institutional-header" }, [
       element("img", { src: print.logo_url, alt: print.logo_alt }),

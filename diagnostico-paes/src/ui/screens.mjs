@@ -67,7 +67,7 @@ export function renderWelcome(root, bundle, { demo, hasProfile, offlineReady, re
   mount(root, card(ui.etiqueta_sesion, ui.titulo, children));
 }
 
-export function renderEnrollment(root, bundle, { demo, onSubmit }) {
+export function renderEnrollment(root, bundle, { demo, onSubmit, initialError = "" }) {
   const input = element("input", {
     className: "code-input",
     id: "enrollment-code",
@@ -82,7 +82,7 @@ export function renderEnrollment(root, bundle, { demo, onSubmit }) {
     "aria-describedby": "code-help code-error",
   });
   if (demo) input.value = bundle.deployment.enrolamiento.codigo_demo_visible;
-  const error = element("p", { className: "field-error", id: "code-error", role: "alert" });
+  const error = element("p", { className: "field-error", id: "code-error", role: "alert", text: initialError });
   const submit = element("button", { className: "primary-button", type: "submit", text: "Guardar código y continuar" });
   const form = element("form", { className: "enrollment-form" }, [
     element("label", { htmlFor: "enrollment-code", text: "Tu código personal" }),
@@ -112,13 +112,20 @@ export function renderEnrollment(root, bundle, { demo, onSubmit }) {
   input.focus();
 }
 
-export function renderInstructions(root, bundle, onBegin) {
+export function renderInstructions(root, bundle, onBegin, { enrollmentStatus = "confirmed" } = {}) {
   const list = element("ol", { className: "instruction-list" });
   bundle.deployment.ui.instrucciones.forEach((instruction, index) => {
     list.append(element("li", {}, [element("strong", { text: index + 1 }), element("span", { text: instruction })]));
   });
   mount(root, card("Paso 2 de 2", "Antes de empezar", [
     element("p", { className: "lede", text: "Cuando presiones comenzar, el primer estímulo aparecerá de inmediato. No hay reloj visible." }),
+    enrollmentStatus === "provisional" ? element("div", { className: "notice", dataset: { kind: "warning" }, role: "status" }, [
+      element("span", { className: "notice-icon", text: "◇", "aria-hidden": "true" }),
+      element("p", {}, [
+        element("strong", { text: "Tarjeta pendiente de confirmación. " }),
+        document.createTextNode("Puedes continuar sin conexión. Al respaldar, el sistema intentará asociar esta sesión; conserva el QR o código hasta recibir confirmación."),
+      ]),
+    ]) : null,
     list,
     element("div", { className: "notice" }, [element("span", { className: "notice-icon", text: "!" }), element("p", { text: "No cierres la pestaña al terminar. Espera hasta ver el mapa y el estado del respaldo." })]),
     element("div", { className: "button-row" }, element("button", { className: "primary-button", type: "button", text: "Comenzar recorrido", onclick: onBegin })),
@@ -173,7 +180,8 @@ export function renderMap(root, map, bundle, { syncState, backupCode, onCopyBack
     list.append(element("li", { className: "map-zone", dataset: { state: zone.state_id, symbol: zone.state.simbolo } }, [
       element("div", {}, [
         element("h2", { text: zone.label }),
-        element("p", { text: `${zone.state.etiqueta}. ${zone.state.descripcion}` }),
+        element("p", { text: zone.description }),
+        element("p", { className: "field-help", text: `${zone.state.etiqueta}. ${zone.state.descripcion}` }),
       ]),
     ]));
   }
@@ -209,6 +217,7 @@ export function renderMap(root, map, bundle, { syncState, backupCode, onCopyBack
     syncing: ["↻", "Enviando respaldo", "Mantén esta pestaña abierta unos segundos."],
     pending: ["!", "Respaldo pendiente", "Tus respuestas están seguras en este teléfono. Puedes reintentar o guardar el código manual."],
     offline: ["⌁", "Sin conexión", "Tus respuestas están en este teléfono y se intentarán enviar al recuperar conexión."],
+    orphaned: ["◇", "Respaldo recibido para conciliación", "La entrega llegó, pero el adulto deberá asociarla a tu tarjeta. Conserva este QR o código hasta que te lo indiquen."],
     manual: ["◇", "Respaldo manual disponible", "La conexión a la nube aún no está configurada. Guarda el código o su QR."],
   }[syncState.state] ?? ["…", "Comprobando respaldo", "Espera un momento."];
 

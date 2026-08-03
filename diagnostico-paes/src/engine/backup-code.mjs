@@ -1,5 +1,6 @@
 const LEGACY_PREFIX = "DX1";
-const PREFIX = "DX2";
+const PREVIOUS_PREFIX = "DX2";
+const PREFIX = "DX3";
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 
 function crc32(value) {
@@ -121,6 +122,7 @@ function expandLegacyPayload(compact) {
     framework_id: compact.f,
     framework_version: compact.fv,
     enrollment_code: compact.c,
+    enrollment_status: "provisional",
     started_at: compact.b,
     completed_at: compact.e,
     status: "completed",
@@ -153,6 +155,8 @@ export function compactBackupPayload(attempt, responses, bundle) {
   const sources = new Set(orderedResponses.map((response) => response.source));
   if (sources.size !== 1 || !["device", "paper"].includes([...sources][0])) throw new Error("El respaldo mezcla procedencias o usa una procedencia desconocida");
   const source = [...sources][0];
+  const enrollmentStatus = attempt.enrollment_status ?? "provisional";
+  if (!["confirmed", "provisional"].includes(enrollmentStatus)) throw new Error("El respaldo contiene un estado de enrolamiento inválido");
   const recordedTimes = orderedResponses.map((response) => timestampToMs(response.client_recorded_at));
   const recordingBase = Math.min(...recordedTimes);
 
@@ -173,10 +177,11 @@ export function compactBackupPayload(attempt, responses, bundle) {
   });
 
   return [
-    2,
+    3,
     backupBundleKey(bundle),
     uuidToToken(attempt.attempt_id),
     attempt.enrollment_code,
+    enrollmentStatus === "confirmed" ? "c" : "p",
     source === "device" ? "d" : "p",
     timestampToMs(attempt.started_at, { nullable: true }),
     timestampToMs(attempt.completed_at),
@@ -186,13 +191,20 @@ export function compactBackupPayload(attempt, responses, bundle) {
 }
 
 function expandCompactPayload(compact, bundle) {
-  if (!Array.isArray(compact) || compact.length !== 9 || compact[0] !== 2 || !Array.isArray(compact[8])) {
+  const version = Array.isArray(compact) ? compact[0] : null;
+  const previous = version === 2 && compact.length === 9;
+  const current = version === 3 && compact.length === 10;
+  const rowIndex = current ? 9 : 8;
+  if ((!previous && !current) || !Array.isArray(compact[rowIndex])) {
     throw new Error("Versión de respaldo no compatible");
   }
   if (compact[1] !== backupBundleKey(bundle)) throw new Error("El respaldo pertenece a otra versión de la sesión");
   const references = orderedReferences(bundle);
-  if (compact[8].length !== references.length) throw new Error("El respaldo no contiene todas las respuestas de la sesión");
-  const source = compact[4] === "d" ? "device" : compact[4] === "p" ? "paper" : null;
+  if (compact[rowIndex].length !== references.length) throw new Error("El respaldo no contiene todas las respuestas de la sesión");
+  const enrollmentStatus = current ? (compact[4] === "c" ? "confirmed" : compact[4] === "p" ? "provisional" : null) : "provisional";
+  if (!enrollmentStatus) throw new Error("El respaldo contiene un estado de enrolamiento inválido");
+  const sourceIndex = current ? 5 : 4;
+  const source = compact[sourceIndex] === "d" ? "device" : compact[sourceIndex] === "p" ? "paper" : null;
   if (!source) throw new Error("El respaldo contiene una procedencia inválida");
   const attemptId = tokenToUuid(compact[2]);
   const attempt = {
@@ -203,14 +215,15 @@ function expandCompactPayload(compact, bundle) {
     framework_id: bundle.framework.marco_id,
     framework_version: bundle.framework.version,
     enrollment_code: compact[3],
-    started_at: msToTimestamp(compact[5], { nullable: true }),
-    completed_at: msToTimestamp(compact[6]),
+    enrollment_status: enrollmentStatus,
+    started_at: msToTimestamp(compact[current ? 6 : 5], { nullable: true }),
+    completed_at: msToTimestamp(compact[current ? 7 : 6]),
     status: "completed",
     sync_status: "manual_backup",
   };
-  const recordingBase = compact[7];
+  const recordingBase = compact[current ? 8 : 7];
   if (!Number.isSafeInteger(recordingBase)) throw new Error("El respaldo contiene una fecha inválida");
-  const responses = compact[8].map((row, index) => {
+  const responses = compact[rowIndex].map((row, index) => {
     if (!Array.isArray(row) || row.length !== 4 || !Number.isSafeInteger(row[3])) throw new Error(`La respuesta ${index + 1} está incompleta`);
     const reference = references[index];
     return {
@@ -248,11 +261,12 @@ export function encodeLegacyBackup(attempt, responses) {
 export function decodeBackup(code, bundle) {
   const normalized = String(code ?? "").trim().replace(/\s+/g, "");
   const [prefix, encoded, checksum, ...extra] = normalized.split(".");
-  if (![PREFIX, LEGACY_PREFIX].includes(prefix) || !encoded || !checksum || extra.length) throw new Error("El código de respaldo no tiene el formato esperado");
+  if (![PREFIX, PREVIOUS_PREFIX, LEGACY_PREFIX].includes(prefix) || !encoded || !checksum || extra.length) throw new Error("El código de respaldo no tiene el formato esperado");
   if (crc32(encoded) !== checksum.toUpperCase()) throw new Error("El respaldo está incompleto o fue alterado");
   try {
     const compact = JSON.parse(fromBase64Url(encoded));
     if (prefix === LEGACY_PREFIX) return expandLegacyPayload(compact);
+    if ((prefix === PREVIOUS_PREFIX && compact?.[0] !== 2) || (prefix === PREFIX && compact?.[0] !== 3)) throw new Error("Versión de respaldo no compatible");
     return expandCompactPayload(compact, bundle);
   } catch (error) {
     if (error.message.includes("respaldo") || error.message.includes("Versión") || error.message.includes("sesión")) throw error;

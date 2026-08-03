@@ -9,6 +9,7 @@ export const RELEASE_GATE_IDS = Object.freeze([
 
 export const BANK_AUTHORING_STATES = Object.freeze([
   "relleno_tecnico_no_aplicar",
+  "contenido_docente_pendiente_revision",
   "contenido_docente_revisado",
 ]);
 

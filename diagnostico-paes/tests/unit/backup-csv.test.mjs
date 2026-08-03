@@ -18,6 +18,7 @@ const attempt = {
   framework_id: "framework-1",
   framework_version: "1",
   enrollment_code: "ABC-DEF-GHJ",
+  enrollment_status: "confirmed",
   started_at: "2026-08-17T12:00:00.000Z",
   completed_at: "2026-08-17T12:20:00.000Z",
 };
@@ -56,11 +57,12 @@ const miniBundle = {
 test("el respaldo realiza ida y vuelta y conserva doce filas crudas", () => {
   const encoded = encodeBackup(attempt, responses, miniBundle);
   const decoded = decodeBackup(encoded, miniBundle);
-  assert.match(encoded, /^DX2\./);
+  assert.match(encoded, /^DX3\./);
   assert.ok(encoded.length < 1_300, `el respaldo compacto mide ${encoded.length} caracteres`);
   assert.equal(decoded.responses.length, 12);
   assert.equal(decoded.responses[3].selected_option, null);
   assert.equal(decoded.attempt.enrollment_code, attempt.enrollment_code);
+  assert.equal(decoded.attempt.enrollment_status, "confirmed");
 });
 
 test("el respaldo alterado falla por checksum", () => {
@@ -94,7 +96,7 @@ test("el recuperador contrasta el respaldo con código, sesión, ítems y altern
     readJson("data/active.json"),
     readJson("data/paes-ciencias-2027/deployment.v1.json"),
     readJson("data/paes-ciencias-2027/framework.v1.json"),
-    readJson("data/paes-ciencias-2027/bank-anchor-placeholder.v1.json"),
+    readJson("data/paes-ciencias-2027/bank-anchor.v0.3.json"),
     readJson("data/paes-ciencias-2027/session-anchor-2026-08-17.v1.json"),
   ]);
   const bundle = { active, deployment, framework, bank, session };

@@ -129,6 +129,19 @@ export function assertFramework(framework) {
     assertReference(row.estado, stateIds, `framework.mapa_evidencia.tabla_inferencia[${index}].estado`);
     return `${row.evidencias_evaluables}:${row.aciertos}`;
   }), "framework.mapa_evidencia.tabla_inferencia");
+  if (map.respuestas_rapidas !== undefined) {
+    const quick = requireObject(map.respuestas_rapidas, "framework.mapa_evidencia.respuestas_rapidas");
+    if (!Number.isInteger(quick.umbral_ms) || quick.umbral_ms < 1) {
+      throw new ContractError("umbral debe ser un entero positivo", "framework.mapa_evidencia.respuestas_rapidas.umbral_ms");
+    }
+    if (quick.sesion_ancla !== "marcar_sin_excluir") {
+      throw new ContractError("regla de sesión ancla no reconocida", "framework.mapa_evidencia.respuestas_rapidas.sesion_ancla");
+    }
+    if (quick.modo_autonomo !== "excluir_de_cobertura") {
+      throw new ContractError("regla de modo autónomo no reconocida", "framework.mapa_evidencia.respuestas_rapidas.modo_autonomo");
+    }
+    requireBoolean(quick.recalibrar_con_datos_reales, "framework.mapa_evidencia.respuestas_rapidas.recalibrar_con_datos_reales");
+  }
 
   const matrix = requireArray(framework.matriz_contenido_habilidad, "framework.matriz_contenido_habilidad", 1);
   matrix.forEach((row, index) => {
@@ -161,9 +174,15 @@ export function assertBank(bank, frameworkContext) {
     requireString(item.version, `${path}.version`);
     if (item.marco_id !== bank.marco_id || item.marco_version !== bank.marco_version) throw new ContractError("referencia de marco incoherente", path);
     assertReference(item.unidad_id, frameworkContext.unitIds, `${path}.unidad_id`);
+    if (!["medicion", "contexto"].includes(item.unidad_rol)) {
+      throw new ContractError("rol de unidad no reconocido", `${path}.unidad_rol`);
+    }
     assertReference(item.criterio_id, frameworkContext.criterionIds, `${path}.criterio_id`);
     requireString(item.eje, `${path}.eje`);
     requireString(item.formato_estimulo, `${path}.formato_estimulo`);
+    if (!["aprobado_piloto", "pendiente_revision_docente", "revisado_docente"].includes(item.estado_revision)) {
+      throw new ContractError("estado de revisión no reconocido", `${path}.estado_revision`);
+    }
     requireString(item.enunciado, `${path}.enunciado`);
     const stimulus = requireObject(item.estimulo, `${path}.estimulo`);
     requireString(stimulus.tipo, `${path}.estimulo.tipo`);
@@ -190,6 +209,24 @@ export function assertBank(bank, frameworkContext) {
           throw new ContractError("serie numérica incoherente con las categorías", `${path}.estimulo.series[${seriesIndex}].valores`);
         }
       });
+    } else if (stimulus.tipo === "grafico_lineas") {
+      const xAxis = requireObject(stimulus.eje_x, `${path}.estimulo.eje_x`);
+      const yAxis = requireObject(stimulus.eje_y, `${path}.estimulo.eje_y`);
+      for (const [axis, axisPath] of [[xAxis, `${path}.estimulo.eje_x`], [yAxis, `${path}.estimulo.eje_y`]]) {
+        requireString(axis.etiqueta, `${axisPath}.etiqueta`);
+        if (!Number.isFinite(axis.min) || !Number.isFinite(axis.max) || axis.min >= axis.max) {
+          throw new ContractError("rango de eje inválido", axisPath);
+        }
+        requireArray(axis.marcas, `${axisPath}.marcas`, 2).forEach((mark, markIndex) => {
+          if (!Number.isFinite(mark) || mark < axis.min || mark > axis.max) throw new ContractError("marca fuera del rango", `${axisPath}.marcas[${markIndex}]`);
+        });
+      }
+      requireArray(stimulus.puntos, `${path}.estimulo.puntos`, 2).forEach((point, pointIndex) => {
+        if (!Number.isFinite(point?.x) || !Number.isFinite(point?.y)) throw new ContractError("punto inválido", `${path}.estimulo.puntos[${pointIndex}]`);
+        if (point.x < xAxis.min || point.x > xAxis.max || point.y < yAxis.min || point.y > yAxis.max) {
+          throw new ContractError("punto fuera del rango de los ejes", `${path}.estimulo.puntos[${pointIndex}]`);
+        }
+      });
     } else {
       throw new ContractError(`tipo no soportado: ${stimulus.tipo}`, `${path}.estimulo.tipo`);
     }
@@ -197,6 +234,7 @@ export function assertBank(bank, frameworkContext) {
     const alternativeIds = unique(alternatives.map((alternative, alternativeIndex) => {
       requireString(alternative.id, `${path}.alternativas[${alternativeIndex}].id`);
       requireString(alternative.texto, `${path}.alternativas[${alternativeIndex}].texto`);
+      requireString(alternative.diagnostico, `${path}.alternativas[${alternativeIndex}].diagnostico`);
       return alternative.id;
     }), `${path}.alternativas`);
     assertReference(item.clave, alternativeIds, `${path}.clave`);
@@ -231,10 +269,20 @@ export function assertSession(session, frameworkContext, bankContext) {
   for (const key of ["orden_fijo", "permite_retroceso", "muestra_feedback", "permite_omitir"]) {
     requireBoolean(rules[key], `session.reglas.${key}`);
   }
+  if (!Number.isInteger(rules.maximo_zonas_foco) || rules.maximo_zonas_foco !== 1) {
+    throw new ContractError("esta interfaz admite exactamente una zona de foco", "session.reglas.maximo_zonas_foco");
+  }
+  const quickRules = frameworkContext.framework.mapa_evidencia.respuestas_rapidas;
+  if (quickRules && ![quickRules.sesion_ancla, quickRules.modo_autonomo].includes(rules.tratamiento_respuestas_rapidas)) {
+    throw new ContractError("tratamiento de respuestas rápidas no reconocido", "session.reglas.tratamiento_respuestas_rapidas");
+  }
   if (session.perfil_evidencia_id !== frameworkContext.framework.mapa_evidencia.perfil_id) {
     throw new ContractError("perfil de evidencia inexistente", "session.perfil_evidencia_id");
   }
-  requireArray(session.orden_foco_estados, "session.orden_foco_estados", 1);
+  const evidenceStateIds = new Set(frameworkContext.framework.mapa_evidencia.estados.map((state) => state.id));
+  requireArray(session.orden_foco_estados, "session.orden_foco_estados", 1).forEach((stateId, index) => {
+    assertReference(stateId, evidenceStateIds, `session.orden_foco_estados[${index}]`);
+  });
   return { session, refs };
 }
 
@@ -261,6 +309,9 @@ export function assertDeployment(deployment, sessionContext) {
     if (!Number.isInteger(size) || size < 1) throw new ContractError("tamaño de grupo inválido", `deployment.enrolamiento.grupos[${index}]`);
   });
   requireArray(enrollment.hashes_permitidos, "deployment.enrolamiento.hashes_permitidos");
+  if (enrollment.hashes_permitidos.length !== 0) {
+    throw new ContractError("la pertenencia de cohorte solo puede validarse en el backend; esta lista debe permanecer vacía", "deployment.enrolamiento.hashes_permitidos");
+  }
   requireArray(enrollment.hashes_demo, "deployment.enrolamiento.hashes_demo");
   const enrollmentHashes = [...enrollment.hashes_permitidos, ...enrollment.hashes_demo];
   enrollmentHashes.forEach((hash, index) => {
@@ -280,6 +331,7 @@ export function assertDeployment(deployment, sessionContext) {
     if (!isValidSupabaseBackendUrl(backend.url)) throw new ContractError("se esperaba una URL HTTPS de proyecto Supabase", "deployment.backend.url");
     requireString(backend.publishable_key, "deployment.backend.publishable_key");
     if (!isPlausibleSupabasePublishableKey(backend.publishable_key)) throw new ContractError("clave publicable de Supabase no reconocible", "deployment.backend.publishable_key");
+    requireString(backend.enrollment_rpc_name, "deployment.backend.enrollment_rpc_name");
     requireString(backend.rpc_name, "deployment.backend.rpc_name");
     requireString(backend.schema, "deployment.backend.schema");
   }

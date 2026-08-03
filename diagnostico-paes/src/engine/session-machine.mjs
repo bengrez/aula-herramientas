@@ -1,4 +1,9 @@
-export function newAttempt({ deployment, session, framework }, enrollmentCode, { now = () => new Date().toISOString(), uuid = () => crypto.randomUUID() } = {}) {
+export function newAttempt({ deployment, session, framework }, enrollmentCode, {
+  now = () => new Date().toISOString(),
+  uuid = () => crypto.randomUUID(),
+  enrollmentStatus = "provisional",
+} = {}) {
+  if (!["confirmed", "provisional"].includes(enrollmentStatus)) throw new Error("El estado de enrolamiento no es reconocible");
   return {
     attempt_id: uuid(),
     administration_id: deployment.administracion.administracion_id,
@@ -7,6 +12,7 @@ export function newAttempt({ deployment, session, framework }, enrollmentCode, {
     framework_id: framework.marco_id,
     framework_version: framework.version,
     enrollment_code: enrollmentCode,
+    enrollment_status: enrollmentStatus,
     status: "instructions",
     position: 0,
     started_at: null,

@@ -18,7 +18,7 @@
     "bienvenida": "No lleva nota. Equivocarse no tiene costo: cada respuesta ayuda a decidir qué vale la pena practicar después.",
     "duracion_humana": "cerca de 25 minutos",
     "etiqueta_sesion": "Sesión ancla · línea base",
-    "aviso_placeholder": "Esta es una versión técnica con ítems de relleno. No debe aplicarse todavía a estudiantes.",
+    "aviso_placeholder": "Esta versión contiene nueve ítems pendientes de revisión docente. No debe aplicarse todavía a estudiantes.",
     "instrucciones": [
       "Lee cada estímulo antes de elegir.",
       "Avanza hacia adelante: no podrás volver a un ítem anterior.",
@@ -52,6 +52,7 @@
     "url": "",
     "publishable_key": "",
     "schema": "api",
+    "enrollment_rpc_name": "enroll_session_v1",
     "rpc_name": "submit_session_v1"
   },
   "release_gates": {
