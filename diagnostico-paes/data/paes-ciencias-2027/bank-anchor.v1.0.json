@@ -1,16 +1,16 @@
 {
   "schema_version": 1,
   "banco_id": "ancla-paes-ciencias",
-  "version": "0.3",
+  "version": "1.0",
   "marco_id": "paes-ciencias",
   "marco_version": "admision-2027.v1",
-  "estado_autoria": "contenido_docente_pendiente_revision",
-  "aviso": "Los ítems A-01 a A-03 fueron aprobados como piloto el 2026-08-02. Los nueve ítems B-01 a D-03 esperan revisión docente y el banco no debe aplicarse todavía.",
+  "estado_autoria": "contenido_docente_revisado",
+  "aviso": "Los 12 ítems están aprobados por el docente: A-01 a A-03 el 2026-08-02 y B-01 a D-03 el 2026-08-03. El banco queda cerrado en v1.0. Los gates físicos y operativos de liberación siguen pendientes: esto no habilita por sí solo la aplicación.",
   "fuente_local": "docencia_2026/10_REFERENCE/ref-banco-ancla-paes-ciencias-v1.md",
   "items": [
     {
       "item_id": "A-01",
-      "version": "0.3",
+      "version": "1.0",
       "marco_id": "paes-ciencias",
       "marco_version": "admision-2027.v1",
       "unidad_id": "BIO-04.05",
@@ -18,15 +18,43 @@
       "criterio_id": "HC-02.C6",
       "eje": "Biología",
       "formato_estimulo": "tabla_de_grupos",
-      "estado_revision": "aprobado_piloto",
+      "estado_revision": "revisado_docente",
       "estimulo": {
         "tipo": "tabla",
         "introduccion": "Un grupo de estudiantes quiere saber si el color de la luz afecta la germinación de semillas de rabanito. Prepara tres bandejas y las mantiene siete días:",
-        "columnas": ["Bandeja", "Color de luz", "Temperatura", "Agua diaria", "Semillas sembradas", "Semillas germinadas al día 7"],
+        "columnas": [
+          "Bandeja",
+          "Color de luz",
+          "Temperatura",
+          "Agua diaria",
+          "Semillas sembradas",
+          "Semillas germinadas al día 7"
+        ],
         "filas": [
-          ["A", "Blanca", "22 °C", "10 mL", 50, 41],
-          ["B", "Roja", "22 °C", "10 mL", 50, 38],
-          ["C", "Azul", "22 °C", "10 mL", 50, 44]
+          [
+            "A",
+            "Blanca",
+            "22 °C",
+            "10 mL",
+            50,
+            41
+          ],
+          [
+            "B",
+            "Roja",
+            "22 °C",
+            "10 mL",
+            50,
+            38
+          ],
+          [
+            "C",
+            "Azul",
+            "22 °C",
+            "10 mL",
+            50,
+            44
+          ]
         ],
         "texto_alternativo": "Tabla de tres bandejas; varía el color de la luz; temperatura, agua y semillas sembradas son iguales en las tres; la última columna registra cuántas semillas germinaron."
       },
@@ -60,7 +88,7 @@
     },
     {
       "item_id": "A-02",
-      "version": "0.3",
+      "version": "1.0",
       "marco_id": "paes-ciencias",
       "marco_version": "admision-2027.v1",
       "unidad_id": "FIS-02.01",
@@ -68,7 +96,7 @@
       "criterio_id": "HC-02.C6",
       "eje": "Física",
       "formato_estimulo": "montaje_descrito",
-      "estado_revision": "aprobado_piloto",
+      "estado_revision": "revisado_docente",
       "estimulo": {
         "tipo": "texto",
         "texto": "Un estudiante deja rodar un carrito por una rampa fija apoyada en una mesa. Suelta el carrito desde cinco marcas distintas de la rampa, cada vez más arriba, y con un cronómetro mide cuántos segundos demora en llegar al final. Usa siempre el mismo carrito y la misma rampa, sin moverla entre una prueba y otra.",
@@ -104,7 +132,7 @@
     },
     {
       "item_id": "A-03",
-      "version": "0.3",
+      "version": "1.0",
       "marco_id": "paes-ciencias",
       "marco_version": "admision-2027.v1",
       "unidad_id": "QUI-03.08",
@@ -112,7 +140,7 @@
       "criterio_id": "HC-02.C6",
       "eje": "Química",
       "formato_estimulo": "procedimiento_numerado",
-      "estado_revision": "aprobado_piloto",
+      "estado_revision": "revisado_docente",
       "estimulo": {
         "tipo": "secuencia",
         "introduccion": "Para estudiar la disolución de una tableta efervescente, un grupo realiza cuatro ensayos:",
@@ -154,7 +182,7 @@
     },
     {
       "item_id": "B-01",
-      "version": "0.3",
+      "version": "1.0",
       "marco_id": "paes-ciencias",
       "marco_version": "admision-2027.v1",
       "unidad_id": "BIO-04.04",
@@ -162,15 +190,31 @@
       "criterio_id": "HC-03.C1",
       "eje": "Biología",
       "formato_estimulo": "tabla_bases_distintas",
-      "estado_revision": "pendiente_revision_docente",
+      "estado_revision": "revisado_docente",
       "estimulo": {
         "tipo": "tabla",
         "introduccion": "En un estudio de regeneración de bosque se contaron las plántulas presentes en tres sectores:",
-        "columnas": ["Sector", "Plántulas contadas", "Superficie del sector"],
+        "columnas": [
+          "Sector",
+          "Plántulas contadas",
+          "Superficie del sector"
+        ],
         "filas": [
-          ["Norte", 240, "400 m²"],
-          ["Centro", 180, "200 m²"],
-          ["Sur", 300, "600 m²"]
+          [
+            "Norte",
+            240,
+            "400 m²"
+          ],
+          [
+            "Centro",
+            180,
+            "200 m²"
+          ],
+          [
+            "Sur",
+            300,
+            "600 m²"
+          ]
         ],
         "texto_alternativo": "Tabla de tres sectores con el número de plántulas contadas y la superficie de cada sector; las superficies son distintas entre sí."
       },
@@ -204,7 +248,7 @@
     },
     {
       "item_id": "B-02",
-      "version": "0.3",
+      "version": "1.0",
       "marco_id": "paes-ciencias",
       "marco_version": "admision-2027.v1",
       "unidad_id": "FIS-03.01",
@@ -212,7 +256,7 @@
       "criterio_id": "HC-03.C1",
       "eje": "Física",
       "formato_estimulo": "grafico_lineas_eje_truncado",
-      "estado_revision": "pendiente_revision_docente",
+      "estado_revision": "revisado_docente",
       "estimulo": {
         "tipo": "grafico_lineas",
         "titulo": "Temperatura durante 30 minutos",
@@ -220,26 +264,60 @@
           "etiqueta": "Tiempo (minutos)",
           "min": 0,
           "max": 30,
-          "marcas": [0, 5, 10, 15, 20, 25, 30]
+          "marcas": [
+            0,
+            5,
+            10,
+            15,
+            20,
+            25,
+            30
+          ]
         },
         "eje_y": {
           "etiqueta": "Temperatura (°C)",
           "min": 68,
           "max": 72,
-          "marcas": [68, 69, 70, 71, 72],
+          "marcas": [
+            68,
+            69,
+            70,
+            71,
+            72
+          ],
           "truncado": true
         },
-        "aviso_rango": "Eje vertical truncado: 68–72 °C",
         "puntos": [
-          {"x": 0, "y": 71.8},
-          {"x": 5, "y": 71.2},
-          {"x": 10, "y": 70.6},
-          {"x": 15, "y": 70.1},
-          {"x": 20, "y": 69.5},
-          {"x": 25, "y": 68.9},
-          {"x": 30, "y": 68.4}
+          {
+            "x": 0,
+            "y": 71.8
+          },
+          {
+            "x": 5,
+            "y": 71.2
+          },
+          {
+            "x": 10,
+            "y": 70.6
+          },
+          {
+            "x": 15,
+            "y": 70.1
+          },
+          {
+            "x": 20,
+            "y": 69.5
+          },
+          {
+            "x": 25,
+            "y": 68.9
+          },
+          {
+            "x": 30,
+            "y": 68.4
+          }
         ],
-        "texto_alternativo": "Gráfico de temperatura contra tiempo durante 30 minutos. La línea desciende de forma continua y ocupa casi toda la altura del gráfico, pero el eje vertical va solo de 68 a 72 °C: la temperatura baja de 71,8 a 68,4 °C."
+        "texto_alternativo": "Gráfico de líneas. Eje horizontal: tiempo en minutos, de 0 a 30, con marcas cada 5. Eje vertical: temperatura en grados Celsius, de 68 a 72, con marcas cada 1. La línea desciende de forma pareja desde poco menos de 72 en el minuto 0 hasta poco más de 68 en el minuto 30, pasando por 70 alrededor del minuto 15."
       },
       "enunciado": "¿Qué afirmación describe correctamente lo ocurrido en los 30 minutos?",
       "alternativas": [
@@ -271,7 +349,7 @@
     },
     {
       "item_id": "B-03",
-      "version": "0.3",
+      "version": "1.0",
       "marco_id": "paes-ciencias",
       "marco_version": "admision-2027.v1",
       "unidad_id": "QUI-03.10",
@@ -279,15 +357,27 @@
       "criterio_id": "HC-03.C1",
       "eje": "Química",
       "formato_estimulo": "tabla_unidades_mezcladas",
-      "estado_revision": "pendiente_revision_docente",
+      "estado_revision": "revisado_docente",
       "estimulo": {
         "tipo": "tabla",
         "introduccion": "Tres bebidas declaran su contenido de azúcar en sus etiquetas:",
-        "columnas": ["Bebida", "Contenido de azúcar declarado"],
+        "columnas": [
+          "Bebida",
+          "Contenido de azúcar declarado"
+        ],
         "filas": [
-          ["P", "9 g por cada 100 mL"],
-          ["Q", "40 g por envase de 500 mL"],
-          ["R", "100 mg por cada mL"]
+          [
+            "P",
+            "9 g por cada 100 mL"
+          ],
+          [
+            "Q",
+            "40 g por envase de 500 mL"
+          ],
+          [
+            "R",
+            "100 mg por cada mL"
+          ]
         ],
         "texto_alternativo": "Tabla de tres bebidas; cada una declara el azúcar en una unidad distinta: gramos por 100 mL, gramos por envase de 500 mL, y miligramos por mL."
       },
@@ -321,7 +411,7 @@
     },
     {
       "item_id": "C-01",
-      "version": "0.3",
+      "version": "1.0",
       "marco_id": "paes-ciencias",
       "marco_version": "admision-2027.v1",
       "unidad_id": "BIO-04.01",
@@ -329,7 +419,7 @@
       "criterio_id": "HC-03.C3",
       "eje": "Biología",
       "formato_estimulo": "estudio_observacional",
-      "estado_revision": "pendiente_revision_docente",
+      "estado_revision": "revisado_docente",
       "estimulo": {
         "tipo": "texto",
         "texto": "En 40 parcelas de un mismo campo se midió la altura de las plantas y se registró la cantidad de hongos presentes en sus raíces. Las plantas más altas tendieron a presentar más hongos en la raíz. No se manipuló ninguna condición: solo se observó y se midió.",
@@ -365,7 +455,7 @@
     },
     {
       "item_id": "C-02",
-      "version": "0.3",
+      "version": "1.0",
       "marco_id": "paes-ciencias",
       "marco_version": "admision-2027.v1",
       "unidad_id": "FIS-02.06",
@@ -373,13 +463,27 @@
       "criterio_id": "HC-03.C3",
       "eje": "Física",
       "formato_estimulo": "tabla_extrapolacion",
-      "estado_revision": "pendiente_revision_docente",
+      "estado_revision": "revisado_docente",
       "estimulo": {
         "tipo": "tabla",
         "introduccion": "Se colgaron masas de un resorte y se midió cuánto se estiraba:",
-        "columnas": ["Masa colgada", "100 g", "200 g", "300 g", "400 g", "500 g"],
+        "columnas": [
+          "Masa colgada",
+          "100 g",
+          "200 g",
+          "300 g",
+          "400 g",
+          "500 g"
+        ],
         "filas": [
-          ["Estiramiento", "2,0 cm", "4,1 cm", "5,9 cm", "8,0 cm", "10,1 cm"]
+          [
+            "Estiramiento",
+            "2,0 cm",
+            "4,1 cm",
+            "5,9 cm",
+            "8,0 cm",
+            "10,1 cm"
+          ]
         ],
         "texto_alternativo": "Tabla con cinco masas entre 100 y 500 gramos y su estiramiento correspondiente, entre 2,0 y 10,1 centímetros; la relación es aproximadamente proporcional."
       },
@@ -413,7 +517,7 @@
     },
     {
       "item_id": "C-03",
-      "version": "0.3",
+      "version": "1.0",
       "marco_id": "paes-ciencias",
       "marco_version": "admision-2027.v1",
       "unidad_id": "QUI-03.08",
@@ -421,7 +525,7 @@
       "criterio_id": "HC-03.C3",
       "eje": "Química",
       "formato_estimulo": "comparacion_experimental",
-      "estado_revision": "pendiente_revision_docente",
+      "estado_revision": "revisado_docente",
       "estimulo": {
         "tipo": "texto",
         "texto": "Se compararon dos quitamanchas, X e Y, aplicándolos sobre manchas de aceite en tela de algodón. En 20 pruebas por producto, X eliminó la mancha por completo en 17 casos e Y en 9.",
@@ -457,7 +561,7 @@
     },
     {
       "item_id": "D-01",
-      "version": "0.3",
+      "version": "1.0",
       "marco_id": "paes-ciencias",
       "marco_version": "admision-2027.v1",
       "unidad_id": "BIO-04.05",
@@ -465,7 +569,7 @@
       "criterio_id": "HC-04.C1",
       "eje": "Biología",
       "formato_estimulo": "variables_confundidas",
-      "estado_revision": "pendiente_revision_docente",
+      "estado_revision": "revisado_docente",
       "estimulo": {
         "tipo": "texto",
         "texto": "Para probar si un fertilizante mejora el crecimiento, un grupo prepara dos conjuntos de macetas con la misma especie:\n\nGrupo 1: con fertilizante, ubicado dentro de un invernadero.\nGrupo 2: sin fertilizante, ubicado en el patio exterior.\n\nA las seis semanas, las plantas del Grupo 1 son notoriamente más altas. El grupo concluye que el fertilizante funciona.",
@@ -501,7 +605,7 @@
     },
     {
       "item_id": "D-02",
-      "version": "0.3",
+      "version": "1.0",
       "marco_id": "paes-ciencias",
       "marco_version": "admision-2027.v1",
       "unidad_id": "FIS-04.05",
@@ -509,7 +613,7 @@
       "criterio_id": "HC-04.C1",
       "eje": "Física",
       "formato_estimulo": "estudio_sin_comparacion",
-      "estado_revision": "pendiente_revision_docente",
+      "estado_revision": "revisado_docente",
       "estimulo": {
         "tipo": "texto",
         "texto": "Una familia instala aislante térmico en su casa a fines de marzo. Compara su boleta de electricidad de julio con la de marzo del mismo año y encuentra que el consumo bajó un 22 %. Concluye que el aislante produjo ese ahorro.",
@@ -545,7 +649,7 @@
     },
     {
       "item_id": "D-03",
-      "version": "0.3",
+      "version": "1.0",
       "marco_id": "paes-ciencias",
       "marco_version": "admision-2027.v1",
       "unidad_id": "QUI-03.10",
@@ -553,7 +657,7 @@
       "criterio_id": "HC-04.C1",
       "eje": "Química",
       "formato_estimulo": "muestreo_sesgado",
-      "estado_revision": "pendiente_revision_docente",
+      "estado_revision": "revisado_docente",
       "estimulo": {
         "tipo": "texto",
         "texto": "Para evaluar la calidad del agua de un río que atraviesa una zona industrial, un equipo toma seis muestras. Las seis se recogen en el mismo punto, ubicado antes de que el río pase frente a las industrias, y todas el mismo día a las 8 de la mañana. Los análisis no detectan contaminantes, y el equipo concluye que el río no está contaminado.",

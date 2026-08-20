@@ -3,12 +3,11 @@ import assert from "node:assert/strict";
 import { encodeBackup, encodeLegacyBackup, decodeBackup } from "../../src/engine/backup-code.mjs";
 import { validateBackupForBundle } from "../../src/engine/backup-validation.mjs";
 import { responsesToCsv, RAW_RESPONSE_COLUMNS, assertRawColumns } from "../../src/engine/csv.mjs";
+import { readActiveDocuments } from "../helpers/active-documents.mjs";
 import { readFile } from "node:fs/promises";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
-const root = resolve(dirname(fileURLToPath(import.meta.url)), "../..");
-const readJson = async (path) => JSON.parse(await readFile(join(root, path), "utf8"));
 
 const attempt = {
   attempt_id: "00000000-0000-4000-8000-000000000001",
@@ -92,14 +91,8 @@ test("el CSV neutraliza fórmulas de hoja de cálculo", () => {
 });
 
 test("el recuperador contrasta el respaldo con código, sesión, ítems y alternativas activas", async () => {
-  const [active, deployment, framework, bank, session] = await Promise.all([
-    readJson("data/active.json"),
-    readJson("data/paes-ciencias-2027/deployment.v1.json"),
-    readJson("data/paes-ciencias-2027/framework.v1.json"),
-    readJson("data/paes-ciencias-2027/bank-anchor.v0.3.json"),
-    readJson("data/paes-ciencias-2027/session-anchor-2026-08-17.v1.json"),
-  ]);
-  const bundle = { active, deployment, framework, bank, session };
+  const bundle = await readActiveDocuments();
+  const { deployment, framework, bank, session } = bundle;
   const itemById = new Map(bank.items.map((item) => [item.item_id, item]));
   const liveAttempt = {
     ...attempt,

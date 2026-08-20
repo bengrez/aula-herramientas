@@ -6,23 +6,17 @@ import { fileURLToPath } from "node:url";
 import { assertBundle } from "../../src/engine/contracts.mjs";
 import { assessReleaseReadiness, RELEASE_GATE_IDS } from "../../src/engine/release-readiness.mjs";
 import { readinessExitCode, validatePilotRelease } from "../../tools/release-policy.mjs";
+import { readActiveDocuments } from "../helpers/active-documents.mjs";
 
-const root = join(dirname(fileURLToPath(import.meta.url)), "../..");
-const readJson = async (path) => JSON.parse(await readFile(join(root, path), "utf8"));
 
 async function productionBundle() {
-  return assertBundle({
-    active: await readJson("data/active.json"),
-    framework: await readJson("data/paes-ciencias-2027/framework.v1.json"),
-    bank: await readJson("data/paes-ciencias-2027/bank-anchor.v0.3.json"),
-    session: await readJson("data/paes-ciencias-2027/session-anchor-2026-08-17.v1.json"),
-    deployment: await readJson("data/paes-ciencias-2027/deployment.v1.json"),
-  });
+  return assertBundle(await readActiveDocuments());
 }
 
 function makeCandidate(bundle) {
   const candidate = structuredClone(bundle);
   candidate.bank.estado_autoria = "contenido_docente_revisado";
+  candidate.deployment.administracion.fecha_objetivo = "2026-09-14";
   candidate.deployment.release_status = "pilot";
   candidate.deployment.pilot_ready = true;
   candidate.deployment.backend = {

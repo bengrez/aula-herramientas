@@ -5,9 +5,8 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { assertBundle } from "../../src/engine/contracts.mjs";
 import { assessReleaseReadiness, RELEASE_GATE_IDS } from "../../src/engine/release-readiness.mjs";
+import { readActiveDocuments } from "../helpers/active-documents.mjs";
 
-const root = join(dirname(fileURLToPath(import.meta.url)), "../..");
-const readJson = async (path) => JSON.parse(await readFile(join(root, path), "utf8"));
 const EXPECTED_RELEASE_GATE_IDS = [
   "contenido_real_revisado",
   "criterios_y_reglas_aprobados",
@@ -18,25 +17,24 @@ const EXPECTED_RELEASE_GATE_IDS = [
 ];
 
 async function productionBundle() {
-  return assertBundle({
-    active: await readJson("data/active.json"),
-    framework: await readJson("data/paes-ciencias-2027/framework.v1.json"),
-    bank: await readJson("data/paes-ciencias-2027/bank-anchor.v0.3.json"),
-    session: await readJson("data/paes-ciencias-2027/session-anchor-2026-08-17.v1.json"),
-    deployment: await readJson("data/paes-ciencias-2027/deployment.v1.json"),
-  });
+  return assertBundle(await readActiveDocuments());
 }
 
 test("los release gates son solo controles de calidad docente y operativa", () => {
   assert.deepEqual(RELEASE_GATE_IDS, EXPECTED_RELEASE_GATE_IDS);
 });
 
-test("el despliegue técnico permanece NO-GO y enumera sus gates", async () => {
+test("el despliegue permanece NO-GO con el contenido cerrado y lo físico pendiente", async () => {
   const assessment = assessReleaseReadiness(await productionBundle());
   assert.equal(assessment.ready, false);
   assert.equal(assessment.checks.find((check) => check.id === "estructura_sesion").passed, true);
-  assert.equal(assessment.checks.find((check) => check.id === "contenido_real").passed, false);
-  for (const id of RELEASE_GATE_IDS) {
+  // El banco quedó aprobado el 2026-08-03: los dos gates pedagógicos están cerrados y eso, por sí
+  // solo, no libera nada. Los cuatro gates físicos y operativos siguen decidiendo el NO-GO.
+  assert.equal(assessment.checks.find((check) => check.id === "contenido_real").passed, true);
+  for (const id of ["contenido_real_revisado", "criterios_y_reglas_aprobados"]) {
+    assert.equal(assessment.checks.find((check) => check.id === `gate.${id}`).passed, true);
+  }
+  for (const id of ["telefono_offline_validado", "qr_respaldo_validado", "impresion_validada", "operacion_sala_validada"]) {
     assert.equal(assessment.checks.find((check) => check.id === `gate.${id}`).passed, false);
   }
 });
@@ -44,6 +42,7 @@ test("el despliegue técnico permanece NO-GO y enumera sus gates", async () => {
 test("una liberación exige contenido, backend, gates y banderas coordinadas", async () => {
   const bundle = structuredClone(await productionBundle());
   bundle.bank.estado_autoria = "contenido_docente_revisado";
+  bundle.deployment.administracion.fecha_objetivo = "2026-09-14";
   bundle.deployment.operacion.url_publica = "https://example.test/diagnostico/";
   bundle.deployment.backend = {
     enabled: true,

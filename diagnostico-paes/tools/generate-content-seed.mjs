@@ -1,17 +1,20 @@
 #!/usr/bin/env node
 import { readFile } from "node:fs/promises";
 import { dirname, join, resolve } from "node:path";
-import { fileURLToPath } from "node:url";
+import { fileURLToPath, pathToFileURL } from "node:url";
 import { assertBundle } from "../src/engine/contracts.mjs";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
-const readJson = async (path) => JSON.parse(await readFile(join(root, path), "utf8"));
+const activePath = join(root, "data/active.json");
+const active = JSON.parse(await readFile(activePath, "utf8"));
+const activeBase = pathToFileURL(activePath);
+const readReference = async (url) => JSON.parse(await readFile(fileURLToPath(new URL(url, activeBase)), "utf8"));
 const bundle = assertBundle({
-  active: await readJson("data/active.json"),
-  framework: await readJson("data/paes-ciencias-2027/framework.v1.json"),
-  bank: await readJson("data/paes-ciencias-2027/bank-anchor.v0.3.json"),
-  session: await readJson("data/paes-ciencias-2027/session-anchor-2026-08-17.v1.json"),
-  deployment: await readJson("data/paes-ciencias-2027/deployment.v1.json"),
+  active,
+  framework: await readReference(active.framework_url),
+  bank: await readReference(active.bank_url),
+  session: await readReference(active.session_url),
+  deployment: await readReference(active.deployment_url),
 });
 
 const quote = (value) => value === null || value === undefined ? "null" : `'${String(value).replaceAll("'", "''")}'`;

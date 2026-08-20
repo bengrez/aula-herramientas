@@ -2,8 +2,8 @@
   "schema_version": 1,
   "deployment_url": "./paes-ciencias-2027/deployment.v1.json",
   "framework_url": "./paes-ciencias-2027/framework.v1.json",
-  "bank_url": "./paes-ciencias-2027/bank-anchor.v0.3.json",
-  "session_url": "./paes-ciencias-2027/session-anchor-2026-08-17.v1.json",
+  "bank_url": "./paes-ciencias-2027/bank-anchor.v1.0.json",
+  "session_url": "./paes-ciencias-2027/session-anchor.v1.json",
   "validation": {
     "abilities": 5,
     "criteria": 16,
@@ -53,7 +53,7 @@
     "./active.json",
     "./paes-ciencias-2027/deployment.v1.json",
     "./paes-ciencias-2027/framework.v1.json",
-    "./paes-ciencias-2027/bank-anchor.v0.3.json",
-    "./paes-ciencias-2027/session-anchor-2026-08-17.v1.json"
+    "./paes-ciencias-2027/bank-anchor.v1.0.json",
+    "./paes-ciencias-2027/session-anchor.v1.json"
   ]
 }

@@ -4,19 +4,10 @@ import { readFile, readdir } from "node:fs/promises";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { assertBundle, flattenCriteria, flattenUnits } from "../../src/engine/contracts.mjs";
-
-const here = dirname(fileURLToPath(import.meta.url));
-const root = join(here, "../..");
-const readJson = async (path) => JSON.parse(await readFile(join(root, path), "utf8"));
+import { readActiveDocuments, readJson, root } from "../helpers/active-documents.mjs";
 
 async function productionBundle() {
-  return {
-    active: await readJson("data/active.json"),
-    framework: await readJson("data/paes-ciencias-2027/framework.v1.json"),
-    bank: await readJson("data/paes-ciencias-2027/bank-anchor.v0.3.json"),
-    session: await readJson("data/paes-ciencias-2027/session-anchor-2026-08-17.v1.json"),
-    deployment: await readJson("data/paes-ciencias-2027/deployment.v1.json"),
-  };
+  return readActiveDocuments();
 }
 
 test("el marco maestro conserva el inventario 5/16/11/82", async () => {
@@ -100,7 +91,11 @@ test("B-02 conserva el eje truncado, los siete puntos y el texto alternativo aco
   assert.deepEqual(chart.puntos.map((point) => [point.x, point.y]), [
     [0, 71.8], [5, 71.2], [10, 70.6], [15, 70.1], [20, 69.5], [25, 68.9], [30, 68.4],
   ]);
-  assert.equal(chart.texto_alternativo, "Gráfico de temperatura contra tiempo durante 30 minutos. La línea desciende de forma continua y ocupa casi toda la altura del gráfico, pero el eje vertical va solo de 68 a 72 °C: la temperatura baja de 71,8 a 68,4 °C.");
+  assert.equal(chart.texto_alternativo, "Gráfico de líneas. Eje horizontal: tiempo en minutos, de 0 a 30, con marcas cada 5. Eje vertical: temperatura en grados Celsius, de 68 a 72, con marcas cada 1. La línea desciende de forma pareja desde poco menos de 72 en el minuto 0 hasta poco más de 68 en el minuto 30, pasando por 70 alrededor del minuto 15.");
+  // El acceso por lector de pantalla es equivalente, no privilegiado: los mismos datos que ve
+  // quien mira el gráfico, sin la resta hecha ni la magnitud del cambio calificada.
+  assert.doesNotMatch(chart.texto_alternativo, /truncad|solo de|casi toda la altura/i);
+  assert.equal(Object.keys(chart).some((key) => key.startsWith("aviso")), false);
 });
 
 test("un segundo marco satisface el mismo contrato sin tocar el motor", async () => {
@@ -131,6 +126,17 @@ test("el código ejecutable no contiene valores propios del marco activo", async
   for (const file of files) {
     const source = await readFile(file, "utf8");
     for (const value of forbidden) assert.equal(source.includes(value), false, `${file} contiene ${value}`);
+  }
+});
+
+test("ninguna vista lee el identificador de autoría del ítem", async () => {
+  const views = [...await walk(join(root, "src/ui"))];
+  for (const name of ["app.mjs", "print.mjs", "paper-tool.mjs", "backup-tool.mjs", "access-tool.mjs"]) {
+    views.push(join(root, "src", name));
+  }
+  for (const file of views) {
+    const source = await readFile(file, "utf8");
+    assert.equal(source.includes("formato_estimulo"), false, `${file} muestra formato_estimulo`);
   }
 });
 

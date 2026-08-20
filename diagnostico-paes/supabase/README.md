@@ -2,7 +2,7 @@
 
 Este directorio contiene un backend de recepción de respuestas crudas. No calcula puntajes ni perfiles y no expone lectura de tablas al navegador.
 
-> **Estado actual: no desplegado y NO-GO.** No hay URL ni clave real configuradas en los datos públicos, nueve de los 12 ítems ancla siguen pendientes de revisión docente y `private.administrations.enabled` se siembra como `false`.
+> **Estado actual: no desplegado y NO-GO.** No hay URL ni clave real configuradas en los datos públicos y `private.administrations.enabled` se siembra como `false`. El contenido sí está cerrado: los 12 ítems ancla quedaron aprobados por el docente y el seed refleja el banco v1.0.
 
 ## Modelo de seguridad
 
@@ -35,7 +35,7 @@ propios `ALTER DEFAULT PRIVILEGES` y volver a ejecutar el contrato de esquema an
 
 1. `migrations/202607310001_diagnostic_engine.sql`: esquema, tablas, restricciones, RLS y contrato inicial.
 2. `migrations/202608020001_enrollment_authority_and_orphans.sql`: autoridad de enrolamiento, sesiones provisionales, entregas huérfanas, conciliación y contrato RPC vigente.
-3. `seed-content-placeholder.sql`: marco, banco ancla v0.3, plantilla y administración. El nombre se conserva por compatibilidad histórica; el seed mantiene el banco pendiente de revisión y la administración deshabilitada.
+3. `seed-content-placeholder.sql`: marco, banco ancla v1.0, plantilla y administración. El nombre se conserva por compatibilidad histórica; el seed deja la administración deshabilitada.
 4. `seed-enrollment-hashes.example.sql`: ejemplo público deliberadamente vacío. El archivo privado `seed-enrollment-hashes.sql` está ignorado por Git y no debe vivir en el árbol que se publica.
 
 Los seeds de contenido son repetibles sobre los mismos IDs, pero no deben usarse para mutar una versión que ya recibió respuestas. Para un nuevo instrumento o aplicación, crear IDs/versiones y seeds nuevos. El enrolamiento real se provisiona desde una fuente restringida controlada por el docente, nunca desde el repositorio público.
@@ -158,7 +158,7 @@ Cuando el proyecto final ya pasó el ensayo extremo a extremo, el propietario pu
 ```sql
 update private.administrations
 set enabled = true
-where administration_id = 'ivb-2026-08-17-ancla-01';
+where administration_id = 'ivb-2026-ancla-01';
 ```
 
 Antes de hacerlo, verificar que contenido y plantilla en base coincidan byte/versión con los publicados. Para detener ingresos, ejecutar el mismo cambio con `enabled = false`; no es necesario retirar GitHub Pages para cerrar el RPC.
@@ -195,7 +195,7 @@ La vista administrativa tiene una fila por respuesta y las mismas columnas permi
 ```sql
 select *
 from private.raw_response_export_v1
-where administration_id = 'ivb-2026-08-17-ancla-01'
+where administration_id = 'ivb-2026-ancla-01'
 order by participant_ref, presentation_order;
 ```
 

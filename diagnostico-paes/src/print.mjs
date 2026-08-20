@@ -2,6 +2,7 @@ import { loadBundle, orderedItems } from "./engine/loader.mjs";
 import { flattenCriteria } from "./engine/contracts.mjs";
 import { element, clear } from "./ui/dom.mjs";
 import { renderStimulus } from "./ui/stimulus-renderers.mjs";
+import { publicFormatLabel } from "./engine/stimulus-format.mjs";
 import { registerServiceWorker } from "./infra/sw-client.mjs";
 import { assessReleaseReadiness } from "./engine/release-readiness.mjs";
 
@@ -17,7 +18,7 @@ function answerList(item) {
 
 function itemBlock(item, index) {
   return element("article", { className: "item-print" }, [
-    element("div", { className: "item-heading" }, [element("h2", { text: `Ítem ${index + 1}` }), element("span", { text: `${item.eje} · ${item.formato_estimulo.replaceAll("_", " ")}` })]),
+    element("div", { className: "item-heading" }, [element("h2", { text: `Ítem ${index + 1}` }), element("span", { text: `${item.eje} · ${publicFormatLabel(item.estimulo)}` })]),
     renderStimulus(item.estimulo),
     element("p", { className: "question", text: item.enunciado }),
     answerList(item),

@@ -5,6 +5,7 @@ import { spawnSync } from "node:child_process";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { createCode } from "../../src/engine/enrollment-code.mjs";
+import { readActiveDocuments } from "../../tests/helpers/active-documents.mjs";
 
 const ledgerPath = process.argv[2];
 const container = process.argv[3];
@@ -25,9 +26,7 @@ const enrollmentFixtures = records.slice(0, 3).map((record) => ({
 const enrollmentCode = enrollmentFixtures[0].enrollmentCode;
 const paperEnrollmentCode = enrollmentFixtures[1].enrollmentCode;
 const validationEnrollmentCode = enrollmentFixtures[2].enrollmentCode;
-const deployment = JSON.parse(await readFile(join(root, "data/paes-ciencias-2027/deployment.v1.json"), "utf8"));
-const session = JSON.parse(await readFile(join(root, "data/paes-ciencias-2027/session-anchor-2026-08-17.v1.json"), "utf8"));
-const bank = JSON.parse(await readFile(join(root, "data/paes-ciencias-2027/bank-anchor.v0.3.json"), "utf8"));
+const { deployment, session, bank } = await readActiveDocuments();
 const orphanEnrollmentCode = createCode("ZZZZZZZZ", deployment.enrolamiento);
 const itemById = new Map(bank.items.map((item) => [item.item_id, item]));
 const attemptId = randomUUID();

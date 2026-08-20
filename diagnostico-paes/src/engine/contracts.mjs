@@ -1,4 +1,5 @@
 import { BANK_AUTHORING_STATES, RELEASE_GATE_IDS, isPlausibleSupabasePublishableKey, isValidSupabaseBackendUrl } from "./release-readiness.mjs";
+import { hasPublicFormatLabel } from "./stimulus-format.mjs";
 
 export class ContractError extends Error {
   constructor(message, path = "") {
@@ -229,6 +230,16 @@ export function assertBank(bank, frameworkContext) {
       });
     } else {
       throw new ContractError(`tipo no soportado: ${stimulus.tipo}`, `${path}.estimulo.tipo`);
+    }
+    if (!hasPublicFormatLabel(stimulus.tipo)) {
+      throw new ContractError("tipo sin etiqueta pública: el identificador de autoría no puede llegar a la pantalla", `${path}.estimulo.tipo`);
+    }
+    // Un aviso sobre el propio estímulo —"eje truncado", "escalas distintas"— anuncia lo que el
+    // ítem pide notar y lo convierte en lectura literal. La notación convencional del gráfico sí
+    // corresponde; la frase que la explica, no.
+    const anuncio = Object.keys(stimulus).find((key) => key.startsWith("aviso"));
+    if (anuncio) {
+      throw new ContractError(`“${anuncio}” describe el diseño del ítem en pantalla`, `${path}.estimulo`);
     }
     const alternatives = requireArray(item.alternativas, `${path}.alternativas`, 2);
     const alternativeIds = unique(alternatives.map((alternative, alternativeIndex) => {

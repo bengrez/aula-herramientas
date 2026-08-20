@@ -144,7 +144,6 @@ function renderLineChart(stimulus) {
   );
   return element("div", { className: "stimulus" }, [
     stimulus.titulo ? element("p", { className: "stimulus-title", text: stimulus.titulo }) : null,
-    stimulus.aviso_rango ? element("p", { className: "chart-range", text: stimulus.aviso_rango }) : null,
     svg,
   ]);
 }

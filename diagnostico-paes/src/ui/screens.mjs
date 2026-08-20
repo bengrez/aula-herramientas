@@ -1,5 +1,6 @@
 import { element, clear, focusHeading } from "./dom.mjs";
 import { renderStimulus } from "./stimulus-renderers.mjs";
+import { publicFormatLabel } from "../engine/stimulus-format.mjs";
 
 function card(eyebrow, title, children = []) {
   const section = element("section", { className: "screen-card" });
@@ -137,7 +138,7 @@ export function renderItem(root, item, { position, total, onAnswer }) {
     element("div", { className: "progress-copy" }, [element("span", { text: `Recorrido ${position + 1} de ${total}` }), element("span", { text: "cobertura, no aciertos" })]),
     element("progress", { className: "progress-track", max: total, value: position, "aria-label": `${position} de ${total} recorridos completados` }),
   ]);
-  const meta = element("div", { className: "item-meta" }, [element("span", { text: item.eje }), element("span", { text: item.formato_estimulo.replaceAll("_", " ") })]);
+  const meta = element("div", { className: "item-meta" }, [element("span", { text: item.eje }), element("span", { text: publicFormatLabel(item.estimulo) })]);
   const fieldset = element("fieldset", { className: "alternatives" });
   fieldset.append(element("legend", { className: "visually-hidden", text: "Elige una alternativa" }));
   const inputs = [];

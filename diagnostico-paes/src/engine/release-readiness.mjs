@@ -86,6 +86,11 @@ export function assessReleaseReadiness(bundle) {
         && session.reglas?.permite_omitir === true,
     },
     {
+      id: "fecha_administracion",
+      label: "La administración declara la fecha en que se aplica",
+      passed: typeof deployment.administracion?.fecha_objetivo === "string" && deployment.administracion.fecha_objetivo.trim() !== "",
+    },
+    {
       id: "url_publica",
       label: "La URL pública de entrega usa HTTPS",
       passed: (() => {

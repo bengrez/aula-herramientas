@@ -2,9 +2,9 @@
 
 Aplicación web estática, instalable y *offline-first* para una sesión diagnóstica breve de Ciencias. Presenta una secuencia fija sin nota ni retroalimentación por ítem, conserva el avance en el dispositivo y, al terminar, muestra un mapa cualitativo de evidencia. La misma aplicación puede dejar una entrega pendiente para sincronizar con Supabase o producir un respaldo manual recuperable como CSV crudo.
 
-> **Estado actual: demostración técnica, NO-GO para estudiantes.** El banco ancla v0.3 contiene los 12 ítems definidos para esta sesión, pero nueve siguen pendientes de revisión docente. Los 12 tienen rol de `contexto`, por lo que no producen evidencia de contenido en el mapa. `pilot_ready` es `false`, el backend está desactivado y la administración de base de datos se crea deshabilitada. `?demo=1` permite revisar un flujo aislado; no convierte esta versión en un piloto válido.
+> **Estado actual: NO-GO para estudiantes, con el contenido ya cerrado.** El banco ancla v1.0 contiene los 12 ítems aprobados por el docente —los tres del piloto el 2026-08-02 y los nueve restantes el 2026-08-03—, de modo que los dos gates pedagógicos están cerrados. Lo que falta es físico y operativo: teléfono sin conexión, impresión, respaldo por QR y operación de sala, más la URL pública y el backend. Los 12 ítems tienen rol de `contexto`, por lo que no producen evidencia de contenido en el mapa. `pilot_ready` es `false`, el backend está desactivado y la administración de base de datos se crea deshabilitada. `?demo=1` permite revisar un flujo aislado; no convierte esta versión en un piloto válido.
 
-Fecha objetivo declarada en los datos: **17 de agosto de 2026**. Esa fecha no reemplaza el checklist de liberación de este documento.
+La administración **no declara fecha objetivo** (`fecha_objetivo: null`): la del 17 de agosto de 2026 pasó sin que la sesión se aplicara y arrastrarla haría pasar por vigente algo que no lo está. `npm run readiness` la lista como pendiente. Al fijar la fecha real basta con escribir `administracion.fecha_objetivo` y `administracion_id` en `deployment.v1.json` y regenerar el seed; el nombre del archivo de sesión ya no la codifica.
 
 ## Qué hace y qué no hace
 
@@ -46,7 +46,7 @@ El motor carga cuatro documentos enlazados por `data/active.json`:
 
 Los intentos guardan una instantánea de esos cuatro documentos. Por eso una actualización posterior del sitio no debe reinterpretar una sesión ya iniciada.
 
-### Contrato del banco ancla v0.3
+### Contrato del banco ancla v1.0
 
 La sesión presenta exactamente este orden: `A-01`, `B-02`, `C-03`, `D-01`, `A-02`, `B-03`, `C-01`, `D-02`, `A-03`, `B-01`, `C-02`, `D-03`. Los contratos comprueban además que no se repitan consecutivamente criterio ni eje y que las claves queden balanceadas en tres A, tres B, tres C y tres D.
 
@@ -107,9 +107,9 @@ No se editan `src/`, `index.html` ni `sw.js` para cambiar de asignatura, marco o
 2. Mantener `schema_version: 1` y asignar identificadores/versiones nuevos.
 3. En el banco, referir un `unidad_id` y un `criterio_id` existentes en el marco, y declarar `unidad_rol: "medicion" | "contexto"`. Cada alternativa debe tener ID único, diagnóstico de distractor y la `clave` debe apuntar a una de ellas. Solo `medicion` aporta evidencia de contenido; `contexto` puede aportar evidencia de habilidad.
 4. En la sesión, referir exactamente `banco_id`, `banco_version`, `marco_id` y `marco_version`; usar órdenes correlativos desde 1.
-5. En el despliegue, referir la plantilla y versión activas. Mientras falte revisión, conservar `release_status: "placeholder"` y `pilot_ready: false`.
+5. En el despliegue, referir la plantilla y versión activas. Mientras falte cualquier gate, conservar `release_status: "placeholder"` y `pilot_ready: false`.
 6. Actualizar las cuatro URL, el inventario esperado de `validation` y todos los recursos necesarios en `data/active.json`. Todo archivo requerido sin red debe aparecer en `offline_assets`. Al detectar un `active.json` distinto, el *service worker* solo activa ese manifiesto después de precargar correctamente su conjunto offline; una falla deja la nueva versión fuera de servicio en vez de anunciarla como lista sin red. Si cambia el propio código, el nuevo controlador toma control y fuerza una única recarga antes de iniciar, evitando mezclar módulos antiguos y nuevos.
-7. Regenerar `supabase/seed-content-placeholder.sql` con `node tools/generate-content-seed.mjs` y revisar el resultado. El nombre del archivo se conserva por compatibilidad histórica; su contenido refleja el banco ancla v0.3, mantiene su estado pendiente de revisión y deja la administración deshabilitada.
+7. Regenerar `supabase/seed-content-placeholder.sql` con `node tools/generate-content-seed.mjs` y revisar el resultado. El generador resuelve los cuatro documentos desde `data/active.json`, así que renombrar un banco o refechar una sesión no exige tocarlo. El nombre del archivo se conserva por compatibilidad histórica; el seed refleja el banco ancla v1.0 y deja la administración deshabilitada.
 8. Ejecutar las pruebas automáticas y el recorrido manual completo.
 
 Para regenerar el marco desde su documento maestro:
@@ -182,7 +182,7 @@ El recurso es una herramienta docente personal. Este checklist no exige aprobaci
 
 ### Contenido y medición
 
-- [ ] Los nueve ítems pendientes del banco ancla v0.3 fueron revisados por contenido, lenguaje, accesibilidad, clave y distractores; los tres ya aprobados conservaron su aprobación.
+- [x] Los 12 ítems del banco ancla v1.0 fueron revisados por contenido, lenguaje, accesibilidad, clave y distractores: `A-01` a `A-03` el 2026-08-02 y `B-01` a `D-03` el 2026-08-03.
 - [ ] El banco pasó de `estado_autoria: contenido_docente_pendiente_revision` al estado final aprobado, sin perder la trazabilidad por ítem.
 - [ ] Las etiquetas públicas, estados y tabla de inferencia fueron aprobados por el docente responsable.
 - [ ] Cada criterio objetivo tiene evidencia suficiente; “territorio aún no medido” sigue siendo distinto de desempeño débil.
