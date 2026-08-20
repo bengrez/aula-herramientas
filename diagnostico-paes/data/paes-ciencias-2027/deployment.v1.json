@@ -68,7 +68,7 @@
     "operacion_sala_validada": false
   },
   "operacion": {
-    "url_publica": "",
+    "url_publica": "https://bengrez.github.io/aula-herramientas/diagnostico-paes/",
     "modo_offline": true,
     "reintento_al_reabrir": true,
     "respaldo_manual": true,
