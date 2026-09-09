@@ -1,4 +1,5 @@
 const TOKEN_STORAGE_PREFIX = "diagnostic-auth";
+const DEFAULT_TIMEOUT_MS = 15000;
 
 async function parseResponse(response) {
   const text = await response.text();
@@ -19,7 +20,22 @@ export class SupabaseHttp {
     this.config = config;
     this.storage = storage;
     this.fetcher = fetcher;
-    this.tokenKey = `${TOKEN_STORAGE_PREFIX}:${new URL(config.url).host}`;
+    this.tokenKey = `${config.auth_storage_prefix ?? TOKEN_STORAGE_PREFIX}:${new URL(config.url).host}`;
+  }
+
+  // Sin límite de tiempo, un proyecto pausado o una red lenta dejan la interfaz esperando sin
+  // señal alguna. Se aborta y se traduce el fallo a algo que el estudiante pueda entender.
+  async request(url, options) {
+    const timeout = Number(this.config.timeout_ms ?? DEFAULT_TIMEOUT_MS);
+    const abortable = Number.isFinite(timeout) && timeout > 0 && typeof AbortSignal?.timeout === "function";
+    try {
+      return await this.fetcher(url, abortable ? { ...options, signal: AbortSignal.timeout(timeout) } : options);
+    } catch (error) {
+      // Aquí no llegó respuesta alguna, así que el mensaje original es de transporte y suele venir
+      // en inglés («Failed to fetch»). Los mensajes del servidor viajan por parseResponse, no por acá.
+      if (error?.name === "TimeoutError" || error?.name === "AbortError") throw new Error("el servidor no respondió a tiempo", { cause: error });
+      throw new Error("no hay conexión con el servidor", { cause: error });
+    }
   }
 
   headers(accessToken) {
@@ -47,7 +63,7 @@ export class SupabaseHttp {
   }
 
   async signInAnonymously() {
-    const response = await this.fetcher(`${this.config.url}/auth/v1/signup`, {
+    const response = await this.request(`${this.config.url}/auth/v1/signup`, {
       method: "POST",
       headers: this.headers(),
       body: JSON.stringify({ data: {}, gotrue_meta_security: {} }),
@@ -58,7 +74,7 @@ export class SupabaseHttp {
   }
 
   async refresh(refreshToken) {
-    const response = await this.fetcher(`${this.config.url}/auth/v1/token?grant_type=refresh_token`, {
+    const response = await this.request(`${this.config.url}/auth/v1/token?grant_type=refresh_token`, {
       method: "POST",
       headers: this.headers(),
       body: JSON.stringify({ refresh_token: refreshToken }),
@@ -83,7 +99,7 @@ export class SupabaseHttp {
 
   async rpc(name, parameters) {
     const token = await this.accessToken();
-    const response = await this.fetcher(`${this.config.url}/rest/v1/rpc/${encodeURIComponent(name)}`, {
+    const response = await this.request(`${this.config.url}/rest/v1/rpc/${encodeURIComponent(name)}`, {
       method: "POST",
       headers: {
         ...this.headers(token),

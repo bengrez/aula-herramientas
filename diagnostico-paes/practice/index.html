@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#143642">
+  <meta name="robots" content="noindex,nofollow">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data: blob:; connect-src 'self' https://*.supabase.co; font-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'">
+  <title>Atlas · Práctica</title>
+  <link rel="icon" href="../assets/icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../src/styles.css">
+  <link rel="stylesheet" href="./practice.css">
+</head>
+<body>
+  <a class="skip-link" href="#app">Saltar al contenido</a>
+  <div class="page-shell">
+    <header class="site-header">
+      <a class="wordmark" href="./"><span class="wordmark-mark" aria-hidden="true">↗</span>Atlas</a>
+      <span id="connection" class="connection-pill" role="status" data-state="online-pending"><span class="status-dot" aria-hidden="true"></span><span class="connection-text">Preparando uso sin internet…</span></span>
+    </header>
+    <aside id="preview" class="preview-banner">Versión de revisión docente · preguntas en revisión</aside>
+    <main id="app" class="app-stage" tabindex="-1" aria-busy="true"><p>Preparando tu práctica…</p></main>
+    <div id="live" class="visually-hidden" aria-live="polite"></div>
+    <p id="message" role="status" aria-live="polite"></p>
+    <footer class="site-footer">Práctica formativa · sin nota, ranking ni estimación de puntaje PAES</footer>
+  </div>
+  <noscript>Activa JavaScript para usar el almacenamiento local.</noscript>
+  <script type="module" src="./app.mjs"></script>
+</body>
+</html>

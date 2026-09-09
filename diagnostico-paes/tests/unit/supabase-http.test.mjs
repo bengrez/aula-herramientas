@@ -116,3 +116,40 @@ test("clearSession elimina el token anónimo del dispositivo", () => {
 
   assert.equal(storage.getItem(tokenKey), null);
 });
+
+test("cada llamada lleva un límite de tiempo adjunto", async () => {
+  let visto = null;
+  const fetcher = async (url, options) => { visto = options; return jsonResponse({ access_token: "a", refresh_token: "r", expires_in: 3600 }); };
+  await new SupabaseHttp(config, memoryStorage(), fetcher).signInAnonymously();
+  assert.ok(visto.signal instanceof AbortSignal);
+  assert.equal(visto.signal.aborted, false);
+});
+
+// Un proyecto pausado o una red lenta no deben dejar la interfaz esperando sin explicación.
+test("un fallo por tiempo agotado se traduce a un mensaje entendible", async () => {
+  const fetcher = async () => { throw Object.assign(new Error("The operation was aborted"), { name: "TimeoutError" }); };
+  const client = new SupabaseHttp(config, memoryStorage(), fetcher);
+  await assert.rejects(client.signInAnonymously(), /no respondió a tiempo/);
+});
+
+test("un fallo de red se traduce y conserva el original como causa", async () => {
+  const original = new TypeError("Failed to fetch");
+  const fetcher = async () => { throw original; };
+  await assert.rejects(new SupabaseHttp(config, memoryStorage(), fetcher).signInAnonymously(), (error) => {
+    assert.match(error.message, /no hay conexión con el servidor/);
+    assert.equal(error.cause, original);
+    return true;
+  });
+});
+
+test("un rechazo del servidor conserva su mensaje, que no es de transporte", async () => {
+  const fetcher = async () => jsonResponse({ message: "not_authorized" }, { status: 401 });
+  await assert.rejects(new SupabaseHttp(config, memoryStorage(), fetcher).signInAnonymously(), /not_authorized/);
+});
+
+test("sin límite configurado no se adjunta señal a la llamada", async () => {
+  let visto = null;
+  const fetcher = async (url, options) => { visto = options; return jsonResponse({ access_token: "a", refresh_token: "r", expires_in: 3600 }); };
+  await new SupabaseHttp({ ...config, timeout_ms: 0 }, memoryStorage(), fetcher).signInAnonymously();
+  assert.equal("signal" in visto, false);
+});

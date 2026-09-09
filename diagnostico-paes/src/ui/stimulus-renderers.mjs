@@ -150,6 +150,20 @@ function renderLineChart(stimulus) {
 
 export function renderStimulus(stimulus) {
   if (!stimulus?.texto_alternativo) throw new Error("Todo estímulo necesita texto alternativo");
+  if (stimulus.tipo === "figura") {
+    if (!/^assets\/figures\/[a-z0-9-]+\.v[0-9]+\.svg$/.test(stimulus.archivo)) throw new Error("Ruta de figura no permitida");
+    const url = new URL(`../../${stimulus.archivo}`, import.meta.url).href;
+    const picture = element("img", { src: url, alt: stimulus.texto_alternativo, className: "study-figure", decoding: "async" });
+    const warning = element("p", { role: "alert", hidden: true, text: "No se pudo cargar la figura. Usa la descripción equivalente o vuelve a cargar; no respondas basándote en una imagen incompleta." });
+    picture.addEventListener("error", () => { warning.hidden = false; });
+    return element("figure", { className: "stimulus visual-stimulus" }, [
+      element("p", { text: stimulus.introduccion }),
+      element("p", { className: "field-help", text: "En pantallas pequeñas, desliza la figura horizontalmente para ver todos los paneles." }),
+      element("div", { className: "figure-scroll", tabindex: "0", role: "region", "aria-label": "Figura desplazable horizontalmente" }, picture), warning,
+      element("figcaption", {}, [element("a", { href: url, target: "_blank", rel: "noopener", text: "Abrir figura a tamaño completo" }),
+        element("details", {}, [element("summary", { text: "Descripción equivalente de la figura" }), element("p", { text: stimulus.texto_alternativo })])]),
+    ]);
+  }
   if (stimulus.tipo === "tabla") return renderTable(stimulus);
   if (stimulus.tipo === "secuencia" || stimulus.tipo === "diagrama") return renderSequence(stimulus);
   if (stimulus.tipo === "grafico_barras") return renderBars(stimulus);

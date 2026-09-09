@@ -1,0 +1,795 @@
+{
+  "schema_version": 1,
+  "banco_id": "paes-ciencias-practica-biologia",
+  "version": "0.2.0-borrador",
+  "marco_id": "paes-ciencias",
+  "marco_version": "admision-2027.v1",
+  "estado_autoria": "contenido_docente_pendiente_revision",
+  "aviso": "BORRADOR — 14 ítems generados para pivotar de diagnóstico (unidad_rol: \"contexto\", solo habilidad) a práctica (unidad_rol: \"medicion\", contenido repetible). NINGÚN ítem de este archivo ha sido revisado por el docente: todos llevan estado_revision \"pendiente_revision_docente\" y ninguno debe presentarse a estudiantes como aprobado. Este archivo no está referenciado desde data/active.json ni desde ningún banco en producción; activarlo es una decisión docente posterior, no automática.",
+  "fuente_local": "Generado 2026-09-01 a partir de data/paes-ciencias-2027/framework.v1.json (áreas BIO-01 a BIO-04, unidades con prioridad_diagnostico_v1: \"alta\") y de docencia_2026/10_REFERENCE/ref-anatomia-item-paes-ciencias-v1.md (reglas de forma medidas sobre 75 ítems reales DEMRE).",
+  "items": [
+    {
+      "item_id": "PB-01",
+      "version": "0.2",
+      "marco_id": "paes-ciencias",
+      "marco_version": "admision-2027.v1",
+      "unidad_id": "BIO-01.01",
+      "unidad_rol": "medicion",
+      "criterio_id": "HC-03.C1",
+      "eje": "Biología",
+      "formato_estimulo": "tabla_presencia_ausencia_cubiertas",
+      "estado_revision": "pendiente_revision_docente",
+      "estimulo": {
+        "tipo": "tabla",
+        "introduccion": "Una estudiante compara registros de microscopía y caracterización de cubiertas de tres células. Resume en una tabla las estructuras identificadas en cada muestra:",
+        "columnas": [
+          "Cubierta celular",
+          "Bacteria encapsulada",
+          "Célula vegetal",
+          "Célula animal"
+        ],
+        "filas": [
+          [
+            "Cápsula",
+            "Presente",
+            "Ausente",
+            "Ausente"
+          ],
+          [
+            "Pared celular",
+            "Presente",
+            "Presente",
+            "Ausente"
+          ],
+          [
+            "Membrana plasmática",
+            "Presente",
+            "Presente",
+            "Presente"
+          ]
+        ],
+        "texto_alternativo": "Tabla de cubiertas celulares. Cápsula: presente en bacteria encapsulada, ausente en vegetal y animal. Pared celular: presente en bacteria y vegetal, ausente en animal. Membrana plasmática: presente en bacteria, vegetal y animal."
+      },
+      "enunciado": "¿Cuál de las siguientes afirmaciones interpreta correctamente lo que muestra la tabla sobre estas tres cubiertas celulares?",
+      "alternativas": [
+        {
+          "id": "A",
+          "texto": "La cápsula y la pared celular son la misma estructura vista en distintas células, porque ambas se ubican por fuera de la membrana.",
+          "diagnostico": "Confunde dos cubiertas distintas por compartir posición externa a la membrana: trata \"estar afuera\" como si fuera la misma estructura, sin atender a que la tabla las registra en filas independientes, con patrones de presencia distintos entre las tres células."
+        },
+        {
+          "id": "B",
+          "texto": "Solo las células que tienen pared celular necesitan también una membrana plasmática.",
+          "diagnostico": "Interpreta la coexistencia de pared y membrana en la bacteria y en la célula vegetal como una relación de necesidad condicional, cuando la tabla muestra que la membrana está presente en las tres células, tengan o no pared celular."
+        },
+        {
+          "id": "C",
+          "texto": "La membrana plasmática es la única cubierta presente en las tres células; la cápsula y la pared no son comunes a todas.",
+          "diagnostico": "La tabla registra tres cubiertas con patrones distintos de presencia y ausencia entre las tres células. Solo la fila \"membrana plasmática\" marca presente en las tres columnas; cápsula y pared varían según el tipo celular. La lectura correcta compara fila por fila, sin suponer que dos estructuras son equivalentes por compartir una misma posición relativa."
+        },
+        {
+          "id": "D",
+          "texto": "La célula vegetal no requiere membrana plasmática, porque su pared celular ya cumple esa función.",
+          "diagnostico": "Supone que una cubierta rígida de sostén reemplaza la función de intercambio y regulación de la membrana; la tabla registra la membrana como presente en la célula vegetal, no ausente."
+        }
+      ],
+      "clave": "C",
+      "estado_clave": "ok",
+      "razonamiento_esperado": "La tabla registra tres cubiertas con patrones distintos de presencia y ausencia entre las tres células. Solo la fila \"membrana plasmática\" marca presente en las tres columnas; cápsula y pared varían según el tipo celular. La lectura correcta compara fila por fila, sin suponer que dos estructuras son equivalentes por compartir una misma posición relativa."
+    },
+    {
+      "item_id": "PB-02",
+      "version": "0.2",
+      "marco_id": "paes-ciencias",
+      "marco_version": "admision-2027.v1",
+      "unidad_id": "BIO-01.03",
+      "unidad_rol": "medicion",
+      "criterio_id": "HC-03.C2",
+      "eje": "Biología",
+      "formato_estimulo": "caso_falla_organelo_digestivo",
+      "estado_revision": "pendiente_revision_docente",
+      "estimulo": {
+        "tipo": "texto",
+        "texto": "En un estudio con hepatocitos de un paciente, un equipo observa al microscopio electrónico que numerosas vesículas citoplasmáticas están llenas de material sin digerir, mientras que el resto del citoplasma se ve normal. Al medir la actividad de las enzimas digestivas dentro de esas vesículas, encuentran que es prácticamente nula, aunque comprueban que esas enzimas sí se producen y se empaquetan de forma correcta antes de llegar a las vesículas.",
+        "texto_alternativo": "En hepatocitos de un paciente se observan vesículas citoplasmáticas llenas de material sin digerir; las enzimas digestivas dentro de esas vesículas están prácticamente inactivas, aunque se producen y se empaquetan de forma correcta antes de llegar a destino."
+      },
+      "enunciado": "¿Cuál de las siguientes opciones explica mejor, a nivel celular, la acumulación de material sin digerir que se observa?",
+      "alternativas": [
+        {
+          "id": "A",
+          "texto": "Las mitocondrias no están produciendo suficiente energía para mover el material fuera de la célula.",
+          "diagnostico": "Atribuye la falla a la mitocondria por asociarla de forma genérica con \"lo que falla cuando algo no funciona en la célula\", sin relacionar el dato reportado —enzimas digestivas inactivas— con el organelo cuya función es precisamente digerir: el lisosoma."
+        },
+        {
+          "id": "B",
+          "texto": "Los lisosomas de este paciente no están degradando su contenido, por lo que el material que reciben se acumula sin procesarse.",
+          "diagnostico": "El caso reporta enzimas digestivas producidas y empaquetadas con normalidad, pero inactivas dentro de las vesículas donde deberían degradar material. Eso apunta a una falla en la función del organelo encargado de la digestión intracelular —el lisosoma—, no en los organelos responsables de producir energía (mitocondria), empaquetar proteínas (Golgi) u oxidar sustancias específicas (peroxisoma)."
+        },
+        {
+          "id": "C",
+          "texto": "El aparato de Golgi no está empaquetando correctamente las enzimas, por lo que nunca llegan a destino.",
+          "diagnostico": "Contradice un dato explícito del caso —las enzimas sí se empaquetan correctamente— y atribuye la falla a un organelo previo en la ruta que el propio estudio descarta."
+        },
+        {
+          "id": "D",
+          "texto": "El material se acumula porque esas vesículas son peroxisomas, y los peroxisomas no degradan sustancias, solo las oxidan.",
+          "diagnostico": "Confunde lisosoma con peroxisoma: ambos procesan sustancias, pero el peroxisoma se especializa en reacciones de oxidación —por ejemplo, de ácidos grasos y compuestos tóxicos—, no en la digestión general de macromoléculas que describe el caso."
+        }
+      ],
+      "clave": "B",
+      "estado_clave": "ok",
+      "razonamiento_esperado": "El caso reporta enzimas digestivas producidas y empaquetadas con normalidad, pero inactivas dentro de las vesículas donde deberían degradar material. Eso apunta a una falla en la función del organelo encargado de la digestión intracelular —el lisosoma—, no en los organelos responsables de producir energía (mitocondria), empaquetar proteínas (Golgi) u oxidar sustancias específicas (peroxisoma)."
+    },
+    {
+      "item_id": "PB-03",
+      "version": "0.2",
+      "marco_id": "paes-ciencias",
+      "marco_version": "admision-2027.v1",
+      "unidad_id": "BIO-01.05",
+      "unidad_rol": "medicion",
+      "criterio_id": "HC-03.C1",
+      "eje": "Biología",
+      "formato_estimulo": "matriz_presencia_ausencia_tipos_celulares",
+      "estado_revision": "pendiente_revision_docente",
+      "estimulo": {
+        "tipo": "tabla",
+        "introduccion": "Se sabe que tres muestras corresponden, en algún orden, a una bacteria, una célula animal nucleada y una célula fotosintética de una hoja. Para identificarlas se registran los siguientes rasgos internos:",
+        "columnas": [
+          "Estructura",
+          "Célula X",
+          "Célula Y",
+          "Célula Z"
+        ],
+        "filas": [
+          [
+            "Núcleo delimitado por membrana",
+            "Ausente",
+            "Presente",
+            "Presente"
+          ],
+          [
+            "Pared celular",
+            "Presente",
+            "Ausente",
+            "Presente"
+          ],
+          [
+            "Cloroplastos",
+            "Ausente",
+            "Ausente",
+            "Presente"
+          ],
+          [
+            "Vacuola central grande",
+            "Ausente",
+            "Ausente",
+            "Presente"
+          ]
+        ],
+        "texto_alternativo": "Tabla que compara tres células de forma similar según presencia o ausencia de núcleo delimitado por membrana, pared celular, cloroplastos y vacuola central grande. Célula X: solo pared. Célula Y: solo núcleo. Célula Z: las cuatro estructuras presentes."
+      },
+      "enunciado": "Sin usar la forma externa de las células, ¿cuál de las siguientes clasificaciones es coherente con la tabla?",
+      "alternativas": [
+        {
+          "id": "A",
+          "texto": "Las tres células son eucariontes, porque las tres presentan alguna cubierta rígida o estructura de sostén visible.",
+          "diagnostico": "Usa la presencia de una estructura de sostén (pared) como criterio de célula eucarionte, ignorando el rasgo que la tabla sí registra como distintivo: la presencia de un núcleo delimitado por membrana, ausente en la célula X."
+        },
+        {
+          "id": "B",
+          "texto": "La célula Y es vegetal, porque es la única que combina núcleo y pared celular.",
+          "diagnostico": "Atribuye a la célula Y una combinación de estructuras que la tabla no le asigna: Y tiene núcleo, pero la fila de pared celular la marca como ausente para esa columna."
+        },
+        {
+          "id": "C",
+          "texto": "Como las tres células tienen una forma similar, es razonable tratarlas como el mismo tipo celular mientras no haya más evidencia.",
+          "diagnostico": "Vuelve a apoyarse en la forma externa —que el enunciado advierte explícitamente que no basta para clasificar— en lugar de usar los cuatro rasgos internos que la tabla ya entrega para diferenciarlas."
+        },
+        {
+          "id": "D",
+          "texto": "La célula X es procarionte, la célula Y es animal y la célula Z es vegetal.",
+          "diagnostico": "La célula X carece de núcleo pese a tener pared, patrón propio de una célula procarionte. La célula Y tiene núcleo pero ninguna de las otras tres estructuras, patrón de célula animal. La célula Z presenta las cuatro estructuras, patrón de célula vegetal. La clasificación se sostiene en la combinación de rasgos internos registrados en la tabla, no en la forma externa compartida por las tres."
+        }
+      ],
+      "clave": "D",
+      "estado_clave": "ok",
+      "razonamiento_esperado": "La célula X carece de núcleo pese a tener pared, patrón propio de una célula procarionte. La célula Y tiene núcleo pero ninguna de las otras tres estructuras, patrón de célula animal. La célula Z presenta las cuatro estructuras, patrón de célula vegetal. La clasificación se sostiene en la combinación de rasgos internos registrados en la tabla, no en la forma externa compartida por las tres."
+    },
+    {
+      "item_id": "PB-04",
+      "version": "0.2",
+      "marco_id": "paes-ciencias",
+      "marco_version": "admision-2027.v1",
+      "unidad_id": "BIO-01.06",
+      "unidad_rol": "medicion",
+      "criterio_id": "HC-03.C3",
+      "eje": "Biología",
+      "formato_estimulo": "caso_comparacion_celulas_especializadas",
+      "estado_revision": "pendiente_revision_docente",
+      "estimulo": {
+        "tipo": "texto",
+        "texto": "Un enterocito, célula que recubre el intestino delgado, presenta en su superficie miles de microvellosidades que aumentan enormemente el área de contacto con el contenido intestinal, junto con una gran cantidad de mitocondrias concentradas cerca de esa superficie. Una neurona, en cambio, no presenta microvellosidades, pero sí prolongaciones largas especializadas en conducir señales eléctricas a distancia.",
+        "texto_alternativo": "El enterocito tiene microvellosidades y muchas mitocondrias cerca de la superficie de absorción; la neurona no tiene microvellosidades, pero sí prolongaciones largas especializadas en conducir señales eléctricas."
+      },
+      "enunciado": "¿Cuál de las siguientes conclusiones sobre la relación entre estructura y función celular es correcta?",
+      "alternativas": [
+        {
+          "id": "A",
+          "texto": "Las microvellosidades del enterocito aumentan su superficie de absorción, y sus mitocondrias cercanas aportan la energía necesaria para el transporte activo de nutrientes.",
+          "diagnostico": "La conclusión sostenible vincula cada estructura observada con la función específica que cumple en ese tipo celular: microvellosidades con superficie de absorción, mitocondrias cercanas con energía para transporte activo. Generalizar ese patrón a toda célula con un rasgo similar, o igualar estructuras distintas por su forma, excede lo que el caso permite concluir."
+        },
+        {
+          "id": "B",
+          "texto": "Como el enterocito tiene más mitocondrias que la neurona, toda célula del organismo que presente una gran cantidad de mitocondrias debe participar necesariamente en la absorción de nutrientes intestinales.",
+          "diagnostico": "Generaliza una adaptación específica del enterocito —vinculada a su tarea de absorción— a cualquier célula con muchas mitocondrias, ignorando que otras células, como la neurona, también pueden requerir mucha energía para funciones distintas del transporte de nutrientes."
+        },
+        {
+          "id": "C",
+          "texto": "Las microvellosidades y las prolongaciones de la neurona cumplen la misma función, porque ambas son extensiones que sobresalen de la célula.",
+          "diagnostico": "Iguala dos estructuras por su forma general —proyecciones que sobresalen de la célula— sin atender a que cumplen funciones distintas: aumentar la superficie de absorción en un caso, conducir señales a distancia en el otro."
+        },
+        {
+          "id": "D",
+          "texto": "Toda célula especializada en una función concreta debe tener microvellosidades, porque son la estructura que permite la especialización.",
+          "diagnostico": "Convierte un rasgo particular del enterocito —las microvellosidades— en un requisito general de toda especialización celular; el propio caso de la neurona, especializada sin microvellosidades, contradice esa generalización."
+        }
+      ],
+      "clave": "A",
+      "estado_clave": "ok",
+      "razonamiento_esperado": "La conclusión sostenible vincula cada estructura observada con la función específica que cumple en ese tipo celular: microvellosidades con superficie de absorción, mitocondrias cercanas con energía para transporte activo. Generalizar ese patrón a toda célula con un rasgo similar, o igualar estructuras distintas por su forma, excede lo que el caso permite concluir."
+    },
+    {
+      "item_id": "PB-05",
+      "version": "0.2",
+      "marco_id": "paes-ciencias",
+      "marco_version": "admision-2027.v1",
+      "unidad_id": "BIO-02.05",
+      "unidad_rol": "medicion",
+      "criterio_id": "HC-02.C2",
+      "eje": "Biología",
+      "formato_estimulo": "secuencia_experimento_barrera_fecundacion",
+      "estado_revision": "pendiente_revision_docente",
+      "estimulo": {
+        "tipo": "secuencia",
+        "introduccion": "En un experimento hipotético con óvulos de rana se evalúa si el acceso de los espermatozoides es necesario para la fecundación. Se mantienen iguales la viabilidad inicial, la temperatura, la oxigenación y las sustancias disueltas de ambos grupos:",
+        "pasos": [
+          "Divide los óvulos en dos grupos, ambos colocados en el mismo estanque, junto a machos que liberan espermatozoides en el agua.",
+          "Rodea al Grupo 1 con una membrana porosa que permite el intercambio de agua y solutos, pero impide el paso de espermatozoides.",
+          "Deja al Grupo 2 completamente expuesto al agua del estanque, sin ninguna cubierta.",
+          "Después de 24 horas, revisa cuántos óvulos de cada grupo comenzaron a desarrollarse como embriones."
+        ],
+        "texto_alternativo": "Experimento hipotético controlado: dos grupos de óvulos de rana con igual viabilidad, temperatura y oxigenación. Una barrera porosa bloquea espermatozoides en el Grupo 1; el Grupo 2 queda expuesto. Se observa el desarrollo tras 24 horas."
+      },
+      "enunciado": "Si solo los óvulos del Grupo 2 (expuesto) se desarrollan como embriones, ¿cuál de las siguientes conclusiones es la más ajustada a este procedimiento?",
+      "alternativas": [
+        {
+          "id": "A",
+          "texto": "La fecundación ocurre siempre que los óvulos estén cerca de los machos, sin importar si hay una barrera entre ellos.",
+          "diagnostico": "Reduce la fecundación a la cercanía entre óvulos y machos, ignorando que la variable que el procedimiento manipuló fue el acceso físico de los espermatozoides al óvulo, no la distancia entre óvulos y machos."
+        },
+        {
+          "id": "B",
+          "texto": "Los óvulos del Grupo 1 no se desarrollaron porque la barrera impidió que recibieran suficiente oxígeno.",
+          "diagnostico": "Atribuye el resultado a una diferencia de oxigenación que el diseño declara controlada. Dejar pasar agua no bastaría por sí solo para demostrar igualdad de oxígeno; por eso se explicita ese control."
+        },
+        {
+          "id": "C",
+          "texto": "El contacto físico entre el espermatozoide y el óvulo es necesario para que ocurra la fecundación en este procedimiento.",
+          "diagnostico": "La única diferencia entre los dos grupos es si los espermatozoides pueden alcanzar físicamente al óvulo. Como solo el grupo sin barrera desarrolla embriones, el procedimiento aísla el contacto entre gametos como la condición necesaria, dentro de esta especie y este diseño, sin que eso autorice generalizar a otras causas no manipuladas ni a otras especies."
+        },
+        {
+          "id": "D",
+          "texto": "Este procedimiento demuestra que todos los animales necesitan contacto físico directo entre gametos para reproducirse.",
+          "diagnostico": "Generaliza la conclusión a \"todos los animales\", cuando el procedimiento solo estudió ranas: excede la población observada en el diseño."
+        }
+      ],
+      "clave": "C",
+      "estado_clave": "ok",
+      "razonamiento_esperado": "La única diferencia entre los dos grupos es si los espermatozoides pueden alcanzar físicamente al óvulo. Como solo el grupo sin barrera desarrolla embriones, el procedimiento aísla el contacto entre gametos como la condición necesaria, dentro de esta especie y este diseño, sin que eso autorice generalizar a otras causas no manipuladas ni a otras especies."
+    },
+    {
+      "item_id": "PB-06",
+      "version": "0.2",
+      "marco_id": "paes-ciencias",
+      "marco_version": "admision-2027.v1",
+      "unidad_id": "BIO-02.06",
+      "unidad_rol": "medicion",
+      "criterio_id": "HC-03.C1",
+      "eje": "Biología",
+      "formato_estimulo": "tabla_paralela_ciclo_ovarico_uterino",
+      "estado_revision": "pendiente_revision_docente",
+      "estimulo": {
+        "tipo": "tabla",
+        "introduccion": "Una estudiante distingue los eventos ováricos y uterinos en un modelo didáctico de ciclo de 28 días. Las fechas son aproximadas: los ciclos reales pueden variar.",
+        "columnas": [
+          "Día aproximado",
+          "Evento en el ovario",
+          "Evento en el útero"
+        ],
+        "filas": [
+          [
+            "Día 1 a 5",
+            "Un folículo comienza a madurar",
+            "El endometrio se desprende (menstruación)"
+          ],
+          [
+            "Día 14",
+            "Se libera el ovocito (ovulación)",
+            "El endometrio ha empezado a engrosar"
+          ],
+          [
+            "Día 15 a 28",
+            "El folículo roto forma una estructura que produce hormonas",
+            "El endometrio entra en fase secretora, preparándose para una posible implantación"
+          ]
+        ],
+        "texto_alternativo": "Modelo de ciclo de 28 días: días 1 a 5, maduración folicular y menstruación; alrededor del día 14, ovulación y endometrio engrosado; días 15 a 28, cuerpo lúteo productor de hormonas y endometrio en fase secretora."
+      },
+      "enunciado": "De acuerdo con la tabla, ¿cuál de las siguientes afirmaciones distingue correctamente el ciclo ovárico del ciclo uterino?",
+      "alternativas": [
+        {
+          "id": "A",
+          "texto": "La menstruación es el mismo evento que la ovulación, solo que ocurre en un órgano distinto.",
+          "diagnostico": "Iguala dos eventos que la tabla ubica en momentos distintos del ciclo —menstruación entre los días 1 y 5, ovulación en el día 14— y en estructuras distintas, tratando la coincidencia de pertenecer \"al ciclo\" como si fuera el mismo evento."
+        },
+        {
+          "id": "B",
+          "texto": "La menstruación marca el inicio de un nuevo ciclo, mientras que la ovulación es un evento distinto que ocurre semanas después, dentro del mismo ciclo.",
+          "diagnostico": "La tabla separa dos procesos coordinados pero distintos: el ovárico, centrado en la maduración y liberación del ovocito, y el uterino, centrado en el estado del endometrio. Ambos comparten los 28 días del ciclo y están sincronizados por hormonas, pero sus eventos —y los órganos donde ocurren— no son intercambiables."
+        },
+        {
+          "id": "C",
+          "texto": "Como ambos ciclos duran exactamente 28 días y ocurren en la misma persona al mismo tiempo, el ciclo ovárico y el ciclo uterino son, en el fondo, un único proceso biológico con dos nombres distintos.",
+          "diagnostico": "Confunde que dos procesos estén sincronizados y compartan duración con que sean el mismo proceso; la tabla los registra en columnas separadas porque ocurren en órganos distintos y con eventos propios en cada tramo."
+        },
+        {
+          "id": "D",
+          "texto": "Solo el ciclo uterino es relevante para la fecundación, porque el ovario no participa directamente en ese proceso.",
+          "diagnostico": "Descarta el rol del ovario, cuando la tabla ubica ahí precisamente la liberación del ovocito, el día 14, el evento directamente necesario para que pueda haber fecundación."
+        }
+      ],
+      "clave": "B",
+      "estado_clave": "ok",
+      "razonamiento_esperado": "La tabla separa dos procesos coordinados pero distintos: el ovárico, centrado en la maduración y liberación del ovocito, y el uterino, centrado en el estado del endometrio. Ambos comparten los 28 días del ciclo y están sincronizados por hormonas, pero sus eventos —y los órganos donde ocurren— no son intercambiables."
+    },
+    {
+      "item_id": "PB-07",
+      "version": "0.2",
+      "marco_id": "paes-ciencias",
+      "marco_version": "admision-2027.v1",
+      "unidad_id": "BIO-03.01",
+      "unidad_rol": "medicion",
+      "criterio_id": "HC-03.C1",
+      "eje": "Biología",
+      "formato_estimulo": "secuencia_estados_compactacion_cromatina",
+      "estado_revision": "pendiente_revision_docente",
+      "estimulo": {
+        "tipo": "secuencia",
+        "introduccion": "Un investigador observa al microscopio el núcleo de una misma célula en cuatro momentos sucesivos y describe el estado de su cromatina en cada uno:",
+        "pasos": [
+          "Momento 1 (interfase temprana): la cromatina se ve como una red difusa y poco definida dentro del núcleo.",
+          "Momento 2 (interfase, después de duplicarse el ADN): la cromatina sigue viéndose igual de difusa, aunque la célula ahora tiene el doble de ADN que en el Momento 1.",
+          "Momento 3 (profase): la cromatina se condensa y se hacen visibles estructuras compactas y definidas, los cromosomas.",
+          "Momento 4 (metafase): los cromosomas alcanzan su grado máximo de compactación, alineados en el centro de la célula."
+        ],
+        "texto_alternativo": "Secuencia de cuatro momentos del núcleo de una célula: cromatina difusa en interfase temprana; cromatina igualmente difusa pero con el doble de ADN tras la duplicación; condensación visible en profase; compactación máxima en metafase."
+      },
+      "enunciado": "¿Cuál de las siguientes afirmaciones sobre estos cuatro momentos es correcta?",
+      "alternativas": [
+        {
+          "id": "A",
+          "texto": "El grado de compactación más alto de los cuatro momentos ocurre en metafase, y no se debe a que haya más ADN en ese momento, sino a cómo se organiza el material genético.",
+          "diagnostico": "La cantidad de ADN y el grado de compactación son dos variables independientes: el ADN se duplica en un momento (interfase) y la compactación cambia en otro momento distinto (profase a metafase), sin que uno determine al otro. Comparar los cuatro momentos exige rastrear ambas variables por separado, no asumir que se mueven juntas."
+        },
+        {
+          "id": "B",
+          "texto": "Entre el Momento 1 y el Momento 2 aumenta el grado de compactación de la cromatina, porque también aumenta la cantidad de ADN.",
+          "diagnostico": "Confunde cantidad de ADN con grado de compactación: entre esos dos momentos el ADN se duplica, pero la cromatina se describe igual de difusa en ambos; el grado de compactación no cambia solo porque cambie la cantidad de material genético."
+        },
+        {
+          "id": "C",
+          "texto": "Como el Momento 3 y el Momento 4 tienen exactamente la misma cantidad de ADN que el Momento 2, su cromatina debería verse igual de difusa en los tres momentos, sin ninguna diferencia visible entre ellos.",
+          "diagnostico": "Asume que si la cantidad de ADN no cambia entre esos momentos, el grado de compactación tampoco debería cambiar; la secuencia describe justamente lo contrario: la condensación desde el Momento 3 ocurre sin que se sume ADN nuevo."
+        },
+        {
+          "id": "D",
+          "texto": "El Momento 4 debe tener menos ADN que el Momento 2, porque los cromosomas compactos ocupan menos espacio que la cromatina difusa.",
+          "diagnostico": "Confunde el volumen físico que ocupa el material genético con la cantidad de ADN que contiene: compactar la cromatina reduce el espacio que ocupa, no la cantidad de ADN, que sigue siendo la del Momento 2."
+        }
+      ],
+      "clave": "A",
+      "estado_clave": "ok",
+      "razonamiento_esperado": "La cantidad de ADN y el grado de compactación son dos variables independientes: el ADN se duplica en un momento (interfase) y la compactación cambia en otro momento distinto (profase a metafase), sin que uno determine al otro. Comparar los cuatro momentos exige rastrear ambas variables por separado, no asumir que se mueven juntas."
+    },
+    {
+      "item_id": "PB-08",
+      "version": "0.2",
+      "marco_id": "paes-ciencias",
+      "marco_version": "admision-2027.v1",
+      "unidad_id": "BIO-03.02",
+      "unidad_rol": "medicion",
+      "criterio_id": "HC-03.C1",
+      "eje": "Biología",
+      "formato_estimulo": "tabla_momentos_ciclo_celular_desordenados",
+      "estado_revision": "pendiente_revision_docente",
+      "estimulo": {
+        "tipo": "tabla",
+        "introduccion": "Un manual de laboratorio de biología celular describe, en un orden intencionalmente aleatorio y sin numerar, cuatro momentos distintos del ciclo de una misma célula somática en cultivo:",
+        "columnas": [
+          "Momento",
+          "Descripción"
+        ],
+        "filas": [
+          [
+            "Momento P",
+            "El ADN se duplica; al final, cada cromosoma queda formado por dos cromátidas idénticas."
+          ],
+          [
+            "Momento Q",
+            "Los cromosomas, ya condensados, se alinean en el centro de la célula."
+          ],
+          [
+            "Momento R",
+            "Las cromátidas hermanas se separan y migran hacia polos opuestos."
+          ],
+          [
+            "Momento S",
+            "La célula crece y realiza sus funciones normales, antes de duplicar su ADN."
+          ]
+        ],
+        "texto_alternativo": "Tabla con cuatro momentos del ciclo celular descritos fuera de orden: duplicación del ADN, alineación de cromosomas condensados en el centro de la célula, separación de cromátidas hermanas hacia polos opuestos, y crecimiento celular previo a la duplicación."
+      },
+      "enunciado": "¿Cuál de las siguientes secuencias ordena correctamente estos cuatro momentos, desde el más temprano hasta el más tardío del ciclo celular?",
+      "alternativas": [
+        {
+          "id": "A",
+          "texto": "Momento P, Momento S, Momento Q, Momento R",
+          "diagnostico": "Invierte el orden entre el crecimiento celular (Momento S) y la duplicación del ADN (Momento P): la célula crece y cumple sus funciones antes de duplicar su material genético, no después."
+        },
+        {
+          "id": "B",
+          "texto": "Momento S, Momento Q, Momento P, Momento R",
+          "diagnostico": "Ubica la alineación de los cromosomas en el centro de la célula (Momento Q) antes de la duplicación del ADN (Momento P), cuando los cromosomas necesitan ya tener sus dos cromátidas —producto de la duplicación— para poder alinearse condensados."
+        },
+        {
+          "id": "C",
+          "texto": "Momento S, Momento P, Momento R, Momento Q",
+          "diagnostico": "Invierte metafase y anafase: hace que las cromátidas se separen (Momento R) antes de que los cromosomas se alineen en el centro (Momento Q), cuando la alineación es la condición previa que permite después la separación ordenada."
+        },
+        {
+          "id": "D",
+          "texto": "Momento S, Momento P, Momento Q, Momento R",
+          "diagnostico": "En el ciclo celular normal descrito, el crecimiento previo a la replicación (S en la tabla) antecede a la duplicación del ADN (P), luego ocurre la alineación en metafase (Q) y después la separación en anafase (R). Las letras de la tabla son etiquetas de momentos, no nombres de fases. La compactación y la cantidad de ADN son propiedades distintas; condensarse no significa duplicarse."
+        }
+      ],
+      "clave": "D",
+      "estado_clave": "ok",
+      "razonamiento_esperado": "En el ciclo celular normal descrito, el crecimiento previo a la replicación (S en la tabla) antecede a la duplicación del ADN (P), luego ocurre la alineación en metafase (Q) y después la separación en anafase (R). Las letras de la tabla son etiquetas de momentos, no nombres de fases. La compactación y la cantidad de ADN son propiedades distintas; condensarse no significa duplicarse."
+    },
+    {
+      "item_id": "PB-09",
+      "version": "0.2",
+      "marco_id": "paes-ciencias",
+      "marco_version": "admision-2027.v1",
+      "unidad_id": "BIO-03.03",
+      "unidad_rol": "medicion",
+      "criterio_id": "HC-03.C3",
+      "eje": "Biología",
+      "formato_estimulo": "caso_deteccion_punto_control",
+      "estado_revision": "pendiente_revision_docente",
+      "estimulo": {
+        "tipo": "texto",
+        "texto": "Al analizar una célula en cultivo, un equipo detecta que se detuvo antes de iniciar la mitosis. Al revisar su material genético, encuentran que aún presenta daños sin reparar, aunque la duplicación del ADN ya se había completado por completo antes de la detención.",
+        "texto_alternativo": "Una célula en cultivo se detuvo antes de iniciar la mitosis; su ADN, ya completamente duplicado, todavía presenta daños sin reparar."
+      },
+      "enunciado": "¿Cuál de las siguientes conclusiones sobre el punto de control involucrado se ajusta mejor a esta evidencia?",
+      "alternativas": [
+        {
+          "id": "A",
+          "texto": "La célula se detuvo en el punto de control G1-S, porque ese es el que revisa si el ADN está dañado.",
+          "diagnostico": "Atribuye la detención al punto de control G1-S, que revisa las condiciones para iniciar la duplicación del ADN; el caso indica que la duplicación ya se completó, por lo que la célula ya superó ese punto de control antes de detenerse."
+        },
+        {
+          "id": "B",
+          "texto": "La célula se detuvo en el punto de control G2-M, que verifica que el ADN duplicado esté completo y sin daños antes de iniciar la mitosis.",
+          "diagnostico": "La duplicación completa del ADN indica que la célula ya superó el punto de control G1-S. La detención posterior, con daño sin reparar y antes de iniciar mitosis, corresponde al punto de control G2-M, que verifica específicamente que el ADN duplicado esté íntegro antes de continuar."
+        },
+        {
+          "id": "C",
+          "texto": "La célula se detuvo en el punto de control de metafase, porque ese es el punto de control que revisa, en general, el estado y la integridad del ADN antes de que la célula siga dividiéndose.",
+          "diagnostico": "Atribuye al punto de control de metafase —que verifica que los cromosomas estén correctamente unidos al huso— la función de revisar daño en el ADN, que corresponde a los puntos de control G1-S y G2-M."
+        },
+        {
+          "id": "D",
+          "texto": "Como el ADN tiene daños sin reparar, esta célula nunca más podrá completar un ciclo celular.",
+          "diagnostico": "Concluye más de lo que el caso permite: la detención en un punto de control puede resolverse si el daño se repara a tiempo; el caso no aporta evidencia de que la célula esté permanentemente incapacitada."
+        }
+      ],
+      "clave": "B",
+      "estado_clave": "ok",
+      "razonamiento_esperado": "La duplicación completa del ADN indica que la célula ya superó el punto de control G1-S. La detención posterior, con daño sin reparar y antes de iniciar mitosis, corresponde al punto de control G2-M, que verifica específicamente que el ADN duplicado esté íntegro antes de continuar."
+    },
+    {
+      "item_id": "PB-10",
+      "version": "0.2",
+      "marco_id": "paes-ciencias",
+      "marco_version": "admision-2027.v1",
+      "unidad_id": "BIO-03.05",
+      "unidad_rol": "medicion",
+      "criterio_id": "HC-03.C1",
+      "eje": "Biología",
+      "formato_estimulo": "diagrama_paneles_anafase_i_ii",
+      "estado_revision": "pendiente_revision_docente",
+      "estimulo": {
+        "tipo": "diagrama",
+        "introduccion": "Un esquema muestra, en dos paneles separados, la separación de cromosomas en dos momentos distintos de la meiosis, en una célula con dos pares de cromosomas homólogos:",
+        "pasos": [
+          "Panel 1: cada estructura que migra hacia un polo está formada por dos cromátidas todavía unidas entre sí; lo que se separa son los cromosomas homólogos, cada uno con sus dos cromátidas.",
+          "Panel 2: cada estructura que migra hacia un polo está formada por una sola cromátida; lo que se separa son las cromátidas hermanas, antes unidas entre sí."
+        ],
+        "texto_alternativo": "Diagrama de dos paneles: en el primero, lo que migra hacia los polos son cromosomas homólogos completos, cada uno con sus dos cromátidas unidas; en el segundo, lo que migra son cromátidas hermanas sueltas, de una sola cromátida cada una."
+      },
+      "enunciado": "¿Cuál de las siguientes opciones identifica correctamente qué anafase corresponde a cada panel?",
+      "alternativas": [
+        {
+          "id": "A",
+          "texto": "Ambos paneles corresponden a la misma anafase, porque en los dos algo se separa y migra hacia los polos.",
+          "diagnostico": "Trata \"anafase\" como un evento único sin distinguir a qué división corresponde, cuando lo que se separa en cada panel es distinto: cromosomas homólogos completos en el Panel 1, cromátidas hermanas en el Panel 2."
+        },
+        {
+          "id": "B",
+          "texto": "El Panel 1 corresponde a la anafase II y el Panel 2 a la anafase I, porque la anafase II ocurre primero al ser la división más simple.",
+          "diagnostico": "Invierte la asignación de los paneles y justifica el orden con un criterio —\"más simple\"— que no tiene relación con la secuencia real: la anafase I ocurre antes que la anafase II, no después."
+        },
+        {
+          "id": "C",
+          "texto": "El Panel 1 es la anafase I —separa homólogos con sus dos cromátidas— y el Panel 2 es la anafase II —separa cromátidas hermanas—.",
+          "diagnostico": "Lo que se separa en cada anafase distingue a las dos divisiones: en la anafase I se separan cromosomas homólogos completos —cada uno con sus dos cromátidas—, mientras que en la anafase II se separan las cromátidas hermanas de un mismo cromosoma. Nombrar \"anafase\" sin especificar I o II pierde justamente esa distinción."
+        },
+        {
+          "id": "D",
+          "texto": "El Panel 2 corresponde a la mitosis, no a la meiosis, porque ahí se separan cromátidas hermanas igual que en una célula somática.",
+          "diagnostico": "Confunde que la anafase II comparta con la mitosis la separación de cromátidas hermanas con que ambas sean el mismo proceso; el esquema presenta explícitamente dos momentos de una meiosis, no una comparación con mitosis."
+        }
+      ],
+      "clave": "C",
+      "estado_clave": "ok",
+      "razonamiento_esperado": "Lo que se separa en cada anafase distingue a las dos divisiones: en la anafase I se separan cromosomas homólogos completos —cada uno con sus dos cromátidas—, mientras que en la anafase II se separan las cromátidas hermanas de un mismo cromosoma. Nombrar \"anafase\" sin especificar I o II pierde justamente esa distinción."
+    },
+    {
+      "item_id": "PB-11",
+      "version": "0.2",
+      "marco_id": "paes-ciencias",
+      "marco_version": "admision-2027.v1",
+      "unidad_id": "BIO-03.08",
+      "unidad_rol": "medicion",
+      "criterio_id": "HC-02.C1",
+      "eje": "Biología",
+      "formato_estimulo": "tabla_porcentaje_similitud_proteica",
+      "estado_revision": "pendiente_revision_docente",
+      "estimulo": {
+        "tipo": "tabla",
+        "introduccion": "Un ejercicio con datos simulados compara secuencias homólogas de una proteína entre el ser humano y otras tres especies. Los porcentajes ilustran una comparación, no son mediciones de una proteína identificada:",
+        "columnas": [
+          "Especie",
+          "Similitud de la proteína con el ser humano"
+        ],
+        "filas": [
+          [
+            "Chimpancé",
+            "98 %"
+          ],
+          [
+            "Ratón",
+            "85 %"
+          ],
+          [
+            "Pez cebra",
+            "70 %"
+          ]
+        ],
+        "texto_alternativo": "Tabla con el porcentaje de similitud de una misma proteína entre el ser humano y tres especies: chimpancé 98 %, ratón 85 % y pez cebra 70 %."
+      },
+      "enunciado": "¿Cuál de las siguientes afirmaciones es la más ajustada a lo que esta evidencia permite concluir?",
+      "alternativas": [
+        {
+          "id": "A",
+          "texto": "El chimpancé desciende directamente del ser humano, porque su proteína es la más parecida.",
+          "diagnostico": "La semejanza molecular no demuestra que el chimpancé descienda del ser humano. En este caso se interpreta como evidencia compatible con un ancestro común, no como una relación directa entre esas dos especies actuales."
+        },
+        {
+          "id": "B",
+          "texto": "Como esta proteína muestra que el chimpancé es el más cercano, esta única comparación ya demuestra toda la historia evolutiva que conecta a las cuatro especies.",
+          "diagnostico": "Trata una sola línea de evidencia —una proteína— como si bastara para demostrar la historia evolutiva completa, cuando ese porcentaje es un dato parcial que normalmente se contrasta con otras evidencias: anatómicas, embriológicas o del registro fósil."
+        },
+        {
+          "id": "C",
+          "texto": "El pez cebra no tiene ningún parentesco evolutivo con el ser humano, porque su similitud es la más baja de las tres.",
+          "diagnostico": "Una similitud menor no implica ausencia de parentesco. Esta comparación de una proteína homóloga aporta evidencia parcial de relación evolutiva; por sí sola no fecha la separación de linajes."
+        },
+        {
+          "id": "D",
+          "texto": "El chimpancé es, según esta proteína, el más cercano al ser humano, aunque la comparación no basta por sí sola para reconstruir la historia evolutiva.",
+          "diagnostico": "El porcentaje de similitud ordena a las tres especies por cercanía evolutiva con el ser humano según esta proteína, con el chimpancé como la más cercana. Pero una sola proteína es una línea de evidencia parcial: sostiene la comparación de cercanía relativa, no una reconstrucción completa de la historia evolutiva, que normalmente requiere contrastar varias líneas de evidencia."
+        }
+      ],
+      "clave": "D",
+      "estado_clave": "ok",
+      "razonamiento_esperado": "El porcentaje de similitud ordena a las tres especies por cercanía evolutiva con el ser humano según esta proteína, con el chimpancé como la más cercana. Pero una sola proteína es una línea de evidencia parcial: sostiene la comparación de cercanía relativa, no una reconstrucción completa de la historia evolutiva, que normalmente requiere contrastar varias líneas de evidencia."
+    },
+    {
+      "item_id": "PB-12",
+      "version": "0.2",
+      "marco_id": "paes-ciencias",
+      "marco_version": "admision-2027.v1",
+      "unidad_id": "BIO-03.10",
+      "unidad_rol": "medicion",
+      "criterio_id": "HC-03.C1",
+      "eje": "Biología",
+      "formato_estimulo": "grafico_barras_resistencia_por_generacion",
+      "estado_revision": "pendiente_revision_docente",
+      "estimulo": {
+        "tipo": "grafico_barras",
+        "titulo": "Bacterias resistentes a un antibiótico, por generación",
+        "categorias": [
+          "Generación 1",
+          "Generación 2",
+          "Generación 3",
+          "Generación 4"
+        ],
+        "series": [
+          {
+            "nombre": "Porcentaje de bacterias resistentes",
+            "valores": [
+              2,
+              15,
+              48,
+              82
+            ]
+          }
+        ],
+        "texto_alternativo": "Gráfico de barras con una serie: porcentaje de bacterias resistentes a un antibiótico en cuatro generaciones sucesivas de una misma población, expuesta de forma continua al antibiótico. Los valores aumentan de generación en generación: 2 %, 15 %, 48 % y 82 %."
+      },
+      "enunciado": "Antes de exponer una población de bacterias a un antibiótico se comprueba que algunos individuos ya son resistentes. En un modelo con datos simulados, se sigue su proporción durante cuatro generaciones bajo exposición continua. ¿Qué explicación es compatible con el patrón del gráfico?",
+      "alternativas": [
+        {
+          "id": "A",
+          "texto": "Las bacterias, al sentir la presencia del antibiótico, desarrollaron resistencia para poder sobrevivir a él.",
+          "diagnostico": "Explica el cambio como una respuesta dirigida de las bacterias frente al antibiótico —como si \"decidieran\" o \"desarrollaran\" resistencia porque la necesitan— en vez de como el resultado de que algunas ya eran resistentes antes de la exposición."
+        },
+        {
+          "id": "B",
+          "texto": "Ya existía variación en la población antes de la exposición: las bacterias ya resistentes sobrevivieron y se reprodujeron más que las no resistentes.",
+          "diagnostico": "El aumento gradual del porcentaje de resistentes generación tras generación es compatible con selección natural sobre variación ya existente: algunos individuos ya eran resistentes antes de la exposición, sobrevivieron y se reprodujeron más que el resto, y su proporción fue creciendo. No hace falta —ni la evidencia lo muestra— que el antibiótico haya generado la resistencia en cada individuo por necesidad."
+        },
+        {
+          "id": "C",
+          "texto": "Todas las bacterias de la población se volvieron igual de resistentes a partir de la Generación 2, porque el antibiótico afectó a la población completa por igual.",
+          "diagnostico": "Ignora que el gráfico muestra un aumento gradual, no un cambio simultáneo de toda la población: en la Generación 2 solo el 15 % era resistente, no el 100 %, lo que contradice la idea de un efecto parejo sobre todos los individuos."
+        },
+        {
+          "id": "D",
+          "texto": "Cada bacteria individual necesitaba volverse resistente para sobrevivir, así que fue desarrollando su resistencia personal generación tras generación.",
+          "diagnostico": "Describe la resistencia como algo que cada bacteria individual desarrolla por necesidad a lo largo de su vida, en vez de como una característica que ya variaba entre individuos antes de la selección; una bacteria no cambia su resistencia genética porque la necesite."
+        }
+      ],
+      "clave": "B",
+      "estado_clave": "ok",
+      "razonamiento_esperado": "El aumento gradual del porcentaje de resistentes generación tras generación es compatible con selección natural sobre variación ya existente: algunos individuos ya eran resistentes antes de la exposición, sobrevivieron y se reprodujeron más que el resto, y su proporción fue creciendo. No hace falta —ni la evidencia lo muestra— que el antibiótico haya generado la resistencia en cada individuo por necesidad."
+    },
+    {
+      "item_id": "PB-13",
+      "version": "0.2",
+      "marco_id": "paes-ciencias",
+      "marco_version": "admision-2027.v1",
+      "unidad_id": "BIO-04.01",
+      "unidad_rol": "medicion",
+      "criterio_id": "HC-03.C2",
+      "eje": "Biología",
+      "formato_estimulo": "tabla_comparativa_autotrofo_heterotrofo",
+      "estado_revision": "pendiente_revision_docente",
+      "estimulo": {
+        "tipo": "tabla",
+        "introduccion": "Se comparan dos cultivos en condiciones controladas: células vegetales fotosintéticas iluminadas, con CO₂ como única fuente externa de carbono, y células animales con nutrientes orgánicos. La tabla describe estas condiciones, no todas las células vegetales ni todos los ambientes:",
+        "columnas": [
+          "Capacidad",
+          "Célula vegetal fotosintética",
+          "Célula animal"
+        ],
+        "filas": [
+          [
+            "Obtiene carbono desde CO₂ del ambiente (fotosíntesis)",
+            "Sí",
+            "No"
+          ],
+          [
+            "Incorpora carbono desde compuestos orgánicos del medio",
+            "No se aportan en este cultivo",
+            "Sí"
+          ],
+          [
+            "Produce ATP mediante respiración celular",
+            "Sí",
+            "Sí"
+          ]
+        ],
+        "texto_alternativo": "En los cultivos descritos, la célula vegetal fotosintética incorpora carbono del CO₂ y no recibe compuestos orgánicos del medio. La animal incorpora carbono orgánico. Ambas realizan respiración celular."
+      },
+      "enunciado": "¿Cuál de las siguientes conclusiones sobre la diferencia entre nutrición autótrofa y heterótrofa es correcta según la tabla?",
+      "alternativas": [
+        {
+          "id": "A",
+          "texto": "La fuente de carbono distingue la nutrición autótrofa de la heterótrofa en estos cultivos; ambas células pueden producir ATP mediante respiración.",
+          "diagnostico": "En estas condiciones, el cultivo vegetal incorpora carbono inorgánico mediante fotosíntesis, mientras el animal depende del carbono orgánico suministrado. Ambos pueden producir ATP por respiración; compartir esa capacidad no significa producir la misma cantidad ni a la misma velocidad."
+        },
+        {
+          "id": "B",
+          "texto": "Solo la célula vegetal produce ATP, porque es la única con la energía necesaria para hacerlo a partir de la luz solar.",
+          "diagnostico": "Usa \"producir ATP\" como si fuera exclusivo de la célula vegetal, cuando la tabla muestra que ambas células producen ATP mediante respiración celular; la fotosíntesis no reemplaza a la respiración, la antecede como fuente de materia orgánica."
+        },
+        {
+          "id": "C",
+          "texto": "Como ambas células producen ATP, ambas son autótrofas.",
+          "diagnostico": "Usa un rasgo compartido por ambas células —producir ATP— como si fuera el criterio que define la nutrición autótrofa, ignorando la fila que sí distingue a las dos células: el origen del carbono que incorporan."
+        },
+        {
+          "id": "D",
+          "texto": "La célula animal no puede producir ATP en ningún caso, porque solo la fotosíntesis permite que una célula fabrique la energía necesaria para sintetizarlo.",
+          "diagnostico": "Asume que sin fotosíntesis no puede haber producción de ATP, cuando la tabla muestra que la célula animal sí produce ATP mediante respiración celular, a partir del carbono que obtiene de su alimento, no de CO₂ atmosférico."
+        }
+      ],
+      "clave": "A",
+      "estado_clave": "ok",
+      "razonamiento_esperado": "En estas condiciones, el cultivo vegetal incorpora carbono inorgánico mediante fotosíntesis, mientras el animal depende del carbono orgánico suministrado. Ambos pueden producir ATP por respiración; compartir esa capacidad no significa producir la misma cantidad ni a la misma velocidad."
+    },
+    {
+      "item_id": "PB-14",
+      "version": "0.2",
+      "marco_id": "paes-ciencias",
+      "marco_version": "admision-2027.v1",
+      "unidad_id": "BIO-04.04",
+      "unidad_rol": "medicion",
+      "criterio_id": "HC-03.C1",
+      "eje": "Biología",
+      "formato_estimulo": "diagrama_flujo_energia_reciclaje_carbono",
+      "estado_revision": "pendiente_revision_docente",
+      "estimulo": {
+        "tipo": "diagrama",
+        "introduccion": "Un esquema representa lo que ocurre con la energía y con los átomos de carbono en un ecosistema simple formado por pasto, conejos y zorros:",
+        "pasos": [
+          "El pasto captura energía luminosa y la transforma en energía química al fabricar materia orgánica, incorporando carbono desde el CO₂ del aire.",
+          "El conejo se alimenta del pasto: obtiene energía química y átomos de carbono que estaban en la materia orgánica del pasto.",
+          "El zorro se alimenta del conejo: obtiene energía química y átomos de carbono que estaban en el conejo.",
+          "En cada paso, buena parte de la energía se libera como calor hacia el ambiente, mientras que los átomos de carbono permanecen disponibles para volver a circular, por ejemplo mediante la respiración celular."
+        ],
+        "texto_alternativo": "Diagrama de cuatro pasos: el pasto captura energía luminosa y carbono del CO₂; el conejo obtiene energía y carbono del pasto; el zorro los obtiene del conejo; en cada paso la energía se libera como calor hacia el ambiente mientras el carbono vuelve a circular por el ecosistema."
+      },
+      "enunciado": "¿Cuál de las siguientes afirmaciones describe correctamente lo que ocurre con la energía y con el carbono en esta secuencia?",
+      "alternativas": [
+        {
+          "id": "A",
+          "texto": "Tanto la energía como el carbono se reciclan de la misma manera dentro del ecosistema, pasando de un organismo a otro sin perderse.",
+          "diagnostico": "Trata el flujo de energía y el reciclaje de carbono como el mismo tipo de proceso; el esquema describe que la energía se pierde como calor en cada paso y no vuelve a estar disponible, mientras que los átomos de carbono sí permanecen en el ecosistema y pueden reincorporarse."
+        },
+        {
+          "id": "B",
+          "texto": "El zorro recibe más energía que el conejo, porque está más arriba en la cadena y acumula la energía de los niveles anteriores.",
+          "diagnostico": "Invierte el patrón que describe el esquema: en cada paso se libera energía como calor, por lo que el nivel superior de la cadena recibe menos energía disponible que el anterior, no más."
+        },
+        {
+          "id": "C",
+          "texto": "Parte de la energía se disipa como calor en cada transferencia y no se recicla como energía química en la cadena, mientras los átomos de carbono pueden volver a circular.",
+          "diagnostico": "La energía se conserva, pero parte se disipa como calor y pierde disponibilidad para realizar trabajo biológico en la cadena. No se recicla como la materia: los átomos de carbono pueden pasar entre organismos y regresar al ambiente, por ejemplo como CO₂ en la respiración."
+        },
+        {
+          "id": "D",
+          "texto": "El carbono que obtiene el zorro es distinto del carbono que había en el pasto, porque cada organismo fabrica sus propios átomos nuevos al alimentarse.",
+          "diagnostico": "Supone que cada organismo genera átomos de carbono nuevos al alimentarse, cuando el esquema describe que los mismos átomos de carbono pasan de un organismo a otro a través de la cadena alimentaria."
+        }
+      ],
+      "clave": "C",
+      "estado_clave": "ok",
+      "razonamiento_esperado": "La energía se conserva, pero parte se disipa como calor y pierde disponibilidad para realizar trabajo biológico en la cadena. No se recicla como la materia: los átomos de carbono pueden pasar entre organismos y regresar al ambiente, por ejemplo como CO₂ en la respiración."
+    }
+  ]
+}

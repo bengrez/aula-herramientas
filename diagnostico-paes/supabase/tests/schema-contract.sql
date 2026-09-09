@@ -88,9 +88,11 @@ begin
     join pg_namespace n on n.oid = p.pronamespace
     where n.nspname = 'api'
       and has_function_privilege('authenticated', p.oid, 'execute')
-      and p.oid not in (
-        'api.submit_session_v1(text,uuid,text,text,text,text,text,text,timestamptz,timestamptz,jsonb)'::regprocedure,
-        'api.enroll_session_v1(text,text,text,text)'::regprocedure
+      -- Por nombre, no por firma: así el contrato puede ejecutarse antes y después de la migración
+      -- de práctica, cuyas funciones todavía no existen en la primera pasada.
+      and p.proname not in (
+        'submit_session_v1', 'enroll_session_v1',
+        'enroll_practice_v1', 'submit_practice_delta_v1', 'get_practice_progress_v1'
       )
   ) then raise exception 'authenticated can execute unexpected api function'; end if;
 end $$;

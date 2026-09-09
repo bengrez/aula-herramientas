@@ -4,7 +4,7 @@ import { assertBundle } from "../../src/engine/contracts.mjs";
 import { PUBLIC_FORMAT_LABELS, hasPublicFormatLabel, publicFormatLabel } from "../../src/engine/stimulus-format.mjs";
 import { readActiveDocuments } from "../helpers/active-documents.mjs";
 
-const CLOSED_LIST = ["caso", "tabla", "procedimiento", "esquema", "gráfico"];
+const CLOSED_LIST = ["caso", "tabla", "procedimiento", "esquema", "gráfico", "figura"];
 
 test("la etiqueta visible sale de una lista cerrada y genérica", () => {
   for (const label of Object.values(PUBLIC_FORMAT_LABELS)) {

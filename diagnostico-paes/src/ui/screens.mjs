@@ -133,10 +133,11 @@ export function renderInstructions(root, bundle, onBegin, { enrollmentStatus = "
   ]));
 }
 
-export function renderItem(root, item, { position, total, onAnswer }) {
-  const progressBlock = element("div", { className: "progress-block", dataset: { focusTarget: "true" }, "aria-label": `${position} de ${total} recorridos completados` }, [
-    element("div", { className: "progress-copy" }, [element("span", { text: `Recorrido ${position + 1} de ${total}` }), element("span", { text: "cobertura, no aciertos" })]),
-    element("progress", { className: "progress-track", max: total, value: position, "aria-label": `${position} de ${total} recorridos completados` }),
+export function renderItem(root, item, { position, total, onAnswer, practice = false }) {
+  const progressLabel = practice ? `${position} de ${total} preguntas completadas` : `${position} de ${total} recorridos completados`;
+  const progressBlock = element("div", { className: "progress-block", dataset: { focusTarget: "true" }, "aria-label": progressLabel }, [
+    element("div", { className: "progress-copy" }, [element("span", { text: `${practice ? "Pregunta" : "Recorrido"} ${position + 1} de ${total}` }), element("span", { text: practice ? "Tu tanda de práctica" : "cobertura, no aciertos" })]),
+    element("progress", { className: "progress-track", max: total, value: position, "aria-label": progressLabel }),
   ]);
   const meta = element("div", { className: "item-meta" }, [element("span", { text: item.eje }), element("span", { text: publicFormatLabel(item.estimulo) })]);
   const fieldset = element("fieldset", { className: "alternatives" });
@@ -172,7 +173,58 @@ export function renderItem(root, item, { position, total, onAnswer }) {
     element("div", { className: "omit-row" }, element("label", { htmlFor: omit.id }, [omit, element("span", { text: "Prefiero dejarla sin responder" })])),
     element("div", { className: "button-row" }, continueButton),
   ]);
+  if (practice) continueButton.textContent = "Comprobar respuesta";
   mount(root, section);
+}
+
+// Pantalla de feedback inmediato tras responder un ítem de práctica (modelo repetible, no el
+// diagnóstico de una sola pasada). El controlador de práctica tiene almacenamiento aislado;
+// la autorización de desarrollo local no habilita su uso con estudiantes.
+export function renderItemFeedback(root, { item, response, onContinue }) {
+  const omitted = response.selected_option === null;
+  const correct = !omitted && response.selected_option === item.clave;
+  const selectedAlternative = omitted ? null : item.alternativas.find((alternative) => alternative.id === response.selected_option);
+  const keyAlternative = item.alternativas.find((alternative) => alternative.id === item.clave);
+
+  const status = omitted
+    ? { kind: "warning", icon: "◇", title: "Sin respuesta", lead: "Dejaste esta pregunta sin responder." }
+    : correct
+      ? { kind: "success", icon: "✓", title: "Correcta", lead: "Elegiste la alternativa clave." }
+      : { kind: "error", icon: "!", title: "Incorrecta", lead: "Esta no es la alternativa clave." };
+
+  const children = [
+    item.estimulo?.tipo === "figura" ? renderStimulus(item.estimulo) : null,
+    element("div", { className: "notice", dataset: { kind: status.kind }, role: "status" }, [
+      element("span", { className: "notice-icon", text: status.icon, "aria-hidden": "true" }),
+      element("p", {}, [element("strong", { text: `${status.title}. ` }), document.createTextNode(status.lead)]),
+    ]),
+  ];
+
+  // Toda alternativa trae un `diagnostico` (contracts.mjs lo exige), incluida la de la propia
+  // clave — algunos bancos la redactan como una simple confirmación ("Clave."). Se muestra igual,
+  // sin asumir que sólo los distractores tienen texto que decir.
+  if (!correct && selectedAlternative?.diagnostico) {
+    children.push(element("section", {}, [
+      element("h3", { text: "Sobre tu respuesta" }),
+      element("p", { text: selectedAlternative.diagnostico }),
+    ]));
+  }
+  if (keyAlternative) {
+    children.push(element("section", {}, [
+      element("h3", { text: "Sobre la alternativa clave" }),
+      element("p", { text: `${keyAlternative.id}. ${keyAlternative.texto}` }),
+      element("p", { text: item.razonamiento_esperado || keyAlternative.diagnostico }),
+    ]));
+  }
+
+  children.push(element("div", { className: "button-row" }, element("button", {
+    className: "primary-button",
+    type: "button",
+    text: "Continuar",
+    onclick: onContinue,
+  })));
+
+  mount(root, card(item.eje, item.enunciado, children));
 }
 
 export function renderMap(root, map, bundle, { syncState, backupCode, onCopyBackup, onDownloadBackup, onRetrySync, onPurgeLocal, qrCanvas }) {

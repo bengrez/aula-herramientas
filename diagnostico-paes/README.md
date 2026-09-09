@@ -1,5 +1,46 @@
 # Diagnóstico PAES: mapa para seguir aprendiendo
 
+## Nuevo modo de práctica — revisión local, NO-GO
+
+La práctica repetida comienza en Biología y se revisa en `/practice/?demo=1`. Desde el
+2026-09-08 la experiencia está pensada para el teléfono del estudiante: la portada muestra un solo
+botón «Empezar · 5 preguntas» visible sin desplazarse (un toque hasta la primera pregunta), chips
+de cantidad 3/5/10, la casilla «Solo preguntas con diagrama» y una lista por unidad agrupada por
+área del marco donde cada fila inicia una tanda de esa unidad. El avance se muestra con conteos
+descriptivos (respuestas, aciertos, unidades practicadas, última práctica, tandas terminadas) que
+suben con una animación breve al volver de una tanda.
+
+Durante la tanda, un riel con un nodo por pregunta (✓ ✕ ◇) queda fijo bajo la cabecera y la barra
+de acción fija abajo cambia de «Comprobar B» a «Siguiente pregunta». El feedback se revela en la
+misma pantalla: la alternativa elegida y la clave quedan marcadas en su sitio, se muestra el
+razonamiento y la línea «En esta tanda: 2 aciertos de 3 respuestas · 1 sin responder». Dejar una
+pregunta sin responder toma un toque; si ya había una alternativa marcada pide confirmar. Al
+terminar aparece un resumen con el riel completo, conteos de la tanda, unidades tocadas y el
+acumulado, con «Otra tanda igual» a un toque (o «Otra tanda · todos los temas» cuando la unidad
+elegida ya no tiene preguntas nuevas). Nunca se muestra nota, nivel, porcentaje ni ranking; una
+omisión no cuenta como error.
+
+La biblioteca reúne 18 preguntas en 14 unidades: 14 del banco base y cuatro sobre dos diagramas
+SVG originales de mitosis/meiosis. Las tandas que combinan unidades comienzan con una figura. El
+enlace anterior `/practice/?demo=1&visual=1` abre la misma portada y el historial del antiguo
+piloto se copia al cuaderno común conservando el origen y los avances guardados. Ver
+[guía visual](docs/visual-pilot.md).
+
+El servidor guarda por unidad intentos, aciertos, omisiones y última práctica, más el número de
+tandas terminadas por estudiante. Nada de ítem, alternativa ni tiempo por respuesta (ADR-0008 rev. 0.4).
+
+Desde el 2026-09-09 el código es opcional: la app se abre practicando con un cuaderno local y el
+código de la tarjeta sólo sirve para llevar el avance a otro teléfono. El cuaderno de invitado
+nunca sale del dispositivo.
+
+La práctica sigue **NO-GO 2/12**: no está habilitada para estudiantes ni reemplaza el diagnóstico
+de `data/active.json`. Supabase sigue desactivado. Las 18 preguntas y las dos figuras permanecen
+pendientes de revisión docente; aviso y retiro de información siguen pendientes de ADR-0008.
+
+Ver [entrega, pruebas y próximos gates](docs/practice-handoff.md) y
+[revisión del banco](docs/practice-review.md). Las secciones siguientes describen el diagnóstico
+histórico, cuyo contrato y almacenamiento se conservan.
+
 Aplicación web estática, instalable y *offline-first* para una sesión diagnóstica breve de Ciencias. Presenta una secuencia fija sin nota ni retroalimentación por ítem, conserva el avance en el dispositivo y, al terminar, muestra un mapa cualitativo de evidencia. La misma aplicación puede dejar una entrega pendiente para sincronizar con Supabase o producir un respaldo manual recuperable como CSV crudo.
 
 > **Estado actual: NO-GO para estudiantes, con el contenido ya cerrado.** El banco ancla v1.0 contiene los 12 ítems aprobados por el docente —los tres del piloto el 2026-08-02 y los nueve restantes el 2026-08-03—, de modo que los dos gates pedagógicos están cerrados. Lo que falta es físico y operativo: teléfono sin conexión, impresión, respaldo por QR y operación de sala, más la URL pública y el backend. Los 12 ítems tienen rol de `contexto`, por lo que no producen evidencia de contenido en el mapa. `pilot_ready` es `false`, el backend está desactivado y la administración de base de datos se crea deshabilitada. `?demo=1` permite revisar un flujo aislado; no convierte esta versión en un piloto válido.

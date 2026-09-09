@@ -199,6 +199,11 @@ export function assertBank(bank, frameworkContext) {
           if (typeof cell !== "string" && typeof cell !== "number") throw new ContractError("celda debe ser texto o número", `${path}.estimulo.filas[${rowIndex}][${cellIndex}]`);
         });
       });
+    } else if (stimulus.tipo === "figura") {
+      requireString(stimulus.figura_id, `${path}.estimulo.figura_id`);
+      requireString(stimulus.figura_version, `${path}.estimulo.figura_version`);
+      if (!/^assets\/figures\/[a-z0-9-]+\.v[0-9]+\.svg$/.test(stimulus.archivo)) throw new ContractError("figura debe ser un SVG local versionado", path);
+      if (!["pendiente_revision_docente", "revisado_docente"].includes(stimulus.estado_revision)) throw new ContractError("revisión de figura inválida", path);
     } else if (["secuencia", "diagrama"].includes(stimulus.tipo)) {
       requireArray(stimulus.pasos, `${path}.estimulo.pasos`, 1).forEach((step, stepIndex) => requireString(step, `${path}.estimulo.pasos[${stepIndex}]`));
     } else if (stimulus.tipo === "grafico_barras") {

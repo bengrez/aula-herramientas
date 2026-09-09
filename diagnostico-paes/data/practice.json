@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "mode": "practice",
+  "title": "Ciencias · Biología",
+  "scope_id": "ivb-2026-practica-ciencias",
+  "period": "2026",
+  "default_count": 5,
+  "framework_url": "./paes-ciencias-2027/framework.v1.json",
+  "bank_url": "./paes-ciencias-2027/bank-practica-biologia.v0.json",
+  "visual_bank_url": "./paes-ciencias-2027/bank-visual-division.v0.json",
+  "enrollment": { "alfabeto": "23456789ABCDEFGHJKMNPQRSTUVWXYZ", "longitud_carga": 8, "multiplicador": 7, "grupos": [3, 3, 3] },
+  "pilot_ready": false,
+  "retention": { "window": "última semana de diciembre de 2026", "deadline": "2026-12-31", "timezone": "America/Santiago", "scheduled": false },
+  "backend": { "enabled": false, "url": "", "publishable_key": "", "schema": "api" },
+  "gates": {
+    "aviso_estudiantes_apoderados": false,
+    "retiro_informacion": false,
+    "retencion_operativa": false,
+    "revision_docente": false,
+    "telefono_offline_real": false,
+    "postgres_local": true,
+    "navegador_local": true,
+    "backend_remoto": false,
+    "operacion_docente": false
+  },
+  "offline_assets": [
+    "../assets/figures/mitosis.v1.svg", "../assets/figures/meiosis.v1.svg", "./paes-ciencias-2027/bank-visual-division.v0.json",
+    "./figures.json", "../practice/index.html", "../practice/app.mjs",
+    "../practice/landing.mjs", "../practice/practice.css", "../src/styles.css",
+    "../assets/icon.svg", "../src/ui/screens.mjs", "../src/ui/dom.mjs",
+    "../src/ui/stimulus-renderers.mjs", "../src/engine/stimulus-format.mjs", "../src/engine/contracts.mjs",
+    "../src/engine/release-readiness.mjs", "../src/engine/practice.mjs", "../src/engine/practice-selector.mjs",
+    "../src/engine/enrollment-code.mjs", "../src/engine/progress.mjs", "../src/engine/practice-library.mjs",
+    "../src/engine/loader.mjs", "../src/infra/practice-store.mjs", "../src/infra/practice-sync.mjs",
+    "../src/infra/supabase-http.mjs", "./practice.json", "./paes-ciencias-2027/framework.v1.json",
+    "./paes-ciencias-2027/bank-practica-biologia.v0.json", "../practice/question.mjs", "../practice/summary.mjs",
+    "../practice/motion.mjs", "../src/engine/practice-summary.mjs"
+  ]
+}

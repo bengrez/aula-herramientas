@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "estado_revision": "pendiente_revision_docente",
+  "figuras": [
+    {
+      "figura_id": "division-mitotica",
+      "figura_version": "1",
+      "archivo": "assets/figures/mitosis.v1.svg",
+      "estado_revision": "pendiente_revision_docente",
+      "tipo": "figura",
+      "introduccion": "El esquema muestra cuatro momentos desordenados de la mitosis de una célula animal inicialmente 2n = 4. Los cromosomas se mantienen individualizados al final para facilitar su seguimiento. Cada punto oscuro marca una región centromérica; los trazos finos representan fibras del huso.",
+      "texto_alternativo": "Panel A: cuatro estructuras en X alineadas individualmente en el centro celular, con fibras hacia ambos polos. Panel B: dos envolturas nucleares, cada una rodeando cuatro estructuras simples, y un surco en la célula. Panel C: cuatro estructuras en X dispersas dentro de una envoltura nuclear discontinua. Panel D: dos grupos de cuatro estructuras simples separadas hacia polos opuestos, unidas a fibras; cada grupo contiene dos largas y dos cortas.",
+      "origen": "Ilustración SVG original del proyecto; no reproduce una figura editorial",
+      "revision_cientifica": "borrador_tecnico_no_aprobado_docente",
+      "fuentes": [
+        "https://openstax.org/books/biology-2e/pages/10-2-the-cell-cycle"
+      ],
+      "unidades": [
+        "BIO-03.02"
+      ],
+      "preguntas": [
+        "PV-MI-01",
+        "PV-MI-02"
+      ],
+      "variantes_permitidas": [
+        "reordenar paneles actualizando clave y texto alternativo",
+        "cambiar etiquetas conservando correspondencias"
+      ],
+      "invariantes": {
+        "A": {
+          "cromosomas": 4,
+          "cromatidas_por_cromosoma": 2
+        },
+        "B": {
+          "nucleos": 2,
+          "cromosomas_por_nucleo": 4
+        },
+        "C": {
+          "cromosomas": 4,
+          "cromatidas_por_cromosoma": 2
+        },
+        "D": {
+          "por_polo": 4,
+          "cromatidas_por_cromosoma": 1
+        }
+      }
+    },
+    {
+      "figura_id": "division-meiotica",
+      "figura_version": "1",
+      "archivo": "assets/figures/meiosis.v1.svg",
+      "estado_revision": "pendiente_revision_docente",
+      "tipo": "figura",
+      "introduccion": "Los paneles muestran dos momentos de una meiosis iniciada por una célula 2n = 4. Q representa solo una de las dos células que resultan de la primera división. Se omite el entrecruzamiento para concentrarse en qué estructuras se separan. Los puntos oscuros marcan regiones centroméricas y los trazos finos, fibras del huso.",
+      "texto_alternativo": "Panel P: dos estructuras en X migran hacia cada polo, una larga y una corta; las del polo izquierdo tienen trazo liso y las del derecho punteado. Cada X mantiene sus dos componentes unidos. Panel Q: dos estructuras simples migran hacia cada polo, una larga y una corta, todas de trazo liso; cada estructura tiene un solo componente y un punto oscuro. Se representa una sola célula en cada panel.",
+      "origen": "Ilustración SVG original del proyecto; no reproduce una figura editorial",
+      "revision_cientifica": "borrador_tecnico_no_aprobado_docente",
+      "fuentes": [
+        "https://openstax.org/books/biology-2e/pages/11-1-the-process-of-meiosis"
+      ],
+      "unidades": [
+        "BIO-03.05"
+      ],
+      "preguntas": [
+        "PV-ME-01",
+        "PV-ME-02"
+      ],
+      "variantes_permitidas": [
+        "reordenar paneles actualizando clave y texto alternativo",
+        "cambiar etiquetas conservando correspondencias"
+      ],
+      "invariantes": {
+        "P": {
+          "por_polo": 2,
+          "cromatidas_por_cromosoma": 2
+        },
+        "Q": {
+          "por_polo": 2,
+          "cromatidas_por_cromosoma": 1
+        }
+      }
+    }
+  ]
+}

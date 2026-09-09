@@ -1,0 +1,199 @@
+{
+  "schema_version": 1,
+  "banco_id": "paes-piloto-visual-division",
+  "version": "0.1.0-borrador",
+  "titulo": "Biología · mitosis y meiosis",
+  "marco_id": "paes-ciencias",
+  "marco_version": "admision-2027.v1",
+  "estado_autoria": "contenido_docente_pendiente_revision",
+  "items": [
+    {
+      "item_id": "PV-MI-01",
+      "version": "0.1",
+      "marco_id": "paes-ciencias",
+      "marco_version": "admision-2027.v1",
+      "unidad_id": "BIO-03.02",
+      "unidad_rol": "medicion",
+      "criterio_id": "HC-03.C1",
+      "eje": "Biología",
+      "formato_estimulo": "figura_division_celular",
+      "estado_revision": "pendiente_revision_docente",
+      "estimulo": {
+        "figura_id": "division-mitotica",
+        "figura_version": "1",
+        "archivo": "assets/figures/mitosis.v1.svg",
+        "estado_revision": "pendiente_revision_docente",
+        "tipo": "figura",
+        "introduccion": "El esquema muestra cuatro momentos desordenados de la mitosis de una célula animal inicialmente 2n = 4. Los cromosomas se mantienen individualizados al final para facilitar su seguimiento. Cada punto oscuro marca una región centromérica; los trazos finos representan fibras del huso.",
+        "texto_alternativo": "Panel A: cuatro estructuras en X alineadas individualmente en el centro celular, con fibras hacia ambos polos. Panel B: dos envolturas nucleares, cada una rodeando cuatro estructuras simples, y un surco en la célula. Panel C: cuatro estructuras en X dispersas dentro de una envoltura nuclear discontinua. Panel D: dos grupos de cuatro estructuras simples separadas hacia polos opuestos, unidas a fibras; cada grupo contiene dos largas y dos cortas."
+      },
+      "enunciado": "¿Qué orden representa la secuencia temporal de los cuatro paneles?",
+      "alternativas": [
+        {
+          "id": "A",
+          "texto": "C → A → D → B",
+          "diagnostico": "Primero se observan cromosomas condensados aún dispersos (C); después se alinean (A), sus cromátidas se separan (D) y se forman dos núcleos (B)."
+        },
+        {
+          "id": "B",
+          "texto": "A → C → B → D",
+          "diagnostico": "La alineación no antecede a la condensación inicial, y los nuevos núcleos se forman después de la separación."
+        },
+        {
+          "id": "C",
+          "texto": "C → D → A → B",
+          "diagnostico": "Invierte la alineación y la separación: en este proceso normal la metafase antecede a la anafase."
+        },
+        {
+          "id": "D",
+          "texto": "B → A → C → D",
+          "diagnostico": "Ubica al comienzo el momento con dos núcleos nuevos, que corresponde al final de la mitosis."
+        }
+      ],
+      "clave": "A",
+      "estado_clave": "ok",
+      "razonamiento_esperado": "Primero se observan cromosomas condensados aún dispersos (C); después se alinean (A), sus cromátidas se separan (D) y se forman dos núcleos (B)."
+    },
+    {
+      "item_id": "PV-MI-02",
+      "version": "0.1",
+      "marco_id": "paes-ciencias",
+      "marco_version": "admision-2027.v1",
+      "unidad_id": "BIO-03.02",
+      "unidad_rol": "medicion",
+      "criterio_id": "HC-03.C1",
+      "eje": "Biología",
+      "formato_estimulo": "figura_division_celular",
+      "estado_revision": "pendiente_revision_docente",
+      "estimulo": {
+        "figura_id": "division-mitotica",
+        "figura_version": "1",
+        "archivo": "assets/figures/mitosis.v1.svg",
+        "estado_revision": "pendiente_revision_docente",
+        "tipo": "figura",
+        "introduccion": "El esquema muestra cuatro momentos desordenados de la mitosis de una célula animal inicialmente 2n = 4. Los cromosomas se mantienen individualizados al final para facilitar su seguimiento. Cada punto oscuro marca una región centromérica; los trazos finos representan fibras del huso.",
+        "texto_alternativo": "Panel A: cuatro estructuras en X alineadas individualmente en el centro celular, con fibras hacia ambos polos. Panel B: dos envolturas nucleares, cada una rodeando cuatro estructuras simples, y un surco en la célula. Panel C: cuatro estructuras en X dispersas dentro de una envoltura nuclear discontinua. Panel D: dos grupos de cuatro estructuras simples separadas hacia polos opuestos, unidas a fibras; cada grupo contiene dos largas y dos cortas."
+      },
+      "enunciado": "Al pasar del panel A al D, ¿qué estructuras se separaron para originar los dos grupos que se observan?",
+      "alternativas": [
+        {
+          "id": "A",
+          "texto": "Cromosomas homólogos que permanecen formados por dos cromátidas.",
+          "diagnostico": "En mitosis no se separan pares de homólogos como unidades de dos cromátidas: compara las X de A con las estructuras simples de D."
+        },
+        {
+          "id": "B",
+          "texto": "Cromátidas hermanas, que tras separarse constituyen cromosomas hijos.",
+          "diagnostico": "Las cromátidas hermanas se separan en anafase. Cada una pasa a ser un cromosoma hijo; en este modelo se dirigen cuatro a cada polo."
+        },
+        {
+          "id": "C",
+          "texto": "Dos moléculas de ADN nuevas fabricadas durante la anafase.",
+          "diagnostico": "La replicación ocurre antes de la mitosis, durante la fase S, no durante esta separación."
+        },
+        {
+          "id": "D",
+          "texto": "La membrana plasmática, que divide de inmediato el núcleo en dos.",
+          "diagnostico": "El panel D muestra separación del material cromosómico, no la división de la membrana como causa de esa separación."
+        }
+      ],
+      "clave": "B",
+      "estado_clave": "ok",
+      "razonamiento_esperado": "Las cromátidas hermanas se separan en anafase. Cada una pasa a ser un cromosoma hijo; en este modelo se dirigen cuatro a cada polo."
+    },
+    {
+      "item_id": "PV-ME-01",
+      "version": "0.1",
+      "marco_id": "paes-ciencias",
+      "marco_version": "admision-2027.v1",
+      "unidad_id": "BIO-03.05",
+      "unidad_rol": "medicion",
+      "criterio_id": "HC-03.C1",
+      "eje": "Biología",
+      "formato_estimulo": "figura_division_celular",
+      "estado_revision": "pendiente_revision_docente",
+      "estimulo": {
+        "figura_id": "division-meiotica",
+        "figura_version": "1",
+        "archivo": "assets/figures/meiosis.v1.svg",
+        "estado_revision": "pendiente_revision_docente",
+        "tipo": "figura",
+        "introduccion": "Los paneles muestran dos momentos de una meiosis iniciada por una célula 2n = 4. Q representa solo una de las dos células que resultan de la primera división. Se omite el entrecruzamiento para concentrarse en qué estructuras se separan. Los puntos oscuros marcan regiones centroméricas y los trazos finos, fibras del huso.",
+        "texto_alternativo": "Panel P: dos estructuras en X migran hacia cada polo, una larga y una corta; las del polo izquierdo tienen trazo liso y las del derecho punteado. Cada X mantiene sus dos componentes unidos. Panel Q: dos estructuras simples migran hacia cada polo, una larga y una corta, todas de trazo liso; cada estructura tiene un solo componente y un punto oscuro. Se representa una sola célula en cada panel."
+      },
+      "enunciado": "¿A qué momento de la meiosis corresponde cada panel?",
+      "alternativas": [
+        {
+          "id": "A",
+          "texto": "P: anafase II; Q: anafase I.",
+          "diagnostico": "Invierte las divisiones: la separación de estructuras aún duplicadas precede a la separación de cromátidas."
+        },
+        {
+          "id": "B",
+          "texto": "P y Q: metafase I.",
+          "diagnostico": "Los cromosomas se están alejando hacia los polos, no alineándose en la zona ecuatorial."
+        },
+        {
+          "id": "C",
+          "texto": "P: anafase I; Q: anafase II.",
+          "diagnostico": "En P se separan homólogos que conservan dos cromátidas: anafase I. En Q se separan cromátidas hermanas: anafase II."
+        },
+        {
+          "id": "D",
+          "texto": "P y Q: anafase II.",
+          "diagnostico": "En P cada estructura que migra sigue duplicada; no corresponde a la separación de cromátidas de la segunda división."
+        }
+      ],
+      "clave": "C",
+      "estado_clave": "ok",
+      "razonamiento_esperado": "En P se separan homólogos que conservan dos cromátidas: anafase I. En Q se separan cromátidas hermanas: anafase II."
+    },
+    {
+      "item_id": "PV-ME-02",
+      "version": "0.1",
+      "marco_id": "paes-ciencias",
+      "marco_version": "admision-2027.v1",
+      "unidad_id": "BIO-03.05",
+      "unidad_rol": "medicion",
+      "criterio_id": "HC-03.C1",
+      "eje": "Biología",
+      "formato_estimulo": "figura_division_celular",
+      "estado_revision": "pendiente_revision_docente",
+      "estimulo": {
+        "figura_id": "division-meiotica",
+        "figura_version": "1",
+        "archivo": "assets/figures/meiosis.v1.svg",
+        "estado_revision": "pendiente_revision_docente",
+        "tipo": "figura",
+        "introduccion": "Los paneles muestran dos momentos de una meiosis iniciada por una célula 2n = 4. Q representa solo una de las dos células que resultan de la primera división. Se omite el entrecruzamiento para concentrarse en qué estructuras se separan. Los puntos oscuros marcan regiones centroméricas y los trazos finos, fibras del huso.",
+        "texto_alternativo": "Panel P: dos estructuras en X migran hacia cada polo, una larga y una corta; las del polo izquierdo tienen trazo liso y las del derecho punteado. Cada X mantiene sus dos componentes unidos. Panel Q: dos estructuras simples migran hacia cada polo, una larga y una corta, todas de trazo liso; cada estructura tiene un solo componente y un punto oscuro. Se representa una sola célula en cada panel."
+      },
+      "enunciado": "Compara lo que migra hacia un solo polo en P y en Q. ¿Cuál descripción coincide con la figura?",
+      "alternativas": [
+        {
+          "id": "A",
+          "texto": "En P y Q migran cuatro cromosomas, cada uno con dos cromátidas.",
+          "diagnostico": "Cuenta el destino de un solo polo, no la célula completa; además, Q muestra estructuras simples."
+        },
+        {
+          "id": "B",
+          "texto": "En P migra un cromosoma y en Q migran dos.",
+          "diagnostico": "En P se observan dos estructuras hacia cada polo: una larga y una corta."
+        },
+        {
+          "id": "C",
+          "texto": "En P migran dos cromosomas simples y en Q dos cromosomas duplicados.",
+          "diagnostico": "Invierte la condición duplicada y simple que diferencia las estructuras de P y Q."
+        },
+        {
+          "id": "D",
+          "texto": "En P migran dos cromosomas de dos cromátidas cada uno; en Q, dos cromosomas de una cromátida cada uno.",
+          "diagnostico": "A cada polo de P llegan dos cromosomas duplicados (cuatro cromátidas en total). A cada polo de la célula Q llegan dos cromosomas hijos simples (dos cromátidas en total). No se están sumando las dos células de la segunda división."
+        }
+      ],
+      "clave": "D",
+      "estado_clave": "ok",
+      "razonamiento_esperado": "A cada polo de P llegan dos cromosomas duplicados (cuatro cromátidas en total). A cada polo de la célula Q llegan dos cromosomas hijos simples (dos cromátidas en total). No se están sumando las dos células de la segunda división."
+    }
+  ]
+}

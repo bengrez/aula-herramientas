@@ -10,6 +10,7 @@ export const PUBLIC_FORMAT_LABELS = Object.freeze({
   tabla: "tabla",
   secuencia: "procedimiento",
   diagrama: "esquema",
+  figura: "figura",
   grafico_barras: "gráfico",
   grafico_lineas: "gráfico",
 });
