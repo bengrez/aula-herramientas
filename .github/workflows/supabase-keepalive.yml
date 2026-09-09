@@ -1,0 +1,56 @@
+name: Latido de Supabase
+
+# Un proyecto del plan gratuito se pausa tras una semana de poca actividad y sólo el dueño puede
+# reanudarlo a mano desde el panel. Este latido diario genera actividad real en la base de datos
+# haciendo exactamente el mismo ingreso anónimo que hace la app en el teléfono de un estudiante,
+# así que no necesita ninguna función nueva ni relaja el contrato de esquema, que prohíbe que el
+# rol sin autenticar pueda ejecutar cualquier función de `api`.
+#
+# El usuario creado lleva `keepalive` en su metadata para poder distinguirlo de un estudiante
+# cuando se depuren usuarios anónimos: la limpieza genérica que sugiere Supabase (borrar todo
+# usuario anónimo de más de 30 días) invalidaría la sesión de un estudiante que no haya practicado
+# en ese plazo y lo obligaría a reingresar su código.
+#
+# Si la llamada falla, el trabajo falla a propósito: es el aviso de que el respaldo está caído o
+# el proyecto quedó pausado.
+
+on:
+  schedule:
+    - cron: "40 11 * * *"   # 08:40 en Chile continental (UTC-3)
+  workflow_dispatch:
+
+permissions: {}
+
+concurrency:
+  group: supabase-keepalive
+  cancel-in-progress: false
+
+jobs:
+  latido:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Ingreso anónimo de mantención
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_PUBLISHABLE_KEY: ${{ secrets.SUPABASE_PUBLISHABLE_KEY }}
+        run: |
+          set -euo pipefail
+          if [ -z "${SUPABASE_URL:-}" ] || [ -z "${SUPABASE_PUBLISHABLE_KEY:-}" ]; then
+            echo "Sin proyecto configurado todavía: no hay nada que mantener activo."
+            exit 0
+          fi
+          # La respuesta trae una sesión: no se imprime nunca en el registro del trabajo.
+          estado=$(curl --silent --show-error --location --max-time 30 \
+            --output respuesta.json --write-out '%{http_code}' \
+            --request POST "${SUPABASE_URL}/auth/v1/signup" \
+            --header "apikey: ${SUPABASE_PUBLISHABLE_KEY}" \
+            --header "Content-Type: application/json" \
+            --data '{"data":{"keepalive":true},"gotrue_meta_security":{}}')
+          echo "HTTP ${estado}"
+          if [ "${estado}" != "200" ]; then
+            echo "El proyecto no respondió como se esperaba. Revisa en el panel si quedó pausado."
+            jq -r '.msg // .error_description // .error // "sin detalle"' respuesta.json 2>/dev/null || true
+            exit 1
+          fi
+          echo "Actividad registrada en la base de datos."
