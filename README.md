@@ -19,6 +19,20 @@ Publicado con GitHub Pages: https://bengrez.github.io/aula-herramientas/
   predice el tipo de enlace, practica con preguntas al azar. Los datos de los 118 elementos viven en
   `elementos.js`, separados del `index.html`.
 
+## Aparte: apoyo escolar en inglés
+
+Recursos para acompañar estudios de secundaria en Australia (Year 8). No forman parte del trabajo
+de aula del IDE; se listan separados para no mezclarlos.
+
+- [`black-death-skills-lab/`](black-death-skills-lab/) — *The Black Death: a historian's skills
+  lab* (Year 8 HASS, History). Worksheet en inglés australiano con cuatro fuentes (mapa de
+  propagación 1347–1353, crónica de Henry Knighton c. 1390, población de Inglaterra 1290–1522,
+  G. M. Trevelyan 1942), diez preguntas en cuatro bloques y tres herramientas del historiador
+  reutilizables; definiciones al pasar el mouse y glosario impreso. Se completa junto a un adulto;
+  la última página (en español) es para el adulto y está oculta por defecto (tecla N).
+  Autocontenido, sin dependencias externas. Las respuestas escritas se guardan sólo en
+  `localStorage` del navegador; no envía datos.
+
 ## Convención
 
 Cada herramienta vive en su propia carpeta y se enlaza desde este README y desde `index.html`.

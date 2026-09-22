@@ -1,0 +1,720 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Year 8 HASS skills lab: four sources on the Black Death, ten questions, three reusable historian tools. Work through it together.">
+<title>Black Death skills lab</title>
+<style>
+:root{
+  --ink:#1b2432; --muted:#66707e; --paper:#f4f1e8; --paper-light:#fbf9f3;
+  --blue:#2f4a7a; --blue-dark:#1d3054; --coral:#e66a4e; --gold:#e6b954; --gold-dark:#8a6d1f;
+  --line:#c8c3b5; --rule:#d5d0c2; --radius:6px;
+  --src:#eef2f8; --tool:#fbf3dc; --parent:#fff8dc; --lh:8.5mm;
+}
+*{box-sizing:border-box}
+body{margin:0;color:var(--ink);background:var(--paper);
+  font-family:"Avenir Next",Avenir,"Century Gothic","Segoe UI",sans-serif;line-height:1.5}
+h1,h2,h3{font-family:"Iowan Old Style","Palatino Linotype","Book Antiqua",Georgia,serif;line-height:1.15;margin:0}
+p{margin:.4em 0}
+.mono{font-family:"Courier New",monospace}
+.sheet{max-width:186mm;margin:18px auto 40px;background:#fff;border:1px solid var(--line);
+  border-radius:var(--radius);padding:14mm 12mm}
+.screen-note{max-width:186mm;margin:16px auto 0;padding:10px 16px;background:var(--paper-light);
+  border:1px solid var(--line);border-radius:var(--radius);font-size:.85rem;color:var(--muted);
+  display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.screen-note span{flex:1 1 320px}
+.btn{font:600 .8rem "Avenir Next",Avenir,"Century Gothic","Segoe UI",sans-serif;border:1.5px solid var(--blue);
+  background:#fff;color:var(--blue);border-radius:16px;padding:4px 12px;cursor:pointer;white-space:nowrap}
+.btn:hover{background:var(--blue);color:#fff}
+.btn.quiet{border-color:var(--line);color:var(--muted)}
+
+/* definitions on hover */
+dfn{font-style:inherit;border-bottom:1.5px dotted var(--blue);cursor:help;text-decoration:none;outline:none}
+dfn:focus,dfn.on{background:#e6edf8;border-radius:2px}
+.tip{display:none;position:fixed;z-index:50;max-width:320px;padding:10px 13px;background:#fff;border:1.5px solid var(--blue);
+  border-radius:var(--radius);box-shadow:0 6px 18px rgba(27,36,50,.18);font-size:.86rem;line-height:1.45;color:var(--ink);pointer-events:none}
+.tip b{display:block;font-family:"Iowan Old Style","Palatino Linotype","Book Antiqua",Georgia,serif;font-size:.98rem;margin-bottom:3px;color:var(--blue-dark)}
+.tip p{margin:.25em 0}
+.tip .n{margin-top:6px;padding-top:6px;border-top:1px dashed var(--line);color:#4a5566;font-size:.82rem}
+
+/* cover */
+.eyebrow{font:600 .74rem "Courier New",monospace;color:var(--coral);text-transform:uppercase;letter-spacing:.13em;margin:0 0 8px}
+h1{font-size:1.9rem;letter-spacing:-.03em;margin-bottom:6px}
+.bigq{font-family:"Iowan Old Style","Palatino Linotype","Book Antiqua",Georgia,serif;font-size:1.25rem;color:var(--blue-dark);margin:4px 0 10px}
+.meta-row{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 12px}
+.meta-pill{font:600 .74rem "Courier New",monospace;letter-spacing:.03em;border:1px solid var(--blue);
+  color:var(--blue);border-radius:11px;padding:3px 11px;white-space:nowrap}
+.id-line{display:flex;gap:24px;flex-wrap:wrap;margin:12px 0 4px;font-size:.95rem}
+.id-line span{flex:1;min-width:180px;border-bottom:1px solid var(--ink);padding-bottom:2px}
+.id-line span i{font-style:normal;color:var(--muted);font-size:.85rem;margin-right:6px}
+.id-line span .fill{display:inline-block;min-width:60%;outline:none}
+.instructions{margin:14px 0 0;padding:12px 16px;background:var(--paper-light);
+  border:1px solid var(--blue);border-left:5px solid var(--blue);border-radius:var(--radius);font-size:.92rem}
+.instructions > strong:first-child,.context > strong:first-child{display:block;font:600 .72rem "Courier New",monospace;
+  text-transform:uppercase;letter-spacing:.1em;color:var(--blue);margin-bottom:6px}
+.instructions ul{margin:4px 0 0;padding-left:20px}
+.instructions li{margin:3px 0}
+.key{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px;font-size:.82rem}
+.key span{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:4px;border:1px solid var(--line)}
+.key i{display:inline-block;width:14px;height:14px;border-radius:3px;border:1px solid var(--line)}
+.key .k-src i{background:var(--src);border-left:4px solid var(--blue)}
+.key .k-q i{background:#fff}
+.key .k-tool i{background:var(--tool);border-left:4px solid var(--gold)}
+.key .k-def i{background:#fff;border:none;border-bottom:1.5px dotted var(--blue);border-radius:0;height:10px}
+.context{margin:14px 0 0;padding:12px 16px;background:#fff;border:1px solid var(--line);border-radius:var(--radius);font-size:.92rem}
+.context p{max-width:78ch}
+.parts{margin:6px 0 0;padding:0;list-style:none;font-size:.88rem}
+.parts li{margin:3px 0}
+
+/* sections */
+.sec{margin-top:26px}
+.sec-head{border-bottom:2px solid var(--blue);padding-bottom:5px;margin-bottom:6px;break-after:avoid;page-break-after:avoid}
+.sec-head h2{font-size:1.25rem;letter-spacing:-.01em}
+.sec-head .skill{float:right;font:600 .74rem "Courier New",monospace;color:var(--blue);margin-top:6px}
+.sec-note{font-size:.9rem;color:#414b58;margin:6px 0 12px;max-width:72ch}
+
+/* sources */
+.src{margin:12px 0;padding:12px 16px 12px 18px;background:var(--src);border:1px solid #c9d3e4;border-left:6px solid var(--blue);
+  border-radius:var(--radius);break-inside:avoid;page-break-inside:avoid}
+.src .tag{display:block;font:700 .74rem "Courier New",monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--blue);margin-bottom:3px}
+.src h3{font-size:1.05rem;margin-bottom:6px}
+.src .quote{font-family:"Iowan Old Style","Palatino Linotype","Book Antiqua",Georgia,serif;font-size:.97rem;line-height:1.45;
+  margin:6px 0;padding:8px 12px;background:#fff;border-radius:4px;border:1px solid #dde4ef}
+.src .quote p{margin:.35em 0}
+.src .about{font-size:.84rem;color:#33405a;margin:8px 0 0}
+.src .about b{font-weight:700}
+.src .cite{font-size:.76rem;color:var(--muted);margin:6px 0 0}
+svg.map{width:100%;max-width:128mm;height:auto;display:block;margin:0 auto;background:#fff;border:1px solid #dde4ef;border-radius:4px}
+svg.chart{width:100%;max-width:150mm;height:auto;display:block;margin:0 auto;background:#fff;border:1px solid #dde4ef;border-radius:4px}
+.scroll{overflow-x:auto;margin:8px 0 0}
+table.data{border-collapse:collapse;margin:0 auto;font-family:"Courier New",monospace;font-size:.82rem;background:#fff}
+table.data th,table.data td{border:1px solid #c9d3e4;padding:3px 9px;text-align:center}
+table.data th{background:var(--paper-light);font-weight:700}
+
+/* questions */
+.q{border:1px solid var(--line);border-radius:var(--radius);padding:11px 14px 13px;margin:11px 0;background:#fff;break-inside:avoid;page-break-inside:avoid}
+.q-head{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+.qnum{font:700 .95rem "Courier New",monospace;color:var(--blue)}
+.qkind{font:600 .72rem "Courier New",monospace;color:var(--muted);white-space:nowrap;text-transform:uppercase;letter-spacing:.06em}
+.qtext{margin:6px 0 2px;font-size:.95rem;max-width:74ch}
+.qtext b{font-weight:700}
+.lab{margin-top:8px;font:600 .72rem "Courier New",monospace;color:var(--blue);text-transform:uppercase;letter-spacing:.08em}
+/* ruled, typeable answer space */
+.ws{--n:3;min-height:calc(var(--n) * var(--lh));margin-top:6px;padding:0 4px;line-height:var(--lh);font-size:.95rem;outline:none;
+  white-space:pre-wrap;overflow-wrap:break-word;
+  background-image:repeating-linear-gradient(to bottom,transparent 0,transparent calc(var(--lh) - 1px),var(--rule) calc(var(--lh) - 1px),var(--rule) var(--lh))}
+.ws:focus{background-color:#fbfaf5}
+.ws div{min-height:var(--lh)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:0 18px}
+table.opp{border-collapse:collapse;width:100%;table-layout:fixed;margin-top:8px;font-size:.9rem}
+table.opp th,table.opp td{border:1px solid var(--line);padding:6px 9px;vertical-align:top;text-align:left}
+table.opp th{width:26%;background:var(--paper-light);font-weight:700}
+table.opp th small{display:block;font-weight:400;color:var(--muted);font-size:.78rem;line-height:1.3}
+table.opp td{height:14mm;outline:none;line-height:1.4}
+table.opp td:focus{background:#fbfaf5}
+.ticks{display:flex;gap:14px;flex-wrap:wrap;margin:6px 0 2px;font-size:.9rem}
+.ticks label{display:inline-flex;align-items:center;gap:5px;cursor:pointer}
+.ticks input{width:13px;height:13px;margin:0;accent-color:var(--blue)}
+
+/* causal chain */
+.chain{display:flex;flex-direction:column;margin:10px 0 4px;align-items:center}
+.chain .box{width:100%;max-width:120mm;border:1.5px solid var(--ink);border-radius:5px;padding:7px 12px;text-align:center;font-size:.93rem;background:#fff}
+.chain .box.blank{--n:2;--bl:8mm;border-style:dashed;border-color:var(--blue);text-align:left;position:relative;outline:none;
+  padding:6px 12px 6px 26px;min-height:calc(var(--n) * var(--bl) + 12px);line-height:var(--bl);white-space:pre-wrap;
+  background-image:repeating-linear-gradient(to bottom,transparent 0,transparent calc(var(--bl) - 1px),var(--rule) calc(var(--bl) - 1px),var(--rule) var(--bl));
+  background-origin:content-box;background-clip:content-box}
+.chain .box.blank::before{content:"?";position:absolute;left:8px;top:6px;font:700 .95rem "Courier New",monospace;color:var(--blue)}
+.chain .box.blank:focus{background-color:#fbfaf5}
+.chain .arrow{font-size:1.3rem;line-height:1;color:var(--blue);padding:2px 0}
+.chain .ev{display:block;font:600 .72rem "Courier New",monospace;color:var(--muted);letter-spacing:.04em}
+
+/* historian tool */
+.tool{margin:14px 0;padding:12px 16px 12px 18px;background:var(--tool);border:1px solid #e3d5a8;border-left:6px solid var(--gold);
+  border-radius:var(--radius);break-inside:avoid;page-break-inside:avoid;font-size:.92rem}
+.tool .tag{display:block;font:700 .74rem "Courier New",monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--gold-dark);margin-bottom:3px}
+.tool h3{font-size:1.05rem;margin-bottom:6px}
+.tool ul,.tool ol{margin:4px 0 0;padding-left:20px}
+.tool li{margin:3px 0}
+.tool .grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px 16px;margin-top:6px}
+.tool .cell{background:#fff;border:1px solid #e3d5a8;border-radius:4px;padding:7px 10px}
+.tool .cell b{display:block;font-size:.9rem}
+.tool .cell small{display:block;color:#5a4a1c;font-size:.82rem;line-height:1.35}
+.tool .rule{margin-top:8px;padding:7px 10px;background:#fff;border-radius:4px;border:1px dashed var(--gold-dark);font-size:.9rem}
+.tool .words{font-family:"Courier New",monospace;font-size:.84rem;color:#5a4a1c}
+
+/* glossary */
+.glossary{margin-top:26px;break-before:page;page-break-before:always}
+.glossary .gl{display:grid;grid-template-columns:1fr 1fr;gap:5px 22px;margin:8px 0 0;font-size:.8rem;line-height:1.4}
+.glossary .g{break-inside:avoid;page-break-inside:avoid;color:#33405a}
+.glossary .g b{color:var(--ink)}
+.glossary .g .n{color:var(--muted)}
+
+/* parent page */
+.parent{margin-top:30px;padding:14px 18px;background:var(--parent);border:1px dashed #c9a94a;border-radius:var(--radius);
+  font-size:.88rem;color:#3d3416;break-before:page;page-break-before:always}
+.parent .tag{display:block;font:700 .72rem "Courier New",monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--gold-dark);margin-bottom:3px}
+.parent h2{font-size:1.2rem;margin-bottom:6px}
+.parent h3{font-size:1rem;margin:12px 0 4px}
+.parent table{border-collapse:collapse;width:100%;font-size:.84rem;background:#fff}
+.parent th,.parent td{border:1px solid #d9c98c;padding:4px 7px;vertical-align:top;text-align:left}
+.parent th{background:#f6ecc8}
+.parent td.c{text-align:center;width:14mm}
+.parent td.c input{width:14px;height:14px;margin:0;accent-color:var(--gold-dark)}
+.parent ul{margin:4px 0;padding-left:18px}
+.parent li{margin:3px 0}
+.parent .qn{font:700 .8rem "Courier New",monospace;color:var(--blue)}
+.parent .ws{background-color:#fff}
+body.no-parent .parent{display:none}
+
+.endnote{margin-top:22px;padding-top:10px;border-top:1px solid var(--line);font-size:.76rem;color:var(--muted)}
+.endnote p{margin:.25em 0}
+
+@page{size:A4;margin:14mm}
+@media print{
+  body{background:#fff;font-size:10.5pt}
+  .sheet{max-width:100%;margin:0;border:none;border-radius:0;padding:0}
+  .screen-note,.tip{display:none}
+  h1{font-size:17pt}
+  .sec-head h2{font-size:12.5pt}
+  dfn{border-bottom:none;background:none}
+  .src,.tool,.parent,.instructions,.context,.ws,.chain .box.blank,table.opp td{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .sec{break-before:page;page-break-before:always}
+  .key .k-def{display:none}
+}
+@media screen and (max-width:700px){
+  .sheet{padding:18px 14px}
+  .sec-head .skill{float:none;display:block;margin:0 0 4px}
+  .two,.tool .grid2{grid-template-columns:1fr}
+  .glossary .gl{grid-template-columns:1fr}
+  table.opp th{width:34%}
+}
+</style>
+</head>
+<body class="no-parent">
+
+<div class="screen-note">
+  <span>Work through this page together, on a shared screen or on paper. Answers typed here are saved in this browser only. Hover over dotted words for definitions. Press <b>N</b> to show or hide the parent page before sharing your screen.</span>
+  <button class="btn" id="toggleParent" type="button">Show parent page</button>
+  <button class="btn" type="button" onclick="window.print()">Print / save PDF</button>
+  <button class="btn quiet" id="clearAll" type="button">Clear answers</button>
+</div>
+
+<div class="sheet">
+
+<header>
+  <p class="eyebrow">Year 8 HASS &middot; History &middot; Skills lab</p>
+  <h1>The Black Death: a historian&rsquo;s skills lab</h1>
+  <p class="bigq">How did the <dfn data-t="black-death">Black Death</dfn> change <dfn data-t="medieval">medieval</dfn> European society?</p>
+  <div class="meta-row">
+    <span class="meta-pill">About 60 minutes, can be split in two</span>
+    <span class="meta-pill">4 sources &middot; 10 questions</span>
+    <span class="meta-pill">Done together, on screen or on paper</span>
+  </div>
+  <div class="id-line"><span><i>Name:</i><span class="fill" contenteditable="true" data-k="name"></span></span><span><i>Date:</i><span class="fill" contenteditable="true" data-k="date"></span></span></div>
+  <div class="instructions">
+    <strong>How this works</strong>
+    <p>You will work through this with your dad. For each question:</p>
+    <ul>
+      <li><b>Read the source together.</b> Words with a dotted underline show a definition when you hover over them or tap them.</li>
+      <li><b>Talk about the question first.</b> Say what you notice and what you think, out loud. It is fine to be unsure.</li>
+      <li><b>Then write the answer in your own words.</b> Type it straight into the page, or write on the printed copy.</li>
+      <li><b>When you get stuck, read the nearest Historian tool together.</b> Each tool is a strategy you can reuse in any HASS task, not just this one.</li>
+    </ul>
+    <p>Nobody is marking this. The point is to find out what you can already do and which tools help.</p>
+    <div class="key">
+      <span class="k-src"><i></i>SOURCE: evidence to read and interpret</span>
+      <span class="k-q"><i></i>QUESTION: a problem to work on</span>
+      <span class="k-tool"><i></i>HISTORIAN TOOL: a strategy to reuse</span>
+      <span class="k-def"><i></i>dotted word: hover for a definition</span>
+    </div>
+  </div>
+  <div class="context">
+    <strong>Before you start: the story in 100 words</strong>
+    <p>In 1347, ships from the Black Sea brought a deadly disease to Sicily. Within four years it had spread across almost all of Europe.
+    People called it the Great Mortality; today we call it the <b>Black Death</b>. It killed somewhere between a third and a half of Europe&rsquo;s people.
+    Medieval Europe ran on the <dfn data-t="feudal-system"><b>feudal system</b></dfn>: most people were <dfn data-t="peasant">peasants</dfn> who farmed land owned by a <dfn data-t="lord">lord</dfn>. Many were <dfn data-t="serf"><b>serfs</b></dfn> (also called villeins),
+    who were not free to leave the lord&rsquo;s estate, the <dfn data-t="manor"><b>manor</b></dfn>, and owed the lord unpaid work. Wages existed, but lords, backed by the king, expected them to stay low.</p>
+    <strong style="margin-top:10px">What you will do</strong>
+    <ul class="parts">
+      <li><b>Part 1 &middot; Build the picture.</b> Read four sources; separate what they show from what they suggest.</li>
+      <li><b>Part 2 &middot; Can I trust this source?</b> Ask five questions of a medieval chronicle and a modern historian.</li>
+      <li><b>Part 3 &middot; Become the historian.</b> Rebuild a chain of cause and consequence from the evidence.</li>
+      <li><b>Part 4 &middot; Make your case.</b> Judge a claim in one paragraph: claim, evidence, reasoning.</li>
+    </ul>
+  </div>
+</header>
+
+<!-- ============ PART 1 ============ -->
+<section class="sec">
+  <div class="sec-head"><span class="skill">Skill: understanding evidence</span><h2>Part 1 &mdash; Build the picture</h2></div>
+  <p class="sec-note">There are four sources: a map, a medieval <dfn data-t="chronicle">chronicle</dfn>, a graph and a modern <dfn data-t="historian">historian</dfn>. Questions 1 to 3 are only about
+  Sources A and C. Read Sources B and D carefully too; you will need them in Parts 2 to 4. Do not decide what the big answer is yet.</p>
+
+  <div class="src">
+    <span class="tag">Source A &middot; map</span>
+    <h3>Where and when the Black Death arrived, 1347 to 1353</h3>
+    <svg class="map" viewBox="0 0 660 480" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="mapTitle mapDesc">
+<title id="mapTitle">Map: year the Black Death first arrived, 1347 to 1353</title>
+<desc id="mapDesc">Simplified map of Europe. Darker shading marks earlier arrival; dots mark towns with a recorded arrival date.</desc>
+<defs><clipPath id="land"><polygon points="93.5,409.5 94.5,435.0 132.3,448.5 162.8,438.0 191.1,409.5 185.8,397.5 212.1,369.0 223.7,355.5 220.5,342.0 245.7,340.5 265.7,334.5 282.4,324.0 291.9,328.5 312.9,358.5 338.1,378.0 353.9,420.0 363.3,408.0 369.6,382.5 382.2,393.0 378.0,381.0 366.4,373.5 359.1,361.5 330.8,336.0 321.3,328.5 318.2,309.0 333.9,306.0 333.9,316.5 348.6,328.5 361.2,337.5 379.1,351.0 392.7,370.5 401.1,397.5 414.8,420.0 425.2,444.0 437.9,421.5 439.9,390.0 430.5,381.0 460.9,378.0 466.2,387.0 492.4,375.0 672.0,375.0 672.0,-22.5 336.0,-22.5 320.2,0.0 278.2,37.5 254.1,52.5 244.7,84.0 248.8,106.5 262.5,120.0 273.0,118.5 301.3,91.5 315.0,124.5 325.5,156.0 352.8,147.0 361.2,139.5 379.1,100.5 368.6,79.5 370.6,54.0 402.1,33.0 422.1,6.0 442.1,3.0 415.8,43.5 423.1,82.5 451.5,87.0 490.4,79.5 507.1,91.5 485.1,99.0 449.4,99.0 446.2,114.0 442.1,135.0 409.5,142.5 410.6,154.5 384.3,174.0 352.8,177.0 316.1,178.5 295.1,175.5 287.7,168.0 296.1,147.0 300.3,124.5 277.2,157.5 280.3,181.5 274.1,187.5 238.3,196.5 232.1,211.5 219.4,222.0 208.9,226.5 190.1,247.5 172.2,246.0 141.8,264.0 146.0,271.5 165.9,280.5 176.4,297.0 176.4,316.5 172.2,337.5 149.1,337.5 129.2,337.5 100.8,339.0 91.3,346.5 97.7,373.5" fill="#000" class-=""/><polygon points="129.2,238.5 146.0,234.0 162.8,231.0 177.4,228.0 187.9,228.0 202.7,223.5 198.4,217.5 206.8,201.0 191.1,196.5 186.9,184.5 187.9,178.5 173.2,165.0 155.4,150.0 167.0,133.5 144.9,127.5 156.5,114.0 152.2,111.0 136.5,111.0 134.4,121.5 123.9,130.5 131.2,144.0 138.6,151.5 128.1,160.5 136.5,166.5 154.3,166.5 156.5,183.0 157.5,189.0 141.8,189.0 139.7,198.0 139.7,208.5 135.5,214.5 148.0,216.0 155.4,217.5 160.7,217.5 146.0,223.5 141.8,225.0" fill="#000" class-=""/><polygon points="122.8,190.5 120.8,205.5 99.8,211.5 80.8,210.0 93.5,190.5 101.8,162.0 127.0,171.0" fill="#000" class-=""/><polygon points="352.8,417.0 349.6,433.5 330.8,435.0 319.2,423.0 329.7,418.5" fill="#000" class-=""/><polygon points="284.6,372.0 288.8,405.0 277.2,406.5 275.1,376.5" fill="#000" class-=""/><polygon points="287.7,345.0 285.6,369.0 279.3,367.5 286.7,346.5" fill="#000" class-=""/><polygon points="435.8,457.5 465.1,460.5 462.0,465.0 436.8,462.0" fill="#000" class-=""/><polygon points="494.6,372.0 522.9,369.0 558.6,360.0 570.1,370.5 605.9,375.0 625.8,366.0 672.0,390.0 672.0,495.0 567.0,450.0 510.3,438.0 483.0,439.5 474.6,430.5 465.1,414.0 463.1,397.5 464.1,385.5 483.0,384.0 494.6,376.5" fill="#000" class-=""/><polygon points="57.8,456.0 128.1,453.0 168.0,462.0 220.5,436.5 292.9,430.5 300.3,450.0 305.6,466.5 304.5,495.0 57.8,495.0" fill="#000" class-=""/></clipPath></defs>
+<rect x="0" y="0" width="660" height="480" fill="#f2efe6"/>
+<g clip-path="url(#land)">
+<rect x="0" y="0" width="660" height="480" fill="#cde2fb"/>
+<polygon points="94.5,120 94.5,60 241.5,-22.5 315.0,-22.5 388.5,-22.5 441.0,30 430.5,120 420.0,180 378.0,210 357.0,240 315.0,255 273.0,240" fill="#86b6ef"/>
+<polygon points="73.5,300 73.5,97.5 168.0,90 241.5,52.5 273.0,82.5 315.0,127.5 346.5,180 399.0,210 441.0,270 420.0,300 378.0,315 315.0,300 262.5,285 210.0,255 168.0,270 105.0,285" fill="#3987e5"/>
+<polygon points="52.5,465 52.5,322.5 168.0,270 210.0,232.5 262.5,255 315.0,262.5 367.5,270 399.0,292.5 430.5,330 493.5,352.5 514.5,360 672.0,360 672.0,495 399.0,495 126.0,495" fill="#1c5cab"/>
+<ellipse cx="165.9" cy="222.0" rx="54.6" ry="22.5"  fill="#1c5cab"/>
+<ellipse cx="105.0" cy="201.0" rx="27.3" ry="21.0"  fill="#1c5cab"/>
+<ellipse cx="352.8" cy="411.0" rx="25.2" ry="19.5"  fill="#0d366b"/><ellipse cx="245.7" cy="340.5" rx="12.6" ry="7.5"  fill="#0d366b"/><ellipse cx="492.4" cy="375.0" rx="16.8" ry="12.0"  fill="#0d366b"/><ellipse cx="551.2" cy="315.0" rx="21.0" ry="12.0"  fill="#0d366b"/>
+</g>
+<polygon points="493.5,372.0 477.8,352.5 481.9,342.0 489.3,327.0 511.4,292.5 530.2,310.5 540.8,321.0 548.1,322.5 560.7,315.0 573.3,310.5 579.6,315.0 585.9,319.5 605.9,336.0 625.8,366.0 605.9,375.0 570.1,370.5 558.6,360.0 522.9,369.0" fill="#f2efe6" stroke="#7c8794" stroke-width="0.8"/>
+<g fill="none" stroke="#7c8794" stroke-width="0.8" stroke-linejoin="round"><polygon points="93.5,409.5 94.5,435.0 132.3,448.5 162.8,438.0 191.1,409.5 185.8,397.5 212.1,369.0 223.7,355.5 220.5,342.0 245.7,340.5 265.7,334.5 282.4,324.0 291.9,328.5 312.9,358.5 338.1,378.0 353.9,420.0 363.3,408.0 369.6,382.5 382.2,393.0 378.0,381.0 366.4,373.5 359.1,361.5 330.8,336.0 321.3,328.5 318.2,309.0 333.9,306.0 333.9,316.5 348.6,328.5 361.2,337.5 379.1,351.0 392.7,370.5 401.1,397.5 414.8,420.0 425.2,444.0 437.9,421.5 439.9,390.0 430.5,381.0 460.9,378.0 466.2,387.0 492.4,375.0 672.0,375.0 672.0,-22.5 336.0,-22.5 320.2,0.0 278.2,37.5 254.1,52.5 244.7,84.0 248.8,106.5 262.5,120.0 273.0,118.5 301.3,91.5 315.0,124.5 325.5,156.0 352.8,147.0 361.2,139.5 379.1,100.5 368.6,79.5 370.6,54.0 402.1,33.0 422.1,6.0 442.1,3.0 415.8,43.5 423.1,82.5 451.5,87.0 490.4,79.5 507.1,91.5 485.1,99.0 449.4,99.0 446.2,114.0 442.1,135.0 409.5,142.5 410.6,154.5 384.3,174.0 352.8,177.0 316.1,178.5 295.1,175.5 287.7,168.0 296.1,147.0 300.3,124.5 277.2,157.5 280.3,181.5 274.1,187.5 238.3,196.5 232.1,211.5 219.4,222.0 208.9,226.5 190.1,247.5 172.2,246.0 141.8,264.0 146.0,271.5 165.9,280.5 176.4,297.0 176.4,316.5 172.2,337.5 149.1,337.5 129.2,337.5 100.8,339.0 91.3,346.5 97.7,373.5" fill="none" class-=""/><polygon points="129.2,238.5 146.0,234.0 162.8,231.0 177.4,228.0 187.9,228.0 202.7,223.5 198.4,217.5 206.8,201.0 191.1,196.5 186.9,184.5 187.9,178.5 173.2,165.0 155.4,150.0 167.0,133.5 144.9,127.5 156.5,114.0 152.2,111.0 136.5,111.0 134.4,121.5 123.9,130.5 131.2,144.0 138.6,151.5 128.1,160.5 136.5,166.5 154.3,166.5 156.5,183.0 157.5,189.0 141.8,189.0 139.7,198.0 139.7,208.5 135.5,214.5 148.0,216.0 155.4,217.5 160.7,217.5 146.0,223.5 141.8,225.0" fill="none" class-=""/><polygon points="122.8,190.5 120.8,205.5 99.8,211.5 80.8,210.0 93.5,190.5 101.8,162.0 127.0,171.0" fill="none" class-=""/><polygon points="352.8,417.0 349.6,433.5 330.8,435.0 319.2,423.0 329.7,418.5" fill="none" class-=""/><polygon points="284.6,372.0 288.8,405.0 277.2,406.5 275.1,376.5" fill="none" class-=""/><polygon points="287.7,345.0 285.6,369.0 279.3,367.5 286.7,346.5" fill="none" class-=""/><polygon points="435.8,457.5 465.1,460.5 462.0,465.0 436.8,462.0" fill="none" class-=""/><polygon points="494.6,372.0 522.9,369.0 558.6,360.0 570.1,370.5 605.9,375.0 625.8,366.0 672.0,390.0 672.0,495.0 567.0,450.0 510.3,438.0 483.0,439.5 474.6,430.5 465.1,414.0 463.1,397.5 464.1,385.5 483.0,384.0 494.6,376.5" fill="none" class-=""/><polygon points="57.8,456.0 128.1,453.0 168.0,462.0 220.5,436.5 292.9,430.5 300.3,450.0 305.6,466.5 304.5,495.0 57.8,495.0" fill="none" class-=""/></g>
+<text x="357.0" y="456.0" font-size="10" fill="#5d6470" font-style="italic" text-anchor="middle">Mediterranean Sea</text>
+<text x="558.6" y="339.0" font-size="10" fill="#5d6470" font-style="italic" text-anchor="middle">Black Sea</text>
+<text x="36.8" y="330" font-size="9" fill="#5d6470" font-style="italic" text-anchor="middle">Atlantic Ocean</text>
+<text x="231.0" y="154.5" font-size="10" fill="#5d6470" font-style="italic" text-anchor="middle">North Sea</text>
+<text x="399.0" y="114.0" font-size="10" fill="#5d6470" font-style="italic" text-anchor="middle">Baltic Sea</text>
+<g font-family="Avenir Next,Avenir,Century Gothic,Segoe UI,sans-serif">
+<rect x="562.7" y="302.8" width="64.0" height="11.0" rx="2" fill="#fff" fill-opacity="0.82"/>
+<text x="565.7" y="311.0" font-size="10.5" font-weight="700" fill="#1b2432" text-anchor="start">Caffa <tspan font-weight="400">1346</tspan></text>
+<rect x="494.4" y="378.8" width="144.8" height="11.0" rx="2" fill="#fff" fill-opacity="0.82"/>
+<text x="497.4" y="387.0" font-size="10.5" font-weight="700" fill="#1b2432" text-anchor="start">Constantinople <tspan font-weight="400">mid 1347</tspan></text>
+<rect x="354.8" y="418.8" width="99.2" height="11.0" rx="2" fill="#fff" fill-opacity="0.82"/>
+<text x="357.8" y="427.0" font-size="10.5" font-weight="700" fill="#1b2432" text-anchor="start">Messina <tspan font-weight="400">Oct 1347</tspan></text>
+<rect x="298.1" y="439.8" width="86.2" height="11.0" rx="2" fill="#fff" fill-opacity="0.82"/>
+<text x="301.1" y="448.0" font-size="10.5" font-weight="700" fill="#1b2432" text-anchor="start">Tunis <tspan font-weight="400">Apr 1348</tspan></text>
+<rect x="124.4" y="344.3" width="112.3" height="11.0" rx="2" fill="#fff" fill-opacity="0.82"/>
+<text x="239.7" y="352.5" font-size="10.5" font-weight="700" fill="#1b2432" text-anchor="end">Marseille <tspan font-weight="400">Nov 1347</tspan></text>
+<rect x="284.4" y="309.8" width="86.2" height="11.0" rx="2" fill="#fff" fill-opacity="0.82"/>
+<text x="287.4" y="318.0" font-size="10.5" font-weight="700" fill="#1b2432" text-anchor="start">Genoa <tspan font-weight="400">Jan 1348</tspan></text>
+<rect x="320.2" y="296.8" width="92.7" height="11.0" rx="2" fill="#fff" fill-opacity="0.82"/>
+<text x="323.2" y="305.0" font-size="10.5" font-weight="700" fill="#1b2432" text-anchor="start">Venice <tspan font-weight="400">Jan 1348</tspan></text>
+<rect x="309.7" y="335.8" width="122.4" height="11.0" rx="2" fill="#fff" fill-opacity="0.82"/>
+<text x="312.7" y="344.0" font-size="10.5" font-weight="700" fill="#1b2432" text-anchor="start">Florence <tspan font-weight="400">spring 1348</tspan></text>
+<rect x="120.0" y="317.3" width="110.4" height="11.0" rx="2" fill="#fff" fill-opacity="0.82"/>
+<text x="233.4" y="325.5" font-size="10.5" font-weight="700" fill="#1b2432" text-anchor="end">Avignon <tspan font-weight="400">early 1348</tspan></text>
+<rect x="119.5" y="251.3" width="86.2" height="11.0" rx="2" fill="#fff" fill-opacity="0.82"/>
+<text x="208.7" y="259.5" font-size="10.5" font-weight="700" fill="#1b2432" text-anchor="end">Paris <tspan font-weight="400">Aug 1348</tspan></text>
+<rect x="44.0" y="232.8" width="111.3" height="11.0" rx="2" fill="#fff" fill-opacity="0.82"/>
+<text x="158.3" y="241.0" font-size="10.5" font-weight="700" fill="#1b2432" text-anchor="end">Weymouth <tspan font-weight="400">June 1348</tspan></text>
+<rect x="189.9" y="206.3" width="92.7" height="11.0" rx="2" fill="#fff" fill-opacity="0.82"/>
+<text x="192.9" y="214.5" font-size="10.5" font-weight="700" fill="#1b2432" text-anchor="start">London <tspan font-weight="400">Nov 1348</tspan></text>
+<rect x="246.7" y="71.8" width="109.4" height="11.0" rx="2" fill="#fff" fill-opacity="0.82"/>
+<text x="249.7" y="80.0" font-size="10.5" font-weight="700" fill="#1b2432" text-anchor="start">Bergen <tspan font-weight="400">autumn 1349</tspan></text>
+<rect x="363.2" y="268.8" width="70.5" height="11.0" rx="2" fill="#fff" fill-opacity="0.82"/>
+<text x="366.2" y="277.0" font-size="10.5" font-weight="700" fill="#1b2432" text-anchor="start">Vienna <tspan font-weight="400">1349</tspan></text>
+<rect x="303.3" y="170.3" width="70.5" height="11.0" rx="2" fill="#fff" fill-opacity="0.82"/>
+<text x="306.3" y="178.5" font-size="10.5" font-weight="700" fill="#1b2432" text-anchor="start">Lübeck <tspan font-weight="400">1350</tspan></text>
+<rect x="488.1" y="111.8" width="102.9" height="11.0" rx="2" fill="#fff" fill-opacity="0.82"/>
+<text x="491.1" y="120.0" font-size="10.5" font-weight="700" fill="#1b2432" text-anchor="start">Pskov <tspan font-weight="400">spring 1352</tspan></text>
+<rect x="585.8" y="142.6" width="70.5" height="11.0" rx="2" fill="#fff" fill-opacity="0.82"/>
+<text x="588.8" y="150.8" font-size="10.5" font-weight="700" fill="#1b2432" text-anchor="start">Moscow <tspan font-weight="400">1353</tspan></text>
+<rect x="179.2" y="290.3" width="97.4" height="11.0" rx="2" fill="#fff" fill-opacity="0.82"/>
+<text x="279.6" y="298.5" font-size="10.5" font-weight="700" fill="#1b2432" text-anchor="end">Milan <tspan font-weight="400">few deaths</tspan></text>
+<circle cx="560.7" cy="315.0" r="4" fill="#1b2432" stroke="#fff" stroke-width="1.6"/>
+<circle cx="492.4" cy="375.0" r="4" fill="#1b2432" stroke="#fff" stroke-width="1.6"/>
+<circle cx="352.8" cy="417.0" r="4" fill="#1b2432" stroke="#fff" stroke-width="1.6"/>
+<circle cx="296.1" cy="438.0" r="4" fill="#1b2432" stroke="#fff" stroke-width="1.6"/>
+<circle cx="245.7" cy="340.5" r="4" fill="#1b2432" stroke="#fff" stroke-width="1.6"/>
+<circle cx="282.4" cy="324.0" r="4" fill="#1b2432" stroke="#fff" stroke-width="1.6"/>
+<circle cx="318.2" cy="309.0" r="4" fill="#1b2432" stroke="#fff" stroke-width="1.6"/>
+<circle cx="307.7" cy="333.0" r="4" fill="#1b2432" stroke="#fff" stroke-width="1.6"/>
+<circle cx="239.4" cy="331.5" r="4" fill="#1b2432" stroke="#fff" stroke-width="1.6"/>
+<circle cx="213.7" cy="256.5" r="4" fill="#1b2432" stroke="#fff" stroke-width="1.6"/>
+<circle cx="163.3" cy="231.0" r="4" fill="#1b2432" stroke="#fff" stroke-width="1.6"/>
+<circle cx="187.9" cy="217.5" r="4" fill="#1b2432" stroke="#fff" stroke-width="1.6"/>
+<circle cx="244.7" cy="84.0" r="4" fill="#1b2432" stroke="#fff" stroke-width="1.6"/>
+<circle cx="361.2" cy="267.0" r="4" fill="#1b2432" stroke="#fff" stroke-width="1.6"/>
+<circle cx="301.3" cy="181.5" r="4" fill="#1b2432" stroke="#fff" stroke-width="1.6"/>
+<circle cx="486.1" cy="123.0" r="4" fill="#1b2432" stroke="#fff" stroke-width="1.6"/>
+<circle cx="583.8" cy="153.8" r="4" fill="#1b2432" stroke="#fff" stroke-width="1.6"/>
+<circle cx="285.6" cy="307.5" r="4" fill="#fff" stroke="#1b2432" stroke-width="1.6"/>
+</g>
+<rect x="10" y="12" width="132" height="116" rx="4" fill="#fff" stroke="#7c8794" stroke-width="0.8"/>
+<text x="16" y="26" font-size="10" font-weight="700" fill="#1b2432">Year the plague arrived</text>
+<rect x="16" y="36" width="14" height="10" fill="#0d366b" stroke="#7c8794" stroke-width="0.5"/>
+<text x="36" y="45" font-size="10" fill="#1b2432">1347</text>
+<rect x="16" y="51" width="14" height="10" fill="#1c5cab" stroke="#7c8794" stroke-width="0.5"/>
+<text x="36" y="60" font-size="10" fill="#1b2432">1348</text>
+<rect x="16" y="66" width="14" height="10" fill="#3987e5" stroke="#7c8794" stroke-width="0.5"/>
+<text x="36" y="75" font-size="10" fill="#1b2432">1349</text>
+<rect x="16" y="81" width="14" height="10" fill="#86b6ef" stroke="#7c8794" stroke-width="0.5"/>
+<text x="36" y="90" font-size="10" fill="#1b2432">1350</text>
+<rect x="16" y="96" width="14" height="10" fill="#cde2fb" stroke="#7c8794" stroke-width="0.5"/>
+<text x="36" y="105" font-size="10" fill="#1b2432">1351 to 1353</text>
+<circle cx="23" cy="117" r="3.5" fill="#1b2432" stroke="#fff" stroke-width="1.2"/><text x="36" y="121" font-size="9.5" fill="#1b2432">town, first recorded case</text>
+<line x1="558" y1="44" x2="631.5" y2="44" stroke="#1b2432" stroke-width="1.5"/><line x1="558" y1="40" x2="558" y2="48" stroke="#1b2432" stroke-width="1.5"/><line x1="631.5" y1="40" x2="631.5" y2="48" stroke="#1b2432" stroke-width="1.5"/>
+<rect x="554" y="28" width="82" height="12" fill="#fff" fill-opacity="0.82" rx="2"/>
+<text x="594.7" y="38" font-size="9" text-anchor="middle" fill="#1b2432">about 500 km</text>
+<text x="640" y="14" font-size="9" fill="#5d6470" text-anchor="end">N &#8593;</text>
+</svg>
+    <p class="about">Shading shows the year the plague first reached each area. Dots mark towns with a recorded date of arrival. The hollow dot marks a city that recorded few deaths. Ships and merchants followed regular <dfn data-t="trade-route">trade routes</dfn> between these ports.</p>
+    <p class="cite">Simplified map drawn for this worksheet. Dates from Encyclopaedia Britannica, &ldquo;Black Death&rdquo; timeline, and O. J. Benedictow, <i>The Black Death 1346&ndash;1353: The Complete History</i> (2004). Coastlines are simplified; the shaded areas are approximate.</p>
+  </div>
+
+  <div class="q">
+    <div class="q-head"><span class="qnum">Q1</span><span class="qkind">Observation &middot; Source A</span></div>
+    <p class="qtext"><b>What do you notice?</b> Write two things that Source A actually shows. Point to the map: places, dates, patterns. (This is an <dfn data-t="observation">observation</dfn>.)</p>
+    <div class="ws" contenteditable="true" data-k="q1" style="--n:3"></div>
+  </div>
+
+  <div class="q">
+    <div class="q-head"><span class="qnum">Q2</span><span class="qkind">Inference &middot; Source A</span></div>
+    <p class="qtext"><b>What can you infer?</b> What does Source A suggest about <em>how</em> the Black Death spread across Europe? Use the word <em>because</em>. (This is an <dfn data-t="inference">inference</dfn>.)</p>
+    <div class="ws" contenteditable="true" data-k="q2" style="--n:3"></div>
+  </div>
+
+  <div class="src">
+    <span class="tag">Source B &middot; <dfn data-t="primary-source">primary source</dfn></span>
+    <h3>A chronicle written at Leicester Abbey, England, about 1390</h3>
+    <div class="quote">
+      <p>Then the dreadful <dfn data-t="pestilence">pestilence</dfn> made its way along the coast by Southampton and reached Bristol, where almost the whole strength of the town perished, as it were surprised by sudden death&hellip;
+      Many villages and <dfn data-t="hamlet">hamlets became desolate</dfn>, not a house being left in them, all having died who dwelt there.</p>
+      <p>Sheep and cattle went wandering over fields and through crops, and there was no one to go and drive or gather them, for there was such a lack of <dfn data-t="servants">servants</dfn> that no one knew what he ought to do&hellip;
+      In the following autumn no one could get a <dfn data-t="reaper">reaper</dfn> for less than <dfn data-t="pence">8d.</dfn> with his food, or a <dfn data-t="reaper">mower</dfn> for less than 12d. with his food. Therefore many crops perished in the fields for want of someone to gather them.</p>
+      <p>The king sent <dfn data-t="proclamation">proclamation</dfn> into all the counties that reapers and other labourers should not take more than they had been accustomed to take&hellip;
+      But the labourers were so <dfn data-t="lifted-up">lifted up and obstinate</dfn> that they would not listen to the king&rsquo;s command, but if anyone wished to have them he had to give them what they wanted,
+      and either lose his <dfn data-t="fruit">fruit and crops</dfn>, or satisfy the <dfn data-t="covetous">lofty and covetous</dfn> wishes of the workmen.</p>
+    </div>
+    <p class="about"><b>About this source.</b> Henry Knighton was a <dfn data-t="canon">canon</dfn> (a churchman) at Leicester Abbey, a monastery that owned farmland and hired workers.
+    He wrote his <dfn data-t="chronicle">chronicle</dfn> around 1390, about forty years after the plague, using the abbey&rsquo;s records and people&rsquo;s memories. <i>Lifted up</i> = proud; <i>covetous</i> = greedy.</p>
+    <p class="cite">Henry Knighton, <i>Chronicle</i>, translated from Latin in E. K. Kendall, <i>Source-Book of English History</i> (1900). Extracts; wording lightly simplified.</p>
+  </div>
+
+  <div class="src">
+    <span class="tag">Source C &middot; data</span>
+    <h3>Estimated population of England, 1290 to 1522</h3>
+    <svg class="chart" viewBox="0 0 600 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="chTitle chDesc">
+<title id="chTitle">Estimated population of England, 1290 to 1522, in millions</title>
+<desc id="chDesc">A line chart. The population is about 4.8 million in 1348, falls to 2.6 million by 1351, and is still below 2.4 million in 1522.</desc>
+<rect x="195.6" y="26" width="6.4" height="230" fill="#e66a4e" opacity="0.18"/>
+<text x="212.5" y="85.8" font-size="9.5" fill="#1b2432" text-anchor="start" font-weight="700">Black Death</text>
+<text x="212.5" y="97.8" font-size="9" fill="#5d6470" text-anchor="start">1348 to 1351</text>
+<line x1="52" y1="256.0" x2="580" y2="256.0" stroke="#ddd8cb" stroke-width="1"/>
+<text x="44" y="259.5" font-size="9.5" fill="#5d6470" text-anchor="end">0</text>
+<line x1="52" y1="210.0" x2="580" y2="210.0" stroke="#ddd8cb" stroke-width="1"/>
+<text x="44" y="213.5" font-size="9.5" fill="#5d6470" text-anchor="end">1</text>
+<line x1="52" y1="164.0" x2="580" y2="164.0" stroke="#ddd8cb" stroke-width="1"/>
+<text x="44" y="167.5" font-size="9.5" fill="#5d6470" text-anchor="end">2</text>
+<line x1="52" y1="118.0" x2="580" y2="118.0" stroke="#ddd8cb" stroke-width="1"/>
+<text x="44" y="121.5" font-size="9.5" fill="#5d6470" text-anchor="end">3</text>
+<line x1="52" y1="72.0" x2="580" y2="72.0" stroke="#ddd8cb" stroke-width="1"/>
+<text x="44" y="75.5" font-size="9.5" fill="#5d6470" text-anchor="end">4</text>
+<line x1="52" y1="26.0" x2="580" y2="26.0" stroke="#ddd8cb" stroke-width="1"/>
+<text x="44" y="29.5" font-size="9.5" fill="#5d6470" text-anchor="end">5</text>
+<text x="14" y="141.0" font-size="9.5" fill="#5d6470" text-anchor="middle" transform="rotate(-90 14 141.0)">millions of people</text>
+<text x="94.2" y="272" font-size="9.5" fill="#5d6470" text-anchor="middle">1300</text>
+<line x1="94.2" y1="256.0" x2="94.2" y2="260.0" stroke="#7c8794" stroke-width="1"/>
+<text x="199.8" y="272" font-size="9.5" fill="#5d6470" text-anchor="middle">1350</text>
+<line x1="199.8" y1="256.0" x2="199.8" y2="260.0" stroke="#7c8794" stroke-width="1"/>
+<text x="305.4" y="272" font-size="9.5" fill="#5d6470" text-anchor="middle">1400</text>
+<line x1="305.4" y1="256.0" x2="305.4" y2="260.0" stroke="#7c8794" stroke-width="1"/>
+<text x="411.0" y="272" font-size="9.5" fill="#5d6470" text-anchor="middle">1450</text>
+<line x1="411.0" y1="256.0" x2="411.0" y2="260.0" stroke="#7c8794" stroke-width="1"/>
+<text x="516.6" y="272" font-size="9.5" fill="#5d6470" text-anchor="middle">1500</text>
+<line x1="516.6" y1="256.0" x2="516.6" y2="260.0" stroke="#7c8794" stroke-width="1"/>
+<line x1="52" y1="256.0" x2="580" y2="256.0" stroke="#7c8794" stroke-width="1"/>
+<polyline points="73.1,37.5 125.9,40.3 195.6,34.7 202.0,136.4 256.9,141.0 305.4,160.3 411.0,168.6 563.1,147.9" fill="none" stroke="#2f4a7a" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<circle cx="73.1" cy="37.5" r="4.5" fill="#2f4a7a" stroke="#fff" stroke-width="2"/>
+<circle cx="125.9" cy="40.3" r="4.5" fill="#2f4a7a" stroke="#fff" stroke-width="2"/>
+<circle cx="195.6" cy="34.7" r="4.5" fill="#2f4a7a" stroke="#fff" stroke-width="2"/>
+<circle cx="202.0" cy="136.4" r="4.5" fill="#2f4a7a" stroke="#fff" stroke-width="2"/>
+<circle cx="256.9" cy="141.0" r="4.5" fill="#2f4a7a" stroke="#fff" stroke-width="2"/>
+<circle cx="305.4" cy="160.3" r="4.5" fill="#2f4a7a" stroke="#fff" stroke-width="2"/>
+<circle cx="411.0" cy="168.6" r="4.5" fill="#2f4a7a" stroke="#fff" stroke-width="2"/>
+<circle cx="563.1" cy="147.9" r="4.5" fill="#2f4a7a" stroke="#fff" stroke-width="2"/>
+<rect x="111.6" y="17.7" width="76.0" height="12" fill="#fff" fill-opacity="0.85" rx="2"/>
+<text x="189.6" y="26.700000000000003" font-size="10" font-weight="700" fill="#1b2432" text-anchor="end">1348: 4.81 m</text>
+<rect x="208.0" y="131.4" width="76.0" height="12" fill="#fff" fill-opacity="0.85" rx="2"/>
+<text x="210.0" y="140.4" font-size="10" font-weight="700" fill="#1b2432" text-anchor="start">1351: 2.60 m</text>
+<rect x="344.0" y="177.6" width="130.0" height="12" fill="#fff" fill-opacity="0.85" rx="2"/>
+<text x="411.0" y="186.6" font-size="10" font-weight="700" fill="#1b2432" text-anchor="middle">1450: 1.90 m (lowest)</text>
+<rect x="67.1" y="45.5" width="76.0" height="12" fill="#fff" fill-opacity="0.85" rx="2"/>
+<text x="69.1" y="54.5" font-size="10" font-weight="700" fill="#1b2432" text-anchor="start">1290: 4.75 m</text>
+</svg>
+    <div class="scroll"><table class="data">
+      <tr><th>Year</th><td>1290</td><td>1315</td><td>1348</td><td>1351</td><td>1377</td><td>1400</td><td>1450</td><td>1522</td></tr>
+      <tr><th>Millions</th><td>4.75</td><td>4.69</td><td>4.81</td><td>2.60</td><td>2.50</td><td>2.08</td><td>1.90</td><td>2.35</td></tr>
+    </table></div>
+    <p class="about"><b>About this source.</b> No <dfn data-t="census">census</dfn> existed in the Middle Ages. These are historians&rsquo; best <dfn data-t="estimate">estimates</dfn>, reconstructed from tax records and <dfn data-t="manor">manor</dfn> records, so every number is approximate.
+    England is used here as a case study: it has the best surviving records in Europe.</p>
+    <p class="cite">S. Broadberry, B. Campbell, A. Klein, M. Overton and B. van Leeuwen, <i>English Medieval Population: Reconciling Time Series and Cross-Sectional Evidence</i> (University of Warwick, 2010), summary table.</p>
+  </div>
+
+  <div class="src">
+    <span class="tag">Source D &middot; <dfn data-t="secondary-source">secondary source</dfn></span>
+    <h3>A modern historian on what happened next</h3>
+    <div class="quote">
+      <p>Obviously the survivors among the <dfn data-t="peasant">peasantry</dfn> had the <dfn data-t="whip-hand">whip-hand</dfn> of the <dfn data-t="lord">lord</dfn> and his <dfn data-t="bailiff">bailiff</dfn>. Instead of the recent hunger for land there was a shortage of men to <dfn data-t="till">till</dfn> it&hellip;
+      The lord of the <dfn data-t="manor">manor</dfn> could no longer cultivate his <dfn data-t="demesne">demesne</dfn> land with the reduced number of <dfn data-t="serf">serfs</dfn>, while many of the <dfn data-t="strip-holdings">strip-holdings in the open fields</dfn> were thrown back on his hands,
+      because the families that farmed them had died of <dfn data-t="pestilence">plague</dfn>.</p>
+    </div>
+    <p class="about"><b>About this source.</b> G. M. Trevelyan was a British <dfn data-t="historian">historian</dfn>. He wrote this in a history of everyday life for general readers, published during the Second World War.
+    <i>To have the whip-hand</i> = to be in control; <i>to till</i> = to farm; <i>strip-holdings</i> = the strips of field that peasant families farmed for themselves.</p>
+    <p class="cite">G. M. Trevelyan, <i>English Social History</i> (first published 1942), chapter on the Black Death.</p>
+  </div>
+
+  <div class="tool">
+    <span class="tag">Historian tool 1</span>
+    <h3>Observation is not inference</h3>
+    <div class="grid2">
+      <div class="cell"><b>Observation</b><small>Something you can point to in the source. Anyone looking at it would agree it is there. &ldquo;The map shows the plague reached Messina in October 1347.&rdquo;</small></div>
+      <div class="cell"><b>Inference</b><small>A conclusion you reach by combining the source with your own reasoning. Someone else could reach a different one. &ldquo;It probably travelled by ship, because the first places hit are all ports.&rdquo;</small></div>
+    </div>
+    <div class="rule">Test yourself with the sentence: <span class="words">I can see &hellip; so I think &hellip; because &hellip;</span> The first blank is the observation; the rest is the inference.</div>
+  </div>
+
+  <div class="q">
+    <div class="q-head"><span class="qnum">Q3</span><span class="qkind">Retry with the tool &middot; Source C</span></div>
+    <p class="qtext">Now use the tool on the graph. Write <b>one observation</b> (with numbers) and <b>one inference</b> about what the numbers mean for people living in England.</p>
+    <div class="lab">I can see</div>
+    <div class="ws" contenteditable="true" data-k="q3a" style="--n:2"></div>
+    <div class="lab">so I think, because</div>
+    <div class="ws" contenteditable="true" data-k="q3b" style="--n:3"></div>
+  </div>
+</section>
+
+<!-- ============ PART 2 ============ -->
+<section class="sec">
+  <div class="sec-head"><span class="skill">Skill: analysing sources</span><h2>Part 2 &mdash; Can I trust this source?</h2></div>
+  <p class="sec-note">Work mainly with Source B (Knighton) and Source D (Trevelyan). Talk through Q4 together before you read the tool, if you can.</p>
+
+  <div class="tool">
+    <span class="tag">Historian tool 2</span>
+    <h3>Five questions to ask any source</h3>
+    <div class="grid2">
+      <div class="cell"><b>Origin</b><small>Who made it? When? Where?</small></div>
+      <div class="cell"><b>Purpose</b><small>Why was it created? Who was meant to read it?</small></div>
+      <div class="cell"><b><dfn data-t="perspective">Perspective</dfn></b><small>Whose point of view does it represent? What did the author care about?</small></div>
+      <div class="cell"><b>Usefulness</b><small>What can it help us understand?</small></div>
+      <div class="cell"><b>Limitation</b><small>What can&rsquo;t it tell us? What is missing?</small></div>
+      <div class="cell"><b>Remember</b><small><dfn data-t="bias">Biased</dfn> is not the same as useless. A one-sided source is excellent evidence of what its author, and people like them, believed.</small></div>
+    </div>
+  </div>
+
+  <div class="q">
+    <div class="q-head"><span class="qnum">Q4</span><span class="qkind">Analyse &middot; Source B</span></div>
+    <p class="qtext">Fill in the five questions for <b>Source B</b>. Use the &ldquo;About this source&rdquo; note as well as the extract.</p>
+    <table class="opp">
+      <tr><th>Origin<small>who, when, where</small></th><td contenteditable="true" data-k="q4a"></td></tr>
+      <tr><th>Purpose<small>why, for whom</small></th><td contenteditable="true" data-k="q4b"></td></tr>
+      <tr><th>Perspective<small>whose point of view</small></th><td contenteditable="true" data-k="q4c"></td></tr>
+      <tr><th>Usefulness<small>what it helps us understand</small></th><td contenteditable="true" data-k="q4d"></td></tr>
+      <tr><th>Limitation<small>what it cannot tell us</small></th><td contenteditable="true" data-k="q4e"></td></tr>
+    </table>
+  </div>
+
+  <div class="q">
+    <div class="q-head"><span class="qnum">Q5</span><span class="qkind">Explain &middot; Source B</span></div>
+    <p class="qtext"><b>A source can be <dfn data-t="bias">biased</dfn> and still be useful.</b> Explain how this is true of Source B. Quote a word or phrase from the extract in your answer.</p>
+    <div class="ws" contenteditable="true" data-k="q5" style="--n:4"></div>
+  </div>
+
+  <div class="q">
+    <div class="q-head"><span class="qnum">Q6</span><span class="qkind">Compare &middot; Sources B and D</span></div>
+    <p class="qtext">Source D was written about 600 years after Source B. Give <b>one thing Source D can do that Source B cannot</b>, and <b>one thing Source B can do that Source D cannot</b>.</p>
+    <div class="lab">Source D can</div>
+    <div class="ws" contenteditable="true" data-k="q6a" style="--n:2"></div>
+    <div class="lab">Source B can</div>
+    <div class="ws" contenteditable="true" data-k="q6b" style="--n:2"></div>
+  </div>
+</section>
+
+<!-- ============ PART 3 ============ -->
+<section class="sec">
+  <div class="sec-head"><span class="skill">Skill: cause and consequence</span><h2>Part 3 &mdash; Become the historian</h2></div>
+  <p class="sec-note">Historians connect <dfn data-t="evidence">evidence</dfn> into explanations of <dfn data-t="cause-consequence">cause and consequence</dfn>. The chain below has three missing steps. Talk it through together first; the tool comes after.</p>
+
+  <div class="q">
+    <div class="q-head"><span class="qnum">Q7</span><span class="qkind">Reconstruct the chain</span></div>
+    <p class="qtext">Fill in the three missing steps. Each step must be something that <em>happened</em>, and the sources must give you evidence for it. Write the source letter next to each step you add.</p>
+    <div class="chain">
+      <div class="box">Many people die <span class="ev">Sources A, C</span></div>
+      <div class="arrow">&darr;</div>
+      <div class="box blank" contenteditable="true" data-k="q7a"></div>
+      <div class="arrow">&darr;</div>
+      <div class="box">Fewer workers available</div>
+      <div class="arrow">&darr;</div>
+      <div class="box blank" contenteditable="true" data-k="q7b"></div>
+      <div class="arrow">&darr;</div>
+      <div class="box">Workers can demand higher wages</div>
+      <div class="arrow">&darr;</div>
+      <div class="box blank" contenteditable="true" data-k="q7c"></div>
+      <div class="arrow">&darr;</div>
+      <div class="box"><dfn data-t="feudal-system">Feudal</dfn> relationships begin to change</div>
+    </div>
+  </div>
+
+  <div class="tool">
+    <span class="tag">Historian tool 3</span>
+    <h3>From evidence to explanation</h3>
+    <ol class="steps">
+      <li><b>Evidence:</b> what the source shows. <span class="words">Source C shows the population fell from 4.81 to 2.60 million between 1348 and 1351.</span></li>
+      <li><b>Relationship:</b> what that connects to. Use linking words: <span class="words">because &middot; so &middot; led to &middot; as a result &middot; this meant that</span></li>
+      <li><b>Explanation:</b> why the link makes sense, in your own words. <span class="words">With almost half the people gone, every surviving worker was needed, so&hellip;</span></li>
+    </ol>
+    <div class="rule"><b><dfn data-t="corroboration">Corroboration</dfn>.</b> When two sources point the same way, say so: it makes a claim stronger. When they disagree, say how, and think about why (different time, purpose or point of view).</div>
+  </div>
+
+  <div class="q">
+    <div class="q-head"><span class="qnum">Q8</span><span class="qkind">Evaluate evidence</span></div>
+    <p class="qtext">Which source provides the <b>strongest evidence</b> for one part of the chain in Q7? Name the source, the step it supports, and explain why it is strong.</p>
+    <div class="ws" contenteditable="true" data-k="q8" style="--n:4"></div>
+  </div>
+
+  <div class="q">
+    <div class="q-head"><span class="qnum">Q9</span><span class="qkind">Corroborate &middot; Sources C and D</span></div>
+    <p class="qtext">Do Sources C and D support the <b>same <dfn data-t="interpretation">interpretation</dfn></b> of the effects of the Black Death? Use evidence from <em>both</em> sources in your answer.</p>
+    <div class="ws" contenteditable="true" data-k="q9" style="--n:5"></div>
+  </div>
+</section>
+
+<!-- ============ PART 4 ============ -->
+<section class="sec">
+  <div class="sec-head"><span class="skill">Skill: argue from evidence</span><h2>Part 4 &mdash; Make your case</h2></div>
+  <p class="sec-note">No tool this time. Talk it through together, then write the paragraph in your own words.</p>
+
+  <div class="q">
+    <div class="q-head"><span class="qnum">Q10</span><span class="qkind">Claim &middot; evidence &middot; reasoning</span></div>
+    <p class="qtext"><b>&ldquo;The Black Death weakened the <dfn data-t="feudal-system">feudal system</dfn>.&rdquo;</b> How strongly does the evidence support this <dfn data-t="claim">claim</dfn>?
+    Write one well-reasoned paragraph of about 100 to 150 words. Use <b>at least two different sources</b>.</p>
+    <p class="qtext">How strongly?</p>
+    <div class="ticks">
+      <label><input type="radio" name="q10s" data-k="q10s-1">Strongly</label>
+      <label><input type="radio" name="q10s" data-k="q10s-2">Partly</label>
+      <label><input type="radio" name="q10s" data-k="q10s-3">Only a little</label>
+      <label><input type="radio" name="q10s" data-k="q10s-4">Not at all</label>
+    </div>
+    <div class="lab">Claim: what do you think?</div>
+    <div class="ws" contenteditable="true" data-k="q10a" style="--n:1"></div>
+    <div class="lab">Evidence: what supports your answer?</div>
+    <div class="ws" contenteditable="true" data-k="q10b" style="--n:4"></div>
+    <div class="lab"><dfn data-t="reasoning">Reasoning</dfn>: how does that evidence support your claim?</div>
+    <div class="ws" contenteditable="true" data-k="q10c" style="--n:4"></div>
+  </div>
+
+  <div class="endnote">
+    <p>Sources A and C were drawn for this worksheet from the works cited under them. Sources B and D are genuine extracts; cuts are marked with &hellip; and a few words were modernised.</p>
+  </div>
+</section>
+
+<!-- ============ GLOSSARY ============ -->
+<section class="glossary">
+  <div class="sec-head"><span class="skill">Reference</span><h2>Glossary</h2></div>
+  <p class="sec-note">The same definitions that appear when you hover over a dotted word, in alphabetical order, for the printed copy.</p>
+  <div class="gl"><div class="g"><b>bailiff</b> The lord&rsquo;s manager: he ran the manor day to day, collected what was owed and made sure the serfs did their work.</div><div class="g"><b>biased</b> Leaning towards one side. Every source has some bias because every author has a perspective. A biased source is still evidence, of what its author believed and wanted others to believe.</div><div class="g"><b>Black Death</b> The pandemic of plague that swept across Europe, North Africa and the Middle East between 1347 and 1353. People at the time called it the Great Mortality or the pestilence; the name Black Death came centuries later. <span class=n>It was caused by the bacterium <i>Yersinia pestis</i>, carried by fleas on rats and, in its lung form, passed from person to person.</span></div><div class="g"><b>canon</b> A priest belonging to a religious community. Leicester Abbey was a large monastery that owned villages and farmland, so it was itself a landlord and an employer of workers.</div><div class="g"><b>cause and consequence</b> A cause is why something happened; a consequence is what happened as a result. Historians look for chains of causes and consequences, not single reasons.</div><div class="g"><b>census</b> An official count of everyone in a country. England&rsquo;s first census was in 1801, so medieval populations have to be estimated.</div><div class="g"><b>chronicle</b> A year-by-year record of events, usually written by a monk or churchman. Chronicles mix what the writer saw, what he was told and what he copied from other writers.</div><div class="g"><b>claim</b> The statement you are arguing for. A good historical claim is clear, specific and can be tested against evidence.</div><div class="g"><b>corroboration</b> When two or more sources support the same point. A corroborated claim is stronger. Sources that disagree are useful too: they show different perspectives.</div><div class="g"><b>demesne</b> Said &ldquo;de-MAIN&rdquo;. The part of the manor the lord kept to farm for himself. Serfs had to work it as part of their duties.</div><div class="g"><b>d. (pence)</b> Short for pence, from the Latin <i>denarius</i>. Twelve pence made a shilling. Wages like the ones Knighton records were far higher than the usual rates before the plague.</div><div class="g"><b>estimate</b> A historian&rsquo;s best calculation from incomplete records such as tax lists and manor records. Estimates carry uncertainty, which is why different historians give different numbers.</div><div class="g"><b>evidence</b> Information from a source that you use to support a claim. Good evidence is precise: a number, a date, a quoted phrase.</div><div class="g"><b>feudal system</b> The way medieval society was organised. The king granted land to lords, lords let peasants farm it, and everyone owed service to the person above them: work and produce going up, protection coming down. <span class=n>Historians argue about how neat this really was. The big question of this worksheet asks whether the plague weakened it.</span></div><div class="g"><b>fruit and crops</b> Here <i>fruit</i> means everything the land produces, not only fruit from trees.</div><div class="g"><b>hamlets became desolate</b> A hamlet is a tiny village, smaller than a village with a church. Desolate means empty and abandoned.</div><div class="g"><b>historian</b> Someone who studies the past using evidence, and explains what happened and why. Historians disagree with each other, which is why you ask who wrote a source and when.</div><div class="g"><b>inference</b> A conclusion you reach by combining what the source shows with your own reasoning. Use words like <i>suggests</i>, <i>probably</i> and <i>because</i>.</div><div class="g"><b>interpretation</b> A historian&rsquo;s explanation of what the evidence means. Different historians can interpret the same evidence differently.</div><div class="g"><b>lifted up and obstinate</b> Proud and stubborn. Notice these words are Knighton&rsquo;s judgement of the workers, not a fact he observed.</div><div class="g"><b>lofty and covetous</b> Lofty here means high-and-mighty; covetous means greedy, wanting more than you should. Again, this is the writer&rsquo;s opinion.</div><div class="g"><b>lord</b> A nobleman, or sometimes a monastery, who owned a manor and had rights over the people living on it.</div><div class="g"><b>manor</b> A lord&rsquo;s estate: the village, its fields, the mill and the people on it. Each manor ran by its own customs, written down in manor court records that historians still use.</div><div class="g"><b>medieval</b> From the Middle Ages: roughly the years 500 to 1500 in Europe, between the fall of Rome and the Renaissance.</div><div class="g"><b>observation</b> Something you can point to in the source that anyone looking at it would agree is there.</div><div class="g"><b>peasant</b> A country person who farmed the land. Most people in medieval Europe were peasants. Some were free; many were serfs.</div><div class="g"><b>perspective</b> The point of view a source represents: who the author was, what they cared about, whose side they were on.</div><div class="g"><b>pestilence, plague</b> An old word for a deadly epidemic disease. In these sources it always means the Black Death.</div><div class="g"><b>primary source</b> Evidence created at the time of the events, or by someone who lived through them: a chronicle, a letter, a law, a painting, a tax record. <span class=n>Primary does not mean true. It means close to the event.</span></div><div class="g"><b>proclamation</b> An official announcement from the king, read out in public in every county. <span class=n>Knighton is describing the Ordinance of Labourers (1349), which became the Statute of Labourers in 1351: a law that tried to freeze wages at their pre-plague level.</span></div><div class="g"><b>reaper, mower</b> Harvest workers hired by the day. A reaper cut grain with a sickle; a mower cut hay with a scythe. Wages were often quoted &ldquo;with his food&rdquo; when meals were included.</div><div class="g"><b>reasoning</b> The explanation of how your evidence supports your claim: the <i>because</i> that connects them.</div><div class="g"><b>secondary source</b> An account written later by someone who studied the primary sources: a history book, a textbook, a documentary. <span class=n>Good for the big picture and for interpretation. Always ask who wrote it and when.</span></div><div class="g"><b>serf (villein)</b> A peasant who was not free: tied to the manor, unable to leave or marry without the lord&rsquo;s permission, and required to work the lord&rsquo;s land some days each week without pay. <span class=n>The English word for a serf was villein. Serfdom faded out in England in the century after the Black Death.</span></div><div class="g"><b>servants</b> In Knighton&rsquo;s time this meant hired workers of every kind, on farms as well as in houses, not only household servants.</div><div class="g"><b>strip-holdings in the open fields</b> Medieval villages farmed huge open fields divided into long strips. Each peasant family farmed scattered strips and paid the lord rent or labour for them. <span class=n>When a family died out, their strips went back to the lord, who then needed someone else to farm them.</span></div><div class="g"><b>till</b> To farm the land: plough, sow and harvest.</div><div class="g"><b>trade routes</b> The regular paths that merchants&rsquo; ships and caravans followed. Goods, people and diseases all travelled along them.</div><div class="g"><b>whip-hand</b> To have the whip-hand is to be in control, like the person holding the reins and the whip of a horse.</div></div>
+</section>
+
+<!-- ============ PARENT PAGE ============ -->
+<section class="parent">
+  <span class="tag">P&aacute;gina para el padre &middot; no compartir en pantalla</span>
+  <h2>Checklist diagn&oacute;stico y pistas</h2>
+  <p><b>C&oacute;mo correr la sesi&oacute;n.</b> Se completa <b>juntos</b>, en videollamada con pantalla compartida o en persona; ella escribe con sus palabras (en la p&aacute;gina o en papel).
+  Tu rol: leer cada fuente en voz alta con ella (las palabras con subrayado punteado muestran definiciones al pasar el mouse: &uacute;salas, la comprensi&oacute;n lectora es la brecha detectada),
+  conversar la pregunta antes de que escriba, y escalar la ayuda de a poco: primero repreguntar, luego leer juntos la Historian tool, luego la pista de abajo, y s&oacute;lo al final modelar t&uacute; una respuesta.
+  No es examen: no corregir en caliente, anotar. Marca por pregunta cu&aacute;nto apoyo necesit&oacute; (<b>sola</b> / <b>con pistas</b> / <b>guiada por ti</b>) y an&oacute;talo despu&eacute;s en tu registro.
+  Se puede partir en dos sesiones: Partes 1&ndash;2 y Partes 3&ndash;4.</p>
+  <p><b>Pantalla.</b> Esta p&aacute;gina est&aacute; oculta por defecto; la tecla <b>N</b> la muestra u oculta (esc&oacute;ndela antes de compartir pantalla). Las respuestas escritas quedan guardadas en el navegador del computador donde se escribieron;
+  al terminar, <i>Print / save PDF</i> conserva todo, incluida esta p&aacute;gina si est&aacute; visible. &laquo;Clear answers&raquo; borra todo lo escrito en ese navegador.</p>
+
+  <h3>Habilidades observadas</h3>
+  <table>
+    <tr><th>Habilidad</th><th>D&oacute;nde se ve</th><th>Sola</th><th>Con pistas</th><th>Guiada</th></tr>
+    <tr><td>Extrae informaci&oacute;n expl&iacute;cita</td><td>Q1, Q3</td><td class="c"><input type="checkbox" data-k="p1a"></td><td class="c"><input type="checkbox" data-k="p1b"></td><td class="c"><input type="checkbox" data-k="p1c"></td></tr>
+    <tr><td>Distingue observaci&oacute;n de inferencia</td><td>Q1&ndash;Q3</td><td class="c"><input type="checkbox" data-k="p2a"></td><td class="c"><input type="checkbox" data-k="p2b"></td><td class="c"><input type="checkbox" data-k="p2c"></td></tr>
+    <tr><td>Identifica perspectiva</td><td>Q4, Q5</td><td class="c"><input type="checkbox" data-k="p3a"></td><td class="c"><input type="checkbox" data-k="p3b"></td><td class="c"><input type="checkbox" data-k="p3c"></td></tr>
+    <tr><td>Eval&uacute;a utilidad y limitaciones</td><td>Q4, Q6</td><td class="c"><input type="checkbox" data-k="p4a"></td><td class="c"><input type="checkbox" data-k="p4b"></td><td class="c"><input type="checkbox" data-k="p4c"></td></tr>
+    <tr><td>Compara evidencia</td><td>Q6, Q9</td><td class="c"><input type="checkbox" data-k="p5a"></td><td class="c"><input type="checkbox" data-k="p5b"></td><td class="c"><input type="checkbox" data-k="p5c"></td></tr>
+    <tr><td>Explica causa y consecuencia</td><td>Q7</td><td class="c"><input type="checkbox" data-k="p6a"></td><td class="c"><input type="checkbox" data-k="p6b"></td><td class="c"><input type="checkbox" data-k="p6c"></td></tr>
+    <tr><td>Sostiene una afirmaci&oacute;n con evidencia</td><td>Q8, Q10</td><td class="c"><input type="checkbox" data-k="p7a"></td><td class="c"><input type="checkbox" data-k="p7b"></td><td class="c"><input type="checkbox" data-k="p7c"></td></tr>
+    <tr><td>Explica por qu&eacute; la evidencia apoya la afirmaci&oacute;n</td><td>Q8, Q10</td><td class="c"><input type="checkbox" data-k="p8a"></td><td class="c"><input type="checkbox" data-k="p8b"></td><td class="c"><input type="checkbox" data-k="p8c"></td></tr>
+  </table>
+
+  <h3>Qu&eacute; buscar en cada respuesta (y qu&eacute; pista dar si se traba)</h3>
+  <ul>
+    <li><span class="qn">Q1</span> Dos hechos verificables en el mapa: llega primero a puertos del Mediterr&aacute;neo (Messina oct 1347), tarda ~1 a&ntilde;o en llegar a Par&iacute;s/Londres, ~5 a&ntilde;os en llegar a Mosc&uacute;; Mil&aacute;n casi no tuvo muertes. Si dice &laquo;se propag&oacute; por barco&raquo;, eso es inferencia: guardarlo para Q2.</li>
+    <li><span class="qn">Q2</span> Inferencia con &laquo;because&raquo;: viaj&oacute; por mar y rutas de comercio porque los primeros lugares son puertos; avanz&oacute; de sur a norte; Mil&aacute;n sugiere que cerrar la ciudad ayud&oacute;. Pista: &laquo;&iquest;qu&eacute; tienen en com&uacute;n Messina, Marsella, G&eacute;nova, Weymouth?&raquo;.</li>
+    <li><span class="qn">Q3</span> Observaci&oacute;n con n&uacute;meros (4.81 &rarr; 2.60 millones en tres a&ntilde;os, casi la mitad). Inferencia: casi una de cada dos personas muri&oacute;; la poblaci&oacute;n sigui&oacute; bajando hasta 1450, o sea hubo m&aacute;s brotes; en 1522 a&uacute;n no se recuperaba.</li>
+    <li><span class="qn">Q4</span> Origen: Knighton, can&oacute;nigo de Leicester Abbey, c. 1390, Inglaterra. Prop&oacute;sito: registrar los hechos del reino para la abad&iacute;a y la posteridad. Perspectiva: la Iglesia y los due&ntilde;os de tierras que contratan trabajadores. Utilidad: cifras de salarios, cosechas perdidas, la orden del rey. Limitaci&oacute;n: escrito 40 a&ntilde;os despu&eacute;s; no da la versi&oacute;n de los trabajadores; s&oacute;lo Inglaterra.</li>
+    <li><span class="qn">Q5</span> Sesgo en las palabras (&laquo;lifted up and obstinate&raquo;, &laquo;lofty and covetous wishes&raquo;) = mirada del empleador. &Uacute;til igual: los n&uacute;meros (8d., 12d.), la orden del rey y las cosechas perdidas son hechos comprobables, y el sesgo mismo muestra c&oacute;mo pensaban los se&ntilde;ores. Pista: &laquo;busca las palabras que juzgan a los trabajadores; luego busca los n&uacute;meros&raquo;.</li>
+    <li><span class="qn">Q6</span> D puede: ver el largo plazo, comparar muchas fuentes, explicar consecuencias. B puede: dar detalle de testigo, cifras de la &eacute;poca, el tono de c&oacute;mo se viv&iacute;a. Cualquier par razonable vale.</li>
+    <li><span class="qn">Q7</span> Eslabones esperables: (1) campos, cosechas y animales quedan sin quien los atienda (B); (2) los se&ntilde;ores siguen necesitando que se trabaje su tierra y compiten por los pocos trabajadores (B, D); (3) el rey intenta congelar salarios y los trabajadores no obedecen; el se&ntilde;or no puede cultivar su demesne con menos siervos (B, D). Pista: &laquo;&iquest;qu&eacute; pas&oacute; con las cosechas seg&uacute;n Knighton? &iquest;qu&eacute; necesitaba el se&ntilde;or?&raquo;.</li>
+    <li><span class="qn">Q8</span> Vale cualquier elecci&oacute;n bien justificada: C para &laquo;mueren muchos&raquo; (n&uacute;meros de historiadores); B para salarios (testigo, cifras concretas); D para el cambio feudal (explicaci&oacute;n de historiador). Lo que importa es que diga <i>por qu&eacute;</i> es fuerte (fiable, precisa, cercana al hecho, corroborada).</li>
+    <li><span class="qn">Q9</span> S&iacute;, se corroboran: C da la escala de la p&eacute;rdida; D explica su efecto sobre se&ntilde;ores y siervos. Son tipos distintos (datos vs interpretaci&oacute;n) pero apuntan igual. Respuesta fuerte: cita un n&uacute;mero de C y una frase de D.</li>
+    <li><span class="qn">Q10</span> Una respuesta fuerte: fija una posici&oacute;n (&laquo;partly&raquo; o &laquo;strongly&raquo; ambas defendibles), usa dos fuentes o m&aacute;s, y conecta la evidencia con &laquo;el sistema feudal se debilit&oacute;&raquo; (los siervos ganan poder de negociaci&oacute;n, el demesne no se puede trabajar, la ley de salarios del rey es ignorada). Bonus si pone un matiz: los se&ntilde;ores resistieron (la orden del rey) y el cambio tard&oacute; d&eacute;cadas.</li>
+  </ul>
+
+  <h3>Registro de la sesi&oacute;n</h3>
+  <div class="lab">Fecha, duraci&oacute;n, preguntas que costaron, herramienta que m&aacute;s sirvi&oacute;, qu&eacute; repasar</div>
+  <div class="ws" contenteditable="true" data-k="p-log" style="--n:4"></div>
+  <p style="font-size:.8rem;color:#6b5d2a;margin-top:10px">Fuentes: A y C fueron dibujadas para esta hoja a partir de las obras citadas; B y D son extractos genuinos (Kendall 1900 para Knighton; Trevelyan 1942), con cortes marcados y algunas palabras modernizadas.</p>
+</section>
+
+</div>
+
+<div class="tip" id="tip" role="tooltip"></div>
+<script type="application/json" id="gloss">{"black-death": {"t": "Black Death", "d": "The pandemic of plague that swept across Europe, North Africa and the Middle East between 1347 and 1353. People at the time called it the Great Mortality or the pestilence; the name Black Death came centuries later.", "n": "It was caused by the bacterium <i>Yersinia pestis<\/i>, carried by fleas on rats and, in its lung form, passed from person to person."}, "pestilence": {"t": "pestilence, plague", "d": "An old word for a deadly epidemic disease. In these sources it always means the Black Death.", "n": ""}, "medieval": {"t": "medieval", "d": "From the Middle Ages: roughly the years 500 to 1500 in Europe, between the fall of Rome and the Renaissance.", "n": ""}, "feudal-system": {"t": "feudal system", "d": "The way medieval society was organised. The king granted land to lords, lords let peasants farm it, and everyone owed service to the person above them: work and produce going up, protection coming down.", "n": "Historians argue about how neat this really was. The big question of this worksheet asks whether the plague weakened it."}, "lord": {"t": "lord", "d": "A nobleman, or sometimes a monastery, who owned a manor and had rights over the people living on it.", "n": ""}, "peasant": {"t": "peasant", "d": "A country person who farmed the land. Most people in medieval Europe were peasants. Some were free; many were serfs.", "n": ""}, "serf": {"t": "serf (villein)", "d": "A peasant who was not free: tied to the manor, unable to leave or marry without the lord&rsquo;s permission, and required to work the lord&rsquo;s land some days each week without pay.", "n": "The English word for a serf was villein. Serfdom faded out in England in the century after the Black Death."}, "manor": {"t": "manor", "d": "A lord&rsquo;s estate: the village, its fields, the mill and the people on it. Each manor ran by its own customs, written down in manor court records that historians still use.", "n": ""}, "demesne": {"t": "demesne", "d": "Said &ldquo;de-MAIN&rdquo;. The part of the manor the lord kept to farm for himself. Serfs had to work it as part of their duties.", "n": ""}, "bailiff": {"t": "bailiff", "d": "The lord&rsquo;s manager: he ran the manor day to day, collected what was owed and made sure the serfs did their work.", "n": ""}, "strip-holdings": {"t": "strip-holdings in the open fields", "d": "Medieval villages farmed huge open fields divided into long strips. Each peasant family farmed scattered strips and paid the lord rent or labour for them.", "n": "When a family died out, their strips went back to the lord, who then needed someone else to farm them."}, "reaper": {"t": "reaper, mower", "d": "Harvest workers hired by the day. A reaper cut grain with a sickle; a mower cut hay with a scythe. Wages were often quoted &ldquo;with his food&rdquo; when meals were included.", "n": ""}, "pence": {"t": "d. (pence)", "d": "Short for pence, from the Latin <i>denarius<\/i>. Twelve pence made a shilling. Wages like the ones Knighton records were far higher than the usual rates before the plague.", "n": ""}, "servants": {"t": "servants", "d": "In Knighton&rsquo;s time this meant hired workers of every kind, on farms as well as in houses, not only household servants.", "n": ""}, "proclamation": {"t": "proclamation", "d": "An official announcement from the king, read out in public in every county.", "n": "Knighton is describing the Ordinance of Labourers (1349), which became the Statute of Labourers in 1351: a law that tried to freeze wages at their pre-plague level."}, "chronicle": {"t": "chronicle", "d": "A year-by-year record of events, usually written by a monk or churchman. Chronicles mix what the writer saw, what he was told and what he copied from other writers.", "n": ""}, "canon": {"t": "canon", "d": "A priest belonging to a religious community. Leicester Abbey was a large monastery that owned villages and farmland, so it was itself a landlord and an employer of workers.", "n": ""}, "hamlet": {"t": "hamlets became desolate", "d": "A hamlet is a tiny village, smaller than a village with a church. Desolate means empty and abandoned.", "n": ""}, "lifted-up": {"t": "lifted up and obstinate", "d": "Proud and stubborn. Notice these words are Knighton&rsquo;s judgement of the workers, not a fact he observed.", "n": ""}, "covetous": {"t": "lofty and covetous", "d": "Lofty here means high-and-mighty; covetous means greedy, wanting more than you should. Again, this is the writer&rsquo;s opinion.", "n": ""}, "fruit": {"t": "fruit and crops", "d": "Here <i>fruit<\/i> means everything the land produces, not only fruit from trees.", "n": ""}, "whip-hand": {"t": "whip-hand", "d": "To have the whip-hand is to be in control, like the person holding the reins and the whip of a horse.", "n": ""}, "till": {"t": "till", "d": "To farm the land: plough, sow and harvest.", "n": ""}, "historian": {"t": "historian", "d": "Someone who studies the past using evidence, and explains what happened and why. Historians disagree with each other, which is why you ask who wrote a source and when.", "n": ""}, "primary-source": {"t": "primary source", "d": "Evidence created at the time of the events, or by someone who lived through them: a chronicle, a letter, a law, a painting, a tax record.", "n": "Primary does not mean true. It means close to the event."}, "secondary-source": {"t": "secondary source", "d": "An account written later by someone who studied the primary sources: a history book, a textbook, a documentary.", "n": "Good for the big picture and for interpretation. Always ask who wrote it and when."}, "observation": {"t": "observation", "d": "Something you can point to in the source that anyone looking at it would agree is there.", "n": ""}, "inference": {"t": "inference", "d": "A conclusion you reach by combining what the source shows with your own reasoning. Use words like <i>suggests<\/i>, <i>probably<\/i> and <i>because<\/i>.", "n": ""}, "evidence": {"t": "evidence", "d": "Information from a source that you use to support a claim. Good evidence is precise: a number, a date, a quoted phrase.", "n": ""}, "corroboration": {"t": "corroboration", "d": "When two or more sources support the same point. A corroborated claim is stronger. Sources that disagree are useful too: they show different perspectives.", "n": ""}, "perspective": {"t": "perspective", "d": "The point of view a source represents: who the author was, what they cared about, whose side they were on.", "n": ""}, "bias": {"t": "biased", "d": "Leaning towards one side. Every source has some bias because every author has a perspective. A biased source is still evidence, of what its author believed and wanted others to believe.", "n": ""}, "claim": {"t": "claim", "d": "The statement you are arguing for. A good historical claim is clear, specific and can be tested against evidence.", "n": ""}, "reasoning": {"t": "reasoning", "d": "The explanation of how your evidence supports your claim: the <i>because<\/i> that connects them.", "n": ""}, "interpretation": {"t": "interpretation", "d": "A historian&rsquo;s explanation of what the evidence means. Different historians can interpret the same evidence differently.", "n": ""}, "cause-consequence": {"t": "cause and consequence", "d": "A cause is why something happened; a consequence is what happened as a result. Historians look for chains of causes and consequences, not single reasons.", "n": ""}, "estimate": {"t": "estimate", "d": "A historian&rsquo;s best calculation from incomplete records such as tax lists and manor records. Estimates carry uncertainty, which is why different historians give different numbers.", "n": ""}, "census": {"t": "census", "d": "An official count of everyone in a country. England&rsquo;s first census was in 1801, so medieval populations have to be estimated.", "n": ""}, "trade-route": {"t": "trade routes", "d": "The regular paths that merchants&rsquo; ships and caravans followed. Goods, people and diseases all travelled along them.", "n": ""}}</script>
+<script>
+(function(){
+  /* ---- local persistence (this browser only) ---- */
+  var PRE='bd-skills-lab:';
+  var store={
+    get:function(k){try{return localStorage.getItem(PRE+k)}catch(e){return null}},
+    set:function(k,v){try{localStorage.setItem(PRE+k,v)}catch(e){}},
+    clear:function(){try{Object.keys(localStorage).filter(function(k){return k.indexOf(PRE)===0}).forEach(function(k){localStorage.removeItem(k)})}catch(e){}}
+  };
+  document.querySelectorAll('[contenteditable][data-k]').forEach(function(el){
+    var v=store.get(el.dataset.k); if(v) el.innerHTML=v;
+    el.addEventListener('input',function(){store.set(el.dataset.k,el.innerHTML)});
+    el.addEventListener('paste',function(e){e.preventDefault();var t=(e.clipboardData||window.clipboardData).getData('text');document.execCommand('insertText',false,t)});
+  });
+  document.querySelectorAll('input[data-k]').forEach(function(el){
+    el.checked=store.get(el.dataset.k)==='1';
+    el.addEventListener('change',function(){
+      if(el.type==='radio'){document.querySelectorAll('input[name="'+el.name+'"]').forEach(function(r){store.set(r.dataset.k,r.checked?'1':'0')})}
+      else store.set(el.dataset.k,el.checked?'1':'0');
+    });
+  });
+  document.getElementById('clearAll').addEventListener('click',function(){
+    if(confirm('Clear every answer typed in this browser?')){store.clear();location.reload()}
+  });
+
+  /* ---- parent page toggle ---- */
+  var b=document.getElementById('toggleParent');
+  function toggleParent(){document.body.classList.toggle('no-parent');b.textContent=document.body.classList.contains('no-parent')?'Show parent page':'Hide parent page'}
+  b.addEventListener('click',toggleParent);
+
+  /* ---- definitions on hover / focus / tap ---- */
+  var G=JSON.parse(document.getElementById('gloss').textContent);
+  var tip=document.getElementById('tip'),cur=null;
+  function show(el){
+    var g=G[el.dataset.t]; if(!g) return;
+    tip.innerHTML='<b>'+g.t+'</b><p>'+g.d+'</p>'+(g.n?'<p class="n">'+g.n+'</p>':'');
+    tip.style.display='block';
+    var r=el.getBoundingClientRect(),tw=tip.offsetWidth,th=tip.offsetHeight;
+    var x=Math.min(Math.max(8,r.left),window.innerWidth-tw-8);
+    var y=r.bottom+8; if(y+th>window.innerHeight-8) y=Math.max(8,r.top-th-8);
+    tip.style.left=x+'px'; tip.style.top=y+'px';
+    if(cur&&cur!==el) cur.classList.remove('on'); cur=el; el.classList.add('on');
+  }
+  function hide(){tip.style.display='none'; if(cur) cur.classList.remove('on'); cur=null}
+  document.querySelectorAll('dfn[data-t]').forEach(function(el){
+    el.setAttribute('tabindex','0');
+    el.addEventListener('mouseenter',function(){show(el)});
+    el.addEventListener('mouseleave',hide);
+    el.addEventListener('focus',function(){show(el)});
+    el.addEventListener('blur',hide);
+    el.addEventListener('pointerdown',function(e){ if(e.pointerType==='touch'){e.preventDefault(); cur===el?hide():show(el);} });
+  });
+  document.addEventListener('pointerdown',function(e){ if(cur && !e.target.closest('dfn[data-t]')) hide(); });
+  window.addEventListener('scroll',function(){ if(cur) show(cur) },{passive:true});
+  document.addEventListener('keydown',function(e){
+    if(e.key==='Escape') hide();
+    var a=document.activeElement, typing=a&&(a.isContentEditable||/INPUT|TEXTAREA/.test(a.tagName));
+    if((e.key==='n'||e.key==='N')&&!typing&&!e.ctrlKey&&!e.metaKey&&!e.altKey) toggleParent();
+  });
+})();
+</script>
+</body>
+</html>
