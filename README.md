@@ -20,9 +20,11 @@ Publicado con GitHub Pages: https://bengrez.github.io/aula-herramientas/
   `elementos.js`, separados del `index.html`.
 - [`vacunas-rebano/`](vacunas-rebano/) — Vacunas e inmunidad de rebaño (Cs. para la Ciudadanía,
   IV° medio, Bienestar y Salud). Página de lectura vertical para el celular, con el umbral
-  `1 − 1/R₀` y un simulador de dos casos (cobertura alta y baja) con contagio al azar sobre 100
-  personas. Autocontenida, sin dependencias externas, sin envío ni almacenamiento de datos. Versión
-  mínima: las cifras son de libro; falta contrastarlas con fuentes oficiales.
+  `1 − 1/R₀` y un simulador animado de dos casos (cobertura alta y baja) con contagio al azar sobre
+  100 personas: avanza solo ronda a ronda, con pausa, paso a paso, tres velocidades y un gráfico de
+  contagiadas por ronda que compara los dos casos. Respeta «reducir movimiento». Autocontenida, sin
+  dependencias externas, sin envío ni almacenamiento de datos. Versión mínima: las cifras son de
+  libro; falta contrastarlas con fuentes oficiales.
 
 ## Aparte: apoyo escolar en inglés
 
