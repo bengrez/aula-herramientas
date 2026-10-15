@@ -66,20 +66,18 @@
   button[aria-pressed="true"] small { color: #fff; }
   button:disabled { opacity: 0.45; cursor: default; }
   button:focus-visible { outline: 3px solid var(--ambar); outline-offset: 2px; }
-  .acciones { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 12px 0; }
+  .acciones { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 12px 0 8px; }
+  .acciones button { padding: 8px 4px; font-size: 0.95rem; }
   .acciones button.principal { background: var(--pizarra); border-color: var(--pizarra); color: #fff; }
 
   #escena[hidden] { display: none; }
-  #poblacion {
-    display: grid; grid-template-columns: repeat(10, 1fr); gap: 5px;
-    width: min(100%, 420px); margin: 10px auto;
-  }
-  #poblacion { --k: 1; }
+  .fila { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; align-items: start; margin: 8px 0; }
+  #poblacion { display: grid; grid-template-columns: repeat(10, 1fr); gap: 3px; width: 100%; padding: 2px; }
   .c { display: block; position: relative; height: 0; padding-bottom: 100%; transition: background-color .3s, box-shadow .3s, border-radius .3s; }
   .c::after { content: ""; position: absolute; top: -2px; left: -2px; right: -2px; bottom: -2px; border-radius: inherit; border: 3px solid transparent; pointer-events: none; opacity: 0; }
-  .c.rebote::after { border-color: var(--cobalto); animation: anillo .6s ease-out; animation-duration: calc(.6s * var(--k)); }
-  .c.fuente::after { border-color: var(--carmesi); animation: anillo .6s ease-out; animation-duration: calc(.6s * var(--k)); }
-  .c.nuevo { animation: aparece .45s ease-out; animation-duration: calc(.45s * var(--k)); }
+  .c.rebote::after { border-color: var(--cobalto); animation: anillo .6s ease-out; }
+  .c.fuente::after { border-color: var(--carmesi); animation: anillo .6s ease-out; }
+  .c.nuevo { animation: aparece .45s ease-out; }
   @keyframes anillo { from { opacity: .95; transform: scale(.8); } to { opacity: 0; transform: scale(1.35); } }
   @keyframes aparece { 0% { transform: scale(.3); } 60% { transform: scale(1.25); } 100% { transform: scale(1); } }
   .v { background: var(--cobalto); border-radius: 50%; }
@@ -87,7 +85,7 @@
   .i { background: var(--carmesi); border-radius: 3px; }
   .r { background: #FEE2E2; box-shadow: inset 0 0 0 2px var(--carmesi); border-radius: 3px; }
 
-  .leyenda { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 10px; font-size: 0.95rem; margin: 6px 0 12px; }
+  .leyenda { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 10px; font-size: 0.9rem; margin: 6px 0 8px; }
   .leyenda div { display: flex; gap: 6px; align-items: flex-start; }
   .leyenda span.m { flex: none; width: 14px; height: 14px; margin-top: 4px; }
 
@@ -97,9 +95,8 @@
   #estado { font-weight: 700; color: var(--pizarra); min-height: 1.5em; }
   #estado.fin { color: var(--carmesi); }
   .solo-lector { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; margin: -1px; padding: 0; border: 0; }
-  .g-titulo { margin-top: 16px; }
-  #grafico { display: block; width: 100%; height: auto; background: #fff; border: 1px solid var(--borde); border-radius: 6px; }
-  .g-leyenda { display: flex; flex-wrap: wrap; gap: 4px 16px; font-size: 0.95rem; margin: 8px 0 0; }
+    #grafico { display: block; width: 100%; height: auto; background: #fff; border: 1px solid var(--borde); border-radius: 6px; }
+  .g-leyenda { display: flex; flex-wrap: wrap; gap: 4px 16px; font-size: 0.9rem; margin: 0 0 4px; }
   .ln { display: inline-block; width: 28px; height: 0; border-top: 3px solid; vertical-align: middle; margin-right: 6px; }
   .ln.alta { border-top-style: dashed; border-top-color: var(--pizarra); }
   .ln.baja { border-top-color: var(--carmesi); }
@@ -175,10 +172,16 @@
         <button type="button" id="pausa" class="principal">Pausa</button>
         <button type="button" id="siguiente">Siguiente ronda</button>
         <button type="button" id="repetir">Repetir este caso</button>
-        <button type="button" id="velocidad">Velocidad: normal</button>
       </div>
       <p id="anuncio" class="solo-lector" aria-live="polite" aria-atomic="true"></p>
-      <div id="poblacion" role="img" aria-label="Población de 100 personas"></div>
+      <div class="fila">
+        <div id="poblacion" role="img" aria-label="Población de 100 personas"></div>
+        <svg id="grafico" viewBox="0 0 150 150" role="img" aria-label="Gráfico de contagiadas por ronda"></svg>
+      </div>
+      <div class="g-leyenda">
+        <span><span class="ln alta"></span>Alta (95 %)</span>
+        <span><span class="ln baja"></span>Baja (60 %)</span>
+      </div>
       <div class="leyenda">
         <div><span class="m v"></span>Vacunada</div>
         <div><span class="m s"></span>No vacunada, sana</div>
@@ -190,12 +193,6 @@
         <p>Contagiadas en total: <strong id="d-total">1</strong> de 100</p>
         <p>No vacunadas que siguen sanas: <strong id="d-salvadas">0</strong> de <strong id="d-nov">0</strong></p>
         <p id="estado"></p>
-      </div>
-      <h3 class="g-titulo">Contagiadas en total, ronda a ronda</h3>
-      <svg id="grafico" viewBox="0 0 340 198" role="img" aria-label="Gráfico de contagiadas por ronda"></svg>
-      <div class="g-leyenda">
-        <span><span class="ln alta"></span>Cobertura alta (95 %)</span>
-        <span><span class="ln baja"></span>Cobertura baja (60 %)</span>
       </div>
     </div>
   </section>
@@ -303,12 +300,11 @@ function conteos(p) {
 (function () {
   var $ = function (id) { return document.getElementById(id); };
   var NOMBRE = { 95: 'Cobertura alta', 60: 'Cobertura baja' };
-  var VEL = [{ k: 1.6, txt: 'lenta' }, { k: 1, txt: 'normal' }, { k: 0.5, txt: 'rápida' }];
   var reducir = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
   var escena = $('escena'), grilla = $('poblacion'), estadoEl = $('estado');
   var btnAlto = $('caso-alto'), btnBajo = $('caso-bajo');
-  var btnPausa = $('pausa'), btnSig = $('siguiente'), btnRep = $('repetir'), btnVel = $('velocidad');
-  var velIdx = 1, casoActual = null, poblacion = null, rnd = null;
+  var btnPausa = $('pausa'), btnSig = $('siguiente'), btnRep = $('repetir');
+  var casoActual = null, poblacion = null, rnd = null;
   var spans = [], vista = [], rondaVista = 0;
   var modo = 'auto', ocupado = false, fin = false, gen = 0, timers = [], timerSig = null;
   var series = {}, actual = null, quiere = false;
@@ -397,7 +393,6 @@ function conteos(p) {
     btnPausa.textContent = modo === 'auto' ? 'Pausa' : 'Continuar';
     btnPausa.disabled = fin;
     btnSig.disabled = fin || modo !== 'pausa';
-    btnVel.textContent = 'Velocidad: ' + VEL[velIdx].txt;
     btnAlto.setAttribute('aria-pressed', casoActual === 95 ? 'true' : 'false');
     btnBajo.setAttribute('aria-pressed', casoActual === 60 ? 'true' : 'false');
     if (fin) {
@@ -421,7 +416,7 @@ function conteos(p) {
   function dibujarGrafico() {
     var svg = $('grafico');
     while (svg.firstChild) svg.removeChild(svg.firstChild);
-    var W = 340, H = 198, L = 40, R = 14, T = 12, B = 42;
+    var W = 150, H = 150, L = 28, R = 8, T = 8, B = 28;
     var pw = W - L - R, ph = H - T - B, y0 = T + ph;
     var xmax = 8;
     [95, 60].forEach(function (v) {
@@ -433,24 +428,24 @@ function conteos(p) {
 
     [0, 50, 100].forEach(function (v) {
       svg.appendChild(el('line', { x1: L, x2: W - R, y1: Y(v), y2: Y(v), stroke: '#CBD5E1', 'stroke-width': 1 }));
-      svg.appendChild(el('text', { x: L - 6, y: Y(v) + 5, 'text-anchor': 'end', 'font-size': 16, fill: '#475569' }, String(v)));
+      svg.appendChild(el('text', { x: L - 4, y: Y(v) + 4, 'text-anchor': 'end', 'font-size': 12, fill: '#475569' }, String(v)));
     });
-    var paso = xmax > 10 ? 2 : 1;
+    var paso = xmax > 12 ? 4 : 2;
     for (var i = 0; i <= xmax; i += paso) {
-      svg.appendChild(el('text', { x: X(i), y: y0 + 20, 'text-anchor': 'middle', 'font-size': 16, fill: '#475569' }, String(i)));
+      svg.appendChild(el('text', { x: X(i), y: y0 + 14, 'text-anchor': 'middle', 'font-size': 12, fill: '#475569' }, String(i)));
     }
-    svg.appendChild(el('text', { x: L + pw / 2, y: H - 4, 'text-anchor': 'middle', 'font-size': 16, fill: '#475569' }, 'Ronda'));
+    svg.appendChild(el('text', { x: L + pw / 2, y: H - 2, 'text-anchor': 'middle', 'font-size': 12, fill: '#475569' }, 'Ronda'));
 
     var descr = 'Contagiadas en total por ronda.';
     [[95, '#1E293B', '6 5'], [60, '#DC2626', null]].forEach(function (cfg) {
       var enCurso = (actual && casoActual === cfg[0]) ? actual : null;
       function trazo(s, opacidad) {
         var pts = s.map(function (v, i) { return X(i) + ',' + Y(v); }).join(' ');
-        var attrs = { points: pts, fill: 'none', stroke: cfg[1], 'stroke-width': 3, 'stroke-linejoin': 'round', 'stroke-linecap': 'round', opacity: opacidad };
+        var attrs = { points: pts, fill: 'none', stroke: cfg[1], 'stroke-width': 2.5, 'stroke-linejoin': 'round', 'stroke-linecap': 'round', opacity: opacidad };
         if (cfg[2]) attrs['stroke-dasharray'] = cfg[2];
         svg.appendChild(el('polyline', attrs));
         s.forEach(function (v, i) {
-          svg.appendChild(el('circle', { cx: X(i), cy: Y(v), r: 4, fill: cfg[1], opacity: opacidad }));
+          svg.appendChild(el('circle', { cx: X(i), cy: Y(v), r: 2.5, fill: cfg[1], opacity: opacidad }));
         });
       }
       if (series[cfg[0]]) {
@@ -477,7 +472,6 @@ function conteos(p) {
     actual = [1];
     escena.hidden = false;
     escena.scrollIntoView({ block: 'start' });
-    grilla.style.setProperty('--k', String(VEL[velIdx].k));
     var ini = poblacion.est.indexOf('i');
     if (!reducir) marcar(ini, 'nuevo');
     refrescar();
@@ -485,7 +479,7 @@ function conteos(p) {
     grilla.setAttribute('aria-label', 'Población de 100 personas. Ronda 0. 1 contagiada en total.');
     anunciar(NOMBRE[vac] + '. Llega 1 persona contagiada.');
     actualizarBotones();
-    programar(1200 * VEL[velIdx].k);
+    programar(1200);
   }
 
   function terminarRonda() {
@@ -501,8 +495,8 @@ function conteos(p) {
     grilla.setAttribute('aria-label', 'Población de 100 personas. Ronda ' + rondaVista + '. ' + txtTotal);
     anunciar((fin ? 'El brote terminó en la ronda ' + rondaVista + '. ' : 'Ronda ' + rondaVista + '. ') + txtTotal);
     if (fin && (document.activeElement === btnPausa || document.activeElement === btnSig)) btnRep.focus({ preventScroll: true });
-    if (!fin && modo === 'auto') programar((reducir ? 1200 : 450) * VEL[velIdx].k);
-    if (!fin && modo === 'pausa' && quiere) { quiere = false; programar(150 * VEL[velIdx].k); }
+    if (!fin && modo === 'auto') programar(reducir ? 1200 : 450);
+    if (!fin && modo === 'pausa' && quiere) { quiere = false; programar(150); }
     actualizarBotones();
   }
 
@@ -510,7 +504,7 @@ function conteos(p) {
     if (fin || ocupado || !poblacion) return;
     ocupado = true;
     cancelarSig();
-    var k = reducir ? 0 : VEL[velIdx].k;
+    var k = reducir ? 0 : 1;
     siguienteRonda(poblacion, rnd);
     var ev = poblacion.ultimo, nu = ev.nuevos, n = nu.length;
     rondaVista = poblacion.ronda;
@@ -551,11 +545,6 @@ function conteos(p) {
     if (modo !== 'pausa' || fin) return;
     if (ocupado) { quiere = true; return; }
     paso();
-  });
-  btnVel.addEventListener('click', function () {
-    velIdx = (velIdx + 1) % VEL.length;
-    grilla.style.setProperty('--k', String(VEL[velIdx].k));
-    actualizarBotones();
   });
   document.addEventListener('visibilitychange', function () {
     if (document.hidden && modo === 'auto' && poblacion && !fin) {
