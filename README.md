@@ -18,6 +18,11 @@ Publicado con GitHub Pages: https://bengrez.github.io/aula-herramientas/
   Escudo (8° Básico, Química, Guía N° 3). Explora tendencias por posición, compara dos elementos y
   predice el tipo de enlace, practica con preguntas al azar. Los datos de los 118 elementos viven en
   `elementos.js`, separados del `index.html`.
+- [`vacunas-rebano/`](vacunas-rebano/) — Vacunas e inmunidad de rebaño (Cs. para la Ciudadanía,
+  IV° medio, Bienestar y Salud). Página de lectura vertical para el celular, con el umbral
+  `1 − 1/R₀` y un simulador de dos casos (cobertura alta y baja) con contagio al azar sobre 100
+  personas. Autocontenida, sin dependencias externas, sin envío ni almacenamiento de datos. Versión
+  mínima: las cifras son de libro; falta contrastarlas con fuentes oficiales.
 
 ## Aparte: apoyo escolar en inglés
 

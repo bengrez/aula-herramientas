@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Vacunas e inmunidad de rebaño</title>
+<style>
+  :root {
+    --marfil: #FBFBFA;
+    --linea: #E5E7EB;
+    --borde: #CBD5E1;
+    --pizarra: #1E293B;
+    --suave: #475569;
+    --cobalto: #2563EB;
+    --cobalto-fondo: #EFF4FF;
+    --ambar: #B45309;
+    --carmesi: #DC2626;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    font-family: Inter, "Segoe UI", system-ui, -apple-system, Roboto, Helvetica, Arial, sans-serif;
+    font-size: 17px;
+    line-height: 1.55;
+    color: var(--pizarra);
+    background-color: var(--marfil);
+    background-image:
+      linear-gradient(var(--linea) 1px, transparent 1px),
+      linear-gradient(90deg, var(--linea) 1px, transparent 1px);
+    background-size: 28px 28px;
+  }
+  main { width: min(680px, calc(100% - 24px)); margin: 0 auto; padding: 20px 0 48px; }
+  header { padding: 8px 4px 4px; }
+  .eyebrow { color: var(--ambar); font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; margin: 0 0 4px; }
+  h1 { font-size: 1.85rem; line-height: 1.15; margin: 0 0 6px; }
+  h2 { font-size: 1.25rem; line-height: 1.25; margin: 0 0 10px; }
+  section {
+    background: #fff;
+    border: 1px solid var(--borde);
+    border-radius: 8px;
+    padding: 16px 16px 14px;
+    margin-top: 14px;
+  }
+  section > :last-child { margin-bottom: 0; }
+  p { margin: 0 0 10px; }
+  ul, ol { margin: 0 0 10px; padding-left: 22px; }
+  li { margin-bottom: 6px; }
+  .paso { display: inline-block; background: var(--pizarra); color: #fff; border-radius: 4px; font-size: 0.78rem; font-weight: 700; line-height: 1.55; padding: 1px 8px; margin: 0 0 6px; }
+  h3 { font-size: 1.15rem; line-height: 1.25; margin: 0 0 10px; }
+  .pregunta { font-size: 1.2rem; font-weight: 700; }
+  table { width: 100%; border-collapse: collapse; margin: 4px 0 12px; font-size: 0.95rem; }
+  th, td { border: 1px solid var(--borde); padding: 7px 8px; text-align: left; vertical-align: top; }
+  th { background: var(--cobalto-fondo); }
+  .formula { background: var(--cobalto-fondo); border: 1px solid #BFD3FF; border-radius: 6px; padding: 10px 12px; font-weight: 700; text-align: center; margin: 0 0 12px; }
+
+  .casos { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 12px 0; }
+  button {
+    font: inherit; font-weight: 700; min-height: 52px; padding: 8px 10px;
+    border-radius: 8px; border: 2px solid var(--cobalto); background: #fff; color: var(--cobalto);
+    cursor: pointer; line-height: 1.2; touch-action: manipulation;
+  }
+  button small { display: block; font-weight: 500; font-size: 0.8rem; color: var(--suave); }
+  button[aria-pressed="true"] { background: var(--cobalto); color: #fff; }
+  button[aria-pressed="true"] small { color: #fff; }
+  button:disabled { opacity: 0.45; cursor: default; }
+  button:focus-visible { outline: 3px solid var(--ambar); outline-offset: 2px; }
+  .acciones { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 12px 0; }
+  .acciones button.principal { background: var(--pizarra); border-color: var(--pizarra); color: #fff; }
+  .acciones button.principal:disabled { background: var(--pizarra); }
+
+  #escena[hidden] { display: none; }
+  #poblacion {
+    display: grid; grid-template-columns: repeat(10, 1fr); gap: 5px;
+    width: min(100%, 420px); margin: 10px auto;
+  }
+  .c { display: block; height: 0; padding-bottom: 100%; }
+  .v { background: var(--cobalto); border-radius: 50%; }
+  .s { background: #fff; box-shadow: inset 0 0 0 2px var(--pizarra); border-radius: 50%; }
+  .i { background: var(--carmesi); border-radius: 3px; }
+  .r { background: #FEE2E2; box-shadow: inset 0 0 0 2px var(--carmesi); border-radius: 3px; }
+
+  .leyenda { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 10px; font-size: 0.95rem; margin: 6px 0 12px; }
+  .leyenda div { display: flex; gap: 6px; align-items: flex-start; }
+  .leyenda span.m { flex: none; width: 14px; height: 14px; margin-top: 4px; }
+
+  #datos { border: 1px solid var(--borde); border-radius: 6px; padding: 8px 12px; background: var(--marfil); margin-bottom: 8px; }
+  #datos p { margin: 2px 0; }
+  #datos strong { font-variant-numeric: tabular-nums; }
+  #estado { font-weight: 700; color: var(--carmesi); min-height: 1.5em; }
+  .supuestos { font-size: 0.92rem; color: var(--suave); }
+  footer { text-align: center; color: var(--suave); font-size: 0.85rem; margin-top: 18px; }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <p class="eyebrow">Bienestar y salud</p>
+    <h1>Vacunas e inmunidad de rebaño</h1>
+  </header>
+
+  <section id="inicio">
+    <h2 class="paso">1 · Para partir</h2>
+    <p class="pregunta">Una persona no se vacunó y tampoco se enferma. ¿Cómo es posible?</p>
+    <p>Escribe tu hipótesis en el cuaderno antes de seguir.</p>
+  </section>
+
+  <section id="vacuna">
+    <h2 class="paso">2 · Qué hace una vacuna</h2>
+    <ul>
+      <li>Presenta al sistema inmune una versión del agente infeccioso que no causa la enfermedad, o una parte de él.</li>
+      <li>El cuerpo responde: se producen anticuerpos y quedan células de memoria.</li>
+      <li>Si después llega el agente real, la respuesta es más rápida y más fuerte. La infección se frena antes de causar enfermedad, o la enfermedad es más leve.</li>
+    </ul>
+    <p>Una persona protegida tiene menos probabilidad de contagiarse y, por lo tanto, de contagiar.</p>
+  </section>
+
+  <section id="rebano">
+    <h2 class="paso">3 · Inmunidad de rebaño</h2>
+    <p>Cuando suficientes personas están protegidas, cada persona enferma contagia en promedio a menos de una y los brotes se apagan. Las personas que no están vacunadas quedan menos expuestas.</p>
+    <p><strong>R<sub>0</sub></strong> es el número de personas que contagia, en promedio, una persona enferma en una población sin inmunidad. La proporción mínima de población inmune para que un brote no crezca es:</p>
+    <p class="formula">1 − 1 / R<sub>0</sub></p>
+    <table>
+      <thead><tr><th>R<sub>0</sub></th><th>Cálculo</th><th>Población inmune necesaria</th></tr></thead>
+      <tbody>
+        <tr><td>4 (ejemplo)</td><td>1 − 1/4 = 0,75</td><td>75 %</td></tr>
+        <tr><td>12 (sarampión, valor bajo)</td><td>1 − 1/12 ≈ 0,92</td><td>≈ 92 %</td></tr>
+        <tr><td>18 (sarampión, valor alto)</td><td>1 − 1/18 ≈ 0,94</td><td>≈ 94 %</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section id="simulador">
+    <h2 class="paso">4 · Simulador</h2>
+    <h3>Dos poblaciones, una enfermedad</h3>
+    <p>Población de 100 personas. Una enfermedad con R<sub>0</sub> = 12, como el sarampión. Un día, 1 persona no vacunada se contagia.</p>
+    <p class="supuestos">En cada ronda, cada persona contagiada se junta con 12 personas al azar y contagia a las que no están vacunadas. La vacuna protege al 100 %.</p>
+
+    <ol>
+      <li>Elige un caso.</li>
+      <li>Presiona «Siguiente ronda» hasta que el brote termine.</li>
+      <li>Anota cuántas personas se contagiaron.</li>
+      <li>Repite con el otro caso.</li>
+    </ol>
+
+    <div class="casos" role="group" aria-label="Elige un caso">
+      <button type="button" id="caso-alto" aria-pressed="false">Cobertura alta<small>95 de 100 vacunados</small></button>
+      <button type="button" id="caso-bajo" aria-pressed="false">Cobertura baja<small>60 de 100 vacunados</small></button>
+    </div>
+
+    <div id="escena" hidden>
+      <div id="poblacion" role="img" aria-label="Población de 100 personas"></div>
+      <div class="leyenda">
+        <div><span class="m v"></span>Vacunada</div>
+        <div><span class="m s"></span>No vacunada, sana</div>
+        <div><span class="m i"></span>Contagiada en esta ronda</div>
+        <div><span class="m r"></span>Ya se contagió antes</div>
+      </div>
+      <div id="datos" aria-live="polite" aria-atomic="true">
+        <p>Ronda: <strong id="d-ronda">0</strong></p>
+        <p>Contagiadas en total: <strong id="d-total">1</strong> de 100</p>
+        <p>No vacunadas que siguen sanas: <strong id="d-salvadas">0</strong> de <strong id="d-nov">0</strong></p>
+        <p id="estado"></p>
+      </div>
+      <div class="acciones">
+        <button type="button" id="siguiente" class="principal">Siguiente ronda</button>
+        <button type="button" id="repetir">Repetir este caso</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="dependen">
+    <h2 class="paso">5 · Quiénes dependen del rebaño</h2>
+    <ul>
+      <li>Recién nacidos y bebés que aún no tienen todas sus dosis.</li>
+      <li>Personas con defensas bajas, por ejemplo en tratamiento contra el cáncer o con un trasplante.</li>
+      <li>Personas con alergia grave a un componente de la vacuna.</li>
+    </ul>
+    <p>El rebaño protege solo contra enfermedades que pasan de persona a persona. El tétanos no se contagia entre personas: sus esporas están en el suelo y entran por heridas. Contra el tétanos no hay protección de rebaño; cada persona necesita su vacuna y sus refuerzos.</p>
+  </section>
+
+  <section id="conversar">
+    <h2 class="paso">6 · Para conversar</h2>
+    <ol>
+      <li>Además de ti, ¿quién se beneficia cuando te vacunas?</li>
+      <li>¿Qué pasaría con una cobertura de 90 %? Argumenta con la tabla de la sección 3 y con los dos casos.</li>
+      <li>¿Qué evidencia necesitarías para saber si una campaña de vacunación funcionó?</li>
+    </ol>
+  </section>
+
+  <footer>En la realidad ninguna vacuna protege al 100 % y las personas no vacunadas suelen vivir cerca unas de otras, así que pueden ocurrir brotes locales aunque la cobertura sea alta.</footer>
+</main>
+
+<script>
+/*ENGINE-START*/
+var N = 100;
+var CONTACTOS = 12;
+
+function mulberry32(a) {
+  return function () {
+    a |= 0; a = (a + 0x6D2B79F5) | 0;
+    var t = Math.imul(a ^ (a >>> 15), 1 | a);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+
+function barajar(a, rnd) {
+  for (var i = a.length - 1; i > 0; i--) {
+    var j = Math.floor(rnd() * (i + 1));
+    var t = a[i]; a[i] = a[j]; a[j] = t;
+  }
+  return a;
+}
+
+function nuevaPoblacion(vacunados, rnd) {
+  var idx = [];
+  for (var i = 0; i < N; i++) idx.push(i);
+  barajar(idx, rnd);
+  var est = [];
+  for (var k = 0; k < N; k++) est.push('s');
+  for (var v = 0; v < vacunados; v++) est[idx[v]] = 'v';
+  var sanos = [];
+  for (var q = 0; q < N; q++) if (est[q] === 's') sanos.push(q);
+  est[sanos[Math.floor(rnd() * sanos.length)]] = 'i';
+  return { est: est, ronda: 0, vacunados: vacunados };
+}
+
+function hayContagiados(p) {
+  return p.est.indexOf('i') !== -1;
+}
+
+function siguienteRonda(p, rnd) {
+  var fuentes = [];
+  for (var i = 0; i < N; i++) if (p.est[i] === 'i') fuentes.push(i);
+  if (!fuentes.length) return p;
+  for (var f = 0; f < fuentes.length; f++) p.est[fuentes[f]] = 'r';
+  var nuevos = [];
+  for (var g = 0; g < fuentes.length; g++) {
+    var otros = [];
+    for (var o = 0; o < N; o++) if (o !== fuentes[g]) otros.push(o);
+    barajar(otros, rnd);
+    for (var c = 0; c < CONTACTOS; c++) {
+      var j = otros[c];
+      if (p.est[j] === 's' && nuevos.indexOf(j) === -1) nuevos.push(j);
+    }
+  }
+  for (var n = 0; n < nuevos.length; n++) p.est[nuevos[n]] = 'i';
+  p.ronda++;
+  return p;
+}
+
+function conteos(p) {
+  var c = { v: 0, s: 0, i: 0, r: 0 };
+  for (var i = 0; i < N; i++) c[p.est[i]]++;
+  return {
+    total: c.i + c.r,
+    salvadas: c.s,
+    noVacunadas: N - p.vacunados
+  };
+}
+/*ENGINE-END*/
+
+(function () {
+  var $ = function (id) { return document.getElementById(id); };
+  var escena = $('escena'), grilla = $('poblacion');
+  var btnAlto = $('caso-alto'), btnBajo = $('caso-bajo');
+  var btnSig = $('siguiente'), btnRep = $('repetir');
+  var casoActual = null, poblacion = null, rnd = null;
+
+  function semilla() {
+    var a = new Uint32Array(1);
+    if (window.crypto && window.crypto.getRandomValues) { window.crypto.getRandomValues(a); return a[0]; }
+    return Math.floor(Math.random() * 4294967296);
+  }
+
+  function pintar() {
+    var html = '';
+    for (var i = 0; i < N; i++) html += '<span class="c ' + poblacion.est[i] + '"></span>';
+    grilla.innerHTML = html;
+    var d = conteos(poblacion);
+    $('d-ronda').textContent = poblacion.ronda;
+    $('d-total').textContent = d.total;
+    $('d-salvadas').textContent = d.salvadas;
+    $('d-nov').textContent = d.noVacunadas;
+    var fin = !hayContagiados(poblacion);
+    $('estado').textContent = fin ? 'El brote terminó.' : '';
+    if (fin && document.activeElement === btnSig) btnRep.focus();
+    btnSig.disabled = fin;
+    grilla.setAttribute('aria-label',
+      'Población de 100 personas. Ronda ' + poblacion.ronda + '. ' + d.total + ' contagiadas en total.');
+  }
+
+  function empezar(vacunados) {
+    casoActual = vacunados;
+    rnd = mulberry32(semilla());
+    poblacion = nuevaPoblacion(vacunados, rnd);
+    escena.hidden = false;
+    btnAlto.setAttribute('aria-pressed', vacunados === 95 ? 'true' : 'false');
+    btnBajo.setAttribute('aria-pressed', vacunados === 60 ? 'true' : 'false');
+    pintar();
+  }
+
+  btnAlto.addEventListener('click', function () { empezar(95); });
+  btnBajo.addEventListener('click', function () { empezar(60); });
+  btnRep.addEventListener('click', function () { if (casoActual) empezar(casoActual); });
+  btnSig.addEventListener('click', function () {
+    if (!poblacion || !hayContagiados(poblacion)) return;
+    siguienteRonda(poblacion, rnd);
+    pintar();
+  });
+})();
+</script>
+</body>
+</html>
