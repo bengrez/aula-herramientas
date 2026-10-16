@@ -107,6 +107,39 @@
     .c.fuente { box-shadow: inset 0 0 0 2px var(--carmesi), 0 0 0 1px #fff, 0 0 0 3px var(--carmesi); }
   }
   #escena { scroll-margin-top: 8px; }
+  .presets { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 10px 0 6px; }
+  .presets button { min-height: 48px; font-size: 0.95rem; padding: 6px 8px; }
+  .presets button:last-child:nth-child(odd) { grid-column: 1 / -1; }
+  .cv-preg { font-size: 0.92rem; color: var(--suave); margin: 0 0 4px; }
+  .sel { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 8px 0; }
+  .sel label { display: block; font-size: 0.9rem; font-weight: 700; }
+  .sel select { display: block; width: 100%; font: inherit; font-weight: 500; min-height: 44px; padding: 6px 8px; margin-top: 2px; border: 2px solid var(--borde); border-radius: 8px; background: #fff; color: var(--pizarra); }
+  .cv-barra { scroll-margin-top: 8px; display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 10px 0 6px; }
+  .cv-barra button.principal { background: var(--pizarra); border-color: var(--pizarra); color: #fff; }
+  #cv-t { display: block; width: 100%; margin: 8px 0 2px; accent-color: var(--cobalto); height: 44px; }
+  .cv-fecha { font-weight: 700; font-size: 1.15rem; margin: 4px 0; }
+  .cv-tabla { font-size: 0.88rem; margin: 0 0 8px; table-layout: fixed; }
+  .cv-tabla th { font-size: 0.75rem; line-height: 1.2; }
+  .cv-tabla th, .cv-tabla td { padding: 5px 5px; vertical-align: middle; }
+  .cv-tabla .ln { width: 16px; margin-right: 4px; }
+  .cv-tabla td { font-variant-numeric: tabular-nums; }
+  .cv-tabla td.nom { font-weight: 700; }
+  .cv-h { margin: 14px 0 4px; font-size: 1rem; line-height: 1.25; }
+  .cv-h small { display: block; font-weight: 500; font-size: 0.82rem; color: var(--suave); }
+  #covid svg { display: block; width: 100%; height: auto; background: #fff; border: 1px solid var(--borde); border-radius: 6px; }
+  .nota { background: var(--cobalto-fondo); border: 1px solid #BFD3FF; border-radius: 6px; padding: 10px 12px; margin-top: 14px; font-size: 0.95rem; }
+  .nota h4 { margin: 0 0 6px; font-size: 1rem; }
+  .nota ul { margin: 0; padding-left: 20px; }
+  .nota li:last-child { margin-bottom: 0; }
+  @media (max-width: 340px) {
+    .cv-tabla { font-size: 0.82rem; }
+    .cv-tabla th, .cv-tabla td { padding: 5px 3px; }
+    .cv-tabla .ln { width: 10px; margin-right: 3px; }
+    .sel select { font-size: 0.8rem; padding: 6px 2px; }
+  }
+  .cv-preg:empty { display: none; }
+  .ln.pa { border-top-color: var(--cobalto); }
+  .ln.pb { border-top-style: dashed; border-top-color: var(--ambar); }
   .supuestos { font-size: 0.92rem; color: var(--suave); }
   footer { text-align: center; color: var(--suave); font-size: 0.85rem; margin-top: 18px; }
 </style>
@@ -150,7 +183,7 @@
   </section>
 
   <section id="simulador">
-    <h2 class="paso">4 · Simulador</h2>
+    <h2 class="paso">4 · Simulador: un modelo simple</h2>
     <h3>Dos poblaciones, una enfermedad</h3>
     <p>Población de 100 personas. Una enfermedad con R<sub>0</sub> = 12, como el sarampión. Un día, 1 persona no vacunada se contagia.</p>
     <p class="supuestos">En cada ronda, las personas que se contagiaron en la ronda anterior se juntan con 12 personas al azar y contagian a las no vacunadas que están sanas. Esas personas se marcan con un anillo rojo, pasan a «Ya se contagió antes» y no vuelven a contagiar. Las vacunadas que reciben un contacto se marcan con un anillo azul: el contagio no pasa. La vacuna protege al 100 %.</p>
@@ -197,8 +230,57 @@
     </div>
   </section>
 
+  <section id="covid">
+    <h2 class="paso">5 · En la realidad: COVID-19</h2>
+    <h3>Países comparados, mes a mes</h3>
+    <p>Datos reales de 2020 a 2022. Cada curva es un país: la azul es el país A y la naranja discontinua, el país B.</p>
+    <ol>
+      <li>Elige una comparación, o elige dos países.</li>
+      <li>Presiona «Reproducir» y mira cómo cambian las tres curvas.</li>
+      <li>Anota una diferencia que veas entre los dos países y una explicación posible.</li>
+    </ol>
+
+    <div class="presets" id="cv-presets" role="group" aria-label="Comparaciones sugeridas"></div>
+    <div class="sel">
+      <label>País A <select id="cv-a"></select></label>
+      <label>País B <select id="cv-b"></select></label>
+    </div>
+
+    <div class="cv-barra">
+      <button type="button" id="cv-play" class="principal">Reproducir</button>
+      <button type="button" id="cv-ini">Volver al inicio</button>
+    </div>
+    <p class="cv-preg" id="cv-preg"></p>
+    <input type="range" id="cv-t" min="0" max="35" step="1" value="35" aria-label="Mes que se muestra">
+    <p id="cv-anuncio" class="solo-lector" aria-live="polite" aria-atomic="true"></p>
+    <p class="cv-fecha" id="cv-fecha"></p>
+    <table class="cv-tabla">
+      <colgroup><col style="width:27%"><col style="width:23%"><col style="width:27%"><col style="width:23%"></colgroup>
+      <thead><tr><th></th><th>Exceso por millón</th><th>Vacunadas</th><th>Medidas</th></tr></thead>
+      <tbody id="cv-cuerpo"></tbody>
+    </table>
+
+    <h4 class="cv-h">Muertes en exceso, acumuladas<small>Por millón de habitantes. Bajo 0: menos muertes de las esperadas.</small></h4>
+    <svg id="cv-exc" viewBox="0 0 340 150" role="img" aria-label="Muertes en exceso acumuladas"></svg>
+    <h4 class="cv-h">Población con vacunación completa<small>% del país. Línea punteada: umbral clásico con R<sub>0</sub> = 3 (67 %), si la vacuna frenara todo contagio.</small></h4>
+    <svg id="cv-vac" viewBox="0 0 340 100" role="img" aria-label="Vacunación completa"></svg>
+    <h4 class="cv-h">Rigurosidad de las medidas<small>Índice de 0 a 100: cuántas medidas había (colegios, trabajo, viajes…).</small></h4>
+    <svg id="cv-str" viewBox="0 0 340 112" role="img" aria-label="Rigurosidad de las medidas"></svg>
+
+    <div class="nota">
+      <h4>Antes de concluir</h4>
+      <ul>
+        <li>Cada país partió distinto: edad de la población, si es isla o tiene fronteras abiertas, camas de cuidados intensivos, pobreza y desigualdad.</li>
+        <li>«Rigurosidad» cuenta cuántas medidas se decretaron. No mide si se cumplieron ni si llegaron a tiempo.</li>
+        <li>El exceso de muertes compara las de cada mes con las esperadas según años anteriores a la pandemia. Es una estimación, pero se puede comparar mejor entre países que las muertes «por COVID», que dependen de cuánto se testeaba y cómo se registraba.</li>
+        <li>Que dos curvas se muevan juntas no prueba que una cause la otra.</li>
+        <li>Las vacunas protegieron mucho contra la enfermedad grave y la muerte. Contra el contagio protegieron menos, menos aún frente a Ómicron, y esa protección bajaba con los meses. Por eso no se logró una inmunidad de rebaño como la del sarampión.</li>
+      </ul>
+    </div>
+  </section>
+
   <section id="dependen">
-    <h2 class="paso">5 · Quiénes dependen del rebaño</h2>
+    <h2 class="paso">6 · Quiénes dependen del rebaño</h2>
     <ul>
       <li>Recién nacidos y bebés que aún no tienen todas sus dosis.</li>
       <li>Personas con defensas bajas, por ejemplo en tratamiento contra el cáncer o con un trasplante.</li>
@@ -208,15 +290,17 @@
   </section>
 
   <section id="conversar">
-    <h2 class="paso">6 · Para conversar</h2>
+    <h2 class="paso">7 · Para conversar</h2>
     <ol>
       <li>Además de ti, ¿quién se beneficia cuando te vacunas?</li>
       <li>¿Qué pasaría con una cobertura de 90 %? Argumenta con la tabla de la sección 3 y con los dos casos.</li>
       <li>¿Qué evidencia necesitarías para saber si una campaña de vacunación funcionó?</li>
+      <li>En los datos de COVID-19, ¿qué país te sorprende? ¿Qué datos necesitarías para explicar la diferencia?</li>
+      <li>Compara Portugal y Bulgaria en 2021. ¿Qué parte de la diferencia podría deberse a la vacunación y qué parte a otros factores?</li>
     </ol>
   </section>
 
-  <footer>En la realidad ninguna vacuna protege al 100 % y las personas no vacunadas suelen vivir cerca unas de otras, así que pueden ocurrir brotes locales aunque la cobertura sea alta.</footer>
+  <footer>En la realidad ninguna vacuna protege al 100 % y las personas no vacunadas suelen vivir cerca unas de otras, así que pueden ocurrir brotes locales aunque la cobertura sea alta.<br><br>Datos de COVID-19 (2020 a 2022), reducidos a series mensuales para esta página: Our World in Data, licencia CC BY 4.0. Muertes en exceso: Human Mortality Database y World Mortality Dataset. Vacunación: reportes oficiales de cada país, recopilados por Mathieu, Ritchie, Ortiz-Ospina et al., «A global database of COVID-19 vaccinations», Nature Human Behaviour (2021). Rigurosidad de las medidas: Oxford COVID-19 Government Response Tracker, Blavatnik School of Government, Universidad de Oxford. Cuando un país dejó de informar vacunación, se mantiene su último dato.</footer>
 </main>
 
 <script>
@@ -553,6 +637,174 @@ function conteos(p) {
       actualizarBotones();
     }
   });
+})();
+</script>
+<script>
+(function () {
+  var D = {"meses":["2020-01","2020-02","2020-03","2020-04","2020-05","2020-06","2020-07","2020-08","2020-09","2020-10","2020-11","2020-12","2021-01","2021-02","2021-03","2021-04","2021-05","2021-06","2021-07","2021-08","2021-09","2021-10","2021-11","2021-12","2022-01","2022-02","2022-03","2022-04","2022-05","2022-06","2022-07","2022-08","2022-09","2022-10","2022-11","2022-12"],"p":{"New Zealand":{"n":"Nueva Zelanda","e":[-10,-5,-20,-16,-81,-144,-219,-327,-397,-421,-451,-435,-413,-411,-413,-416,-423,-446,-460,-472,-505,-540,-544,-535,-534,-517,-448,-388,-317,-257,-158,-146,-145,-132,-114,-83],"v":[0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.3,1.4,4.4,8.8,14.4,23.5,37.2,61.1,69.9,74.4,75.7,76.4,78.2,78.9,79.1,79.3,79.6,79.7,79.7,79.7,79.8,79.8],"s":[4,19,46,95,58,26,22,52,46,26,22,22,22,31,32,22,22,22,22,58,84,81,78,59,51,50,43,26,16,15,15,15,13,11,11,11]},"Australia":{"n":"Australia","e":[-1,7,27,42,32,-6,-46,-83,-118,-142,-142,-131,-121,-113,-98,-83,-44,-24,-11,-25,-38,-9,21,60,174,258,306,362,453,554,663,730,756,790,844,920],"v":[0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.3,1.0,1.9,6.2,15.0,28.1,43.5,63.1,71.8,75.5,77.2,78.2,81.1,82.2,82.6,82.7,82.7,82.7,82.7,82.7,82.7,82.7],"s":[1,19,39,71,67,55,70,75,75,67,64,66,61,62,51,49,46,62,68,70,72,71,66,59,52,41,38,42,33,19,12,11,11,11,11,11]},"Singapore":{"n":"Singapur","e":[34,45,47,68,64,45,16,14,18,4,6,4,-5,0,1,21,27,31,37,47,80,182,275,309,311,372,488,534,580,607,673,739,793,868,923,972],"v":[0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,3.6,7.2,19.8,30.9,37.1,57.9,75.0,79.0,81.0,82.3,83.1,84.5,87.0,88.4,89.1,89.7,90.0,90.1,90.2,90.3,90.4,90.6,90.7],"s":[16,24,35,76,80,66,56,56,56,51,51,51,51,51,51,51,55,58,51,46,44,46,43,43,45,45,45,43,28,28,28,27,19,18,18,18]},"South Korea":{"n":"Corea del Sur","e":[1,2,-12,-20,-30,-27,-29,-12,-3,5,11,5,-25,-54,-68,-76,-77,-73,-55,-29,-4,30,74,147,173,227,508,750,826,834,859,935,1025,1090,1161,1249],"v":[0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.1,0.6,4.2,9.7,13.8,30.3,49.5,74.4,78.9,81.7,84.4,85.0,85.2,85.3,85.4,85.5,85.5,85.5,85.5,85.6,85.6,85.6],"s":[0,37,63,67,44,54,53,53,51,58,53,62,64,64,58,58,51,50,44,50,46,44,42,45,46,42,41,28,14,14,14,14,14,11,11,11]},"Japan":{"n":"Japón","e":[-62,-106,-145,-152,-180,-208,-242,-240,-249,-242,-255,-224,-238,-283,-303,-288,-251,-229,-221,-185,-145,-132,-127,-106,-111,-15,77,104,148,178,213,376,492,577,658,860],"v":[0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.1,0.8,3.3,14.8,33.4,49.5,63.3,75.7,79.8,80.4,80.7,81.0,81.3,82.0,82.4,82.6,82.7,82.9,83.0,83.1,83.1,83.2],"s":[3,22,41,46,42,28,28,33,34,35,37,43,49,50,44,45,49,53,51,51,52,47,47,47,47,47,47,45,45,39,38,38,36,31,31,32]},"Denmark":{"n":"Dinamarca","e":[-32,-112,-192,-156,-176,-189,-192,-200,-188,-190,-178,-128,-42,-113,-244,-305,-290,-282,-247,-183,-134,-44,31,137,213,247,252,286,300,329,387,454,468,538,555,675],"v":[0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.2,2.5,5.2,9.9,19.6,29.6,52.7,68.8,72.1,73.3,74.2,76.6,79.5,79.8,79.9,79.9,80.0,80.0,80.0,80.0,80.1,80.1,80.1,80.1],"s":[0,1,53,70,66,58,57,54,51,47,47,50,68,66,63,65,59,51,43,39,23,20,26,32,33,14,13,11,11,11,11,11,11,11,11,11]},"Norway":{"n":"Noruega","e":[-22,-62,-69,-44,-56,-67,-77,-59,-36,-26,-16,-30,-76,-143,-205,-228,-238,-244,-236,-177,-115,-34,89,217,206,246,338,416,490,567,673,743,811,904,987,1116],"v":[0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.4,3.2,5.5,7.2,19.2,29.0,33.8,57.3,67.6,69.2,70.8,72.3,73.6,74.0,74.2,74.2,74.4,74.5,74.5,74.6,74.6,74.6,74.6,74.6],"s":[0,11,47,76,62,43,41,40,36,35,54,56,65,72,70,70,62,54,50,42,35,20,21,45,49,17,11,11,11,11,11,11,11,11,11,11]},"Sweden":{"n":"Suecia","e":[-39,-78,-84,190,399,473,477,482,476,458,540,716,887,870,814,787,794,789,784,799,830,859,890,935,990,1041,1014,988,1006,1034,1077,1143,1185,1229,1257,1390],"v":[0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.2,2.4,4.1,6.5,13.8,28.9,37.3,53.4,61.2,64.4,66.6,68.8,70.4,71.1,71.4,71.5,71.6,71.7,71.8,71.8,71.9,71.9,71.9,72.0],"s":[0,6,35,65,65,61,59,57,56,56,59,68,69,69,70,65,65,53,42,35,33,16,16,23,41,22,15,11,11,11,11,11,11,11,11,11]},"Chile":{"n":"Chile","e":[13,11,24,33,157,426,511,563,589,640,690,751,876,993,1144,1306,1488,1625,1741,1787,1801,1843,1905,2000,2075,2297,2471,2543,2609,2678,2777,2824,2872,2918,3004,3082],"v":[0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.1,0.3,18.8,34.5,41.1,55.0,64.1,69.8,72.3,77.2,82.4,84.4,86.5,87.9,88.7,89.1,89.4,89.7,89.9,90.1,90.2,90.2,90.2,90.3],"s":[0,0,34,76,79,81,90,88,88,88,81,76,79,79,79,82,81,85,74,58,58,38,32,32,30,29,29,27,27,27,27,27,27,14,14,14]},"Uruguay":{"n":"Uruguay","e":[-36,-21,-35,-56,-134,-311,-432,-563,-641,-689,-716,-669,-559,-520,-407,126,646,968,1000,984,922,935,962,1048,1354,1710,1804,1878,1956,2129,2178,2165,2110,2120,2102,2126],"v":[0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.5,20.2,30.2,49.2,65.7,73.9,75.7,77.2,78.0,78.4,78.9,80.2,83.3,83.8,84.2,84.5,84.6,84.7,84.7,84.8,84.8,84.8],"s":[0,0,34,66,61,59,43,35,38,44,44,58,67,66,71,76,69,58,59,55,56,47,32,29,25,21,12,14,14,14,14,14,14,14,14,14]},"Portugal":{"n":"Portugal","e":[-85,-169,-156,-14,70,86,265,335,413,494,739,927,1639,1834,1746,1676,1635,1610,1640,1698,1748,1809,1917,2022,1919,1913,1922,2003,2146,2317,2541,2590,2661,2712,2800,2965],"v":[0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.8,2.6,4.7,8.8,19.4,32.5,58.0,70.2,79.8,81.8,82.3,83.2,83.7,85.5,85.8,86.0,86.2,86.4,86.5,86.6,86.6,86.7,86.7,86.7],"s":[1,6,51,83,70,60,62,61,60,62,67,67,72,82,78,70,65,64,65,55,50,43,39,41,38,27,18,16,14,14,14,14,13,11,11,11]},"Peru":{"n":"Perú","e":[-11,-43,-88,-25,529,1027,1523,2127,2294,2334,2353,2387,2708,3305,3900,4612,5236,5445,5504,5513,5499,5473,5461,5477,5607,5750,5781,5798,5820,5826,5854,5899,5911,5901,null,null],"v":[0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.1,2.1,4.0,9.6,16.0,25.1,33.5,46.8,56.1,64.9,68.9,73.0,77.2,79.7,80.7,81.4,82.1,82.7,83.0,83.1,83.3,83.5],"s":[0,0,59,94,93,90,78,84,85,81,74,68,61,74,71,67,63,63,63,63,61,58,58,57,54,45,36,34,33,33,29,28,28,21,11,11]},"Brazil":{"n":"Brasil","e":[-3,11,35,85,247,345,444,554,628,703,777,904,1079,1240,1684,2067,2354,2591,2745,2858,2919,2971,3025,3110,3334,3473,3499,3504,3543,3603,3651,3676,3696,3717,3741,3767],"v":[0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.9,2.4,7.3,10.4,12.4,19.3,29.1,42.5,53.9,62.2,66.6,69.6,72.0,74.6,76.1,77.2,78.5,79.0,79.7,80.0,80.0,80.9,81.2],"s":[1,6,44,75,81,77,80,72,69,63,58,64,68,72,69,67,60,62,58,52,56,51,45,58,41,37,35,31,29,28,27,24,22,22,22,22]},"United States":{"n":"Estados Unidos","e":[-27,-40,-18,212,366,428,542,701,785,865,1059,1333,1665,1786,1812,1838,1891,1929,1977,2178,2410,2608,2736,2888,3159,3305,3319,3312,3338,3376,3443,3501,3551,3611,3670,3759],"v":[0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,2.2,9.1,19.5,34.7,44.3,49.3,51.6,54.6,57.6,59.5,61.0,63.4,64.8,65.8,66.2,66.7,67.0,67.3,67.6,67.9,68.2,68.7,68.9,69.2],"s":[0,7,46,73,73,71,69,69,67,66,71,72,72,68,63,55,57,57,49,52,52,52,51,49,47,45,36,29,27,31,31,28,24,24,29,29]},"United Kingdom":{"n":"Reino Unido","e":[-18,-71,-77,534,850,861,842,860,850,887,1031,1158,1516,1696,1666,1582,1533,1519,1538,1627,1722,1835,1938,2028,2004,1973,1966,1963,2066,2113,2226,2329,2374,2513,2600,2704],"v":[0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.7,1.2,6.7,22.2,38.1,49.0,56.8,63.6,66.5,67.7,68.7,70.3,71.8,72.6,73.2,73.7,74.1,74.3,74.8,75.1,75.2,75.2,75.2,75.2],"s":[3,11,37,80,74,71,65,68,66,68,68,72,87,87,80,65,61,53,48,44,42,42,44,43,39,33,22,16,11,11,11,9,6,6,6,6]},"Bulgaria":{"n":"Bulgaria","e":[-176,-193,-312,-366,-404,-403,-345,-242,-188,-98,1141,2209,2332,2416,3002,3973,4426,4542,4643,4872,5402,6488,7593,8239,8924,9599,9826,9917,9936,9885,9935,10052,10112,10179,10189,10166],"v":[0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.2,0.6,1.4,3.1,8.3,11.9,14.7,17.3,19.6,22.3,26.1,28.2,29.4,30.2,30.2,30.3,30.4,30.4,30.4,30.5,30.6,30.6,30.6,30.6],"s":[0,7,49,72,61,43,42,39,37,38,49,54,54,54,56,52,48,59,48,23,43,50,49,46,46,44,36,15,11,11,11,11,11,11,11,11]},"Mexico":{"n":"México","e":[4,-13,-43,-10,304,666,1076,1452,1638,1804,2097,2442,3318,3673,3810,3896,3930,3950,4041,4508,4848,5014,5067,5100,5294,5488,5478,5451,5416,5398,5431,5444,5431,5408,5393,5407],"v":[0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.4,0.7,5.8,9.7,15.3,20.2,26.6,35.7,47.5,51.0,57.1,60.5,61.9,62.5,62.7,62.7,62.7,62.7,62.7,62.7,64.2,64.2,64.2],"s":[0,0,20,82,82,72,71,72,72,72,72,72,72,67,48,45,44,44,49,67,43,39,39,34,41,39,34,26,26,23,29,32,15,14,14,14]}}};
+  var MESES = D.meses, P = D.p, ULT = MESES.length - 1;
+  var ABR = ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'];
+  var COL = ['#2563EB', '#B45309'], DASH = [null, '7 4'];
+  var PRESETS = [
+    { a: 'New Zealand', b: 'Peru', q: '¿Qué diferencia hay en 2020, antes de las vacunas?' },
+    { a: 'South Korea', b: 'United States', q: 'Medidas parecidas en 2020 (unos 50 y 58 sobre 100 en promedio). ¿Y los resultados?' },
+    { a: 'Sweden', b: 'Norway', q: 'Países vecinos. Mira 2020. ¿Qué factores pueden explicar la diferencia?' },
+    { a: 'Chile', b: 'Brazil', q: 'Chile vacunó rápido en 2021. ¿Cómo se ve en las curvas?' },
+    { a: 'Portugal', b: 'Bulgaria', q: 'Vacunación completa a fines de 2022: 87 % y 31 %. Mira cuánto sube cada curva en 2021.' }
+  ];
+  var reducir = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+  var $ = function (id) { return document.getElementById(id); };
+  var SVGNS = 'http://www.w3.org/2000/svg';
+  var sel = [PRESETS[0].a, PRESETS[0].b], t = ULT, playing = false, jugado = false, gen = 0, timer = null;
+  var selA = $('cv-a'), selB = $('cv-b'), btnPlay = $('cv-play'), btnIni = $('cv-ini'), rango = $('cv-t');
+
+  function nombre(k) { return P[k].n; }
+  function mes(i) { var p = MESES[i].split('-'); return ABR[+p[1] - 1] + ' ' + p[0]; }
+  function num(v, suf) { return v === null ? 'sin dato' : String(v).replace('.', ',') + (suf || ''); }
+  function el(tag, attrs, txt) {
+    var e = document.createElementNS(SVGNS, tag);
+    for (var k in attrs) e.setAttribute(k, attrs[k]);
+    if (txt !== undefined) e.textContent = txt;
+    return e;
+  }
+  function limpiar(n) { while (n.firstChild) n.removeChild(n.firstChild); }
+
+  function escalaExceso() {
+    var mn = 0, mx = 0;
+    for (var k = 0; k < 2; k++) {
+      var s = P[sel[k]].e;
+      for (var i = 0; i < s.length; i++) if (s[i] !== null) { if (s[i] < mn) mn = s[i]; if (s[i] > mx) mx = s[i]; }
+    }
+    var pasos = [250, 500, 1000, 2000, 2500, 5000], paso = 5000;
+    for (var j = 0; j < pasos.length; j++) {
+      if (Math.ceil(mx / pasos[j]) - Math.floor(mn / pasos[j]) <= 5) { paso = pasos[j]; break; }
+    }
+    var lo = Math.floor(mn / paso) * paso, hi = Math.ceil(mx / paso) * paso, ticks = [];
+    for (var v = lo; v <= hi; v += paso) ticks.push(v);
+    return { lo: lo, hi: hi, ticks: ticks };
+  }
+
+  function panel(id, serie, H, esc, ref, conAnios) {
+    var svg = $(id), W = 340, L = 48, R = 10, T = 8, B = conAnios ? 22 : 8;
+    var pw = W - L - R, ph = H - T - B;
+    function X(i) { return L + i * pw / ULT; }
+    function Y(v) { return T + ph - (v - esc.lo) * ph / (esc.hi - esc.lo); }
+    limpiar(svg);
+    [0, 12, 24].forEach(function (i) {
+      svg.appendChild(el('line', { x1: X(i), x2: X(i), y1: T, y2: T + ph, stroke: '#E2E8F0', 'stroke-width': 1 }));
+      if (conAnios) svg.appendChild(el('text', { x: X(i) + 2, y: H - 6, 'font-size': 13, fill: '#475569' }, String(2020 + i / 12)));
+    });
+    esc.ticks.forEach(function (v) {
+      svg.appendChild(el('line', { x1: L, x2: W - R, y1: Y(v), y2: Y(v), stroke: v === 0 ? '#94A3B8' : '#CBD5E1', 'stroke-width': 1 }));
+      svg.appendChild(el('text', { x: L - 5, y: Y(v) + 4, 'text-anchor': 'end', 'font-size': 13, fill: '#475569' }, String(v)));
+    });
+    if (ref) {
+      svg.appendChild(el('line', { x1: L, x2: W - R, y1: Y(ref.v), y2: Y(ref.v), stroke: '#475569', 'stroke-width': 1.5, 'stroke-dasharray': '2 3' }));
+    }
+    svg.appendChild(el('line', { x1: X(t), x2: X(t), y1: T, y2: T + ph, stroke: '#1E293B', 'stroke-width': 1, opacity: 0.35 }));
+    for (var k = 1; k >= 0; k--) {
+      var s = P[sel[k]][serie], seg = [];
+      var cerrar = function () {
+        if (seg.length > 1) {
+          var a = { points: seg.join(' '), fill: 'none', stroke: COL[k], 'stroke-width': 3, 'stroke-linejoin': 'round', 'stroke-linecap': 'round' };
+          if (DASH[k]) a['stroke-dasharray'] = DASH[k];
+          svg.appendChild(el('polyline', a));
+        }
+        seg = [];
+      };
+      for (var i = 0; i <= t; i++) {
+        if (s[i] === null) cerrar(); else seg.push(X(i) + ',' + Y(s[i]));
+      }
+      cerrar();
+      if (s[t] !== null) svg.appendChild(el('circle', { cx: X(t), cy: Y(s[t]), r: 4.5, fill: COL[k] }));
+    }
+  }
+
+  function dibujar() {
+    panel('cv-exc', 'e', 150, escalaExceso(), null, false);
+    panel('cv-vac', 'v', 100, { lo: 0, hi: 100, ticks: [0, 50, 100] }, { v: 67 }, false);
+    panel('cv-str', 's', 112, { lo: 0, hi: 100, ticks: [0, 50, 100] }, null, true);
+    $('cv-fecha').textContent = mes(t);
+    rango.value = String(t);
+    var cuerpo = $('cv-cuerpo'); limpiar(cuerpo);
+    var resumen = [];
+    for (var k = 0; k < 2; k++) {
+      var d = P[sel[k]], tr = document.createElement('tr');
+      var c0 = document.createElement('td'); c0.className = 'nom';
+      var ln = document.createElement('span'); ln.className = 'ln ' + (k === 0 ? 'pa' : 'pb');
+      c0.appendChild(ln); c0.appendChild(document.createTextNode(d.n)); tr.appendChild(c0);
+      var vals = [num(d.e[t]), num(d.v[t], ' %'), num(d.s[t])];
+      vals.forEach(function (x) { var c = document.createElement('td'); c.textContent = x; tr.appendChild(c); });
+      cuerpo.appendChild(tr);
+      resumen.push(d.n + ': exceso ' + vals[0] + ', vacunadas ' + vals[1] + ', medidas ' + vals[2]);
+    }
+    [['cv-exc', 'Muertes en exceso acumuladas por millón'], ['cv-vac', 'Población con vacunación completa, %'], ['cv-str', 'Rigurosidad de las medidas, de 0 a 100']].forEach(function (g) {
+      var serie = g[0] === 'cv-exc' ? 'e' : (g[0] === 'cv-vac' ? 'v' : 's');
+      $(g[0]).setAttribute('aria-label', g[1] + ', ' + mes(t) + '. ' + nombre(sel[0]) + ': ' + num(P[sel[0]][serie][t]) + '. ' + nombre(sel[1]) + ': ' + num(P[sel[1]][serie][t]) + '.');
+    });
+    return mes(t) + '. ' + resumen.join('. ') + '.';
+  }
+
+  function anunciar(txt) { $('cv-anuncio').textContent = txt; }
+  function marcarBotones() {
+    btnPlay.textContent = playing ? 'Pausa' : (t >= ULT ? (jugado ? 'Repetir' : 'Reproducir') : (t > 0 ? 'Continuar' : 'Reproducir'));
+    var botones = $('cv-presets').getElementsByTagName('button'), pregunta = '';
+    for (var i = 0; i < botones.length; i++) {
+      var p = PRESETS[i];
+      var on = sel[0] === p.a && sel[1] === p.b;
+      botones[i].setAttribute('aria-pressed', on ? 'true' : 'false');
+      if (on) pregunta = p.q;
+    }
+    $('cv-preg').textContent = pregunta;
+    selA.value = sel[0]; selB.value = sel[1];
+  }
+  function parar() {
+    playing = false; gen++;
+    if (timer !== null) { clearTimeout(timer); timer = null; }
+    marcarBotones();
+  }
+  function tic() {
+    var g = gen;
+    timer = setTimeout(function () {
+      if (g !== gen) return;
+      timer = null;
+      t++;
+      var txt = dibujar();
+      if (t >= ULT) { parar(); anunciar(txt); } else tic();
+    }, 320);
+  }
+  function jugar() {
+    if (t >= ULT) { t = 0; dibujar(); }
+    playing = true; jugado = true; gen++; marcarBotones(); tic();
+  }
+  function comparar(a, b) {
+    parar(); sel = [a, b];
+    $('cv-play').parentNode.scrollIntoView({ block: 'start' });
+    if (reducir) { t = ULT; anunciar(dibujar()); marcarBotones(); return; }
+    t = 0; dibujar(); jugar();
+  }
+
+  var contPresets = $('cv-presets');
+  PRESETS.forEach(function (p, i) {
+    var b = document.createElement('button'); b.type = 'button';
+    b.textContent = nombre(p.a) + ' y ' + nombre(p.b);
+    b.addEventListener('click', function () { comparar(p.a, p.b); });
+    contPresets.appendChild(b);
+  });
+  var claves = []; for (var k in P) claves.push(k);
+  claves.sort(function (x, y) { return nombre(x).localeCompare(nombre(y), 'es'); });
+  claves.forEach(function (k) {
+    [selA, selB].forEach(function (s) { var o = document.createElement('option'); o.value = k; o.textContent = nombre(k); s.appendChild(o); });
+  });
+  selA.addEventListener('change', function () { comparar(selA.value, sel[1]); });
+  selB.addEventListener('change', function () { comparar(sel[0], selB.value); });
+  btnPlay.addEventListener('click', function () { if (playing) { parar(); anunciar(dibujar()); } else jugar(); });
+  btnIni.addEventListener('click', function () { parar(); t = 0; anunciar(dibujar()); marcarBotones(); });
+  rango.addEventListener('input', function () { parar(); t = +rango.value; dibujar(); marcarBotones(); });
+  rango.addEventListener('change', function () { anunciar(dibujar()); });
+  document.addEventListener('visibilitychange', function () { if (document.hidden && playing) parar(); });
+
+  dibujar(); marcarBotones();
 })();
 </script>
 </body>
