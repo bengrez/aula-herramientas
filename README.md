@@ -41,6 +41,25 @@ de aula del IDE; se listan separados para no mezclarlos.
   Autocontenido, sin dependencias externas. Las respuestas escritas se guardan sólo en
   `localStorage` del navegador; no envía datos.
 
+## El hub (`index.html`)
+
+Página de entrada con el lenguaje visual de https://bengrez.github.io (papel y tinta, claro y oscuro, la misma clave `tema` del
+navegador) y una ficha «Para / Entrena» por herramienta. El fondo es una **red de conceptos que aprende**, dibujada en un canvas
+(bloque `RED-CONCEPTOS-START … END` del propio `index.html`, sin dependencias ni llamadas externas; no usa fuentes web):
+
+- **Nodos** = conceptos de las herramientas; **vínculos** = prerrequisitos (flecha) y relaciones (punteados). Los conceptos y vínculos
+  viven en los arreglos `C` y `E` al comienzo del bloque; para sumar una herramienta, se agregan ahí.
+- **Aprende:** un concepto aparece cuando sus prerrequisitos ya están a la vista y se enlaza con ellos; si la luz del cursor (o del dedo) se
+  queda cerca ≥ 0,9 s se **repasa** (la memoria vuelve a 1 y su estabilidad crece, más cuanto más se había olvidado); sin repaso se
+  **olvida** (≈ 45 s). Los vínculos repasados duran más. Tinta = reciente; acento = consolidado.
+- **Feeling del sitio:** luz con borde difuso y estela de ≈ 1,5 s; con el scroll quieto 4 s el tiempo baja un 40 %.
+- **Celular:** el toque hace de cursor, 18 conceptos como tope (25 en tablet, 31 en escritorio) y 30 cuadros por segundo como máximo.
+  Con la pestaña oculta o con el botón «Pausar fondo» no dibuja. Con `prefers-reduced-motion` muestra un estado final fijo.
+- Para pruebas: `window.redConceptos` (`estado()`, `avanzar(seg)`, `apuntar(x, y)`, `soltar()`, `costoMs()`, `llenar(luz)`, `pausa(b)`).
+
+Cada herramienta (salvo `diagnostico-paes/`, una PWA con service worker y CSP propia) trae un enlace «← Aula herramientas» al principio y el
+mismo pie. Las imágenes de `img/` son copias de las del sitio personal.
+
 ## Convención
 
 Cada herramienta vive en su propia carpeta y se enlaza desde este README y desde `index.html`.
