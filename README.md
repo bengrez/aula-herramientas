@@ -61,6 +61,8 @@ navegador) y una ficha «Para / Entrena» por herramienta. El fondo es una **red
 - **Feeling del sitio:** luz con borde difuso y estela de ≈ 1,5 s; con el scroll quieto 4 s el tiempo baja un 40 %.
 - **Celular:** el toque hace de cursor, 20 conceptos como tope (28 en tablet, 38 en escritorio) y 30 cuadros por segundo como máximo.
   Con la pestaña oculta o con el botón «Pausar fondo» no dibuja. Con `prefers-reduced-motion` muestra un estado final fijo.
+- **Sin texto al pasar el cursor:** el nodo sólo se resalta (la luz lo agranda y lo hace más opaco); no hay línea ni cuadro que lo describa. La alternativa
+  accesible es la lista plegada «Conceptos y relaciones de la red» (`#red-lista`). La red no se guarda entre visitas (sin `localStorage`; ése sólo guarda el tema).
 - Para pruebas: `window.redConceptos` (`estado()`, `avanzar(seg)`, `apuntar(x, y)`, `soltar()`, `costoMs()`, `desglose()`, `rotulos()`, `llenar(luz)`, `pausa(b)`).
 
 Cada herramienta (salvo `diagnostico-paes/`, una PWA con service worker y CSP propia) trae un enlace «← Aula herramientas» al principio y el
