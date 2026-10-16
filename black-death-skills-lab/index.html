@@ -190,8 +190,16 @@ body.no-parent .parent{display:none}
   table.opp th{width:34%}
 }
 </style>
+<style>
+/* Enlace al hub «Aula herramientas» y su pie (se agregó con el hub nuevo; no cambia la lógica de la herramienta). */
+.aula-volver,.aula-pie{margin:0;padding:.55rem 1rem;font:500 .85rem/1.4 system-ui,"Segoe UI",Arial,sans-serif;color:inherit;opacity:.85}
+.aula-volver a,.aula-pie a{color:inherit;text-underline-offset:.18em}
+.aula-pie{text-align:center;padding-block:1.25rem 1.5rem}
+@media print{.aula-volver,.aula-pie{display:none}}
+</style>
 </head>
 <body class="no-parent">
+<p class="aula-volver"><a href="../">← Aula herramientas</a></p>
 
 <div class="screen-note">
   <span>Work through this page together, on a shared screen or on paper. Answers typed here are saved in this browser only. Hover over dotted words for definitions. Press <b>N</b> to show or hide the parent page before sharing your screen.</span>
@@ -716,5 +724,6 @@ body.no-parent .parent{display:none}
   });
 })();
 </script>
+<p class="aula-pie"><a href="../">Aula herramientas</a> · Benjamín Moreira-Grez · Santiago, Chile</p>
 </body>
 </html>

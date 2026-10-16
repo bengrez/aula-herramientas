@@ -1,37 +1,1000 @@
-<!DOCTYPE html>
-<html lang="es">
+<!doctype html>
+<html lang="es-CL">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Aula Herramientas</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Aula herramientas</title>
+<meta name="description" content="Herramientas web para explorar, practicar y recoger evidencia formativa en clases de ciencias. Se abren en el navegador, sin instalar nada.">
+<meta name="theme-color" content="#FAF9F6" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#131211" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='4' fill='%23FFFFFF'/%3E%3Cpath d='M8 22L16 9L24 22M8 22H24' fill='none' stroke='%231A1A1A' stroke-width='1.6'/%3E%3Ccircle cx='8' cy='22' r='2.6' fill='%23900008'/%3E%3Ccircle cx='16' cy='9' r='2.6' fill='%231A1A1A'/%3E%3Ccircle cx='24' cy='22' r='2.6' fill='%231A1A1A'/%3E%3C/svg%3E">
+<script>try{var t=localStorage.getItem('tema');if(t==='dark'||t==='light')document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
 <style>
-  body { font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; background: #f7fafc; color: #1a202c; margin: 0; }
-  main { width: min(760px, calc(100% - 32px)); margin: 48px auto; }
-  h1 { color: #2b6cb0; }
-  h2 { color: #2b6cb0; font-size: 1.15rem; margin-top: 40px; }
-  ul { padding-left: 20px; }
-  li { margin-bottom: 10px; }
-  a { color: #2b6cb0; font-weight: 700; text-decoration: none; }
-  a:hover { text-decoration: underline; }
-  p.muted { color: #718096; }
+/* Mismo lenguaje que bengrez.github.io: papel cálido y tinta casi negra, acento burdeos (coral en oscuro), Bricolage para los títulos,
+   Source Serif para el texto, IBM Plex Mono para las notas. Sin fuentes web: sólo las que ya hay en el equipo, con los mismos respaldos
+   ajustados de ancho que usa el sitio (así esta página no hace ninguna llamada externa). */
+@font-face{font-family:"Bricolage Respaldo";src:local("Arial"),local("Liberation Sans"),local("Helvetica Neue"),local("Helvetica");size-adjust:95%}
+@font-face{font-family:"Source Serif Respaldo";src:local("Georgia"),local("Liberation Serif"),local("Times New Roman");size-adjust:100.7%}
+:root{
+  --bg:#FAF9F6; --surface:#F0EEE8; --ink:#1B1A17; --muted:#4A4844; --rule:#DAD7CF; --rule-strong:#B5B1A6;
+  --accent:#900008; --accent-ink:#7A0007; --velo:rgba(250,249,246,.8);
+  --tq:#7B323C; --tb:#366349; --tf:#39577F;   /* tonos de las disciplinas: el acento girado en el círculo de color (química = el mismo burdeos, más suave; biología, verde; física, azul), con la misma luminosidad */
+  --display:"Bricolage Grotesque","Bricolage Respaldo",system-ui,"Segoe UI",Helvetica,Arial,sans-serif;
+  --body:"Source Serif 4","Source Serif Respaldo",Georgia,"Times New Roman",serif;
+  --mono:"IBM Plex Mono",ui-monospace,"SFMono-Regular",Menlo,Consolas,"Liberation Mono",monospace;
+  --page:62rem; --sesgo:.75; --gutter:clamp(1rem,4vw,2.5rem); --bar:3.25rem;
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#131211; --surface:#1C1A18; --ink:#ECE9E2; --muted:#C4C0B8; --rule:#2C2926; --rule-strong:#45413C;
+    --accent:#FF8F74; --accent-ink:#FFA893; --velo:rgba(19,18,17,.8); --tq:#DD9C92; --tb:#93C8A5; --tf:#94B5DB; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#131211; --surface:#1C1A18; --ink:#ECE9E2; --muted:#C4C0B8; --rule:#2C2926; --rule-strong:#45413C;
+  --accent:#FF8F74; --accent-ink:#FFA893; --velo:rgba(19,18,17,.8); --tq:#DD9C92; --tb:#93C8A5; --tf:#94B5DB; color-scheme:dark;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-padding-top:calc(var(--bar) + 1rem);overflow-anchor:none}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 1.0625rem/1.6 var(--body);-webkit-font-smoothing:antialiased;overflow-wrap:break-word}
+.pagina{max-width:var(--page);margin-left:max(0px,calc((100% - var(--page))*var(--sesgo)));margin-right:auto;padding-inline:var(--gutter)}
+a{color:var(--accent-ink);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:.18em}
+a:hover{text-decoration-thickness:2px}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:2px}
+.skip{position:absolute;left:-999px;top:0;z-index:20;background:var(--bg);padding:.5rem 1rem;font-family:var(--display)}
+.skip:focus{left:var(--gutter)}
+h1,h2,h3{font-family:var(--display);font-weight:600;line-height:1.1;margin:0;text-wrap:balance;letter-spacing:-.015em}
+p,ul,ol,dl,dd,figure{margin:0}
+ul,ol{padding:0;list-style:none}
+p+p{margin-top:1em}
+img{max-width:100%;height:auto}
+
+/* ---- barra ---- */
+.barra{position:sticky;top:0;z-index:10}
+.barra-in{background:var(--bg);background-clip:content-box;border-bottom:1px solid var(--rule);display:flex;align-items:center;gap:1.25rem;min-height:var(--bar);font-family:var(--display);font-size:.95rem}
+.marca{font-weight:600;color:var(--ink);text-decoration:none;margin-right:auto;padding-block:.6rem}
+.marca:hover{text-decoration:underline;text-decoration-thickness:1px}
+.barra-in button{font:inherit;color:var(--ink);background:none;border:0;cursor:pointer;padding:.75rem 0;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:.18em}
+.barra-in button:hover{text-decoration-thickness:2px}
+.barra-in .tema{display:inline-grid;place-items:center;width:2.5rem;height:2.5rem;margin-right:-.6rem;padding:0;text-decoration:none}
+.tema i{width:1.05rem;height:1.05rem;border-radius:50%;border:1.5px solid var(--ink);background:linear-gradient(90deg,var(--ink) 50%,transparent 50%)}
+button[hidden]{display:none}
+
+/* ---- portada ---- */
+.hero{padding-block:clamp(2.25rem,6vw,4.5rem) clamp(1.5rem,4vw,2.5rem)}
+.kicker,.lugar{font-family:var(--mono);font-size:.8rem;color:var(--muted)}
+h1{font-size:clamp(2.5rem,5.4vw + 1rem,5.2rem);line-height:.98;letter-spacing:-.035em;max-width:11em;margin-top:.9rem}
+.lede{font-size:clamp(1.12rem,.5vw + 1rem,1.32rem);line-height:1.5;max-width:35em;margin-top:clamp(1.25rem,3vw,2rem)}
+.red-nota{font-family:var(--mono);font-size:.78rem;line-height:1.6;color:var(--muted);max-width:44rem;margin-top:clamp(1.25rem,3vw,2rem)}
+.red-lee{display:block;min-height:1.6em;margin-top:.45rem;color:var(--ink)}
+.red-lee:empty::before{content:"Pasa el cursor, o deja el dedo quieto, cerca de un punto.";color:var(--muted)}
+
+/* ---- secciones ---- */
+.seccion{border-top:1px solid var(--rule-strong);padding-block:clamp(2rem,5vw,3.5rem)}
+.seccion h2{font-size:clamp(1.5rem,1.2vw + 1.15rem,2rem);margin-block:.45rem .6rem}
+.seccion>.pagina>.intro{max-width:38em}
+.estado{font-family:var(--mono);font-size:.8rem;line-height:1.4;color:var(--ink);display:block;margin-top:.45rem}
+.estado::before{content:"";display:inline-block;width:.66em;height:.66em;margin-right:.5em;border-radius:50%;border:1.5px solid var(--accent)}
+.e-uso::before{background:var(--accent)}
+.e-nuevo::before{background:linear-gradient(90deg,var(--accent) 50%,transparent 50%)}
+
+/* ---- herramientas: el patrón «Para / Entrena» del sitio ---- */
+.herr{position:relative;display:grid;grid-template-columns:minmax(0,15rem) minmax(0,1fr);gap:1rem clamp(1.25rem,3vw,2rem);margin-top:1.25rem;padding-top:1.25rem;border-top:1px solid var(--rule)}
+.herr-medio{align-self:start}
+.herr img,.tipo{display:block;width:100%;border:1px solid var(--rule)}
+.tipo{aspect-ratio:3/2;background:var(--surface);display:flex;flex-direction:column;justify-content:center;align-items:center;gap:.4rem;padding:.75rem;text-align:center}
+.tipo b{font-family:var(--display);font-weight:600;font-size:clamp(1.5rem,1.2vw + 1.1rem,2rem);letter-spacing:-.02em;line-height:1.05;color:var(--ink)}
+.tipo span{font-family:var(--mono);font-size:.74rem;color:var(--muted);line-height:1.35}
+.herr:hover img,.herr:hover .tipo{border-color:var(--accent)}
+.herr h3{font-size:1.3rem;letter-spacing:-.01em;line-height:1.2}
+.herr h3 a{color:inherit;text-decoration-color:var(--accent)}
+.herr h3 a::after{content:"";position:absolute;inset:0}
+.herr h3 a:focus-visible{outline:0}
+.herr h3 a:focus-visible::after{outline:2px solid var(--accent);outline-offset:4px;border-radius:2px}
+.sub{font-family:var(--display);color:var(--muted);margin-top:.15rem}
+.campos{display:grid;grid-template-columns:5.5rem 1fr;gap:.45rem 1rem;margin-top:.9rem;font-size:.98rem;line-height:1.45}
+.campos dt{font-family:var(--display);font-size:.9rem;color:var(--muted);padding-top:.08rem}
+@media (max-width:640px){.herr{grid-template-columns:1fr}.campos{grid-template-columns:1fr;gap:.1rem}.campos dd+dt{margin-top:.5rem}.herr-medio{max-width:15rem}}
+
+/* ---- la red: lista de conceptos (para quien no ve el fondo) ---- */
+details.mas{margin-top:1.25rem;font-size:.98rem}
+details.mas summary{cursor:pointer;font-family:var(--display);padding-block:.5rem}
+.redlista{margin-top:.75rem}
+.redlista ul{columns:18rem;column-gap:1.5rem;font-size:.92rem;line-height:1.5}
+.redlista li{break-inside:avoid;margin-bottom:.2rem}
+
+footer{border-top:1px solid var(--rule);padding-block:1.5rem 2.5rem;font-family:var(--mono);font-size:.78rem;line-height:1.6;color:var(--muted)}
+
+/* ---- texto protegido sobre la red (la misma técnica del sitio): cada bloque lleva un velo del color de la página y una sombra
+   del mismo color, con desenfoque; los puntos pasan «por detrás» y se atenúan bajo el texto sin desaparecer. Sólo con el fondo activo. ---- */
+.red-viva :is(.hero .kicker,.hero h1,.hero .lede,.red-nota,.seccion h2,.intro,.herr,details.mas,footer .pagina){background:var(--velo);box-shadow:0 0 12px 9px var(--velo);border-radius:3px}
+.red-viva .herr{margin-inline:-.25rem;padding-inline:.25rem}
+@media (max-width:639px){
+  :root{--gutter:1.3rem}
+  body{line-height:1.7}
+  .herr{margin-top:2rem;padding-top:1.75rem;gap:1.25rem}
+  .campos{gap:.7rem 1rem;line-height:1.6}
+}
+@media print{canvas{display:none!important}.red-viva *{background:none!important;box-shadow:none!important}}
 </style>
 </head>
 <body>
-<main>
-  <h1>Aula Herramientas</h1>
-  <p class="muted">Herramientas web estáticas para explorar, practicar y recoger evidencia formativa.</p>
-  <ul>
-    <li><a href="diagnostico-paes/">Atlas — diagnóstico PAES Ciencias</a> — demostración técnica offline-first, sin nota; todavía no aplicar a estudiantes.</li>
-    <li><a href="autodiagnostico-bienestar-salud/">Autodiagnóstico de Bienestar y Salud</a> — III° B medio, Cs. Ciudadanía, Unidad 4.</li>
-    <li><a href="tabla-periodica-reactiva/">Tabla periódica reactiva — Imán y Escudo</a> — 8° Básico, Química, Guía N° 3 (tendencias periódicas y tipo de enlace).</li>
-    <li><a href="vacunas-rebano/">Vacunas e inmunidad de rebaño</a> — Cs. para la Ciudadanía, IV° medio (simulador de dos casos y comparación de países con datos reales de COVID-19).</li>
-  </ul>
+<a class="skip" href="#contenido">Saltar al contenido</a>
 
-  <h2>Aparte: apoyo escolar en inglés</h2>
-  <p class="muted">Recursos para acompañar estudios de secundaria en Australia (Year 8). No forman parte del trabajo de aula del IDE.</p>
-  <ul>
-    <li><a href="black-death-skills-lab/">The Black Death: a historian's skills lab</a> — Year 8 HASS (History). Laboratorio de habilidades de análisis de fuentes: cuatro fuentes, diez preguntas, tres herramientas del historiador y definiciones al pasar el mouse. Se completa junto a un adulto; las respuestas se guardan sólo en el navegador.</li>
-  </ul>
+<header class="barra">
+  <div class="pagina barra-in">
+    <a class="marca" href="https://bengrez.github.io/">← Benjamín Moreira-Grez</a>
+    <button type="button" id="pausa" hidden aria-pressed="false">Pausar fondo</button>
+    <button type="button" class="tema" id="tema" hidden><i aria-hidden="true"></i></button>
+  </div>
+</header>
+
+<main id="contenido">
+
+<div class="hero pagina">
+  <p class="kicker">Santiago, Chile</p>
+  <h1>Aula herramientas</h1>
+  <p class="lede">Herramientas web para explorar, practicar y recoger evidencia formativa en clases de ciencias. Se abren en el navegador, sin instalar nada, y están pensadas para el celular. Cada ficha dice qué guarda y dónde.</p>
+  <p class="red-nota">El fondo es una red de conceptos de ciencias que crece como una raíz: una punta baja por un costado de la página y, al avanzar, descubre un concepto. Se refuerza si te detienes cerca y se desvanece si la descuidas.
+    <span class="red-lee" id="red-lee"></span></p>
+</div>
+
+<section class="seccion" aria-labelledby="h-aula">
+  <div class="pagina">
+    <h2 id="h-aula">Para la sala de clases</h2>
+    <p class="intro">Cuatro herramientas, de enseñanza básica a cuarto medio. Ninguna pide cuenta ni correo.</p>
+
+    <article class="herr">
+      <div class="herr-medio"><img src="img/tabla-periodica.webp" width="1200" height="1000" alt="" loading="lazy" decoding="async"></div>
+      <div>
+        <h3><a href="tabla-periodica-reactiva/">Tabla periódica reactiva</a></h3>
+        <p class="sub">Imán y Escudo</p>
+        <p class="estado e-uso">en uso en clases</p>
+        <dl class="campos">
+          <dt>Para</dt>
+          <dd>Química, 8.º básico (CN08 OA14), guía N.º 3.</dd>
+          <dt>Entrena</dt>
+          <dd>Tendencias periódicas por posición, sin memorizar valores: radio atómico, energía de ionización, electronegatividad y tipo de enlace.</dd>
+          <dt>Modos</dt>
+          <dd>Comparación guiada, práctica con pistas graduales y modo docente para proyectar los casos de la guía.</dd>
+          <dt>Datos</dt>
+          <dd>Trabaja sólo en el navegador.</dd>
+        </dl>
+      </div>
+    </article>
+
+    <article class="herr">
+      <div class="herr-medio"><img src="img/autodiagnostico.webp" width="1400" height="386" alt="" loading="lazy" decoding="async"></div>
+      <div>
+        <h3><a href="autodiagnostico-bienestar-salud/">Autodiagnóstico de Bienestar y Salud</a></h3>
+        <p class="estado e-uso">en uso en clases</p>
+        <dl class="campos">
+          <dt>Para</dt>
+          <dd>Ciencias para la Ciudadanía, tercero medio, unidad 4.</dd>
+          <dt>Entrena</dt>
+          <dd>Factores biológicos, ambientales y sociales de la salud (alimentación, estrés y sueño, consumo, actividad física, entorno); elegir uno para investigar en grupo.</dd>
+          <dt>Resultado</dt>
+          <dd>Veinticuatro preguntas en seis bloques, semáforo por bloque y global. Guía para reflexionar, no diagnóstico.</dd>
+          <dt>Datos</dt>
+          <dd>Cálculo en el dispositivo; no guarda ni envía respuestas.</dd>
+        </dl>
+      </div>
+    </article>
+
+    <article class="herr">
+      <div class="herr-medio"><div class="tipo" aria-hidden="true"><b>1 − 1/R₀</b><span>umbral de inmunidad de rebaño</span></div></div>
+      <div>
+        <h3><a href="vacunas-rebano/">Vacunas e inmunidad de rebaño</a></h3>
+        <p class="estado e-nuevo">recién publicada</p>
+        <dl class="campos">
+          <dt>Para</dt>
+          <dd>Ciencias para la Ciudadanía, cuarto medio, Bienestar y Salud.</dd>
+          <dt>Entrena</dt>
+          <dd>Por qué la protección de un grupo cuida también a quien no se vacunó: el umbral 1 − 1/R₀, un simulador de dos casos (cobertura alta y baja) y la lectura de datos reales de COVID-19 entre 2020 y 2022.</dd>
+          <dt>Formato</dt>
+          <dd>Página de lectura vertical, pensada para el celular.</dd>
+          <dt>Datos</dt>
+          <dd>No guarda ni envía nada.</dd>
+        </dl>
+      </div>
+    </article>
+
+    <article class="herr">
+      <div class="herr-medio"><div class="tipo" aria-hidden="true"><b>Atlas</b><span>mapa de aprendizaje, sin nota</span></div></div>
+      <div>
+        <h3><a href="diagnostico-paes/">Atlas, diagnóstico PAES Ciencias</a></h3>
+        <p class="estado e-nuevo">demostración técnica · aún no se aplica a estudiantes</p>
+        <dl class="campos">
+          <dt>Para</dt>
+          <dd>Enseñanza media, preparación de la PAES de Ciencias.</dd>
+          <dt>Entrena</dt>
+          <dd>Habilidades científicas del marco PAES. Una sesión breve que termina en un mapa cualitativo de lo que ya se domina y de lo que falta, y una práctica de Biología por unidad (banco en revisión docente).</dd>
+          <dt>Datos</dt>
+          <dd>Sin nombres ni nota. El avance queda en el dispositivo y funciona sin conexión.</dd>
+        </dl>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section class="seccion" aria-labelledby="h-aparte">
+  <div class="pagina">
+    <h2 id="h-aparte">Aparte: apoyo escolar en inglés</h2>
+    <p class="intro">Recursos para acompañar estudios de secundaria en Australia (Year 8). No forman parte del trabajo de aula del IDE.</p>
+
+    <article class="herr">
+      <div class="herr-medio"><div class="tipo" aria-hidden="true"><b>1347–1353</b><span>four sources, ten questions</span></div></div>
+      <div>
+        <h3><a href="black-death-skills-lab/">The Black Death: a historian’s skills lab</a></h3>
+        <p class="sub">Year 8 HASS (History)</p>
+        <dl class="campos">
+          <dt>Para</dt>
+          <dd>Year 8, History. En inglés australiano; se completa junto a un adulto.</dd>
+          <dt>Entrena</dt>
+          <dd>Analizar fuentes («¿puedo confiar en esta fuente?»), encadenar causa y consecuencia y argumentar a partir de la evidencia, con cuatro fuentes y diez preguntas.</dd>
+          <dt>Datos</dt>
+          <dd>Las respuestas escritas se guardan sólo en el navegador; no se envía nada.</dd>
+        </dl>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section class="seccion" aria-labelledby="h-red">
+  <div class="pagina">
+    <h2 id="h-red">La red de fondo</h2>
+    <p class="intro">Es un adorno que enseña una idea: aprender es repasar a tiempo. Crece como la raíz de la página principal: un eje que baja por el margen izquierdo y ramas que salen de él. Cada punto es un concepto de ciencias del currículum escolar (algunos son los temas de estas herramientas). En el eje van los prerrequisitos, con flecha; en las ramas, las relaciones, punteadas. Un concepto aparece cuando la punta llega, se refuerza si te detienes cerca (con el cursor o con el dedo) y se desvanece si lo descuidas; lo repasado a tiempo dura más y se ve con un aro. Si no ves el fondo, esta es la lista de los conceptos que lo forman.</p>
+    <details class="mas" id="red-detalle">
+      <summary>Conceptos y relaciones de la red</summary>
+      <div class="redlista" id="red-lista"></div>
+    </details>
+  </div>
+</section>
+
 </main>
+
+<footer><div class="pagina"><a href="https://bengrez.github.io/">← Benjamín Moreira-Grez</a> · Aula herramientas · Santiago, Chile. Sin cookies ni servicios externos; las herramientas dicen en su ficha qué guardan.</div></footer>
+
+<script>
+/* Tema claro u oscuro: parte del sistema; el botón lo cambia y lo recuerda en este navegador (la misma clave «tema» del sitio). */
+(function(){
+  var b=document.getElementById('tema'), root=document.documentElement; if(!b||!window.matchMedia) return;
+  function oscuro(){ var t=root.getAttribute('data-theme'); return t?t==='dark':window.matchMedia('(prefers-color-scheme: dark)').matches; }
+  function rotular(){ b.setAttribute('aria-label',oscuro()?'Cambiar a tema claro':'Cambiar a tema oscuro'); }
+  b.addEventListener('click',function(){
+    var t=oscuro()?'light':'dark'; root.setAttribute('data-theme',t);
+    try{ localStorage.setItem('tema',t); }catch(e){}
+    rotular(); window.dispatchEvent(new Event('tema-cambio'));
+  });
+  rotular(); b.hidden=false;
+})();
+</script>
+
+<script>
+/*RED-CONCEPTOS-START*/
+/* Fondo del hub: una red de conceptos de ciencias que crece como la raíz del sitio principal y aprende (aula-herramientas, 2026-10-16).
+   Mismo lugar y mismo modo de crecer que la raíz de bengrez.github.io (quimiotaxis.js, iteración 043): nace arriba, en el margen izquierdo, centrada entre el
+   borde de la ventana y la columna de texto, y baja por colonización del espacio (Runions, Lane y Prusinkiewicz 2007): un eje principal con gravitropismo y
+   puntas laterales que salen de él (plagiotropismo que se cierra con el largo), atraídas por puntos de «nutriente» repartidos en el margen, que ninguna otra punta
+   puede quitarles y que se consumen al alcanzarlos. La diferencia con la raíz: cada punta que avanza descubre un concepto. Cada cierto largo del trazado deja un
+   nodo, y el eje es una cadena de prerrequisitos (flechas) mientras que las laterales brotan de él como relaciones (punteadas). Algunas relaciones cruzadas
+   unen ramas vecinas y cierran la red.
+
+   Cada concepto es de una disciplina (biología, química o física): tono propio y forma propia (círculo, hexágono, triángulo), así que no depende sólo del color.
+   Cada concepto tiene una memoria s (0 a 1, lo que se ve) que decae como en la curva del olvido, s·exp(−t/S), con estabilidad S (segundos).
+   · Aparece: una punta crece desde su prerrequisito (sólo si éste está a la vista) y al llegar deja el concepto.
+   · Se refuerza: si la luz se queda cerca (el cursor o el dedo casi quietos ≥ 0,9 s) se repasa: s vuelve a 1 y S crece, más cuanto más se había olvidado
+     (repaso espaciado). Los vínculos del concepto repasado se refuerzan también y duran más (su propia estabilidad). Tono pleno y aro = consolidado.
+   · Se desvanece: sin repaso, S es corta (S0 = 15 s) y el concepto se olvida en ≈ 45 s; deja una huella (se reaprende más rápido). Un vínculo olvidado no
+     vuelve solo: la punta lo rehace cuando uno de sus extremos reaparece.
+   Mismo feeling del sitio: luz con borde difuso, estela de ≈ 1,5 s, calma al leer (el tiempo baja un 40 % con el scroll quieto 4 s). El canvas no captura eventos.
+   Con prefers-reduced-motion: un estado final fijo y legible. Sin red ni servicios externos.
+   Para pruebas: window.redConceptos = {estado(), avanzar(seg), apuntar(x, y), soltar(), costoMs(), cuadros(), llenar(luz), pausa(b)}. */
+(function () {
+  var reducir = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+  var raiz = document.documentElement;
+
+  var DISC = { B: 'Biología', Q: 'Química', F: 'Física' };
+  var HERR = {
+    tp: 'Tabla periódica reactiva', ad: 'Autodiagnóstico de bienestar', va: 'Vacunas e inmunidad de rebaño',
+    paes: 'Atlas · diagnóstico PAES', bd: 'The Black Death'
+  };
+  /* Conceptos: [id, etiqueta, disciplina, padre, tipo de vínculo con el padre (p prerrequisito, r relación),
+     rol (e sigue el eje, c sigue la rama del padre, i/d brota una lateral a la izquierda/derecha), herramienta, prioridad (1 = se queda en el celular)].
+     El padre va siempre antes que sus hijos. El eje (e) es una ruta sugerida de prerrequisitos, de la materia a la salud pública. */
+  var C = [
+    ['mat', 'Materia y estados', 'Q', null, 'p', 'e', '', 1],
+    ['ato', 'Átomo y modelos atómicos', 'Q', 'mat', 'p', 'e', '', 1],
+    ['tab', 'Tabla periódica', 'Q', 'ato', 'p', 'e', 'tp', 1],
+    ['enl', 'Enlace químico', 'Q', 'tab', 'p', 'e', 'tp', 1],
+    ['rea', 'Reacciones químicas', 'Q', 'enl', 'p', 'e', '', 1],
+    ['cel', 'Célula', 'B', 'rea', 'p', 'e', 'paes', 1],
+    ['met', 'Metabolismo celular', 'B', 'cel', 'p', 'e', '', 1],
+    ['inm', 'Sistema inmune', 'B', 'met', 'p', 'e', 'va', 1],
+    ['vac', 'Vacunas', 'B', 'inm', 'p', 'e', 'va', 1],
+    ['reb', 'Inmunidad de rebaño', 'B', 'vac', 'p', 'e', 'va', 1],
+    ['cin', 'Modelo cinético de partículas', 'F', 'mat', 'r', 'd', '', 2],
+    ['tem', 'Temperatura y calor', 'F', 'cin', 'p', 'c', '', 3],
+    ['med', 'Medición y magnitudes', 'F', 'mat', 'r', 'i', 'paes', 3],
+    ['mov', 'Fuerza y movimiento', 'F', 'med', 'p', 'c', '', 3],
+    ['car', 'Carga eléctrica', 'F', 'ato', 'r', 'i', '', 2],
+    ['ele', 'Electricidad y circuitos', 'F', 'car', 'p', 'c', '', 3],
+    ['rad', 'Radio atómico', 'Q', 'tab', 'r', 'd', 'tp', 2],
+    ['ion', 'Energía de ionización', 'Q', 'rad', 'p', 'c', 'tp', 3],
+    ['neg', 'Electronegatividad', 'Q', 'ion', 'p', 'c', 'tp', 3],
+    ['agu', 'Agua y disoluciones', 'Q', 'enl', 'r', 'i', '', 2],
+    ['phh', 'Ácidos, bases y pH', 'Q', 'agu', 'p', 'c', '', 3],
+    ['ene', 'Energía y sus transformaciones', 'F', 'rea', 'r', 'd', '', 2],
+    ['ond', 'Ondas: luz y sonido', 'F', 'ene', 'r', 'c', '', 3],
+    ['cons', 'Conservación de la masa', 'Q', 'rea', 'r', 'i', '', 3],
+    ['mit', 'Mitosis y meiosis', 'B', 'cel', 'r', 'd', 'paes', 2],
+    ['adn', 'ADN y herencia', 'B', 'mit', 'p', 'c', '', 3],
+    ['fot', 'Fotosíntesis', 'B', 'cel', 'r', 'i', '', 3],
+    ['ali', 'Alimentación y nutrición', 'B', 'met', 'r', 'i', 'ad', 2],
+    ['act', 'Actividad física', 'B', 'ali', 'p', 'c', 'ad', 3],
+    ['sal', 'Factores de la salud', 'B', 'met', 'r', 'd', 'ad', 2],
+    ['sue', 'Sueño y estrés', 'B', 'sal', 'p', 'c', 'ad', 3],
+    ['cnt', 'Contagio y transmisión', 'B', 'inm', 'r', 'd', 'va', 2],
+    ['r0', 'Número reproductivo R₀', 'B', 'cnt', 'p', 'c', 'va', 3],
+    ['pes', 'Peste negra (1347–1353)', 'B', 'inm', 'r', 'i', 'bd', 3],
+    ['cob', 'Cobertura de vacunación', 'B', 'vac', 'r', 'i', 'va', 2],
+    ['umb', 'Umbral 1 − 1/R₀', 'B', 'cob', 'p', 'c', 'va', 3],
+    ['cov', 'Datos reales de COVID-19', 'B', 'reb', 'r', 'i', 'va', 2],
+    ['mod', 'Modelos y simulación', 'B', 'reb', 'r', 'd', 'va', 3]
+  ];
+  /* relaciones cruzadas entre ramas (cierran la red): [a, b, tipo] */
+  var EX = [
+    ['ene', 'met', 'r'], ['fot', 'ene', 'r'], ['fot', 'rea', 'r'], ['neg', 'enl', 'p'], ['car', 'enl', 'r'], ['phh', 'rea', 'r'],
+    ['r0', 'umb', 'p'], ['mod', 'umb', 'r'], ['pes', 'cnt', 'r'], ['cov', 'med', 'r'], ['tem', 'ene', 'r'], ['sal', 'ali', 'r'],
+    ['mod', 'cov', 'r'], ['cin', 'ato', 'r']
+  ];
+
+  /* ---- la lista de conceptos (para quien no ve el fondo), por disciplina y generada desde los mismos datos ---- */
+  (function lista() {
+    var cont = document.getElementById('red-lista'); if (!cont) return;
+    var nombre = {}; C.forEach(function (c) { nombre[c[0]] = c[1]; });
+    var ul = document.createElement('ul');
+    C.forEach(function (c) {
+      var li = document.createElement('li'), partes = c[1];
+      if (c[3]) partes += (c[4] === 'p' ? ' (viene de: ' : ' (se relaciona con: ') + nombre[c[3]] + ')';
+      if (c[6]) partes += ' · ' + HERR[c[6]];
+      li.textContent = partes; ul.appendChild(li);
+    });
+    cont.appendChild(ul);
+  })();
+
+  /* ---- parámetros ---- */
+  var S0 = 15, SMAX = 360, FIRM_K = Math.log(SMAX / S0);          // estabilidad inicial y máxima (s)
+  var OLVIDO = 0.05;                                              // por debajo de esta memoria el concepto se olvida
+  var DWELL = 0.9, DWELL_VEL = 80, REPASO_ESPERA = 4;             // s de luz quieta para repasar; px/s; s antes de poder repasarlo de nuevo
+  var CALMA_ESPERA = 4, CALMA_F = 0.6, CALMA_T = 1.5;             // la calma del sitio: con el scroll quieto 4 s el tiempo baja un 40 %
+  var LUZ_RET = 0.7, LUZ_CAE = 0.8, LUZ_PASO = 34, LUZ_MAX = 26;  // estela: sello que se mantiene 0,7 s y cae en 0,8 s (1,5 s en total, como el sitio)
+  var A_MAX = 0.88;                                               // opacidad tope de los puntos y líneas
+  var V_CREC = 62, V_CREC_RAP = 125;                              // velocidad de las puntas (px/s) y la de la primera armada
+  var RZ_GP = 0.6, RZ_KR = 0.2, RZ_ST = 0.03, RZ_PAT = 1.4, RZ_CONO = 0.1, RZ_AC = 7;   // los de quimiotaxis.js (gravitropismo, resorte al centro, ruido, peso de los atractores)
+
+  /* ---- estado ---- */
+  var cv = document.createElement('canvas');
+  cv.setAttribute('aria-hidden', 'true');
+  cv.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;pointer-events:none';
+  document.body.insertBefore(cv, document.body.firstChild);
+  var ctx = cv.getContext('2d');
+  if (!ctx) return;
+
+  var W = 0, H = 0, dpr = 1, movil = false, tope = 38, R = 200, modo = 'margen';
+  var xl = 0, xr = 0, xc = 0, y0 = 0, y1 = 0;
+  var nodos = [], aristas = [], porId = {};
+  var memoria = {};                       // por id: lo que se recuerda aunque la red se reconstruya (s, S, repasos)
+  var col = { ink: [27, 26, 23], acc: [144, 0, 8], bg: [250, 249, 246] };
+  var TON = { Q: [123, 50, 60], B: [54, 99, 73], F: [57, 87, 127] };
+  var colIzq = 0, colDer = 0;             // columna de texto (px de ventana)
+  var mx = -9999, my = -9999, cx = -9999, cy = -9999, act = 0, objAct = 0, vel = 0;
+  var sellos = [];                        // estela: {x, y, t}
+  var tScroll = performance.now(), scrollY0 = 0, agit = 0, ritmo = 1, reloj = 0, tReal = 0;
+  var tIntro = 0, introEsp = 0.4, tCruz = 0, anillos = [];
+  var bajo = false, emaDt = 16, lentos = 0, tAdapt = performance.now(), pausado = false, costoSum = 0, costoN = 0, ultimoLee = '', tLee = 0;
+  var halo = null, nEtiq = 0, nVis = 0, tPos = 0, tPaso = 0, tDib = 0, tEd = 0, tNo = 0, tEt = 0;
+
+  function rnd(seed) { var a = seed >>> 0; return function () { a = (a + 0x6D2B79F5) >>> 0; var t = a; t = Math.imul(t ^ (t >>> 15), t | 1); t ^= t + Math.imul(t ^ (t >>> 7), t | 61); return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }; }
+  function mezcla(a, b, t) { return [a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t, a[2] + (b[2] - a[2]) * t]; }
+  function rgba(c, a) { return 'rgba(' + (c[0] | 0) + ',' + (c[1] | 0) + ',' + (c[2] | 0) + ',' + a.toFixed(3) + ')'; }
+  function suave(x) { x = x < 0 ? 0 : x > 1 ? 1 : x; return x * x * (3 - 2 * x); }
+
+  function leerColores() {
+    var cs = getComputedStyle(raiz);
+    function hex(n, d) { var v = cs.getPropertyValue(n).trim(), m = /^#([0-9a-f]{6})$/i.exec(v); return m ? [parseInt(m[1].substr(0, 2), 16), parseInt(m[1].substr(2, 2), 16), parseInt(m[1].substr(4, 2), 16)] : d; }
+    col.ink = hex('--ink', col.ink); col.acc = hex('--accent', col.acc); col.bg = hex('--bg', col.bg);
+    TON.Q = hex('--tq', TON.Q); TON.B = hex('--tb', TON.B); TON.F = hex('--tf', TON.F);
+    halo = null; nodos.forEach(function (n) { n.sp = null; });
+  }
+  function crearHalo() {
+    var s = 128, h = document.createElement('canvas'); h.width = h.height = s;
+    var g = h.getContext('2d'), gr = g.createRadialGradient(s / 2, s / 2, 0, s / 2, s / 2, s / 2);
+    var tono = mezcla(col.acc, col.bg, 0.6);
+    gr.addColorStop(0, rgba(tono, 0.06)); gr.addColorStop(0.5, rgba(tono, 0.03)); gr.addColorStop(1, rgba(tono, 0));
+    g.fillStyle = gr; g.fillRect(0, 0, s, s); halo = h;
+  }
+
+  /* ---- construcción: qué conceptos entran (tope según el dispositivo) y dónde nacen (la raíz crece en el margen) ---- */
+  function construir() {
+    W = window.innerWidth; H = window.innerHeight;
+    movil = W < 640 || (window.matchMedia && window.matchMedia('(pointer: coarse)').matches && W < 1024);
+    dpr = Math.min(window.devicePixelRatio || 1, movil ? 1.25 : 1.5);
+    cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    tope = W < 640 ? 20 : W < 1024 ? 28 : C.length;
+    if (H < 520) tope = Math.min(tope, 16);
+    R = movil ? Math.max(120, W * 0.4) : Math.max(150, Math.min(300, W * 0.2));
+    var rc = document.querySelector('#contenido .pagina');
+    if (rc) { var b = rc.getBoundingClientRect(), gp = parseFloat(getComputedStyle(rc).paddingLeft) || 0; colIzq = b.left + gp; colDer = b.right - gp; }
+    else { colIzq = W * 0.12; colDer = W * 0.88; }
+    modo = colIzq >= 190 && H >= 480 ? 'margen' : 'ancho';   // con margen suficiente la raíz vive en él (como en el sitio); si no, crece bajo el texto con el velo
+    raiz.classList.toggle('red-viva', modo === 'ancho');
+    leerColores();
+
+    var cand = C.map(function (c, i) { return { c: c, i: i }; });
+    cand.sort(function (a, b) { return a.c[7] - b.c[7] || a.i - b.i; });
+    var dentro = {}, n = 0;
+    cand.forEach(function (o) { if (n >= tope) return; if (o.c[3] && !dentro[o.c[3]]) return; dentro[o.c[0]] = true; n++; });
+    nodos = []; porId = {};
+    C.forEach(function (c) {
+      if (!dentro[c[0]]) return;
+      var m = memoria[c[0]] || (memoria[c[0]] = { s: 0, S: S0, rep: 0, huella: 0, esp: 0, dw: 0, vista: false });
+      var nd = { id: c[0], et: c[1], d: c[2], pa: c[3] ? porId[c[3]] : null, tp: c[4], rol: c[5], h: c[6], m: m, hij: [], f: 0.75 + 0.9 * rnd(1000 + C.indexOf(c) * 7)(), x: 0, y: 0, px: 0, py: 0, t: 0, ar: null, deg: 0 };
+      porId[c[0]] = nd; nodos.push(nd);
+      if (nd.pa) nd.pa.hij.push(nd);
+    });
+    var viejas = {}; aristas.forEach(function (a) { viejas[a.a.id + '>' + a.b.id] = a; });
+    aristas = [];
+    crecer();
+    nodos.forEach(function (nd) {
+      if (!nd.pa) return;
+      var a = unir(nd.pa, nd, nd.tp, 'arbol', nd.tr);
+      var o = viejas[nd.pa.id + '>' + nd.id]; if (o) { a.w = o.w; a.p = o.p; a.Se = o.Se; }
+      nd.ar = a;
+    });
+    EX.forEach(function (e) {
+      var a = porId[e[0]], b = porId[e[1]]; if (!a || !b) return;
+      var d = Math.hypot(a.x - b.x, a.y - b.y), dmax = modo === 'margen' ? 190 : 150;
+      if (d > dmax || d < 14) return;
+      var mxp = (a.x + b.x) / 2, myp = (a.y + b.y) / 2, nx = -(b.y - a.y) / d, ny = (b.x - a.x) / d, ar = d * 0.16 * (a.x < b.x ? 1 : -1), pts = [], k;
+      for (k = 0; k <= 8; k++) {
+        var u = k / 8, qx = (1 - u) * (1 - u) * a.x + 2 * u * (1 - u) * (mxp + nx * ar) + u * u * b.x, qy = (1 - u) * (1 - u) * a.y + 2 * u * (1 - u) * (myp + ny * ar) + u * u * b.y;
+        pts.push(qx, qy);
+      }
+      var c = unir(a, b, e[2], 'cruz', pts), o = viejas[a.id + '>' + b.id]; if (o) { c.w = o.w; c.p = o.p; c.Se = o.Se; }
+    });
+    if (reducir) estadoFinal(); else sembrar();
+  }
+  function unir(a, b, t, k, pts) {
+    var q = new Float32Array(pts.length), cum = new Float32Array(pts.length / 2), i, L = 0;
+    for (i = 2; i < pts.length; i += 2) { L += Math.hypot(pts[i] - pts[i - 2], pts[i + 1] - pts[i - 1]); cum[i / 2] = L; }
+    var ar = { a: a, b: b, t: t, k: k, tr: Float32Array.from(pts), q: q, cum: cum, L: Math.max(L, 1), w: 0, p: 0, Se: 22, desde: a, inv: false, ok: true };
+    aristas.push(ar); a.deg++; b.deg++;
+    return ar;
+  }
+
+  /* ---- el crecimiento de la raíz, adaptado de quimiotaxis.js (043): colonización del espacio con un eje y laterales ---- */
+  function crecer() {
+    var rg = rnd(20261016), PS = 3, LS = 2, i, k, q;
+    function gauss() { return Math.sqrt(-2 * Math.log(1 - rg())) * Math.cos(6.283185307 * rg()); }
+    y0 = 28; y1 = H - 30;
+    if (modo === 'margen') { xl = 10; xr = colIzq - 24; xc = colIzq / 2; } else { xl = 10; xr = W - 10; xc = W * 0.3; }
+    var hw = Math.max(10, Math.min(xc - xl, xr - xc) - 6);
+    var raizN = nodos[0], cadenaDe = function (n, rolSigue) {
+      var l = [n], cur = n, nx, j;
+      for (;;) { nx = null; for (j = 0; j < cur.hij.length; j++) if (cur.hij[j].rol === rolSigue) { nx = cur.hij[j]; break; } if (!nx) break; l.push(nx); cur = nx; }
+      return l;
+    };
+    var eje = cadenaDe(raizN, 'e'), nEje = eje.length;
+    var dEje = nEje > 1 ? (y1 - y0) * 0.88 / (nEje - 1) : 80, dLat = Math.max(34, Math.min(54, dEje * 0.62));
+    // atractores de nutriente repartidos por el margen
+    var na = Math.min(220, Math.round((xr - xl) * (y1 - y0) / 2400)), ax = new Float32Array(na), ay = new Float32Array(na), av = new Uint8Array(na);
+    for (k = 0; k < na; k++) { ax[k] = xl + 4 + (xr - xl - 8) * rg(); ay[k] = y0 + (y1 - y0) * rg(); av[k] = 1; }
+    var AM = Math.max(46, Math.min(70, dEje * 0.9)), AM2 = AM * AM, tips = [], spawns = [], puntos = [], iter = 0, orden = 0;
+    function nuevoTrazo(n) { return [n.x, n.y]; }
+    raizN.x = xc; raizN.y = y0; raizN.t = 0; raizN.tr = null;
+    puntos.push(raizN.x, raizN.y, 0);
+    var tipEje = { tipo: 'eje', id: 0, cola: eje.slice(1), x: xc, y: y0, th: 0, sd: 0, sp: dEje, pts: nuevoTrazo(raizN), len: 0, vivo: eje.length > 1, pa: raizN };
+    if (tipEje.vivo) tips.push(tipEje);
+    function brotes(n, demora, idTip) {
+      for (var j = 0; j < n.hij.length; j++) {
+        var h = n.hij[j]; if (h.rol !== 'i' && h.rol !== 'd') continue;
+        spawns.push({ it: iter + demora, pa: n, h: h, lado: h.rol === 'i' ? -1 : 1, de: idTip });
+      }
+    }
+    brotes(raizN, Math.round(0.9 * dEje / PS), 0);
+    var contTips = 1;
+    function atrae(t, hx, hy, yo) {      // suma los vectores unitarios hacia los atractores que ve la punta t y que ninguna otra punta tiene más cerca
+      var sx = 0, sy = 0, nn = 0, d2, d, ux, uy, dx, dy, ok, j2;
+      for (var kk = 0; kk < na; kk++) {
+        if (!av[kk]) continue; dx = ax[kk] - t.x; dy = ay[kk] - t.y; d2 = dx * dx + dy * dy; if (d2 > AM2 || d2 < 1e-6) continue;
+        d = Math.sqrt(d2); ux = dx / d; uy = dy / d; if (ux * hx + uy * hy < RZ_CONO) continue;
+        ok = true;
+        for (j2 = 0; j2 < tips.length; j2++) { var o = tips[j2]; if (o === t || !o.vivo) continue; var ex = o.x - ax[kk], ey = o.y - ay[kk]; if (ex * ex + ey * ey < d2) { ok = false; break; } }
+        if (ok) { sx += ux; sy += uy; nn++; }
+      }
+      atr.x = sx; atr.y = sy; atr.n = nn;
+    }
+    var atr = { x: 0, y: 0, n: 0 };
+    function come(t) { var r2 = RZ_AC * RZ_AC; for (var kk = 0; kk < na; kk++) { if (!av[kk]) continue; var dx = ax[kk] - t.x, dy = ay[kk] - t.y; if (dx * dx + dy * dy < r2) av[kk] = 0; } }
+    function descubre(t) {
+      var n = t.cola.shift();
+      n.x = t.x; n.y = t.y; n.t = ++orden; t.pts.push(t.x, t.y); n.tr = t.pts; t.pts = [t.x, t.y]; t.pa = n; t.sd = 0; t.sp = (t.tipo === 'eje' ? dEje : dLat) * (0.94 + 0.12 * rg());
+      for (var jj = 0; jj < n.tr.length - 2; jj += 4) puntos.push(n.tr[jj], n.tr[jj + 1], t.id);   // el trazo recién dejado también empuja a las otras puntas
+      puntos.push(n.x, n.y, t.id);
+      brotes(n, t.tipo === 'eje' ? Math.round(0.9 * dEje / PS) : 6, t.id);
+      if (!t.cola.length) t.vivo = false;
+    }
+    function repele(t) {   // los puntos ya dejados por otras ramas (y por la propia, tras los primeros px) empujan a la punta
+      var rx = 0, ry = 0, dx, dy, d2, d, f, lim = 30, lim2 = lim * lim, esc = Math.min(1, t.len / 26);
+      for (var kk = 0; kk < puntos.length; kk += 3) {
+        if (puntos[kk + 2] === t.id) continue;
+        dx = t.x - puntos[kk]; dy = t.y - puntos[kk + 1]; d2 = dx * dx + dy * dy; if (d2 > lim2 || d2 < 1e-6) continue;
+        d = Math.sqrt(d2); f = (1 - d / lim) * 0.9 * esc; rx += dx / d * f; ry += dy / d * f;
+      }
+      rep.x = rx; rep.y = ry;
+    }
+    var rep = { x: 0, y: 0 };
+    var guarda = 0;
+    while (guarda++ < 9000 && (spawns.length || tips.some(function (t) { return t.vivo; }))) {
+      iter++;
+      for (i = spawns.length - 1; i >= 0; i--) {
+        var sp = spawns[i]; if (sp.it > iter) continue;
+        spawns.splice(i, 1);
+        var phi0 = 1.1 + 0.22 * gauss(); phi0 = phi0 < 0.8 ? 0.8 : phi0 > 1.4 ? 1.4 : phi0;
+        var tl = { tipo: 'lat', id: contTips++, cola: cadenaDe(sp.h, 'c'), x: sp.pa.x, y: sp.pa.y, phi: phi0, phi0: phi0, lado: sp.lado, sd: 0, sp: dLat * (0.94 + 0.12 * rg()), pts: nuevoTrazo(sp.pa), len: 0, vivo: true, pa: sp.pa, fr: 0 };
+        tips.push(tl);
+      }
+      for (i = 0; i < tips.length; i++) {
+        var t = tips[i]; if (!t.vivo) continue;
+        if (t.tipo === 'eje') {
+          atrae(t, Math.sin(t.th), Math.cos(t.th), null);
+          var dx = (atr.n ? atr.x / atr.n : 0), dy = (atr.n ? atr.y / atr.n : 0) + RZ_GP, td = Math.atan2(dx, dy);
+          td = td < -0.6 ? -0.6 : td > 0.6 ? 0.6 : td;
+          t.th += 0.3 * (td - t.th) - RZ_KR * 0.5 * (t.x - xc) / hw + RZ_ST * gauss(); t.th = t.th < -0.6 ? -0.6 : t.th > 0.6 ? 0.6 : t.th;
+          t.x += Math.sin(t.th) * PS; t.y += Math.cos(t.th) * PS;
+          if (t.x < xc - 0.55 * hw) { t.x = xc - 0.55 * hw; if (t.th < 0) t.th = 0; } else if (t.x > xc + 0.55 * hw) { t.x = xc + 0.55 * hw; if (t.th > 0) t.th = 0; }
+          t.sd += PS; t.len += PS;
+          if (iter % 2 === 0) t.pts.push(t.x, t.y);
+        } else {
+          var tt = 0.35 + (t.phi0 - 0.35) * Math.exp(-t.len / 90), ux = t.lado * Math.sin(tt), uy = Math.cos(tt);
+          atrae(t, t.lado * Math.sin(t.phi), Math.cos(t.phi), null);
+          if (atr.n) { ux += RZ_PAT * atr.x / atr.n; uy += RZ_PAT * atr.y / atr.n; }
+          repele(t); ux += rep.x * 1.2; uy += rep.y * 1.2;
+          var pd = Math.atan2(t.lado * ux, uy); pd = pd < 0.1 ? 0.1 : pd > 1.5 ? 1.5 : pd;
+          t.phi += 0.3 * (pd - t.phi) + 0.04 * gauss(); t.phi = t.phi < 0.1 ? 0.1 : t.phi > 1.5 ? 1.5 : t.phi;
+          var xn = t.x + t.lado * Math.sin(t.phi) * LS, yn = t.y + Math.cos(t.phi) * LS;
+          if (xn < xl || xn > xr) { xn = xn < xl ? xl : xr; t.phi = Math.max(0.1, t.phi - 0.3); }    // el borde del margen: se endereza hacia abajo y sigue por él
+          t.x = xn; t.y = yn; t.sd += LS; t.len += LS;
+          if (iter % 3 === 0) t.pts.push(t.x, t.y);
+        }
+        come(t);
+        if (t.y > y1 + 14) {   // se acabó el espacio: deja el resto de la cadena sobre el borde, sin salirse
+          t.y = y1 + 14;
+          while (t.cola.length) { t.x = Math.max(xl, Math.min(xr, t.x + (t.tipo === 'lat' ? t.lado * 14 : 0))); descubre(t); }
+        } else if (t.tipo === 'eje' ? t.y - t.pa.y >= t.sp : t.sd >= t.sp) descubre(t);
+      }
+    }
+    nodos.forEach(function (n) { if (!n.tr) { n.tr = [n.pa ? n.pa.x : xc, n.pa ? n.pa.y : y0, n.x, n.y]; } });
+    // como rzCentra() del sitio: la media del eje queda exactamente en el centro del margen (se corre todo el árbol, sin salirse de los bordes)
+    var sum = 0; eje.forEach(function (n) { sum += n.x; });
+    var dx0 = xc - sum / eje.length;
+    if (Math.abs(dx0) > 0.5) nodos.forEach(function (n) {
+      n.x = Math.max(xl, Math.min(xr, n.x + dx0));
+      for (var j = 0; j < n.tr.length; j += 2) n.tr[j] = Math.max(xl, Math.min(xr, n.tr[j] + dx0));
+    });
+  }
+
+  /* ---- la dinámica ---- */
+  function vivo(n) { return n.m.s > OLVIDO; }
+  function firmeza(n) { return Math.max(0, Math.min(1, Math.log(n.m.S / S0) / FIRM_K)); }
+  function conteoVivos() { var c = 0; nodos.forEach(function (n) { if ((vivo(n) && firmeza(n) < 0.3) || n.m.crec) c++; }); return c; }
+  function creciendo() { var c = 0; nodos.forEach(function (n) { if (n.m.crec) c++; }); return c; }
+  function listo(n) { return vivo(n) && n.m.s > 0.3 && !n.m.crec && n.m.aparece <= 0.3; }
+
+  function llegar(n) {              // la punta llegó: el concepto queda a la vista y su memoria empieza a contar
+    var m = n.m; m.crec = false; m.s = 0.06; m.aparece = 1.2; m.esp = 0; m.dw = 0; m.vista = true;
+  }
+  function introducir(n, rapido) {
+    var m = n.m; m.S = Math.max(S0 * n.f, m.huella * 0.6); m.esp = 0; m.dw = 0;
+    if (n.ar) {
+      m.crec = true; n.ar.p = 0; n.ar.w = 0.95; n.ar.desde = n.pa; n.ar.inv = false; n.ar.v = rapido ? V_CREC_RAP : V_CREC; n.ar.Se = Math.max(22, n.ar.Se);
+    } else llegar(n);
+    n.hij.forEach(function (h) {     // los hijos que seguían a la vista se vuelven a unir al reaparecer su prerrequisito
+      if (h.ar && vivo(h) && h.ar.w < 0.1) { h.ar.p = 0; h.ar.w = 0.6; h.ar.desde = n; h.ar.inv = false; h.ar.v = V_CREC; }
+    });
+  }
+  function elegir() {
+    var libres = nodos.filter(function (n) { return !vivo(n) && !n.m.crec && (!n.pa || listo(n.pa)); });
+    if (!libres.length) return null;
+    libres.sort(function (p, q) { return (p.m.vista ? 1000 : 0) + p.t - ((q.m.vista ? 1000 : 0) + q.t); });
+    return libres[Math.floor(Math.random() * Math.min(3, libres.length))];
+  }
+  function sembrar() {      // al abrir: se parte vacío y las puntas armadas rápido
+    nodos.forEach(function (n) { if (!n.m.sembrado) { n.m.s = 0; n.m.crec = false; n.m.sembrado = true; } });
+    if (!nodos.some(vivo)) { tIntro = 0; introEsp = 0.3; }
+  }
+  function estadoFinal() {  // movimiento reducido: todo a la vista, los más conectados consolidados
+    nodos.forEach(function (n) {
+      n.m.s = 0.9; n.m.S = S0 * Math.exp(FIRM_K * Math.min(1, n.deg / 5) * 0.9); n.m.rep = n.deg >= 3 ? 2 : 0; n.m.aparece = 0; n.m.crec = false;
+    });
+    aristas.forEach(function (a) { a.p = 1; a.w = 0.85; a.Se = 60; });
+  }
+  function repasar(n) {
+    var m = n.m, olvidado = 1 - m.s;
+    if (m.s < 0.7) { m.S = Math.min(SMAX, m.S * (1.4 + 0.8 * olvidado)); m.rep++; }
+    m.s = 1; m.huella = Math.max(m.huella, m.S); m.esp = REPASO_ESPERA; m.dw = 0;
+    anillos.push({ x: n.px, y: n.py, t: 0, n: n });
+    aristas.forEach(function (a) {
+      if (a.a !== n && a.b !== n) return;
+      var otro = a.a === n ? a.b : a.a;
+      if (!vivo(otro)) return;
+      if (a.w < 0.05) { a.p = 0; a.desde = a.t === 'p' || a.k === 'arbol' ? a.a : n; a.inv = a.desde === a.b; a.v = V_CREC; }
+      a.w = 1; a.Se = Math.min(300, a.Se * 1.5);
+    });
+  }
+
+  function paso(dt, real) {       // dt en segundos de la simulación; real, en segundos de pared
+    var n, i;
+    for (i = 0; i < nodos.length; i++) {
+      n = nodos[i]; var m = n.m;
+      if (m.crec) {
+        if (!n.pa || !vivo(n.pa)) { m.crec = false; if (n.ar) n.ar.w *= 0.5; continue; }
+        n.ar.p = Math.min(1, n.ar.p + dt * n.ar.v / n.ar.L);
+        if (n.ar.p >= 1) llegar(n);
+        continue;
+      }
+      if (m.aparece > 0) m.aparece -= dt;
+      if (m.s > 0) {
+        if (m.aparece > 0) m.s = Math.min(1, m.s + dt / 0.9);       // entra: sube hasta el tope y sólo después empieza a olvidarse
+        else { m.s *= Math.exp(-dt / m.S); if (m.s <= OLVIDO) { m.s = 0; m.huella = Math.max(m.huella, m.S); } }
+      }
+      if (m.esp > 0) m.esp -= dt;
+    }
+    for (i = 0; i < aristas.length; i++) {
+      var a = aristas[i]; if (a.w <= 0) continue;
+      if (a.p < 1 && !(a.k === 'arbol' && a.b.m.crec)) a.p = Math.min(1, a.p + dt * (a.v || V_CREC) / a.L);
+      a.w *= Math.exp(-dt / a.Se);
+      if (!vivo(a.a) || (!vivo(a.b) && !a.b.m.crec)) a.w *= Math.exp(-dt / 2);
+      if (a.w < 0.04) { a.w = 0; a.p = 0; }
+    }
+    // una punta nueva cada cierto tiempo, mientras haya pocos conceptos sin consolidar a la vista
+    tIntro += dt;
+    var armando = reloj < 14, tope_vivos = Math.max(4, Math.round(nodos.length * (armando ? 0.45 : movil ? 0.68 : 0.62)));
+    if (tIntro >= introEsp) {
+      tIntro = 0; introEsp = (armando ? 0.3 : 1.5) * (0.7 + Math.random() * 0.6);
+      if (conteoVivos() < tope_vivos && creciendo() < (armando ? 5 : 3)) { var q = elegir(); if (q) introducir(q, armando); }
+    }
+    // las relaciones cruzadas se tienden cuando sus dos extremos están a la vista
+    tCruz += dt;
+    if (tCruz > 0.5) {
+      tCruz = 0;
+      for (i = 0; i < aristas.length; i++) {
+        var c = aristas[i];
+        if (c.k !== 'cruz' || c.w > 0.05 || !listo(c.a) || !listo(c.b)) continue;
+        c.w = 0.7; c.p = 0; c.v = 55; c.desde = c.a.m.s >= c.b.m.s ? c.a : c.b; c.inv = c.desde === c.b;
+      }
+    }
+    // dwell: la luz quieta cerca de un concepto lo repasa
+    if (act > 0.3 && vel < DWELL_VEL) {
+      for (i = 0; i < nodos.length; i++) {
+        n = nodos[i];
+        var dx = cx - n.px, dy = cy - n.py, d = Math.sqrt(dx * dx + dy * dy);
+        if (d < R * 0.42 && vivo(n) && n.m.esp <= 0 && n.m.aparece <= 0 && !n.m.crec) {
+          n.m.dw += real * (1 - d / (R * 0.42) * 0.5);
+          if (n.m.dw >= DWELL) repasar(n);
+        } else n.m.dw = Math.max(0, n.m.dw - real * 2);
+      }
+    } else for (i = 0; i < nodos.length; i++) nodos[i].m.dw = Math.max(0, nodos[i].m.dw - real * 2);
+  }
+
+  /* el mismo campo de desplazamiento para nodos y trazos (así las líneas no se despegan de los puntos): deriva lenta y atracción suave hacia la luz */
+  var gx = 0, gy = 0, tCampo = 0, ampCampo = 1;
+  function desp(x, y) {
+    var X = x + Math.sin(tCampo * 0.00071 + y * 0.0113 + x * 0.0057) * 2.6 * ampCampo, Y = y + Math.cos(tCampo * 0.00053 + x * 0.0124 - y * 0.0049) * 2.6 * ampCampo;
+    if (act > 0.01 && !reducir) {
+      var dx = cx - X, dy = cy - Y, d = Math.sqrt(dx * dx + dy * dy);
+      if (d < R) { var f = 1 - d / R; f = f * f * act * 0.1; X += dx * f; Y += dy * f; }
+    }
+    gx = X; gy = Y;
+  }
+  function posicionar(t) {
+    tCampo = t; ampCampo = reducir ? 0 : 1 + Math.min(agit, 2);
+    var k, j, a;
+    for (k = 0; k < nodos.length; k++) { var n = nodos[k]; desp(n.x, n.y); n.px = gx; n.py = gy; }
+    for (k = 0; k < aristas.length; k++) {      // el trazo sigue a sus dos extremos: se les suma el desplazamiento de cada uno, interpolado a lo largo (el campo varía en cientos de px)
+      a = aristas[k]; if (a.w <= 0) continue;
+      var ax = a.a.px - a.a.x, ay = a.a.py - a.a.y, bx = a.b.px - a.b.x, by = a.b.py - a.b.y, tr = a.tr, q = a.q, cum = a.cum, L = a.L;
+      for (j = 0; j < cum.length; j++) { var u = cum[j] / L; q[2 * j] = tr[2 * j] + ax + (bx - ax) * u; q[2 * j + 1] = tr[2 * j + 1] + ay + (by - ay) * u; }
+    }
+  }
+
+  /* ---- la luz: cabeza + estela, con borde difuso (smoothstep) ---- */
+  function perfil(d, r) { return d >= r ? 0 : d <= r * 0.35 ? 1 : suave((r - d) / (r * 0.65)); }
+  var forzarLuz = false;
+  function luzEn(x, y) {
+    var i = 0, dx, dy, d, v = 0, q;
+    if (forzarLuz) return 1;
+    if (act > 0.01) { dx = cx - x; dy = cy - y; d = Math.sqrt(dx * dx + dy * dy); v = perfil(d, R) * act; }
+    for (i = 0; i < sellos.length; i++) {
+      var s = sellos[i], edad = tReal - s.t, vida = edad < LUZ_RET ? 1 : suave(1 - (edad - LUZ_RET) / LUZ_CAE);
+      if (vida <= 0) continue;
+      dx = s.x - x; dy = s.y - y; if (dx > R || dx < -R || dy > R || dy < -R) continue;
+      q = perfil(Math.sqrt(dx * dx + dy * dy), R * 0.8) * vida; if (q > v) v = q;
+    }
+    return v;
+  }
+  function estela() {
+    while (sellos.length && tReal - sellos[0].t > LUZ_RET + LUZ_CAE) sellos.shift();
+    if (act < 0.05) return;
+    var u = sellos[sellos.length - 1];
+    if (!u || Math.hypot(cx - u.x, cy - u.y) >= LUZ_PASO) { sellos.push({ x: cx, y: cy, t: tReal }); if (sellos.length > LUZ_MAX) sellos.shift(); }
+  }
+
+  /* ---- dibujo ---- */
+  var ox_ = 0, oy_ = 0, ang_ = 0;
+  function enTrazo(a, f) {          // punto y dirección a la fracción f del largo del trazo (sobre los puntos ya desplazados)
+    var obj = f * a.L, q = a.q, cum = a.cum, n = cum.length, j = 1;
+    while (j < n - 1 && cum[j] < obj) j++;
+    var l0 = cum[j - 1], l1 = cum[j], u = l1 > l0 ? (obj - l0) / (l1 - l0) : 0;
+    ox_ = q[2 * j - 2] + (q[2 * j] - q[2 * j - 2]) * u; oy_ = q[2 * j - 1] + (q[2 * j + 1] - q[2 * j - 1]) * u;
+    ang_ = Math.atan2(q[2 * j + 1] - q[2 * j - 1], q[2 * j] - q[2 * j - 2]);
+  }
+  function trazo(a, p) {            // traza el camino hasta la fracción p (desde a, o desde b si a.inv)
+    var q = a.q, cum = a.cum, n = cum.length, obj = p * a.L, j;
+    ctx.beginPath();
+    if (!a.inv) {
+      ctx.moveTo(q[0], q[1]);
+      for (j = 1; j < n; j++) { if (cum[j] <= obj) ctx.lineTo(q[2 * j], q[2 * j + 1]); else { var u = (obj - cum[j - 1]) / (cum[j] - cum[j - 1]); ctx.lineTo(q[2 * j - 2] + (q[2 * j] - q[2 * j - 2]) * u, q[2 * j - 1] + (q[2 * j + 1] - q[2 * j - 1]) * u); break; } }
+    } else {
+      var rr = a.L - obj;
+      ctx.moveTo(q[2 * n - 2], q[2 * n - 1]);
+      for (j = n - 2; j >= 0; j--) { if (a.L - cum[j] <= obj) ctx.lineTo(q[2 * j], q[2 * j + 1]); else { var u2 = (obj - (a.L - cum[j + 1])) / (cum[j + 1] - cum[j]); ctx.lineTo(q[2 * j + 2] + (q[2 * j] - q[2 * j + 2]) * u2, q[2 * j + 3] + (q[2 * j + 1] - q[2 * j + 3]) * u2); break; } }
+    }
+  }
+  function forma(d, x, y, r) {      // biología: círculo; química: hexágono; física: triángulo
+    var k;
+    ctx.beginPath();
+    if (d === 'B') ctx.arc(x, y, r, 0, 6.283);
+    else if (d === 'Q') { r *= 1.15; for (k = 0; k < 6; k++) { var an = -1.5708 + k * 1.0472; if (k) ctx.lineTo(x + r * Math.cos(an), y + r * Math.sin(an)); else ctx.moveTo(x + r * Math.cos(an), y + r * Math.sin(an)); } ctx.closePath(); }
+    else { r *= 1.3; ctx.moveTo(x, y - r); ctx.lineTo(x + r * 0.95, y + r * 0.7); ctx.lineTo(x - r * 0.95, y + r * 0.7); ctx.closePath(); }
+  }
+  var FUENTE = '"Bricolage Respaldo",system-ui,"Segoe UI",Helvetica,Arial,sans-serif';
+  function sprite(n) {              // el nombre con su contorno del color de la página, dibujado una sola vez (el texto es lo caro de cada cuadro)
+    ctx.font = '500 11.5px ' + FUENTE;
+    var w = Math.ceil(ctx.measureText(n.et).width), c = document.createElement('canvas'), g;
+    c.width = Math.ceil((w + 8) * dpr); c.height = Math.ceil(22 * dpr);
+    g = c.getContext('2d'); g.scale(dpr, dpr); g.font = ctx.font; g.lineJoin = 'round';
+    g.lineWidth = 3; g.strokeStyle = rgba(col.bg, 0.9); g.strokeText(n.et, 4, 15);
+    g.fillStyle = rgba(col.ink, 0.94); g.fillText(n.et, 4, 15);
+    n.sp = c; n.lw = w; n.spw = w + 8;
+  }
+  var OFS = [[-12, 0], [12, 0], [-12, -13], [12, -13], [-12, 13], [12, 13], [0, -15], [0, 17]];
+  function dispone(n, x, y, usados) {     // elige dónde va el nombre (sin encimarse ni tapar otros puntos): deja n.lo = [dx, dy] o null
+    if (!n.sp) sprite(n);
+    var w = n.lw, lim = modo === 'margen' ? colIzq - 8 : W - 6, k, tx, yy, o;
+    function libre(t, y2) {
+      if (t < 6 || t + w > lim) return false;
+      for (var u = 0; u < usados.length; u++) { var r = usados[u]; if (r[3] === n) continue; if (t < r[0] + r[2] + 3 && t + w + 3 > r[0] && y2 - 8 < r[1] + 9 && y2 + 8 > r[1] - 9) return false; }
+      return true;
+    }
+    n.lo = null;
+    for (k = 0; k < OFS.length; k++) {
+      o = OFS[k]; tx = k < 6 ? (o[0] < 0 ? x + o[0] - w : x + o[0]) : x - w / 2; yy = y + o[1];
+      if (libre(tx, yy)) { n.lo = [tx - x, yy - y]; usados.push([tx, yy, w, n]); return; }
+    }
+  }
+  var tLay = -9;
+  function etiquetas() {
+    var i, k, n, usados = [], orden = [];
+    if (pausado || reducir || tReal - tLay > 0.25) {
+      tLay = tReal;
+      for (i = 0; i < nodos.length; i++) { n = nodos[i]; n.lo = null; if (n.m.s > OLVIDO && n.py > 10 && n.py < H - 10) { orden.push(n); usados.push([n.px - 7, n.py, 14, n]); } }
+      orden.sort(function (p, q) { return (q.v * 3 + (q.rol === 'e' ? 1 : 0) + firmeza(q) + q.m.s * 0.5) - (p.v * 3 + (p.rol === 'e' ? 1 : 0) + firmeza(p) + p.m.s * 0.5); });
+      for (k = 0; k < orden.length; k++) dispone(orden[k], orden[k].px, orden[k].py, usados);
+    }
+    nEtiq = 0; nVis = 0;
+    for (i = 0; i < nodos.length; i++) {
+      n = nodos[i]; if (n.m.s <= OLVIDO) continue;
+      nVis++; if (!n.lo) continue;
+      var am = reducir ? 0.95 : Math.min(1, 0.5 + 0.55 * Math.pow(n.m.s, 0.8) + 0.5 * n.v) * (n.m.aparece > 0 ? 1 - Math.max(0, n.m.aparece) / 1.2 : 1);
+      if (am < 0.05) continue;
+      ctx.globalAlpha = am; ctx.drawImage(n.sp, n.px + n.lo[0] - 4, n.py + n.lo[1] - 11, n.spw, 22); nEtiq++;
+    }
+    ctx.globalAlpha = 1;
+  }
+  function dibujar() {
+    ctx.clearRect(0, 0, W, H);
+    var i, k, a, n;
+    if (!halo) crearHalo();
+    if (!reducir) {
+      if (act > 0.02) { var rr = R * 1.15; ctx.globalAlpha = act; ctx.drawImage(halo, cx - rr, cy - rr, 2 * rr, 2 * rr); }
+      for (i = sellos.length - 1; i >= 0 && i >= sellos.length - (movil || bajo ? 0 : 6); i -= 3) {      // la estela del halo: pocos sellos (el relleno de píxeles es lo caro)
+        var s = sellos[i], ed = tReal - s.t, vd = ed < LUZ_RET ? 1 : suave(1 - (ed - LUZ_RET) / LUZ_CAE);
+        if (vd > 0.02) { var r2 = R * 0.6; ctx.globalAlpha = vd * 0.8; ctx.drawImage(halo, s.x - r2, s.y - r2, 2 * r2, 2 * r2); }
+      }
+      ctx.globalAlpha = 1;
+    }
+    var z0 = performance.now();
+    // vínculos: trazos que siguen el camino de la punta
+    for (i = 0; i < aristas.length; i++) {
+      a = aristas[i]; if (a.w <= 0) continue;
+      var sa = a.a.m.s, sb = a.b.m.crec ? 1 : a.b.m.s, vis = Math.sqrt(Math.max(0, Math.min(1, Math.min(sa, sb) / 0.6))) * a.w;
+      if (vis < 0.02) continue;
+      enTrazo(a, 0.5);
+      var I = reducir ? 0.4 : luzEn(ox_, oy_), al = Math.min(A_MAX, (0.14 + 0.30 * vis) + (0.18 + 0.22 * vis) * I);
+      var fa = Math.max(firmeza(a.a), firmeza(a.b)) * 0.6 + (a.Se - 22) / 280 * 0.4, tono = TON[a.b.d];
+      ctx.strokeStyle = rgba(mezcla(mezcla(col.ink, tono, 0.55), tono, Math.min(1, fa)), al);
+      ctx.lineWidth = (a.k === 'arbol' && a.t === 'p' ? 1.3 : 1) + (a.k === 'arbol' && a.b.rol === 'e' ? 0.9 : 0) + 1.0 * vis * (1 + Math.min(1, fa));   // el eje, algo más grueso: es la raíz principal
+      if (a.t === 'r') ctx.setLineDash([3, 4]); else ctx.setLineDash([]);
+      trazo(a, a.p); ctx.stroke();
+      if (a.t === 'p' && a.p >= 1 && a.w > 0.3) {       // punta de flecha hacia el que depende
+        enTrazo(a, 0.6); var ang = ang_, ex = ox_, ey = oy_;
+        ctx.setLineDash([]); ctx.fillStyle = ctx.strokeStyle; ctx.beginPath();
+        ctx.moveTo(ex + Math.cos(ang) * 5, ey + Math.sin(ang) * 5);
+        ctx.lineTo(ex + Math.cos(ang + 2.5) * 5, ey + Math.sin(ang + 2.5) * 5);
+        ctx.lineTo(ex + Math.cos(ang - 2.5) * 5, ey + Math.sin(ang - 2.5) * 5);
+        ctx.closePath(); ctx.fill();
+      }
+      if (a.p < 1 && a.k === 'arbol' && a.b.m.crec) {   // la cabeza de la punta que avanza
+        enTrazo(a, a.p); ctx.setLineDash([]); ctx.fillStyle = rgba(tono, Math.min(A_MAX, 0.8 * a.w));
+        ctx.beginPath(); ctx.arc(ox_, oy_, 2.4, 0, 6.283); ctx.fill();
+      }
+    }
+    ctx.setLineDash([]);
+    var z1 = performance.now(); tEd += z1 - z0;
+    // conceptos
+    var cerca = [];
+    for (i = 0; i < nodos.length; i++) {
+      n = nodos[i]; var m = n.m;
+      if (m.s <= OLVIDO) { n.v = 0; continue; }
+      var s_ = Math.pow(m.s, 0.8), I2 = reducir ? 0.4 : luzEn(n.px, n.py), fi = firmeza(n);
+      n.v = I2;
+      var al2 = Math.min(A_MAX, (0.42 + 0.22 * s_) + (0.20 + 0.10 * s_) * I2);
+      var rad = 3 + 2.2 * s_ + 2.0 * fi + 1.8 * I2, ap = m.aparece > 0 ? 1 - Math.max(0, m.aparece) / 1.2 : 1;
+      if (ap < 1) rad *= 0.4 + 0.6 * suave(ap);
+      var tn = TON[n.d];
+      ctx.fillStyle = rgba(mezcla(mezcla(tn, col.ink, 0.35 * (1 - fi)), tn, 0.4 * fi), al2);
+      forma(n.d, n.px, n.py, rad); ctx.fill();
+      if (fi > 0.2) { ctx.strokeStyle = rgba(tn, Math.min(A_MAX, 0.55 * fi * (0.6 + 0.4 * I2))); ctx.lineWidth = 1; forma(n.d, n.px, n.py, rad + 3 + 2 * fi); ctx.stroke(); }
+      if (I2 > 0.25) cerca.push(n);
+    }
+    // anillos del repaso
+    for (i = anillos.length - 1; i >= 0; i--) {
+      var an = anillos[i], f = an.t / 0.9;
+      if (f >= 1) { anillos.splice(i, 1); continue; }
+      ctx.strokeStyle = rgba(TON[an.n.d], 0.6 * (1 - f)); ctx.lineWidth = 1.5;
+      ctx.beginPath(); ctx.arc(an.n.px, an.n.py, 8 + 26 * suave(f), 0, 6.283); ctx.stroke();
+    }
+    var z2 = performance.now(); tNo += z2 - z1;
+    etiquetas();   // el nombre de cada concepto a la vista
+    tEt += performance.now() - z2;
+    return cerca;
+  }
+
+  function lectura(cerca) {         // la línea de la portada: el concepto más cercano a la luz (para quien no ve las etiquetas)
+    var el = document.getElementById('red-lee'); if (!el) return;
+    var txt = '';
+    if (cerca && cerca.length && act > 0.2) {
+      var b = cerca[0], dd = 1e9;
+      cerca.forEach(function (n) { var d = Math.hypot(n.px - cx, n.py - cy); if (d < dd) { dd = d; b = n; } });
+      var pct = Math.round(Math.max(0, b.m.s) * 100);
+      txt = b.et + (b.h ? ' · ' + HERR[b.h] : '') + ' · ' + (b.m.rep ? 'repasado ' + b.m.rep + (b.m.rep === 1 ? ' vez' : ' veces') : 'sin repasar') + ' · se recuerda un ' + pct + ' %';
+    }
+    if (txt !== ultimoLee) { ultimoLee = txt; el.textContent = txt; }
+  }
+
+  /* ---- el reloj ---- */
+  var ult = 0, cerca_ = [];
+  function cuadro(ahora) {
+    requestAnimationFrame(cuadro);
+    if (document.hidden || pausado) { ult = 0; return; }
+    if (!ult) ult = ahora;
+    var intervalo = (movil || bajo) ? 32 : 0;
+    if (ahora - ult < intervalo) return;
+    var real = Math.min(0.1, (ahora - ult) / 1000); ult = ahora;
+    // calidad adaptativa: si el equipo no da más de ≈ 38 cuadros por segundo con el dibujo completo, pasa a 30 y sin halos de la estela
+    if (!bajo && !movil && ahora - tAdapt > 1500) {
+      emaDt += (real * 1000 - emaDt) * 0.1;
+      if (emaDt > 26 && ++lentos > 20) bajo = true;
+    }
+    var t0 = performance.now();
+    avanzarReal(real);
+    var d0 = performance.now(); cerca_ = dibujar(); tDib += performance.now() - d0;
+    if (ahora - tLee > 250) { tLee = ahora; lectura(cerca_); }
+    costoSum += performance.now() - t0; costoN++;
+  }
+  function avanzarReal(real) {
+    tReal += real;
+    var quieto = (performance.now() - tScroll) > CALMA_ESPERA * 1000;
+    ritmo += ((quieto ? CALMA_F : 1) - ritmo) * (1 - Math.exp(-real / CALMA_T));
+    var dt = real * ritmo; reloj += dt;
+    var k = 1 - Math.exp(-real / 0.07), ox = cx, oy = cy;
+    cx += (mx - cx) * k; cy += (my - cy) * k;
+    var v = Math.hypot(cx - ox, cy - oy) / Math.max(real, 1e-3);
+    vel += (v - vel) * (1 - Math.exp(-real / 0.18));
+    act += (objAct - act) * (1 - Math.exp(-real / (objAct ? 0.12 : 0.35)));
+    if (act < 0.01 && objAct === 0) act = 0;
+    agit *= Math.exp(-real / 1.6);
+    estela();
+    var q0 = performance.now(); posicionar(reloj * 1000); var q1 = performance.now(); paso(dt, real); tPos += q1 - q0; tPaso += performance.now() - q1;
+    for (var i = 0; i < anillos.length; i++) anillos[i].t += real;
+  }
+
+  /* ---- entrada: cursor, dedo, scroll, pestaña oculta ---- */
+  function apuntar(x, y) {
+    if (act < 0.05 && objAct === 0) { cx = x; cy = y; vel = 0; }
+    mx = x; my = y; objAct = 1;
+  }
+  function soltar() { objAct = 0; }
+  var temporizador = null;
+  window.addEventListener('resize', function () {
+    clearTimeout(temporizador);
+    temporizador = setTimeout(function () {
+      if (Math.abs(window.innerWidth - W) > 1 || Math.abs(window.innerHeight - H) > 140) construir();
+      else { dpr = Math.min(window.devicePixelRatio || 1, movil ? 1.25 : 1.5); cv.width = Math.round(window.innerWidth * dpr); cv.height = Math.round(window.innerHeight * dpr); ctx.setTransform(dpr, 0, 0, dpr, 0, 0); W = window.innerWidth; H = window.innerHeight; }
+      if (reducir) { posicionar(0); dibujar(); }
+    }, 150);
+  });
+  window.addEventListener('tema-cambio', function () { leerColores(); if (reducir || pausado) { posicionar(reloj * 1000); dibujar(); } });
+  if (window.matchMedia) {
+    var mq = window.matchMedia('(prefers-color-scheme: dark)');
+    (mq.addEventListener ? mq.addEventListener.bind(mq, 'change') : mq.addListener.bind(mq))(function () { leerColores(); if (reducir || pausado) { posicionar(reloj * 1000); dibujar(); } });
+  }
+  new MutationObserver(function () { leerColores(); if (reducir || pausado) { posicionar(reloj * 1000); dibujar(); } }).observe(raiz, { attributes: true, attributeFilter: ['data-theme'] });
+
+  construir();
+  var API = {
+    estado: function () {
+      var vivos = nodos.filter(vivo), cons = nodos.filter(function (n) { return vivo(n) && firmeza(n) > 0.3; });
+      return { nodos: nodos.length, tope: tope, vivos: vivos.length, consolidados: cons.length, ritmo: +ritmo.toFixed(3), reloj: +reloj.toFixed(1), reducir: reducir, movil: movil, R: Math.round(R),
+        modo: modo, margen: { xl: Math.round(xl), xr: Math.round(xr), xc: Math.round(xc), y0: y0, y1: y1, colIzq: Math.round(colIzq) },
+        aristas: aristas.filter(function (a) { return a.w > 0.04; }).length, creciendo: creciendo(), etiquetas: nEtiq, aVista: nVis, sellos: sellos.length, bajo: bajo, luz: +act.toFixed(2), vel: Math.round(vel),
+        conceptos: nodos.map(function (n) { return { id: n.id, d: n.d, pa: n.pa ? n.pa.id : null, s: +n.m.s.toFixed(3), S: Math.round(n.m.S), rep: n.m.rep, x: Math.round(n.px), y: Math.round(n.py), bx: Math.round(n.x), by: Math.round(n.y) }; }) };
+    },
+    avanzar: function (seg) { var k = Math.round(seg * 30); for (var i = 0; i < k; i++) avanzarReal(1 / 30); if (pausado || reducir) { dibujar(); } else cerca_ = dibujar(); },
+    apuntar: apuntar, soltar: soltar,
+    rotulos: function () { return nodos.filter(function (n) { return n.lo && n.m.s > OLVIDO; }).map(function (n) { return { t: n.et, x: n.px + n.lo[0], y: n.py + n.lo[1] - 9, w: n.lw, h: 14 }; }); },
+    desglose: function () { var n = Math.max(1, costoN); return { posicionar: +(tPos / n).toFixed(3), paso: +(tPaso / n).toFixed(3), dibujar: +(tDib / n).toFixed(3), aristas: +(tEd / n).toFixed(3), conceptos: +(tNo / n).toFixed(3), etiquetas: +(tEt / n).toFixed(3) }; },
+    costoMs: function () { return costoN ? +(costoSum / costoN).toFixed(3) : 0; }, cuadros: function () { return costoN; },
+    llenar: function (luz) {   // peor caso para el contraste: todo a la vista, consolidado y, si luz, con la luz en todas partes
+      forzarLuz = !!luz;
+      nodos.forEach(function (n) { n.m.s = 1; n.m.S = SMAX * 0.5; n.m.aparece = 0; n.m.crec = false; n.m.vista = true; });
+      aristas.forEach(function (a) { a.p = 1; a.w = 1; a.Se = 200; });
+      posicionar(reloj * 1000); dibujar();
+    },
+    pausa: function (b) { pausado = !!b; if (pausado) { posicionar(reloj * 1000); dibujar(); } ult = 0; }
+  };
+  window.redConceptos = API;
+
+  var bp = document.getElementById('pausa');
+  if (reducir) {
+    var nota = document.getElementById('red-lee');
+    if (nota) nota.textContent = 'Con movimiento reducido la red se queda quieta: se muestra ya crecida, con los conceptos más conectados consolidados (con aro).';
+    posicionar(0); dibujar(); return;
+  }
+  if (bp) {
+    bp.hidden = false;
+    bp.addEventListener('click', function () {
+      API.pausa(!pausado); bp.setAttribute('aria-pressed', pausado ? 'true' : 'false'); bp.textContent = pausado ? 'Reanudar fondo' : 'Pausar fondo';
+    });
+  }
+  window.addEventListener('pointermove', function (e) { if (e.pointerType !== 'touch') apuntar(e.clientX, e.clientY); });
+  document.documentElement.addEventListener('mouseleave', soltar);
+  window.addEventListener('blur', soltar);
+  window.addEventListener('touchstart', function (e) { if (e.touches.length) apuntar(e.touches[0].clientX, e.touches[0].clientY); }, { passive: true });
+  window.addEventListener('touchmove', function (e) { if (e.touches.length) apuntar(e.touches[0].clientX, e.touches[0].clientY); }, { passive: true });
+  window.addEventListener('touchend', soltar, { passive: true });
+  window.addEventListener('touchcancel', soltar, { passive: true });
+  window.addEventListener('scroll', function () {
+    tScroll = performance.now();
+    var y = window.pageYOffset || 0; agit += Math.min(1.5, Math.abs(y - scrollY0) / 400); scrollY0 = y;
+  }, { passive: true });
+  requestAnimationFrame(cuadro);
+})();
+/*RED-CONCEPTOS-END*/
+</script>
 </body>
 </html>
