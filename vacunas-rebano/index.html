@@ -156,7 +156,20 @@
   .ops button[aria-pressed="true"] { font-weight: 700; }
   .opc.fijo .ops button:disabled { opacity: 1; border-color: var(--borde); color: var(--suave); }
   .opc.fijo .ops button[aria-pressed="true"]:disabled { background: var(--cobalto); border-color: var(--cobalto); color: #fff; }
-  .fijo-nota { font-size: 0.85rem; color: var(--suave); margin: 0; }
+  .fijo-nota { font-size: 0.9rem; color: var(--ambar); font-weight: 700; margin: 0 0 8px; }
+  .glosario { margin: 0 0 12px; font-size: 0.95rem; }
+  .glosario dt { font-weight: 700; margin-top: 6px; }
+  .glosario dd { margin: 0 0 4px; color: var(--suave); }
+  .hitos { display: flex; gap: 6px; margin: 6px 0 4px; }
+  .hitos:empty { display: none; }
+  .hitos button { flex: 1; min-height: 44px; font-size: 0.92rem; padding: 6px 4px; }
+  .cuaderno { background: #FFFBEB; border-left: 4px solid var(--ambar); border-radius: 4px; padding: 8px 10px; margin: 12px 0 4px; font-size: 0.95rem; }
+  .cuaderno ol { margin: 4px 0 0; padding-left: 20px; }
+  .cuaderno li:last-child { margin-bottom: 0; }
+  .cv-tabla tbody th { background: transparent; font-size: 0.82rem; font-weight: 700; text-align: left; color: var(--suave); }
+  .cv-tabla thead th { font-size: 0.85rem; }
+  #cv-otro[hidden], #cv-aviso[hidden], #cv-fijo[hidden] { display: none; }
+  #cv-aviso { margin: 8px 0 0; font-weight: 700; color: var(--ambar); }
   .respuesta { margin-top: 14px; }
   .cv-nav { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 14px; }
   .cv-nav button.principal { background: var(--pizarra); border-color: var(--pizarra); color: #fff; }
@@ -197,12 +210,12 @@
   <section id="rebano">
     <h2 class="paso">3 · Inmunidad de rebaño</h2>
     <p>Cuando suficientes personas están protegidas, cada persona enferma contagia en promedio a menos de una y los brotes se apagan. Las personas que no están vacunadas quedan menos expuestas.</p>
-    <p><strong>R<sub>0</sub></strong> es el número de personas que contagia, en promedio, una persona enferma en una población sin inmunidad. La proporción mínima de población inmune para que un brote no crezca es:</p>
+    <p><strong>R<sub>0</sub></strong> es el número de personas que contagia, en promedio, una persona enferma en una población sin inmunidad. El mínimo de personas inmunes, como parte del total, para que un brote no crezca es:</p>
     <p class="formula">1 − 1 / R<sub>0</sub></p>
     <table>
       <thead><tr><th>R<sub>0</sub></th><th>Cálculo</th><th>Población inmune necesaria</th></tr></thead>
       <tbody>
-        <tr><td>3 (COVID-19 original, estimación)</td><td>1 − 1/3 ≈ 0,67</td><td>≈ 67 %</td></tr>
+        <tr><td>≈ 3 (COVID-19 original; estimaciones entre 2 y 4)</td><td>1 − 1/3 ≈ 0,67</td><td>≈ 67 %</td></tr>
         <tr><td>4 (ejemplo)</td><td>1 − 1/4 = 0,75</td><td>75 %</td></tr>
         <tr><td>12 (sarampión, valor bajo)</td><td>1 − 1/12 ≈ 0,92</td><td>≈ 92 %</td></tr>
         <tr><td>18 (sarampión, valor alto)</td><td>1 − 1/18 ≈ 0,94</td><td>≈ 94 %</td></tr>
@@ -220,17 +233,26 @@
       <li>La vacuna protege al 100 %.</li>
       <li>La protección dura para siempre.</li>
       <li>El virus no cambia: R<sub>0</sub> es siempre 12.</li>
-      <li>Cada persona se junta con 12 al azar; nadie vive agrupado con otros como él.</li>
+      <li>Cada contagiada se junta con 12 al azar; nadie vive junto a otros no vacunados.</li>
       <li>Quien ya se contagió no se vuelve a contagiar.</li>
     </ul>
     <p class="ojo">Vas a necesitar esta lista en la sección 5.</p>
 
-    <div class="opc" id="sim-pred" data-clave="s4" data-multi="0">
-      <p class="opc-q" id="sim-pred-q">Antes de correr el simulador: ¿en cuál caso crees que el brote se apaga solo, en pocas rondas?<small>Elige una. Después compara con el resultado.</small></p>
-      <div class="ops" role="group" aria-labelledby="sim-pred-q">
-        <button type="button" aria-pressed="false">Solo con cobertura alta</button>
-        <button type="button" aria-pressed="false">En los dos casos</button>
-        <button type="button" aria-pressed="false">En ninguno de los dos</button>
+    <p><strong>Antes de correr el simulador, predice.</strong> En cada caso solo pueden contagiarse las personas no vacunadas.</p>
+    <div class="opc" id="sim-pred-a" data-clave="s4a" data-multi="0">
+      <p class="opc-q" id="sim-pred-a-q">Cobertura alta: de las 5 personas no vacunadas, ¿cuántas se contagiarán?</p>
+      <div class="ops" role="group" aria-labelledby="sim-pred-a-q">
+        <button type="button" aria-pressed="false">Casi ninguna</button>
+        <button type="button" aria-pressed="false">Cerca de la mitad</button>
+        <button type="button" aria-pressed="false">Casi todas</button>
+      </div>
+    </div>
+    <div class="opc" id="sim-pred-b" data-clave="s4b" data-multi="0">
+      <p class="opc-q" id="sim-pred-b-q">Cobertura baja: de las 40 personas no vacunadas, ¿cuántas se contagiarán?</p>
+      <div class="ops" role="group" aria-labelledby="sim-pred-b-q">
+        <button type="button" aria-pressed="false">Casi ninguna</button>
+        <button type="button" aria-pressed="false">Cerca de la mitad</button>
+        <button type="button" aria-pressed="false">Casi todas</button>
       </div>
     </div>
 
@@ -238,7 +260,7 @@
       <li>Elige un caso. La simulación parte sola.</li>
       <li>Presiona «Pausa» para detenerla. Con «Siguiente ronda» avanzas de a una y «Continuar» la reanuda.</li>
       <li>Cuando aparezca «El brote terminó…», anota en qué ronda terminó y cuántas personas se contagiaron.</li>
-      <li>Repite con el otro caso. Compara las curvas del gráfico y el resultado con tu predicción.</li>
+      <li>Repite con el otro caso. Compara las curvas del gráfico y el resultado con tus predicciones.</li>
     </ol>
 
     <div class="casos" role="group" aria-label="Elige un caso">
@@ -276,9 +298,10 @@
       <div id="sim-compara" hidden>
         <p><strong>Tu predicción:</strong> <span id="sim-c-pred"></span></p>
         <p><strong>Resultado:</strong> <span id="sim-c-res"></span></p>
-        <p>Anota si coincidió y, si no, qué parte del modelo te hizo pensar otra cosa.</p>
+        <div class="cuaderno"><strong>Cuaderno.</strong> Anota si tus predicciones coincidieron y, si no, qué parte del modelo te hizo pensar otra cosa.</div>
       </div>
     </div>
+    <p class="ojo">Elegimos R<sub>0</sub> = 12 porque el sarampión es el caso donde el rebaño funciona mejor. El COVID-19 original tenía un R<sub>0</sub> cercano a 3: necesitaría menos vacunados, si la vacuna frenara todo contagio. En la sección 5 vas a ver si fue así.</p>
   </section>
 
   <section id="covid">
@@ -293,7 +316,17 @@
 
     <div class="consigna" id="cv-consigna">
       <div data-paso="1">
-        <p>Antes de ver los datos, elige lo que crees que pasó. Apóyate en las secciones 3 y 4. Al pasar al paso 2 tus predicciones quedan registradas y no se pueden cambiar.</p>
+        <p>Los datos usan tres medidas. Léelas antes de predecir:</p>
+        <dl class="glosario">
+          <dt>Exceso de muertes</dt>
+          <dd>Cuántas personas más murieron que las esperadas según la tendencia de los años anteriores a la pandemia, por cada millón de habitantes. Se va sumando mes a mes, así que la curva casi siempre sube. Si está bajo 0, murió menos gente que la esperada (menos gripe, menos accidentes).</dd>
+          <dt>Vacunación completa</dt>
+          <dd>Porcentaje de la población con las dosis iniciales completas (dos, en casi todos los países).</dd>
+          <dt>Medidas</dt>
+          <dd>Índice de 0 a 100 que mide cuán estrictas eran las medidas vigentes: cierres de colegios y trabajos, límites a reuniones y viajes. No mide si se cumplieron ni si llegaron a tiempo respecto del virus.</dd>
+        </dl>
+        <p>Ahora, antes de ver los datos, elige lo que crees que pasó. Son tus predicciones, no una prueba: después vas a ver cuáles se cumplen. Al pasar al paso 2 quedan registradas y no se pueden cambiar.</p>
+        <p class="fijo-nota" id="cv-fijo" hidden>Tus predicciones ya quedaron registradas. Sigue con el paso 2.</p>
         <div class="opc" data-clave="p1" data-multi="0">
           <p class="opc-q" id="q-p1">Los países con medidas más estrictas tuvieron…</p>
           <div class="ops" role="group" aria-labelledby="q-p1">
@@ -303,10 +336,11 @@
           </div>
         </div>
         <div class="opc" data-clave="p2" data-multi="0">
-          <p class="opc-q" id="q-p2">Dos países vecinos, con medidas parecidas, tuvieron resultados…</p>
+          <p class="opc-q" id="q-p2">Dos países vecinos y parecidos, como Suecia y Noruega, en 2020 se diferenciaron más en…</p>
           <div class="ops" role="group" aria-labelledby="q-p2">
-            <button type="button" aria-pressed="false">parecidos</button>
-            <button type="button" aria-pressed="false">muy distintos</button>
+            <button type="button" aria-pressed="false">las medidas</button>
+            <button type="button" aria-pressed="false">el exceso de muertes</button>
+            <button type="button" aria-pressed="false">casi nada: fueron parecidos en las dos cosas</button>
           </div>
         </div>
         <div class="opc" data-clave="p3" data-multi="0">
@@ -320,31 +354,30 @@
       </div>
 
       <div data-paso="2" hidden>
-        <p>En 2020 nadie estaba vacunado: solo había medidas. Presiona «Reproducir»; la animación se detiene en diciembre de 2020. Revisa los dos pares:</p>
+        <p>En 2020 nadie tenía vacunación completa: solo había medidas. Presiona «Reproducir»; la animación se detiene en diciembre de 2020. En cada par, mira la curva de medidas de todo el año y el exceso de muertes a diciembre.</p>
         <ol>
-          <li><strong>Nueva Zelanda y Perú.</strong> Lee en la tabla las medidas y el exceso de cada uno a fin de año.</li>
-          <li><strong>Suecia y Noruega.</strong> Compara la curva de medidas durante el año y el exceso al final.</li>
+          <li><strong>Nueva Zelanda y Perú.</strong> ¿Cuál tuvo la curva de medidas más alta? ¿Cuál terminó con más exceso?</li>
+          <li><strong>Suecia y Noruega.</strong> ¿En qué se parecen y en qué se diferencian las dos curvas?</li>
         </ol>
-        <p class="ojo">Ojo: el índice de rigurosidad cuenta cuántas medidas se decretaron. No mide si se cumplieron ni si llegaron a tiempo.</p>
       </div>
 
       <div data-paso="3" hidden>
-        <p>Compara Chile y Brasil. Reproduce hasta diciembre de 2021 y fíjate en dos cosas: a qué velocidad sube la curva de vacunación de cada país, y si la curva de exceso cambia de pendiente cuando la vacunación sube.</p>
-        <p>La línea punteada del gráfico de vacunación marca el 67 %: el umbral de la sección 3 si R<sub>0</sub> fuera 3 y la vacuna frenara todo contagio. Chile lo cruzó en agosto de 2021. Mueve el deslizador y lee el exceso de Chile en marzo, agosto y diciembre de 2021.</p>
+        <p>Compara Chile y Brasil. Reproduce hasta diciembre de 2021 y fíjate en dos cosas: a qué velocidad sube la vacunación de cada país, y si el exceso sube más lento o más rápido cuando la vacunación sube.</p>
+        <p>La línea punteada del gráfico de vacunación marca el 67 % de la sección 3 (R<sub>0</sub> = 3), si la vacuna frenara todo contagio. Chile lo cruzó en agosto de 2021, justo cuando terminaba su ola de invierno. Toca «abr 2021», «ago 2021» y «dic 2021» y lee el exceso de Chile en cada uno; la fila «Subió en 2021» de la tabla te ahorra las restas.</p>
       </div>
 
       <div data-paso="4" hidden>
-        <p class="dato">Dato: las vacunas contra el COVID-19 protegen mucho contra la enfermedad grave y la muerte, y menos contra contagiarse. Esa protección baja con los meses y bajó más frente a la variante Ómicron, que llegó a fines de 2021.</p>
+        <p class="dato">Dato: en la realidad, una persona vacunada igual puede contagiarse, aunque tiene mucha menos probabilidad de enfermar grave o de morir. Esa protección baja con los meses. Y en 2022 circulaba una variante distinta, Ómicron, detectada en noviembre de 2021, que se contagiaba más fácil.</p>
         <p>Reproduce hasta diciembre de 2022 y revisa dos pares:</p>
         <ol>
-          <li><strong>Portugal y Bulgaria:</strong> 87 % y 31 % de vacunación completa. Lee cuánto subió el exceso de cada uno durante 2021 y durante 2022.</li>
-          <li><strong>Chile y Nueva Zelanda:</strong> los dos con más del 80 % vacunado. Mira qué pasa con el exceso durante 2022.</li>
+          <li><strong>Portugal y Bulgaria:</strong> 87 % y 31 % de vacunación completa a fines de 2022. Toca «dic 2021» y «dic 2022» y lee cuánto subió el exceso de cada uno en cada año. Con el deslizador, mira también en qué meses de 2021 subió Portugal.</li>
+          <li><strong>Chile y Corea del Sur:</strong> los dos con más del 85 %. Mira qué pasa con el exceso de cada uno durante 2022.</li>
         </ol>
         <p>Después vuelve a la lista «Este modelo supone» de la sección 4 y decide cuáles de esos supuestos no se cumplen con el COVID-19 real.</p>
       </div>
 
       <div data-paso="5" hidden>
-        <p>Compara lo que predijiste con lo que viste. Nadie te dice cuál es la respuesta correcta: decide tú si tu predicción se sostiene.</p>
+        <p>Compara lo que predijiste con lo que viste. Nadie te dice cuál es la respuesta correcta: decide tú si cada predicción se sostiene.</p>
         <table class="resumen">
           <thead><tr><th>Pregunta</th><th>Tu predicción</th><th>Lo que viste</th></tr></thead>
           <tbody id="cv-resumen"></tbody>
@@ -354,8 +387,9 @@
     </div>
 
     <div id="cv-visor" hidden>
-      <p class="ojo">Cada curva es un país: la azul es el país A y la naranja discontinua, el país B. «Exceso» son las muertes de más respecto de los años anteriores a la pandemia, acumuladas por millón de habitantes.</p>
+      <p class="ojo">Cada curva es un país: la azul es el país A y la naranja discontinua, el país B. La escala del gráfico de exceso cambia según el par; compara los números con la tabla.</p>
       <div class="presets" id="cv-presets" role="group" aria-label="Comparaciones de este paso"></div>
+      <p class="ojo" id="cv-otro" hidden></p>
       <div class="sel">
         <label>País A <select id="cv-a"></select></label>
         <label>País B <select id="cv-b"></select></label>
@@ -365,56 +399,49 @@
         <button type="button" id="cv-play" class="principal">Reproducir</button>
         <button type="button" id="cv-ini">Volver al inicio</button>
       </div>
-      <input type="range" id="cv-t" min="0" max="35" step="1" value="0" aria-label="Mes que se muestra">
+      <input type="range" id="cv-t" min="0" max="35" step="1" value="0" list="cv-marcas" aria-label="Mes que se muestra">
+      <datalist id="cv-marcas"><option value="0" label="2020"></option><option value="12" label="2021"></option><option value="24" label="2022"></option><option value="35"></option></datalist>
+      <div class="hitos" id="cv-hitos" role="group" aria-label="Ir a un mes"></div>
       <p id="cv-anuncio" class="solo-lector" aria-live="polite" aria-atomic="true"></p>
       <p class="cv-fecha" id="cv-fecha"></p>
       <table class="cv-tabla">
-        <colgroup><col style="width:27%"><col style="width:23%"><col style="width:27%"><col style="width:23%"></colgroup>
-        <thead><tr><th></th><th>Exceso por millón</th><th>Vacunadas</th><th>Medidas</th></tr></thead>
+        <colgroup><col style="width:38%"><col style="width:31%"><col style="width:31%"></colgroup>
+        <thead><tr><th></th><th id="cv-ca"></th><th id="cv-cb"></th></tr></thead>
         <tbody id="cv-cuerpo"></tbody>
       </table>
 
-      <h4 class="cv-h">Muertes en exceso, acumuladas<small>Por millón de habitantes. Bajo 0: menos muertes de las esperadas.</small></h4>
-      <svg id="cv-exc" viewBox="0 0 340 150" role="img" aria-label="Muertes en exceso acumuladas"></svg>
-      <h4 class="cv-h">Población con vacunación completa<small>% del país. Línea punteada: umbral de 67 % (R<sub>0</sub> = 3), si la vacuna frenara todo contagio.</small></h4>
+      <h4 class="cv-h">Exceso de muertes, acumulado<small>Por millón de habitantes. Bajo 0: menos muertes de las esperadas.</small></h4>
+      <svg id="cv-exc" viewBox="0 0 340 150" role="img" aria-label="Exceso de muertes acumulado"></svg>
+      <h4 class="cv-h">Población con vacunación completa<small>% del país. Línea punteada: el 67 % de la sección 3 (R<sub>0</sub> = 3), si la vacuna frenara todo contagio.</small></h4>
       <svg id="cv-vac" viewBox="0 0 340 100" role="img" aria-label="Vacunación completa"></svg>
-      <h4 class="cv-h">Rigurosidad de las medidas<small>Índice de 0 a 100: cuántas medidas había (colegios, trabajo, viajes…).</small></h4>
+      <h4 class="cv-h">Medidas<small>Índice de 0 a 100: cuán estrictas eran las medidas vigentes (colegios, trabajo, viajes…).</small></h4>
       <svg id="cv-str" viewBox="0 0 340 112" role="img" aria-label="Rigurosidad de las medidas"></svg>
     </div>
 
     <div class="respuesta" id="cv-respuesta">
       <div data-paso="2" hidden>
         <div class="opc" data-clave="o1" data-multi="0">
-          <p class="opc-q" id="q-o1">A diciembre de 2020, ¿el país con medidas más estrictas tuvo menos muertes en exceso?<small>Mira los dos pares antes de responder.</small></p>
+          <p class="opc-q" id="q-o1">Nueva Zelanda y Perú: mirando todo 2020, ¿el país con la curva de medidas más alta terminó con menos muertes en exceso?<small>El índice mide cuán estrictas eran las medidas decretadas, no si se cumplieron ni si llegaron a tiempo.</small></p>
           <div class="ops" role="group" aria-labelledby="q-o1">
-            <button type="button" aria-pressed="false">Sí, en los dos pares</button>
-            <button type="button" aria-pressed="false">No, en los dos pares</button>
-            <button type="button" aria-pressed="false">Depende del par</button>
+            <button type="button" aria-pressed="false">Sí: el más estricto tuvo menos muertes</button>
+            <button type="button" aria-pressed="false">No: el más estricto tuvo más muertes</button>
+            <button type="button" aria-pressed="false">No se puede decir cuál fue más estricto</button>
           </div>
         </div>
         <div class="opc" data-clave="o2" data-multi="0">
-          <p class="opc-q" id="q-o2">Suecia y Noruega, con medidas parecidas, terminaron 2020 con un exceso…</p>
+          <p class="opc-q" id="q-o2">Suecia y Noruega: mirando todo 2020, ¿en qué se diferenciaron más?</p>
           <div class="ops" role="group" aria-labelledby="q-o2">
-            <button type="button" aria-pressed="false">parecido</button>
-            <button type="button" aria-pressed="false">muy distinto</button>
+            <button type="button" aria-pressed="false">las medidas</button>
+            <button type="button" aria-pressed="false">el exceso de muertes</button>
+            <button type="button" aria-pressed="false">casi nada: fueron parecidos en las dos cosas</button>
           </div>
         </div>
-        <div class="opc" data-clave="o3" data-multi="1" data-max="3">
-          <p class="opc-q" id="q-o3">Además de las medidas, ¿qué podría explicar estas diferencias?<small>Elige hasta tres, las que te parezcan más probables. Anota en el cuaderno por qué.</small></p>
-          <div class="ops" role="group" aria-labelledby="q-o3">
-            <button type="button" aria-pressed="false">Edad de la población</button>
-            <button type="button" aria-pressed="false">Ser isla o cerrar fronteras a tiempo</button>
-            <button type="button" aria-pressed="false">Camas y personal de hospital</button>
-            <button type="button" aria-pressed="false">Pobreza y hacinamiento</button>
-            <button type="button" aria-pressed="false">Cuánto se cumplieron las medidas</button>
-            <button type="button" aria-pressed="false">Cuándo llegó el virus a cada país</button>
-          </div>
-        </div>
+        <div class="cuaderno"><strong>Cuaderno.</strong> Anota una causa, que no sea las medidas, que podría explicar la diferencia entre Nueva Zelanda y Perú. Escribe qué dato necesitarías para comprobarla.</div>
       </div>
 
       <div data-paso="3" hidden>
         <div class="opc" data-clave="o4" data-multi="0">
-          <p class="opc-q" id="q-o4">Después de cruzar el 67 % (agosto de 2021), el exceso de Chile…<small>Compara cuánto subió entre marzo y agosto con cuánto subió entre agosto y diciembre.</small></p>
+          <p class="opc-q" id="q-o4">Después de cruzar el 67 % (agosto de 2021), el exceso de Chile…<small>Compara cuánto subió de abril a agosto con cuánto subió de agosto a diciembre: cuatro meses cada tramo.</small></p>
           <div class="ops" role="group" aria-labelledby="q-o4">
             <button type="button" aria-pressed="false">dejó de subir</button>
             <button type="button" aria-pressed="false">siguió subiendo, pero más lento</button>
@@ -422,31 +449,31 @@
           </div>
         </div>
         <div class="opc" data-clave="o5" data-multi="0">
-          <p class="opc-q" id="q-o5">Durante 2021, ¿en cuál país subió más el exceso de muertes?<small>Resta el valor de diciembre de 2020 al de diciembre de 2021.</small></p>
+          <p class="opc-q" id="q-o5">Durante 2021, ¿en cuál país subió más el exceso de muertes?<small>Toca «dic 2021» y lee la fila «Subió en 2021».</small></p>
           <div class="ops" role="group" aria-labelledby="q-o5">
             <button type="button" aria-pressed="false">En Chile</button>
             <button type="button" aria-pressed="false">En Brasil</button>
             <button type="button" aria-pressed="false">Parecido en los dos</button>
           </div>
         </div>
-        <p class="ojo">Anota en el cuaderno una explicación posible de lo que elegiste. Todavía no es tu conclusión.</p>
+        <div class="cuaderno"><strong>Cuaderno.</strong> Anota una explicación posible de lo que elegiste y una cosa que te haga dudar de ella. Todavía no es tu conclusión.</div>
       </div>
 
       <div data-paso="4" hidden>
         <div class="opc" data-clave="o6" data-multi="0">
-          <p class="opc-q" id="q-o6">En 2022, en los países con más del 80 % vacunado, el exceso de muertes…</p>
+          <p class="opc-q" id="q-o6">Chile y Corea del Sur, los dos con más del 85 % vacunado: durante 2022 el exceso de muertes…</p>
           <div class="ops" role="group" aria-labelledby="q-o6">
-            <button type="button" aria-pressed="false">dejó de subir</button>
-            <button type="button" aria-pressed="false">siguió subiendo</button>
-            <button type="button" aria-pressed="false">bajó</button>
+            <button type="button" aria-pressed="false">subió en los dos países</button>
+            <button type="button" aria-pressed="false">subió solo en uno</button>
+            <button type="button" aria-pressed="false">no subió en ninguno</button>
           </div>
         </div>
         <div class="opc" data-clave="o7" data-multi="0">
-          <p class="opc-q" id="q-o7">Portugal y Bulgaria: ¿en qué año se nota más la diferencia de vacunación?</p>
+          <p class="opc-q" id="q-o7">Portugal y Bulgaria: ¿en qué año fue mayor la diferencia entre lo que subió el exceso de uno y del otro?</p>
           <div class="ops" role="group" aria-labelledby="q-o7">
             <button type="button" aria-pressed="false">En 2021</button>
             <button type="button" aria-pressed="false">En 2022</button>
-            <button type="button" aria-pressed="false">No se nota</button>
+            <button type="button" aria-pressed="false">Fue parecida en los dos años</button>
           </div>
         </div>
         <div class="opc" data-clave="o8" data-multi="1" data-max="5">
@@ -454,11 +481,12 @@
           <div class="ops" role="group" aria-labelledby="q-o8">
             <button type="button" aria-pressed="false">La vacuna protege al 100 %</button>
             <button type="button" aria-pressed="false">La protección dura para siempre</button>
-            <button type="button" aria-pressed="false">El virus no cambia: R₀ fijo</button>
-            <button type="button" aria-pressed="false">Cada persona se junta con 12 al azar</button>
+            <button type="button" aria-pressed="false">El virus no cambia</button>
+            <button type="button" aria-pressed="false">Cada contagiada se junta con 12 al azar</button>
             <button type="button" aria-pressed="false">Quien ya se contagió no se vuelve a contagiar</button>
           </div>
         </div>
+        <div class="cuaderno"><strong>Cuaderno.</strong> De los supuestos que marcaste, ¿cuál explica mejor que Chile, con más del 85 % vacunado, haya tenido una ola de muertes a comienzos de 2022? Escribe por qué.</div>
       </div>
 
       <div data-paso="5" hidden>
@@ -468,13 +496,18 @@
             <button type="button" aria-pressed="false">Edad promedio de cada país</button>
             <button type="button" aria-pressed="false">Camas de cuidados intensivos por habitante</button>
             <button type="button" aria-pressed="false">Cuánto se cumplieron las medidas</button>
-            <button type="button" aria-pressed="false">Cuándo llegó cada variante a cada país</button>
-            <button type="button" aria-pressed="false">Muertes por grupo de edad</button>
+            <button type="button" aria-pressed="false">Cuándo llegó cada ola o variante a cada país</button>
             <button type="button" aria-pressed="false">Vacunación de los mayores de 60 años</button>
+            <button type="button" aria-pressed="false">Si las personas no vacunadas viven juntas o repartidas</button>
+            <button type="button" aria-pressed="false">Cuántas personas se contagiaron más de una vez</button>
           </div>
         </div>
-        <p><strong>Escribe en el cuaderno, en una frase:</strong> «Con estos datos puedo decir que… pero no puedo decir que…». Que dos curvas se muevan juntas no prueba que una cause la otra.</p>
-        <p><strong>Vuelve a la pregunta de la sección 1.</strong> Con lo que viste, escribe de nuevo tu hipótesis: ¿qué protege a la persona que no se vacunó, y de qué depende que esa protección exista?</p>
+        <div class="cuaderno"><strong>Cuaderno.</strong>
+          <ol>
+            <li>Escribe en una frase: «Con estos datos puedo decir que… pero no puedo decir que…». Que dos curvas se muevan juntas no prueba que una cause la otra.</li>
+            <li>Vuelve a la pregunta de la sección 1. Con lo que viste, escribe de nuevo tu hipótesis: ¿qué protege a la persona que no se vacunó, y de qué depende que esa protección exista?</li>
+          </ol>
+        </div>
       </div>
     </div>
 
@@ -482,6 +515,7 @@
       <button type="button" id="cv-ant">Anterior</button>
       <button type="button" id="cv-sig" class="principal">Siguiente</button>
     </div>
+    <p class="ojo" id="cv-aviso" role="status" hidden></p>
   </section>
 
   <section id="dependen">
@@ -491,7 +525,7 @@
       <li>Personas con defensas bajas, por ejemplo en tratamiento contra el cáncer o con un trasplante.</li>
       <li>Personas con alergia grave a un componente de la vacuna.</li>
     </ul>
-    <p>El rebaño protege solo contra enfermedades que pasan de persona a persona. El tétanos no se contagia entre personas: sus esporas están en el suelo y entran por heridas. Contra el tétanos no hay protección de rebaño; cada persona necesita su vacuna y sus refuerzos.</p>
+    <p>El rebaño protege solo contra enfermedades que pasan de persona a persona. El tétanos no se contagia entre personas: sus esporas, una forma resistente de la bacteria, están en el suelo y entran por heridas. Contra el tétanos no hay protección de rebaño; cada persona necesita su vacuna y sus refuerzos.</p>
   </section>
 
   <section id="conversar">
@@ -499,9 +533,8 @@
     <ol>
       <li>Además de ti, ¿quién se beneficia cuando te vacunas?</li>
       <li>¿Qué pasaría con una cobertura de 90 % y R<sub>0</sub> = 12? Argumenta con la tabla de la sección 3 y con los dos casos del simulador.</li>
-      <li>Dos países con medidas parecidas tuvieron resultados muy distintos en 2020. ¿Qué tendrías que saber de cada uno para explicarlo?</li>
-      <li>Chile pasó el 85 % de vacunación y en 2022 igual tuvo una ola de muertes. ¿Falló la vacuna? Argumenta con la diferencia entre protegerse del contagio y protegerse de la muerte.</li>
-      <li>¿Qué evidencia necesitarías para decir que una campaña de vacunación funcionó?</li>
+      <li>Perú tuvo medidas más estrictas que Nueva Zelanda durante casi todo 2020 y muchas más muertes. ¿Significa que las medidas no sirven? Argumenta con la causa que anotaste en el cuaderno en el paso 2.</li>
+      <li>Chile pasó el 85 % de vacunación y a comienzos de 2022 igual tuvo una ola de muertes. ¿Falló la vacuna? Argumenta con la diferencia entre protegerse del contagio y protegerse de la muerte.</li>
     </ol>
   </section>
 
@@ -817,11 +850,15 @@ function conteos(p) {
 
   function compararPrediccion() {
     if (!series[95] || !series[60]) return;
-    var caja = $('sim-compara'), pres = $('sim-pred').querySelector('button[aria-pressed="true"]');
-    $('sim-c-pred').textContent = pres ? '«' + pres.textContent + '»' : 'no registraste una';
+    var caja = $('sim-compara');
+    function pred(id) {
+      var b = $(id).querySelector('button[aria-pressed="true"]');
+      return b ? '«' + b.textContent.toLowerCase() + '»' : 'sin registrar';
+    }
+    $('sim-c-pred').textContent = 'cobertura alta, ' + pred('sim-pred-a') + '; cobertura baja, ' + pred('sim-pred-b') + '.';
     function res(v) {
       var s = series[v], r = s.length - 1, n = s[r];
-      return NOMBRE[v].toLowerCase() + ': el brote terminó en la ronda ' + r + ' con ' + n + (n === 1 ? ' contagiada' : ' contagiadas') + ' de 100';
+      return NOMBRE[v].toLowerCase() + ': se contagiaron ' + n + ' de las ' + (N - v) + ' no vacunadas; el brote terminó en la ronda ' + r;
     }
     $('sim-c-res').textContent = res(95) + '; ' + res(60) + '.';
     caja.hidden = false;
@@ -867,32 +904,33 @@ function conteos(p) {
     { a: 'Sweden', b: 'Norway' },
     { a: 'Chile', b: 'Brazil' },
     { a: 'Portugal', b: 'Bulgaria' },
-    { a: 'Chile', b: 'New Zealand' },
+    { a: 'Chile', b: 'South Korea' },
     { a: 'South Korea', b: 'United States' }
   ];
   var PASOS = [
-    { titulo: 'Predice', lim: ULT, presets: [] },
-    { titulo: '2020, antes de las vacunas', lim: 11, presets: [TODOS[0], TODOS[1]] },
-    { titulo: '2021, llegan las vacunas', lim: 23, presets: [TODOS[2]] },
-    { titulo: '2022, Ómicron', lim: ULT, presets: [TODOS[3], TODOS[4]] },
-    { titulo: 'Concluye', lim: ULT, presets: TODOS }
+    { titulo: 'Predice', lim: ULT, presets: [], hitos: [] },
+    { titulo: '2020, antes de las vacunas', lim: 11, presets: [TODOS[0], TODOS[1]], hitos: [11] },
+    { titulo: '2021, llegan las vacunas', lim: 23, presets: [TODOS[2]], hitos: [15, 19, 23] },
+    { titulo: '2022, Ómicron', lim: ULT, presets: [TODOS[3], TODOS[4]], hitos: [23, 35] },
+    { titulo: 'Concluye', lim: ULT, presets: TODOS, hitos: [11, 23, 35] }
   ];
   var RESUMEN = [
     ['Medidas más estrictas, ¿menos muertes?', 'p1', 'o1'],
-    ['Vecinos con medidas parecidas', 'p2', 'o2'],
+    ['Suecia y Noruega, ¿en qué se diferenciaron más?', 'p2', 'o2'],
     ['Después de cruzar el 67 %', 'p3', 'o4']
   ];
   var reducir = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
   var $ = function (id) { return document.getElementById(id); };
   var SVGNS = 'http://www.w3.org/2000/svg';
   var sel = [TODOS[0].a, TODOS[0].b], t = 0, lim = 11, playing = false, jugado = false, gen = 0, timer = null;
-  var paso = 1, R = {};
+  var paso = 1, confirmado = false;
   var selA = $('cv-a'), selB = $('cv-b'), btnPlay = $('cv-play'), btnIni = $('cv-ini'), rango = $('cv-t');
-  var btnAnt = $('cv-ant'), btnSig = $('cv-sig'), visor = $('cv-visor'), titulo = $('cv-titulo');
+  var btnAnt = $('cv-ant'), btnSig = $('cv-sig'), visor = $('cv-visor'), titulo = $('cv-titulo'), aviso = $('cv-aviso');
 
   function nombre(k) { return P[k].n; }
   function mes(i) { var p = MESES[i].split('-'); return ABR[+p[1] - 1] + ' ' + p[0]; }
   function num(v, suf) { return v === null ? 'sin dato' : String(v).replace('.', ',') + (suf || ''); }
+  function signo(v) { return v === null ? 'sin dato' : (v > 0 ? '+' : '') + String(v); }
   function el(tag, attrs, txt) {
     var e = document.createElementNS(SVGNS, tag);
     for (var k in attrs) e.setAttribute(k, attrs[k]);
@@ -900,6 +938,15 @@ function conteos(p) {
     return e;
   }
   function limpiar(n) { while (n.firstChild) n.removeChild(n.firstChild); }
+  function celda(tr, tag, txt, clase) {
+    var c = document.createElement(tag); c.textContent = txt; if (clase) c.className = clase; tr.appendChild(c); return c;
+  }
+
+  function subida(k, i) {
+    var e = P[k].e, anio = Math.floor(i / 12), base = anio === 0 ? 0 : e[anio * 12 - 1];
+    if (e[i] === null || base === null) return null;
+    return e[i] - base;
+  }
 
   function escalaExceso() {
     var mn = 0, mx = 0;
@@ -958,36 +1005,52 @@ function conteos(p) {
     panel('cv-str', 's', 112, { lo: 0, hi: 100, ticks: [0, 50, 100] }, null, true);
     $('cv-fecha').textContent = mes(t);
     rango.value = String(t);
+    var anio = 2020 + Math.floor(t / 12);
+    var filas = [
+      ['Exceso de muertes por millón', function (k) { return num(P[k].e[t]); }],
+      ['Subió en ' + anio + (anio === 2020 ? '' : ' (desde dic ' + (anio - 1) + ')'), function (k) { return signo(subida(k, t)); }],
+      ['Vacunación completa', function (k) { return num(P[k].v[t], ' %'); }],
+      ['Medidas (0–100)', function (k) { return num(P[k].s[t]); }]
+    ];
+    [['cv-ca', 0, 'pa'], ['cv-cb', 1, 'pb']].forEach(function (c) {
+      var th = $(c[0]); limpiar(th);
+      var ln = document.createElement('span'); ln.className = 'ln ' + c[2];
+      th.appendChild(ln); th.appendChild(document.createTextNode(nombre(sel[c[1]])));
+    });
     var cuerpo = $('cv-cuerpo'); limpiar(cuerpo);
-    var resumen = [];
-    for (var k = 0; k < 2; k++) {
-      var d = P[sel[k]], tr = document.createElement('tr');
-      var c0 = document.createElement('td'); c0.className = 'nom';
-      var ln = document.createElement('span'); ln.className = 'ln ' + (k === 0 ? 'pa' : 'pb');
-      c0.appendChild(ln); c0.appendChild(document.createTextNode(d.n)); tr.appendChild(c0);
-      var vals = [num(d.e[t]), num(d.v[t], ' %'), num(d.s[t])];
-      vals.forEach(function (x) { var c = document.createElement('td'); c.textContent = x; tr.appendChild(c); });
+    var resumen = [nombre(sel[0]), nombre(sel[1])];
+    filas.forEach(function (f) {
+      var tr = document.createElement('tr');
+      celda(tr, 'th', f[0], 'nom');
+      for (var k = 0; k < 2; k++) { var v = f[1](sel[k]); celda(tr, 'td', v); resumen[k] += ', ' + f[0].toLowerCase() + ' ' + v; }
       cuerpo.appendChild(tr);
-      resumen.push(d.n + ': exceso ' + vals[0] + ', vacunadas ' + vals[1] + ', medidas ' + vals[2]);
-    }
-    [['cv-exc', 'Muertes en exceso acumuladas por millón'], ['cv-vac', 'Población con vacunación completa, %'], ['cv-str', 'Rigurosidad de las medidas, de 0 a 100']].forEach(function (g) {
-      var serie = g[0] === 'cv-exc' ? 'e' : (g[0] === 'cv-vac' ? 'v' : 's');
-      $(g[0]).setAttribute('aria-label', g[1] + ', ' + mes(t) + '. ' + nombre(sel[0]) + ': ' + num(P[sel[0]][serie][t]) + '. ' + nombre(sel[1]) + ': ' + num(P[sel[1]][serie][t]) + '.');
+    });
+    [['cv-exc', 'e', 'Exceso de muertes acumulado por millón'], ['cv-vac', 'v', 'Población con vacunación completa, %'], ['cv-str', 's', 'Medidas, índice de 0 a 100']].forEach(function (g) {
+      $(g[0]).setAttribute('aria-label', g[2] + ', ' + mes(t) + '. ' + nombre(sel[0]) + ': ' + num(P[sel[0]][g[1]][t]) + '. ' + nombre(sel[1]) + ': ' + num(P[sel[1]][g[1]][t]) + '.');
     });
     return mes(t) + '. ' + resumen.join('. ') + '.';
   }
 
   function anunciar(txt) { $('cv-anuncio').textContent = txt; }
+  function esPreset(p) { return p && sel[0] === p.a && sel[1] === p.b; }
   function marcarBotones() {
     var txt = playing ? 'Pausa' : (t >= lim ? (jugado ? 'Repetir' : 'Reproducir') : (t > 0 ? 'Continuar' : 'Reproducir'));
     limpiar(btnPlay);
     btnPlay.appendChild(document.createTextNode(txt));
     var s = document.createElement('small'); s.textContent = 'hasta ' + mes(lim); btnPlay.appendChild(s);
-    var botones = $('cv-presets').getElementsByTagName('button'), pre = PASOS[paso - 1].presets;
+    var cfg = PASOS[paso - 1], botones = $('cv-presets').getElementsByTagName('button'), alguno = false;
     for (var i = 0; i < botones.length; i++) {
-      var p = pre[i];
-      botones[i].setAttribute('aria-pressed', (p && sel[0] === p.a && sel[1] === p.b) ? 'true' : 'false');
+      var es = esPreset(cfg.presets[i]);
+      if (es) alguno = true;
+      botones[i].setAttribute('aria-pressed', es ? 'true' : 'false');
     }
+    var otro = $('cv-otro');
+    if (paso > 1 && paso < 5 && !alguno) {
+      otro.textContent = 'Estás mirando otro par. Vuelve a «' + nombre(cfg.presets[0].a) + ' y ' + nombre(cfg.presets[0].b) + '» cuando quieras.';
+      otro.hidden = false;
+    } else otro.hidden = true;
+    var hitos = $('cv-hitos').getElementsByTagName('button');
+    for (var h = 0; h < hitos.length; h++) hitos[h].setAttribute('aria-pressed', +hitos[h].getAttribute('data-mes') === t ? 'true' : 'false');
     selA.value = sel[0]; selB.value = sel[1];
   }
   function parar() {
@@ -1009,6 +1072,7 @@ function conteos(p) {
     if (t >= lim) { t = 0; dibujar(); }
     playing = true; jugado = true; gen++; marcarBotones(); tic();
   }
+  function irA(m) { parar(); t = m; anunciar(dibujar()); marcarBotones(); }
   function comparar(a, b) {
     parar(); sel = [a, b];
     $('cv-play').parentNode.scrollIntoView({ block: 'start' });
@@ -1026,6 +1090,15 @@ function conteos(p) {
       b.addEventListener('click', function () { comparar(p.a, p.b); });
       cont.appendChild(b);
     });
+    var hc = $('cv-hitos'); limpiar(hc);
+    PASOS[paso - 1].hitos.forEach(function (m) {
+      var b = document.createElement('button'); b.type = 'button';
+      b.textContent = mes(m);
+      b.setAttribute('data-mes', String(m));
+      b.setAttribute('aria-pressed', 'false');
+      b.addEventListener('click', function () { irA(m); });
+      hc.appendChild(b);
+    });
   }
 
   function elegido(clave) {
@@ -1039,13 +1112,23 @@ function conteos(p) {
     var cuerpo = $('cv-resumen'); limpiar(cuerpo);
     RESUMEN.forEach(function (fila) {
       var tr = document.createElement('tr');
-      [fila[0], elegido(fila[1]).join(', ') || '—', elegido(fila[2]).join(', ') || 'sin responder'].forEach(function (x, i) {
-        var c = document.createElement(i === 0 ? 'th' : 'td'); c.textContent = x; tr.appendChild(c);
-      });
+      celda(tr, 'th', fila[0]);
+      celda(tr, 'td', elegido(fila[1]).join(', ') || '—');
+      celda(tr, 'td', elegido(fila[2]).join(', ') || 'sin responder');
       cuerpo.appendChild(tr);
     });
   }
   function prediccionesListas() { return elegido('p1').length && elegido('p2').length && elegido('p3').length; }
+  function faltan(n) {
+    var cajas = document.querySelectorAll('#covid [data-paso="' + n + '"] .opc'), c = 0;
+    for (var i = 0; i < cajas.length; i++) if (!cajas[i].querySelector('button[aria-pressed="true"]')) c++;
+    return c;
+  }
+  function sinAviso() {
+    confirmado = false;
+    aviso.hidden = true; aviso.textContent = '';
+    btnSig.textContent = paso === 1 ? 'Siguiente: ver los datos' : 'Siguiente';
+  }
 
   function mostrarPaso(n, enfocar) {
     parar();
@@ -1065,6 +1148,7 @@ function conteos(p) {
         var bs = fijas[f].getElementsByTagName('button');
         for (var b = 0; b < bs.length; b++) bs[b].disabled = true;
       }
+      $('cv-fijo').hidden = false;
     }
     if (n === 5) armarResumen();
     armarPresets();
@@ -1079,7 +1163,7 @@ function conteos(p) {
     btnAnt.disabled = n === 1;
     btnSig.hidden = n === 5;
     btnSig.disabled = n === 1 && !prediccionesListas();
-    btnSig.textContent = n === 1 ? 'Siguiente: ver los datos' : 'Siguiente';
+    sinAviso();
     if (enfocar) {
       titulo.scrollIntoView({ block: 'start' });
       titulo.focus({ preventScroll: true });
@@ -1104,6 +1188,7 @@ function conteos(p) {
       for (var k = 0; k < bs.length; k++) bs[k].setAttribute('aria-pressed', bs[k] === b ? 'true' : 'false');
     }
     if (paso === 1) btnSig.disabled = !prediccionesListas();
+    if (confirmado) sinAviso();
   });
 
   var claves = []; for (var k in P) claves.push(k);
@@ -1114,11 +1199,22 @@ function conteos(p) {
   selA.addEventListener('change', function () { comparar(selA.value, sel[1]); });
   selB.addEventListener('change', function () { comparar(sel[0], selB.value); });
   btnPlay.addEventListener('click', function () { if (playing) { parar(); anunciar(dibujar()); } else jugar(); });
-  btnIni.addEventListener('click', function () { parar(); t = 0; anunciar(dibujar()); marcarBotones(); });
+  btnIni.addEventListener('click', function () { irA(0); });
   rango.addEventListener('input', function () { parar(); t = +rango.value; dibujar(); marcarBotones(); });
   rango.addEventListener('change', function () { anunciar(dibujar()); });
   btnAnt.addEventListener('click', function () { if (paso > 1) mostrarPaso(paso - 1, true); });
-  btnSig.addEventListener('click', function () { if (paso < 5 && !(paso === 1 && !prediccionesListas())) mostrarPaso(paso + 1, true); });
+  btnSig.addEventListener('click', function () {
+    if (paso >= 5 || (paso === 1 && !prediccionesListas())) return;
+    var f = paso > 1 ? faltan(paso) : 0;
+    if (f > 0 && !confirmado) {
+      confirmado = true;
+      aviso.textContent = 'Te faltó responder ' + (f === 1 ? 'una pregunta' : f + ' preguntas') + ' de este paso. Responde arriba o toca «Seguir igual».';
+      aviso.hidden = false;
+      btnSig.textContent = 'Seguir igual';
+      return;
+    }
+    mostrarPaso(paso + 1, true);
+  });
   document.addEventListener('visibilitychange', function () { if (document.hidden && playing) parar(); });
 
   mostrarPaso(1, false);
