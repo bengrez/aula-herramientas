@@ -814,38 +814,41 @@ function conteos(p) {
   var ctx = cv.getContext('2d');
   if (!ctx) return;
 
-  var W = 0, H = 0, HW = 0, MARGEN = 120, celda = 100, ENLACE = 150, RADIO = 130;
-  var nodos = [], px = [], py = [];
+  var W = 0, H = 0, HW = 0, MARGEN = 100, celda = 40, ENLACE = 60, RADIO = 125;
+  var nodos = [], px = [], py = [], cabeza = [], sig = [], gcols = 0, grows = 0;
   var mx = -9999, my = -9999, cx = -9999, cy = -9999, act = 0, objAct = 0;
   var ultimo = 0, t0 = 0;
+  var NIVELES = [0.05, 0.075, 0.1, 0.125];
 
   function construir() {
     W = window.innerWidth; H = window.innerHeight;
     var dpr = Math.min(window.devicePixelRatio || 1, 1.5);
     cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr);
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    celda = W < 600 ? 96 : 120;
-    ENLACE = celda * 1.5; RADIO = celda * 1.3;
+    celda = W < 600 ? 40 : 48;
+    ENLACE = celda * 1.5; RADIO = W < 600 ? 125 : 150;
     HW = H + 2 * MARGEN;
     nodos = [];
-    var cols = Math.ceil(W / celda) + 1, filas = Math.ceil(HW / celda) + 1;
+    var cols = Math.ceil(W / celda) + 2, filas = Math.ceil(HW / celda) + 1;
     for (var j = 0; j < filas; j++) {
       for (var i = 0; i < cols; i++) {
         nodos.push({
-          bx: (i + 0.5 + (Math.random() - 0.5) * 0.8) * celda - celda / 2,
-          by: (j + 0.5 + (Math.random() - 0.5) * 0.8) * celda,
-          r: 4 + Math.random() * 3,
-          ax: 5 + Math.random() * 9, ay: 5 + Math.random() * 9,
-          fx: 0.00018 + Math.random() * 0.00022, fy: 0.00016 + Math.random() * 0.0002,
+          bx: (i - 0.5 + 0.5 + (Math.random() - 0.5) * 0.85) * celda,
+          by: (j + 0.5 + (Math.random() - 0.5) * 0.85) * celda,
+          r: 3.2 + Math.random() * 2.2,
+          ax: celda * (0.07 + Math.random() * 0.12), ay: celda * (0.07 + Math.random() * 0.12),
+          fx: 0.000065 + Math.random() * 0.00007, fy: 0.00006 + Math.random() * 0.00007,
           p1: Math.random() * 6.283, p2: Math.random() * 6.283
         });
       }
     }
-    px = new Array(nodos.length); py = new Array(nodos.length);
+    px = new Array(nodos.length); py = new Array(nodos.length); sig = new Array(nodos.length);
+    gcols = Math.ceil((W + 200) / ENLACE) + 1; grows = Math.ceil((HW + 200) / ENLACE) + 1;
+    cabeza = new Array(gcols * grows);
   }
 
   function posicionar(t) {
-    var sc = (window.pageYOffset || 0) * 0.12;
+    var sc = (window.pageYOffset || 0) * 0.1;
     for (var k = 0; k < nodos.length; k++) {
       var n = nodos[k];
       var x = n.bx + (reducir ? 0 : Math.sin(t * n.fx * 6.283 + n.p1) * n.ax);
@@ -854,7 +857,7 @@ function conteos(p) {
       if (act > 0.01) {
         var dx = cx - x, dy = cy - y, d = Math.sqrt(dx * dx + dy * dy);
         if (d < RADIO) {
-          var f = 1 - d / RADIO; f = f * f * act * 0.22;
+          var f = 1 - d / RADIO; f = f * f * act * 0.2;
           x += dx * f; y += dy * f;
         }
       }
@@ -862,45 +865,92 @@ function conteos(p) {
     }
   }
 
+  function mezcla(t) {
+    t = t < 0 ? 0 : (t > 1 ? 1 : t);
+    return Math.round(112 - 82 * t) + ',' + Math.round(112 - 71 * t) + ',' + Math.round(108 - 49 * t);
+  }
+
+  function celdaDe(k) {
+    var gx = Math.floor((px[k] + 100) / ENLACE), gy = Math.floor((py[k] + MARGEN + 100) / ENLACE);
+    gx = gx < 0 ? 0 : (gx >= gcols ? gcols - 1 : gx);
+    gy = gy < 0 ? 0 : (gy >= grows ? grows - 1 : gy);
+    return [gx, gy];
+  }
+
   function dibujar() {
     ctx.clearRect(0, 0, W, H);
-    var n = nodos.length, L2 = ENLACE * ENLACE, hay = act > 0.01, k, m;
-    ctx.lineWidth = 1;
+    var n = nodos.length, L2 = ENLACE * ENLACE, hay = act > 0.01, k, m, i, c;
+    for (i = 0; i < cabeza.length; i++) cabeza[i] = -1;
+    var gk = new Array(n);
+    for (k = 0; k < n; k++) { c = celdaDe(k); gk[k] = c; var idx = c[1] * gcols + c[0]; sig[k] = cabeza[idx]; cabeza[idx] = k; }
+    var cubos = [[], [], [], []], curvos = [];
     for (k = 0; k < n; k++) {
-      for (m = k + 1; m < n; m++) {
-        var dx = px[m] - px[k], dy = py[m] - py[k], d2 = dx * dx + dy * dy;
-        if (d2 > L2) continue;
-        var a = 1 - Math.sqrt(d2) / ENLACE;
-        var mxp = (px[k] + px[m]) / 2, myp = (py[k] + py[m]) / 2, f = 0, qx = mxp, qy = myp;
-        if (hay) {
-          var ex = cx - mxp, ey = cy - myp, dm = Math.sqrt(ex * ex + ey * ey);
-          if (dm < RADIO) { f = (1 - dm / RADIO); f = f * f * act; qx = mxp + ex * f * 0.45; qy = myp + ey * f * 0.45; }
+      c = gk[k];
+      for (var gy = c[1] - 1; gy <= c[1] + 1; gy++) {
+        if (gy < 0 || gy >= grows) continue;
+        for (var gx = c[0] - 1; gx <= c[0] + 1; gx++) {
+          if (gx < 0 || gx >= gcols) continue;
+          for (m = cabeza[gy * gcols + gx]; m !== -1; m = sig[m]) {
+            if (m <= k) continue;
+            var dx = px[m] - px[k], dy = py[m] - py[k], d2 = dx * dx + dy * dy;
+            if (d2 > L2) continue;
+            var a = 1 - Math.sqrt(d2) / ENLACE;
+            var mxp = (px[k] + px[m]) / 2, myp = (py[k] + py[m]) / 2, f = 0;
+            if (hay) {
+              var ex = cx - mxp, ey = cy - myp, dm = Math.sqrt(ex * ex + ey * ey);
+              if (dm < RADIO) { f = 1 - dm / RADIO; f = f * f * act; }
+            }
+            if (f > 0.04) {
+              curvos.push([px[k], py[k], px[m], py[m], mxp + (cx - mxp) * f * 0.4, myp + (cy - myp) * f * 0.4, a, f]);
+            } else {
+              var b = Math.min(3, Math.floor(a * 4));
+              cubos[b].push(px[k], py[k], px[m], py[m]);
+            }
+          }
         }
-        ctx.strokeStyle = f > 0.04 ? 'rgba(37,99,235,' + (0.12 + 0.2 * a + 0.3 * f).toFixed(3) + ')' : 'rgba(71,85,105,' + (0.07 + 0.18 * a).toFixed(3) + ')';
-        ctx.beginPath(); ctx.moveTo(px[k], py[k]);
-        if (f > 0.04) ctx.quadraticCurveTo(qx, qy, px[m], py[m]); else ctx.lineTo(px[m], py[m]);
-        ctx.stroke();
       }
     }
+    ctx.lineWidth = 1.4;
+    for (i = 0; i < 4; i++) {
+      var arr = cubos[i];
+      if (!arr.length) continue;
+      ctx.strokeStyle = 'rgba(112,112,108,' + NIVELES[i] + ')';
+      ctx.beginPath();
+      for (m = 0; m < arr.length; m += 4) { ctx.moveTo(arr[m], arr[m + 1]); ctx.lineTo(arr[m + 2], arr[m + 3]); }
+      ctx.stroke();
+    }
+    for (i = 0; i < curvos.length; i++) {
+      var q = curvos[i];
+      ctx.strokeStyle = 'rgba(' + mezcla(q[7] * 1.5) + ',' + (0.07 + 0.08 * q[6] + 0.28 * q[7]).toFixed(3) + ')';
+      ctx.beginPath(); ctx.moveTo(q[0], q[1]); ctx.quadraticCurveTo(q[4], q[5], q[2], q[3]); ctx.stroke();
+    }
     var cercanos = [];
+    ctx.fillStyle = 'rgba(112,112,108,0.17)';
+    ctx.beginPath();
     for (k = 0; k < n; k++) {
       var g = 0;
       if (hay) {
         var ddx = cx - px[k], ddy = cy - py[k], dd = Math.sqrt(ddx * ddx + ddy * ddy);
-        if (dd < RADIO) { g = (1 - dd / RADIO) * act; cercanos.push({ k: k, d: dd }); }
+        if (dd < RADIO) { g = (1 - dd / RADIO) * act; g = g * Math.sqrt(g); cercanos.push({ k: k, d: dd, g: g }); if (g > 0.02) continue; }
       }
-      ctx.fillStyle = 'rgba(37,99,235,' + (0.34 + 0.36 * g).toFixed(3) + ')';
-      ctx.beginPath(); ctx.arc(px[k], py[k], nodos[k].r + 2.6 * g, 0, 6.283); ctx.fill();
+      ctx.moveTo(px[k] + nodos[k].r, py[k]); ctx.arc(px[k], py[k], nodos[k].r, 0, 6.283);
+    }
+    ctx.fill();
+    for (i = 0; i < cercanos.length; i++) {
+      var cc = cercanos[i];
+      if (cc.g <= 0.02) continue;
+      ctx.fillStyle = 'rgba(' + mezcla(cc.g * 1.3) + ',' + (0.17 + 0.5 * cc.g).toFixed(3) + ')';
+      ctx.beginPath(); ctx.arc(px[cc.k], py[cc.k], nodos[cc.k].r + 2 * cc.g, 0, 6.283); ctx.fill();
     }
     if (hay && cercanos.length) {
       cercanos.sort(function (u, v) { return u.d - v.d; });
-      for (k = 0; k < cercanos.length && k < 5; k++) {
-        var c = cercanos[k], aa = (1 - c.d / RADIO) * act;
-        ctx.strokeStyle = 'rgba(37,99,235,' + (0.55 * aa).toFixed(3) + ')';
-        ctx.beginPath(); ctx.moveTo(cx, cy); ctx.lineTo(px[c.k], py[c.k]); ctx.stroke();
+      for (i = 0; i < cercanos.length && i < 6; i++) {
+        var cn = cercanos[i], aa = (1 - cn.d / RADIO) * act;
+        ctx.strokeStyle = 'rgba(30,41,59,' + (0.28 * aa).toFixed(3) + ')';
+        ctx.beginPath(); ctx.moveTo(cx, cy); ctx.lineTo(px[cn.k], py[cn.k]); ctx.stroke();
       }
-      ctx.fillStyle = 'rgba(37,99,235,' + (0.6 * act).toFixed(3) + ')';
-      ctx.beginPath(); ctx.arc(cx, cy, 3.2, 0, 6.283); ctx.fill();
+      ctx.fillStyle = 'rgba(30,41,59,' + (0.4 * act).toFixed(3) + ')';
+      ctx.beginPath(); ctx.arc(cx, cy, 3, 0, 6.283); ctx.fill();
     }
   }
 
@@ -908,8 +958,8 @@ function conteos(p) {
     if (document.hidden) { requestAnimationFrame(cuadro); return; }
     if (ahora - ultimo >= 32) {
       ultimo = ahora;
-      cx += (mx - cx) * 0.2; cy += (my - cy) * 0.2;
-      act += (objAct - act) * 0.08;
+      cx += (mx - cx) * 0.16; cy += (my - cy) * 0.16;
+      act += (objAct - act) * 0.07;
       if (act < 0.01 && objAct === 0) act = 0;
       posicionar(ahora - t0); dibujar();
     }
