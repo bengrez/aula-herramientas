@@ -263,8 +263,16 @@ body.presentando .pizarra{min-height:70vh;display:flex;flex-direction:column;jus
 
 @media (prefers-reduced-motion:reduce){ *{transition:none!important;animation:none!important} }
 </style>
+<style>
+/* Enlace al hub «Aula herramientas» y su pie (se agregó con el hub nuevo; no cambia la lógica de la herramienta). */
+.aula-volver,.aula-pie{margin:0;padding:.55rem 1rem;font:500 .85rem/1.4 system-ui,"Segoe UI",Arial,sans-serif;color:inherit;opacity:.85}
+.aula-volver a,.aula-pie a{color:inherit;text-underline-offset:.18em}
+.aula-pie{text-align:center;padding-block:1.25rem 1.5rem}
+@media print{.aula-volver,.aula-pie{display:none}}
+</style>
 </head>
 <body>
+<p class="aula-volver"><a href="../">← Aula herramientas</a></p>
 
 <header>
   <div class="envoltura">
@@ -943,5 +951,6 @@ dibujarPar();
 nuevaPregunta();
 cargarCaso();
 </script>
+<p class="aula-pie"><a href="../">Aula herramientas</a> · Benjamín Moreira-Grez · Santiago, Chile</p>
 </body>
 </html>
