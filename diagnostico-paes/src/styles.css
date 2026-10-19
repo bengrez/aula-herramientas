@@ -720,7 +720,7 @@ h3 { margin-bottom: 8px; font-size: 1.18rem; }
   .public-url { font-size: 11pt; }
 }
 
-/* Enlace de vuelta al hub «Aula herramientas» (arriba y en el pie). Va aquí y no en la página porque la CSP no admite estilos en línea. */
+/* Enlace de vuelta al hub «Herramientas de aula» (arriba y en el pie). Va aquí y no en la página porque la CSP no admite estilos en línea. */
 .aula-volver {
   margin: 0;
   padding: 6px max(16px, env(safe-area-inset-left));

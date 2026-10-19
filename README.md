@@ -71,7 +71,7 @@ navegador) y una ficha «Para / Entrena» por herramienta. El fondo es una **red
   `node tests/mapeo.mjs` comprueba que sus ids existan en `C` y que cada tarjeta (`data-herr`) tenga entrada.
 - Para pruebas: `window.redConceptos` (`estado()`, `avanzar(seg)`, `apuntar(x, y)`, `soltar()`, `costoMs()`, `desglose()`, `rotulos()`, `llenar(luz)`, `pausa(b)`, `enfocar(id)`).
 
-Cada herramienta trae un enlace «← Aula herramientas» al principio y un pie con él. En `diagnostico-paes/` (PWA con service worker y CSP que no admite estilos
+Cada herramienta trae un enlace «← Herramientas de aula» al principio y un pie con él. En `diagnostico-paes/` (PWA con service worker y CSP que no admite estilos
 en línea) el estilo está en `src/styles.css` y se subió `CACHE_VERSION` en `sw.js` para que el modo sin conexión recoja el cambio. Las imágenes de `img/` son copias de las del sitio personal.
 
 ## Convención
