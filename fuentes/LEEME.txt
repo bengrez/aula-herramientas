@@ -1,0 +1,11 @@
+Fuentes del hub (las mismas que usa https://bengrez.github.io), guardadas aquí para que la página no pida nada a Google Fonts.
+
+  bricolage-400/500/600.woff2          Bricolage Grotesque (The Bricolage Grotesque Project Authors)   OFL-BricolageGrotesque.txt
+  sourceserif4-400/600/400-italic.woff2  Source Serif 4 (The Source Serif 4 Project Authors, Adobe)      OFL-SourceSerif4.txt
+  plexmono-400/500.woff2               IBM Plex Mono (IBM Corp.)                                       OFL-IBMPlexMono.txt
+
+Licencia: SIL Open Font License 1.1; los textos están en esta carpeta y la licencia permite incluirlas y redistribuirlas con la página.
+Origen: instancias estáticas (TTF) que sirve Google Fonts para los pesos que usa el sitio, descargadas el 2026-10-19 y convertidas a WOFF2 con fontTools
+(pyftsubset), con subconjunto latino: ASCII, Latin-1, puntuación común, flechas ←↑→↓↗, subíndices ₀–₉, signo menos y comparaciones. Los
+símbolos que no estén (p. ej. algún carácter matemático) caen al respaldo del sistema.
+Para cambiar un peso o agregar uno: descargar el TTF, subconjunto con el mismo conjunto de caracteres, y declararlo en el @font-face de index.html.

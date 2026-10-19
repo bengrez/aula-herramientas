@@ -8,11 +8,21 @@
 <meta name="theme-color" content="#FAF9F6" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#131211" media="(prefers-color-scheme: dark)">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='4' fill='%23FFFFFF'/%3E%3Cpath d='M8 22L16 9L24 22M8 22H24' fill='none' stroke='%231A1A1A' stroke-width='1.6'/%3E%3Ccircle cx='8' cy='22' r='2.6' fill='%23900008'/%3E%3Ccircle cx='16' cy='9' r='2.6' fill='%231A1A1A'/%3E%3Ccircle cx='24' cy='22' r='2.6' fill='%231A1A1A'/%3E%3C/svg%3E">
+<link rel="preload" href="fuentes/sourceserif4-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fuentes/bricolage-600.woff2" as="font" type="font/woff2" crossorigin>
 <script>try{var t=localStorage.getItem('tema');if(t==='dark'||t==='light')document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
 <style>
 /* Mismo lenguaje que bengrez.github.io: papel cálido y tinta casi negra, acento burdeos (coral en oscuro), Bricolage para los títulos,
-   Source Serif para el texto, IBM Plex Mono para las notas. Sin fuentes web: sólo las que ya hay en el equipo, con los mismos respaldos
-   ajustados de ancho que usa el sitio (así esta página no hace ninguna llamada externa). */
+   Source Serif para el texto, IBM Plex Mono para las notas. Las fuentes son las del sitio, guardadas aquí (fuentes/*.woff2, subconjunto latino,
+   licencia OFL en esa carpeta): la página no hace ninguna llamada externa. Los respaldos ajustados de ancho son los mismos que usa el sitio. */
+@font-face{font-family:"Bricolage Grotesque";font-style:normal;font-weight:400;font-display:swap;src:url(fuentes/bricolage-400.woff2) format("woff2")}
+@font-face{font-family:"Bricolage Grotesque";font-style:normal;font-weight:500;font-display:swap;src:url(fuentes/bricolage-500.woff2) format("woff2")}
+@font-face{font-family:"Bricolage Grotesque";font-style:normal;font-weight:600 700;font-display:swap;src:url(fuentes/bricolage-600.woff2) format("woff2")}
+@font-face{font-family:"Source Serif 4";font-style:normal;font-weight:400;font-display:swap;src:url(fuentes/sourceserif4-400.woff2) format("woff2")}
+@font-face{font-family:"Source Serif 4";font-style:normal;font-weight:500 700;font-display:swap;src:url(fuentes/sourceserif4-600.woff2) format("woff2")}
+@font-face{font-family:"Source Serif 4";font-style:italic;font-weight:400;font-display:swap;src:url(fuentes/sourceserif4-400-italic.woff2) format("woff2")}
+@font-face{font-family:"IBM Plex Mono";font-style:normal;font-weight:400;font-display:swap;src:url(fuentes/plexmono-400.woff2) format("woff2")}
+@font-face{font-family:"IBM Plex Mono";font-style:normal;font-weight:500 700;font-display:swap;src:url(fuentes/plexmono-500.woff2) format("woff2")}
 @font-face{font-family:"Bricolage Respaldo";src:local("Arial"),local("Liberation Sans"),local("Helvetica Neue"),local("Helvetica");size-adjust:95%}
 @font-face{font-family:"Source Serif Respaldo";src:local("Georgia"),local("Liberation Serif"),local("Times New Roman");size-adjust:100.7%}
 :root{
@@ -22,7 +32,8 @@
   --display:"Bricolage Grotesque","Bricolage Respaldo",system-ui,"Segoe UI",Helvetica,Arial,sans-serif;
   --body:"Source Serif 4","Source Serif Respaldo",Georgia,"Times New Roman",serif;
   --mono:"IBM Plex Mono",ui-monospace,"SFMono-Regular",Menlo,Consolas,"Liberation Mono",monospace;
-  --page:62rem; --sesgo:.75; --gutter:clamp(1rem,4vw,2.5rem); --bar:3.25rem;
+  --page:72rem; --sesgo:.75; --gutter:clamp(1rem,4vw,2.5rem); --bar:3.25rem;
+  --riel:clamp(7rem,29vw,11.5rem);   /* ancho mínimo del margen izquierdo, donde crece la red: en pantallas angostas la columna de texto se corre lo necesario para que el margen no baje de esto */
   color-scheme:light;
 }
 @media (prefers-color-scheme:dark){
@@ -38,7 +49,7 @@
 *,*::before,*::after{box-sizing:border-box}
 html{scroll-padding-top:calc(var(--bar) + 1rem);overflow-anchor:none}
 body{margin:0;background:var(--bg);color:var(--ink);font:400 1.0625rem/1.6 var(--body);-webkit-font-smoothing:antialiased;overflow-wrap:break-word}
-.pagina{max-width:var(--page);margin-left:max(0px,calc((100% - var(--page))*var(--sesgo)));margin-right:auto;padding-inline:var(--gutter)}
+.pagina{max-width:var(--page);margin-left:max(0px,calc((100% - var(--page))*var(--sesgo)));margin-right:auto;padding-right:var(--gutter);padding-left:max(var(--gutter),calc(var(--riel) - max(0px,calc((100% - var(--page))*var(--sesgo)))))}
 a{color:var(--accent-ink);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:.18em}
 a:hover{text-decoration-thickness:2px}
 :focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:2px}
@@ -54,12 +65,15 @@ img{max-width:100%;height:auto}
 .barra{position:sticky;top:0;z-index:10}
 .barra-in{background:var(--bg);background-clip:content-box;border-bottom:1px solid var(--rule);display:flex;align-items:center;gap:1.25rem;min-height:var(--bar);font-family:var(--display);font-size:.95rem}
 .marca{font-weight:600;color:var(--ink);text-decoration:none;margin-right:auto;padding-block:.6rem}
+.nw{white-space:nowrap}
 .marca:hover{text-decoration:underline;text-decoration-thickness:1px}
 .barra-in button{font:inherit;color:var(--ink);background:none;border:0;cursor:pointer;padding:.75rem 0;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:.18em}
 .barra-in button:hover{text-decoration-thickness:2px}
 .barra-in .tema{display:inline-grid;place-items:center;width:2.5rem;height:2.5rem;margin-right:-.6rem;padding:0;text-decoration:none}
 .tema i{width:1.05rem;height:1.05rem;border-radius:50%;border:1.5px solid var(--ink);background:linear-gradient(90deg,var(--ink) 50%,transparent 50%)}
 button[hidden]{display:none}
+#pausa{white-space:nowrap}
+@media (max-width:639px){.barra-in{gap:.75rem;font-size:.88rem}#pausa .x{display:none}}
 
 /* ---- portada ---- */
 .hero{padding-block:clamp(2.25rem,6vw,4.5rem) clamp(1.5rem,4vw,2.5rem)}
@@ -104,17 +118,13 @@ details.mas summary{cursor:pointer;font-family:var(--display);padding-block:.5re
 
 footer{border-top:1px solid var(--rule);padding-block:1.5rem 2.5rem;font-family:var(--mono);font-size:.78rem;line-height:1.6;color:var(--muted)}
 
-/* ---- texto protegido sobre la red (la misma técnica del sitio): cada bloque lleva un velo del color de la página y una sombra
-   del mismo color, con desenfoque; los puntos pasan «por detrás» y se atenúan bajo el texto sin desaparecer. Sólo con el fondo activo. ---- */
-.red-viva :is(.hero .kicker,.hero h1,.hero .lede,.red-nota,.seccion h2,.intro,.herr,details.mas,footer .pagina){background:var(--velo);box-shadow:0 0 12px 9px var(--velo);border-radius:3px}
-.red-viva .herr{margin-inline:-.25rem;padding-inline:.25rem}
 @media (max-width:639px){
   :root{--gutter:1.3rem}
   body{line-height:1.7}
   .herr{margin-top:2rem;padding-top:1.75rem;gap:1.25rem}
   .campos{gap:.7rem 1rem;line-height:1.6}
 }
-@media print{canvas{display:none!important}.red-viva *{background:none!important;box-shadow:none!important}}
+@media print{canvas{display:none!important}}
 </style>
 </head>
 <body>
@@ -122,8 +132,8 @@ footer{border-top:1px solid var(--rule);padding-block:1.5rem 2.5rem;font-family:
 
 <header class="barra">
   <div class="pagina barra-in">
-    <a class="marca" href="https://bengrez.github.io/">← Benjamín Moreira-Grez</a>
-    <button type="button" id="pausa" hidden aria-pressed="false">Pausar fondo</button>
+    <a class="marca" href="https://bengrez.github.io/">← Benjamín <span class="nw">Moreira-Grez</span></a>
+    <button type="button" id="pausa" hidden aria-pressed="false" aria-label="Pausar fondo"><span class="v">Pausar</span><span class="x"> fondo</span></button>
     <button type="button" class="tema" id="tema" hidden><i aria-hidden="true"></i></button>
   </div>
 </header>
@@ -134,7 +144,7 @@ footer{border-top:1px solid var(--rule);padding-block:1.5rem 2.5rem;font-family:
   <p class="kicker">Santiago, Chile</p>
   <h1>Aula herramientas</h1>
   <p class="lede">Herramientas web para explorar, practicar y recoger evidencia formativa en clases de ciencias. Se abren en el navegador, sin instalar nada, y están pensadas para el celular. Cada ficha dice qué guarda y dónde.</p>
-  <p class="red-nota">El fondo es una red de conceptos de ciencias que crece como una raíz: una punta baja por un costado de la página y, al avanzar, descubre un concepto. Se refuerza si te detienes cerca y se desvanece si la descuidas.</p>
+  <p class="red-nota">El fondo es una red de conceptos de ciencias. Crece por el costado y se desvanece lo que no se repasa. Al pasar el cursor o el dedo por una herramienta, se iluminan sus conceptos.</p>
 </div>
 
 <section class="seccion" aria-labelledby="h-aula">
@@ -142,7 +152,7 @@ footer{border-top:1px solid var(--rule);padding-block:1.5rem 2.5rem;font-family:
     <h2 id="h-aula">Para la sala de clases</h2>
     <p class="intro">Cuatro herramientas, de enseñanza básica a cuarto medio. Ninguna pide cuenta ni correo.</p>
 
-    <article class="herr">
+    <article class="herr" data-herr="tp">
       <div class="herr-medio"><img src="img/tabla-periodica.webp" width="1200" height="1000" alt="" loading="lazy" decoding="async"></div>
       <div>
         <h3><a href="tabla-periodica-reactiva/">Tabla periódica reactiva</a></h3>
@@ -161,7 +171,7 @@ footer{border-top:1px solid var(--rule);padding-block:1.5rem 2.5rem;font-family:
       </div>
     </article>
 
-    <article class="herr">
+    <article class="herr" data-herr="ad">
       <div class="herr-medio"><img src="img/autodiagnostico.webp" width="1400" height="386" alt="" loading="lazy" decoding="async"></div>
       <div>
         <h3><a href="autodiagnostico-bienestar-salud/">Autodiagnóstico de Bienestar y Salud</a></h3>
@@ -179,7 +189,7 @@ footer{border-top:1px solid var(--rule);padding-block:1.5rem 2.5rem;font-family:
       </div>
     </article>
 
-    <article class="herr">
+    <article class="herr" data-herr="va">
       <div class="herr-medio"><div class="tipo" aria-hidden="true"><b>1 − 1/R₀</b><span>umbral de inmunidad de rebaño</span></div></div>
       <div>
         <h3><a href="vacunas-rebano/">Vacunas e inmunidad de rebaño</a></h3>
@@ -197,7 +207,7 @@ footer{border-top:1px solid var(--rule);padding-block:1.5rem 2.5rem;font-family:
       </div>
     </article>
 
-    <article class="herr">
+    <article class="herr" data-herr="paes">
       <div class="herr-medio"><div class="tipo" aria-hidden="true"><b>Atlas</b><span>mapa de aprendizaje, sin nota</span></div></div>
       <div>
         <h3><a href="diagnostico-paes/">Atlas, diagnóstico PAES Ciencias</a></h3>
@@ -220,7 +230,7 @@ footer{border-top:1px solid var(--rule);padding-block:1.5rem 2.5rem;font-family:
     <h2 id="h-aparte">Aparte: apoyo escolar en inglés</h2>
     <p class="intro">Recursos para acompañar estudios de secundaria en Australia (Year 8). No forman parte del trabajo de aula del IDE.</p>
 
-    <article class="herr">
+    <article class="herr" data-herr="bd">
       <div class="herr-medio"><div class="tipo" aria-hidden="true"><b>1347–1353</b><span>four sources, ten questions</span></div></div>
       <div>
         <h3><a href="black-death-skills-lab/">The Black Death: a historian’s skills lab</a></h3>
@@ -241,7 +251,7 @@ footer{border-top:1px solid var(--rule);padding-block:1.5rem 2.5rem;font-family:
 <section class="seccion" aria-labelledby="h-red">
   <div class="pagina">
     <h2 id="h-red">La red de fondo</h2>
-    <p class="intro">Es un adorno que enseña una idea: aprender es repasar a tiempo. Crece como la raíz de la página principal: un eje que baja por el margen izquierdo y ramas que salen de él. Cada punto es un concepto de ciencias del currículum escolar (algunos son los temas de estas herramientas). En el eje van los prerrequisitos, con flecha; en las ramas, las relaciones, punteadas. Un concepto aparece cuando la punta llega, se refuerza si te detienes cerca (con el cursor o con el dedo) y se desvanece si lo descuidas; lo repasado a tiempo dura más y se ve con un aro. Si no ves el fondo, esta es la lista de los conceptos que lo forman.</p>
+    <p class="intro">El fondo ilustra una idea: lo que no se repasa se olvida. Cada punto es un concepto de ciencias del currículum escolar; varios son los temas de estas herramientas. Si no ves el fondo, o prefieres leerlo, esta es la lista.</p>
     <details class="mas" id="red-detalle">
       <summary>Conceptos y relaciones de la red</summary>
       <div class="redlista" id="red-lista"></div>
@@ -268,6 +278,7 @@ footer{border-top:1px solid var(--rule);padding-block:1.5rem 2.5rem;font-family:
 })();
 </script>
 
+<script src="datos/herramienta-conceptos.js"></script>
 <script>
 /*RED-CONCEPTOS-START*/
 /* Fondo del hub: una red de conceptos de ciencias que crece como la raíz del sitio principal y aprende (aula-herramientas, 2026-10-16).
@@ -286,59 +297,60 @@ footer{border-top:1px solid var(--rule);padding-block:1.5rem 2.5rem;font-family:
    · Se desvanece: sin repaso, S es corta (S0 = 15 s) y el concepto se olvida en ≈ 45 s; deja una huella (se reaprende más rápido). Un vínculo olvidado no
      vuelve solo: la punta lo rehace cuando uno de sus extremos reaparece.
    Mismo feeling del sitio: luz con borde difuso, estela de ≈ 1,5 s, calma al leer (el tiempo baja un 40 % con el scroll quieto 4 s). El canvas no captura eventos.
+   Herramienta ↔ conceptos: al pasar el cursor (o el teclado, o el dedo apoyado) por una tarjeta con data-herr, la red ilumina los conceptos de esa herramienta y los
+   vínculos entre ellos y atenúa el resto, sin texto nuevo. El mapeo está en datos/herramienta-conceptos.js (un solo archivo). En pantallas táctiles, además, la
+   herramienta que cruza la línea de lectura (45 % del alto) enciende sus conceptos al desplazarte. Lo enfocado se muestra aunque la red lo hubiera olvidado.
+   Margen: la raíz vive siempre en el margen izquierdo (sin velo sobre el texto); si la pantalla no lo da, el CSS lo ensancha (--riel) y el texto se corre.
    Con prefers-reduced-motion: un estado final fijo y legible. Sin red ni servicios externos.
-   Para pruebas: window.redConceptos = {estado(), avanzar(seg), apuntar(x, y), soltar(), costoMs(), cuadros(), llenar(luz), pausa(b)}. */
+   Para pruebas: window.redConceptos = {estado(), avanzar(seg), apuntar(x, y), soltar(), costoMs(), cuadros(), llenar(luz), pausa(b), enfocar(id de herramienta o null)}. */
 (function () {
   var reducir = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
   var raiz = document.documentElement;
 
-  var DISC = { B: 'Biología', Q: 'Química', F: 'Física' };
-  var HERR = {
-    tp: 'Tabla periódica reactiva', ad: 'Autodiagnóstico de bienestar', va: 'Vacunas e inmunidad de rebaño',
-    paes: 'Atlas · diagnóstico PAES', bd: 'The Black Death'
-  };
+  /* Qué herramienta trabaja qué concepto: datos/herramienta-conceptos.js (un solo archivo, explícito y revisable). Si no carga, la red funciona sin el resaltado. */
+  var HC = window.HERRAMIENTA_CONCEPTOS || {};
   /* Conceptos: [id, etiqueta, disciplina, padre, tipo de vínculo con el padre (p prerrequisito, r relación),
-     rol (e sigue el eje, c sigue la rama del padre, i/d brota una lateral a la izquierda/derecha), herramienta, prioridad (1 = se queda en el celular)].
+     rol (e sigue el eje, c sigue la rama del padre, i/d brota una lateral a la izquierda/derecha), prioridad (1 = se queda en el celular)].
      El padre va siempre antes que sus hijos. El eje (e) es una ruta sugerida de prerrequisitos, de la materia a la salud pública. */
   var C = [
-    ['mat', 'Materia y estados', 'Q', null, 'p', 'e', '', 1],
-    ['ato', 'Átomo y modelos atómicos', 'Q', 'mat', 'p', 'e', '', 1],
-    ['tab', 'Tabla periódica', 'Q', 'ato', 'p', 'e', 'tp', 1],
-    ['enl', 'Enlace químico', 'Q', 'tab', 'p', 'e', 'tp', 1],
-    ['rea', 'Reacciones químicas', 'Q', 'enl', 'p', 'e', '', 1],
-    ['cel', 'Célula', 'B', 'rea', 'p', 'e', 'paes', 1],
-    ['met', 'Metabolismo celular', 'B', 'cel', 'p', 'e', '', 1],
-    ['inm', 'Sistema inmune', 'B', 'met', 'p', 'e', 'va', 1],
-    ['vac', 'Vacunas', 'B', 'inm', 'p', 'e', 'va', 1],
-    ['reb', 'Inmunidad de rebaño', 'B', 'vac', 'p', 'e', 'va', 1],
-    ['cin', 'Modelo cinético de partículas', 'F', 'mat', 'r', 'd', '', 2],
-    ['tem', 'Temperatura y calor', 'F', 'cin', 'p', 'c', '', 3],
-    ['med', 'Medición y magnitudes', 'F', 'mat', 'r', 'i', 'paes', 3],
-    ['mov', 'Fuerza y movimiento', 'F', 'med', 'p', 'c', '', 3],
-    ['car', 'Carga eléctrica', 'F', 'ato', 'r', 'i', '', 2],
-    ['ele', 'Electricidad y circuitos', 'F', 'car', 'p', 'c', '', 3],
-    ['rad', 'Radio atómico', 'Q', 'tab', 'r', 'd', 'tp', 2],
-    ['ion', 'Energía de ionización', 'Q', 'rad', 'p', 'c', 'tp', 3],
-    ['neg', 'Electronegatividad', 'Q', 'ion', 'p', 'c', 'tp', 3],
-    ['agu', 'Agua y disoluciones', 'Q', 'enl', 'r', 'i', '', 2],
-    ['phh', 'Ácidos, bases y pH', 'Q', 'agu', 'p', 'c', '', 3],
-    ['ene', 'Energía y sus transformaciones', 'F', 'rea', 'r', 'd', '', 2],
-    ['ond', 'Ondas: luz y sonido', 'F', 'ene', 'r', 'c', '', 3],
-    ['cons', 'Conservación de la masa', 'Q', 'rea', 'r', 'i', '', 3],
-    ['mit', 'Mitosis y meiosis', 'B', 'cel', 'r', 'd', 'paes', 2],
-    ['adn', 'ADN y herencia', 'B', 'mit', 'p', 'c', '', 3],
-    ['fot', 'Fotosíntesis', 'B', 'cel', 'r', 'i', '', 3],
-    ['ali', 'Alimentación y nutrición', 'B', 'met', 'r', 'i', 'ad', 2],
-    ['act', 'Actividad física', 'B', 'ali', 'p', 'c', 'ad', 3],
-    ['sal', 'Factores de la salud', 'B', 'met', 'r', 'd', 'ad', 2],
-    ['sue', 'Sueño y estrés', 'B', 'sal', 'p', 'c', 'ad', 3],
-    ['cnt', 'Contagio y transmisión', 'B', 'inm', 'r', 'd', 'va', 2],
-    ['r0', 'Número reproductivo R₀', 'B', 'cnt', 'p', 'c', 'va', 3],
-    ['pes', 'Peste negra (1347–1353)', 'B', 'inm', 'r', 'i', 'bd', 3],
-    ['cob', 'Cobertura de vacunación', 'B', 'vac', 'r', 'i', 'va', 2],
-    ['umb', 'Umbral 1 − 1/R₀', 'B', 'cob', 'p', 'c', 'va', 3],
-    ['cov', 'Datos reales de COVID-19', 'B', 'reb', 'r', 'i', 'va', 2],
-    ['mod', 'Modelos y simulación', 'B', 'reb', 'r', 'd', 'va', 3]
+    ['mat', 'Materia y estados', 'Q', null, 'p', 'e', 1],
+    ['ato', 'Átomo y modelos atómicos', 'Q', 'mat', 'p', 'e', 1],
+    ['tab', 'Tabla periódica', 'Q', 'ato', 'p', 'e', 1],
+    ['enl', 'Enlace químico', 'Q', 'tab', 'p', 'e', 1],
+    ['rea', 'Reacciones químicas', 'Q', 'enl', 'p', 'e', 1],
+    ['cel', 'Célula', 'B', 'rea', 'p', 'e', 1],
+    ['met', 'Metabolismo celular', 'B', 'cel', 'p', 'e', 1],
+    ['inm', 'Sistema inmune', 'B', 'met', 'p', 'e', 1],
+    ['vac', 'Vacunas', 'B', 'inm', 'p', 'e', 1],
+    ['reb', 'Inmunidad de rebaño', 'B', 'vac', 'p', 'e', 1],
+    ['cin', 'Modelo cinético de partículas', 'F', 'mat', 'r', 'd', 2],
+    ['tem', 'Temperatura y calor', 'F', 'cin', 'p', 'c', 3],
+    ['med', 'Medición y magnitudes', 'F', 'mat', 'r', 'i', 3],
+    ['mov', 'Fuerza y movimiento', 'F', 'med', 'p', 'c', 3],
+    ['car', 'Carga eléctrica', 'F', 'ato', 'r', 'i', 2],
+    ['ele', 'Electricidad y circuitos', 'F', 'car', 'p', 'c', 3],
+    ['rad', 'Radio atómico', 'Q', 'tab', 'r', 'd', 2],
+    ['ion', 'Energía de ionización', 'Q', 'rad', 'p', 'c', 3],
+    ['neg', 'Electronegatividad', 'Q', 'ion', 'p', 'c', 3],
+    ['agu', 'Agua y disoluciones', 'Q', 'enl', 'r', 'i', 2],
+    ['phh', 'Ácidos, bases y pH', 'Q', 'agu', 'p', 'c', 3],
+    ['ene', 'Energía y sus transformaciones', 'F', 'rea', 'r', 'd', 2],
+    ['ond', 'Ondas: luz y sonido', 'F', 'ene', 'r', 'c', 3],
+    ['cons', 'Conservación de la masa', 'Q', 'rea', 'r', 'i', 3],
+    ['mit', 'Mitosis y meiosis', 'B', 'cel', 'r', 'd', 2],
+    ['adn', 'ADN y herencia', 'B', 'mit', 'p', 'c', 3],
+    ['fot', 'Fotosíntesis', 'B', 'cel', 'r', 'i', 3],
+    ['ali', 'Alimentación y nutrición', 'B', 'met', 'r', 'i', 2],
+    ['act', 'Actividad física', 'B', 'ali', 'p', 'c', 3],
+    ['sal', 'Factores de la salud', 'B', 'met', 'r', 'd', 2],
+    ['sue', 'Sueño y estrés', 'B', 'sal', 'p', 'c', 3],
+    ['cnt', 'Contagio y transmisión', 'B', 'inm', 'r', 'd', 2],
+    ['r0', 'Número reproductivo R₀', 'B', 'cnt', 'p', 'c', 3],
+    ['pes', 'Peste negra (1347–1353)', 'B', 'inm', 'r', 'i', 3],
+    ['cob', 'Cobertura de vacunación', 'B', 'vac', 'r', 'i', 2],
+    ['umb', 'Umbral 1 − 1/R₀', 'B', 'cob', 'p', 'c', 3],
+    ['cov', 'Datos reales de COVID-19', 'B', 'reb', 'r', 'i', 2],
+    ['mod', 'Modelos y simulación', 'B', 'reb', 'r', 'd', 3]
   ];
   /* relaciones cruzadas entre ramas (cierran la red): [a, b, tipo] */
   var EX = [
@@ -355,7 +367,8 @@ footer{border-top:1px solid var(--rule);padding-block:1.5rem 2.5rem;font-family:
     C.forEach(function (c) {
       var li = document.createElement('li'), partes = c[1];
       if (c[3]) partes += (c[4] === 'p' ? ' (viene de: ' : ' (se relaciona con: ') + nombre[c[3]] + ')';
-      if (c[6]) partes += ' · ' + HERR[c[6]];
+      var hs = []; Object.keys(HC).forEach(function (k) { if (HC[k].conceptos.indexOf(c[0]) >= 0) hs.push(HC[k].nombre); });
+      if (hs.length) partes += ' · ' + hs.join(', ');
       li.textContent = partes; ul.appendChild(li);
     });
     cont.appendChild(ul);
@@ -379,7 +392,7 @@ footer{border-top:1px solid var(--rule);padding-block:1.5rem 2.5rem;font-family:
   var ctx = cv.getContext('2d');
   if (!ctx) return;
 
-  var W = 0, H = 0, dpr = 1, movil = false, tope = 38, R = 200, modo = 'margen';
+  var W = 0, H = 0, dpr = 1, movil = false, tope = 38, R = 200, modo = 'margen';   // la raíz siempre vive en el margen izquierdo; en pantallas angostas el CSS ensancha ese margen (--riel)
   var xl = 0, xr = 0, xc = 0, y0 = 0, y1 = 0;
   var nodos = [], aristas = [], porId = {};
   var memoria = {};                       // por id: lo que se recuerda aunque la red se reconstruya (s, S, repasos)
@@ -391,6 +404,7 @@ footer{border-top:1px solid var(--rule);padding-block:1.5rem 2.5rem;font-family:
   var tScroll = performance.now(), scrollY0 = 0, agit = 0, ritmo = 1, reloj = 0, tReal = 0;
   var tIntro = 0, introEsp = 0.4, tCruz = 0, anillos = [];
   var bajo = false, emaDt = 16, lentos = 0, tAdapt = performance.now(), pausado = false, costoSum = 0, costoN = 0;
+  var foco = null, focoObj = 0, focoF = 0;     // herramienta enfocada (id), su objetivo (0 o 1) y la intensidad que se ve (0 a 1)
   var halo = null, nEtiq = 0, nVis = 0, tPos = 0, tPaso = 0, tDib = 0, tEd = 0, tNo = 0, tEt = 0;
 
   function rnd(seed) { var a = seed >>> 0; return function () { a = (a + 0x6D2B79F5) >>> 0; var t = a; t = Math.imul(t ^ (t >>> 15), t | 1); t ^= t + Math.imul(t ^ (t >>> 7), t | 61); return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }; }
@@ -426,19 +440,17 @@ footer{border-top:1px solid var(--rule);padding-block:1.5rem 2.5rem;font-family:
     var rc = document.querySelector('#contenido .pagina');
     if (rc) { var b = rc.getBoundingClientRect(), gp = parseFloat(getComputedStyle(rc).paddingLeft) || 0; colIzq = b.left + gp; colDer = b.right - gp; }
     else { colIzq = W * 0.12; colDer = W * 0.88; }
-    modo = colIzq >= 190 && H >= 480 ? 'margen' : 'ancho';   // con margen suficiente la raíz vive en él (como en el sitio); si no, crece bajo el texto con el velo
-    raiz.classList.toggle('red-viva', modo === 'ancho');
     leerColores();
 
     var cand = C.map(function (c, i) { return { c: c, i: i }; });
-    cand.sort(function (a, b) { return a.c[7] - b.c[7] || a.i - b.i; });
+    cand.sort(function (a, b) { return a.c[6] - b.c[6] || a.i - b.i; });
     var dentro = {}, n = 0;
     cand.forEach(function (o) { if (n >= tope) return; if (o.c[3] && !dentro[o.c[3]]) return; dentro[o.c[0]] = true; n++; });
     nodos = []; porId = {};
     C.forEach(function (c) {
       if (!dentro[c[0]]) return;
       var m = memoria[c[0]] || (memoria[c[0]] = { s: 0, S: S0, rep: 0, huella: 0, esp: 0, dw: 0, vista: false });
-      var nd = { id: c[0], et: c[1], d: c[2], pa: c[3] ? porId[c[3]] : null, tp: c[4], rol: c[5], h: c[6], m: m, hij: [], f: 0.75 + 0.9 * rnd(1000 + C.indexOf(c) * 7)(), x: 0, y: 0, px: 0, py: 0, t: 0, ar: null, deg: 0 };
+      var nd = { id: c[0], et: c[1], d: c[2], pa: c[3] ? porId[c[3]] : null, tp: c[4], rol: c[5], fo: false, m: m, hij: [], f: 0.75 + 0.9 * rnd(1000 + C.indexOf(c) * 7)(), x: 0, y: 0, px: 0, py: 0, t: 0, ar: null, deg: 0 };
       porId[c[0]] = nd; nodos.push(nd);
       if (nd.pa) nd.pa.hij.push(nd);
     });
@@ -453,16 +465,29 @@ footer{border-top:1px solid var(--rule);padding-block:1.5rem 2.5rem;font-family:
     });
     EX.forEach(function (e) {
       var a = porId[e[0]], b = porId[e[1]]; if (!a || !b) return;
-      var d = Math.hypot(a.x - b.x, a.y - b.y), dmax = modo === 'margen' ? 190 : 150;
+      var d = Math.hypot(a.x - b.x, a.y - b.y), dmax = 190;
       if (d > dmax || d < 14) return;
       var mxp = (a.x + b.x) / 2, myp = (a.y + b.y) / 2, nx = -(b.y - a.y) / d, ny = (b.x - a.x) / d, ar = d * 0.16 * (a.x < b.x ? 1 : -1), pts = [], k;
       for (k = 0; k <= 8; k++) {
         var u = k / 8, qx = (1 - u) * (1 - u) * a.x + 2 * u * (1 - u) * (mxp + nx * ar) + u * u * b.x, qy = (1 - u) * (1 - u) * a.y + 2 * u * (1 - u) * (myp + ny * ar) + u * u * b.y;
-        pts.push(qx, qy);
+        pts.push(Math.max(xl, Math.min(xr, qx)), qy);
       }
       var c = unir(a, b, e[2], 'cruz', pts), o = viejas[a.id + '>' + b.id]; if (o) { c.w = o.w; c.p = o.p; c.Se = o.Se; }
     });
     if (reducir) estadoFinal(); else sembrar();
+    marcarFoco();
+  }
+  /* ---- herramienta ↔ conceptos: al enfocar una herramienta se iluminan sus conceptos (y los vínculos entre ellos) y el resto se atenúa ---- */
+  function marcarFoco() {
+    var ids = foco && HC[foco] ? HC[foco].conceptos : [];
+    nodos.forEach(function (n) { n.fo = ids.indexOf(n.id) >= 0; });
+    tLay = -9;
+  }
+  function enfocar(id) {
+    id = id && HC[id] ? id : null;
+    if (id === foco) return;
+    foco = id; focoObj = id ? 1 : 0; marcarFoco();
+    if (reducir || pausado) { focoF = focoObj; posicionar(reloj * 1000); dibujar(); }
   }
   function unir(a, b, t, k, pts) {
     var q = new Float32Array(pts.length), cum = new Float32Array(pts.length / 2), i, L = 0;
@@ -477,7 +502,7 @@ footer{border-top:1px solid var(--rule);padding-block:1.5rem 2.5rem;font-family:
     var rg = rnd(20261016), PS = 3, LS = 2, i, k, q;
     function gauss() { return Math.sqrt(-2 * Math.log(1 - rg())) * Math.cos(6.283185307 * rg()); }
     y0 = 28; y1 = H - 30;
-    if (modo === 'margen') { xl = 10; xr = colIzq - 24; xc = colIzq / 2; } else { xl = 10; xr = W - 10; xc = W * 0.3; }
+    var estrecho = colIzq < 150; xl = estrecho ? 12 : 10; xr = colIzq - (estrecho ? 20 : 24); xc = colIzq / 2;   // los puntos (con su aro y su deriva) no deben pisar el texto
     var hw = Math.max(10, Math.min(xc - xl, xr - xc) - 6);
     var raizN = nodos[0], cadenaDe = function (n, rolSigue) {
       var l = [n], cur = n, nx, j;
@@ -702,7 +727,7 @@ footer{border-top:1px solid var(--rule);padding-block:1.5rem 2.5rem;font-family:
     var k, j, a;
     for (k = 0; k < nodos.length; k++) { var n = nodos[k]; desp(n.x, n.y); n.px = gx; n.py = gy; }
     for (k = 0; k < aristas.length; k++) {      // el trazo sigue a sus dos extremos: se les suma el desplazamiento de cada uno, interpolado a lo largo (el campo varía en cientos de px)
-      a = aristas[k]; if (a.w <= 0) continue;
+      a = aristas[k]; if (a.w <= 0 && !(focoF > 0.01 && (a.a.fo || a.b.fo))) continue;
       var ax = a.a.px - a.a.x, ay = a.a.py - a.a.y, bx = a.b.px - a.b.x, by = a.b.py - a.b.y, tr = a.tr, q = a.q, cum = a.cum, L = a.L;
       for (j = 0; j < cum.length; j++) { var u = cum[j] / L; q[2 * j] = tr[2 * j] + ax + (bx - ax) * u; q[2 * j + 1] = tr[2 * j + 1] + ay + (by - ay) * u; }
     }
@@ -758,47 +783,60 @@ footer{border-top:1px solid var(--rule);padding-block:1.5rem 2.5rem;font-family:
     else if (d === 'Q') { r *= 1.15; for (k = 0; k < 6; k++) { var an = -1.5708 + k * 1.0472; if (k) ctx.lineTo(x + r * Math.cos(an), y + r * Math.sin(an)); else ctx.moveTo(x + r * Math.cos(an), y + r * Math.sin(an)); } ctx.closePath(); }
     else { r *= 1.3; ctx.moveTo(x, y - r); ctx.lineTo(x + r * 0.95, y + r * 0.7); ctx.lineTo(x - r * 0.95, y + r * 0.7); ctx.closePath(); }
   }
-  var FUENTE = '"Bricolage Respaldo",system-ui,"Segoe UI",Helvetica,Arial,sans-serif';
-  function sprite(n) {              // el nombre con su contorno del color de la página, dibujado una sola vez (el texto es lo caro de cada cuadro)
-    ctx.font = '500 11.5px ' + FUENTE;
-    var w = Math.ceil(ctx.measureText(n.et).width), c = document.createElement('canvas'), g;
-    c.width = Math.ceil((w + 8) * dpr); c.height = Math.ceil(22 * dpr);
-    g = c.getContext('2d'); g.scale(dpr, dpr); g.font = ctx.font; g.lineJoin = 'round';
-    g.lineWidth = 3; g.strokeStyle = rgba(col.bg, 0.9); g.strokeText(n.et, 4, 15);
-    g.fillStyle = rgba(col.ink, 0.94); g.fillText(n.et, 4, 15);
-    n.sp = c; n.lw = w; n.spw = w + 8;
+  var FUENTE = '"Bricolage Grotesque","Bricolage Respaldo",system-ui,"Segoe UI",Helvetica,Arial,sans-serif';
+  function fuenteRotulo() { return '500 ' + (colIzq < 150 ? 11 : 11.5) + 'px ' + FUENTE; }
+  function lineas(txt, maxW) {     // el nombre en una línea; si no cabe en el margen, en dos (cortando donde las líneas quedan más parejas)
+    if (ctx.measureText(txt).width <= maxW) return [txt];
+    var p = txt.split(' '), mejor = [txt], mw = 1e9, k, a, b, m;
+    for (k = 1; k < p.length; k++) { a = p.slice(0, k).join(' '); b = p.slice(k).join(' '); m = Math.max(ctx.measureText(a).width, ctx.measureText(b).width); if (m < mw) { mw = m; mejor = [a, b]; } }
+    return mejor;
   }
-  var OFS = [[-12, 0], [12, 0], [-12, -13], [12, -13], [-12, 13], [12, 13], [0, -15], [0, 17]];
+  function sprite(n) {              // el nombre con su contorno del color de la página, dibujado una sola vez (el texto es lo caro de cada cuadro)
+    ctx.font = fuenteRotulo();
+    var ls = lineas(n.et, Math.max(60, colIzq - 18)), w = 0, i, h;
+    ls.forEach(function (t) { w = Math.max(w, Math.ceil(ctx.measureText(t).width)); });
+    h = 22 + 13 * (ls.length - 1);
+    var c = document.createElement('canvas'), g;
+    c.width = Math.ceil((w + 8) * dpr); c.height = Math.ceil(h * dpr);
+    g = c.getContext('2d'); g.scale(dpr, dpr); g.font = ctx.font; g.lineJoin = 'round';
+    for (i = 0; i < ls.length; i++) { g.lineWidth = 3; g.strokeStyle = rgba(col.bg, 0.9); g.strokeText(ls[i], 4, 15 + 13 * i); g.fillStyle = rgba(col.ink, 0.94); g.fillText(ls[i], 4, 15 + 13 * i); }
+    n.sp = c; n.lw = w; n.spw = w + 8; n.sph = h; n.nl = ls.length;
+  }
+  var OFS = [[-12, 0], [12, 0], [-12, -13], [12, -13], [-12, 13], [12, 13], [0, -1], [0, 1], [0, -2], [0, 2]];
   function dispone(n, x, y, usados) {     // elige dónde va el nombre (sin encimarse ni tapar otros puntos): deja n.lo = [dx, dy] o null
     if (!n.sp) sprite(n);
-    var w = n.lw, lim = modo === 'margen' ? colIzq - 8 : W - 6, k, tx, yy, o;
+    var w = n.lw, hh = 6.5 * n.nl + 1.5, mi = colIzq < 150 ? 3 : 6, lim = colIzq - (colIzq < 150 ? 3 : 8), k, tx, yy, o;
     function libre(t, y2) {
-      if (t < 6 || t + w > lim) return false;
-      for (var u = 0; u < usados.length; u++) { var r = usados[u]; if (r[3] === n) continue; if (t < r[0] + r[2] + 3 && t + w + 3 > r[0] && y2 - 8 < r[1] + 9 && y2 + 8 > r[1] - 9) return false; }
+      if (t < mi || t + w > lim) return false;
+      for (var u = 0; u < usados.length; u++) { var r = usados[u]; if (r[3] === n) continue; if (t < r[0] + r[2] + 3 && t + w + 3 > r[0] && y2 - hh < r[1] + r[4] && y2 + hh > r[1] - r[4]) return false; }
       return true;
     }
     n.lo = null;
     for (k = 0; k < OFS.length; k++) {
-      o = OFS[k]; tx = k < 6 ? (o[0] < 0 ? x + o[0] - w : x + o[0]) : x - w / 2; yy = y + o[1];
-      if (libre(tx, yy)) { n.lo = [tx - x, yy - y]; usados.push([tx, yy, w, n]); return; }
+      o = OFS[k];
+      tx = k < 6 ? (o[0] < 0 ? x + o[0] - w : x + o[0]) : Math.max(mi, Math.min(lim - w, x - w / 2));     // arriba o abajo: centrado en el punto, corrido si no cabe en el margen
+      yy = k < 6 ? y + o[1] * (1 + (n.nl - 1) * 0.4) : y + (o[1] < 0 ? -(hh + 7) : hh + 9) * (Math.abs(o[1]) > 1 ? 1.9 : 1);
+      if (libre(tx, yy)) { n.lo = [tx - x, yy - y]; usados.push([tx, yy, w, n, hh]); return; }
     }
   }
+  function aVista(n) { return n.m.s > OLVIDO || (n.fo && focoF > 0.05); }
   var tLay = -9;
   function etiquetas() {
     var i, k, n, usados = [], orden = [];
     if (pausado || reducir || tReal - tLay > 0.25) {
       tLay = tReal;
-      for (i = 0; i < nodos.length; i++) { n = nodos[i]; n.lo = null; if (n.m.s > OLVIDO && n.py > 10 && n.py < H - 10) { orden.push(n); usados.push([n.px - 7, n.py, 14, n]); } }
-      orden.sort(function (p, q) { return (q.v * 3 + (q.rol === 'e' ? 1 : 0) + firmeza(q) + q.m.s * 0.5) - (p.v * 3 + (p.rol === 'e' ? 1 : 0) + firmeza(p) + p.m.s * 0.5); });
+      for (i = 0; i < nodos.length; i++) { n = nodos[i]; n.lo = null; if (aVista(n) && n.py > 10 && n.py < H - 10) { orden.push(n); usados.push([n.px - 7, n.py, 14, n, 9]); } }
+      orden.sort(function (p, q) { return (q.v * 3 + (q.rol === 'e' ? 1 : 0) + firmeza(q) + q.m.s * 0.5 + (q.fo ? 20 * focoF : 0)) - (p.v * 3 + (p.rol === 'e' ? 1 : 0) + firmeza(p) + p.m.s * 0.5 + (p.fo ? 20 * focoF : 0)); });
       for (k = 0; k < orden.length; k++) dispone(orden[k], orden[k].px, orden[k].py, usados);
     }
     nEtiq = 0; nVis = 0;
     for (i = 0; i < nodos.length; i++) {
-      n = nodos[i]; if (n.m.s <= OLVIDO) continue;
+      n = nodos[i]; if (!aVista(n)) continue;
       nVis++; if (!n.lo) continue;
       var am = reducir ? 0.95 : Math.min(1, 0.5 + 0.55 * Math.pow(n.m.s, 0.8) + 0.5 * n.v) * (n.m.aparece > 0 ? 1 - Math.max(0, n.m.aparece) / 1.2 : 1);
+      if (focoF > 0.01) am = n.fo ? Math.max(am, 0.97 * focoF) : am * (1 - 0.7 * focoF);
       if (am < 0.05) continue;
-      ctx.globalAlpha = am; ctx.drawImage(n.sp, n.px + n.lo[0] - 4, n.py + n.lo[1] - 11, n.spw, 22); nEtiq++;
+      ctx.globalAlpha = am; ctx.drawImage(n.sp, n.px + n.lo[0] - 4, n.py + n.lo[1] - 11 - 6.5 * (n.nl - 1), n.spw, n.sph); nEtiq++;
     }
     ctx.globalAlpha = 1;
   }
@@ -817,17 +855,22 @@ footer{border-top:1px solid var(--rule);padding-block:1.5rem 2.5rem;font-family:
     var z0 = performance.now();
     // vínculos: trazos que siguen el camino de la punta
     for (i = 0; i < aristas.length; i++) {
-      a = aristas[i]; if (a.w <= 0) continue;
+      a = aristas[i];
+      // enfoque: entre dos conceptos de la herramienta el vínculo se ve entero (aunque estén olvidados); con un solo extremo, a media intensidad si el otro está a la vista
+      var fe = focoF > 0.01 ? (a.a.fo && a.b.fo ? 1 : (a.a.fo && vivo(a.b)) || (a.b.fo && vivo(a.a)) ? 0.5 : 0) : 0, fz = fe * focoF, pp = a.p;
+      if (a.w <= 0 && fz < 0.02) continue;
       var sa = a.a.m.s, sb = a.b.m.crec ? 1 : a.b.m.s, vis = Math.sqrt(Math.max(0, Math.min(1, Math.min(sa, sb) / 0.6))) * a.w;
+      if (fz > 0.02) { if (fz * 0.9 > vis) vis = fz * 0.9; if (pp < 1 && !a.b.m.crec) pp = 1; }
       if (vis < 0.02) continue;
       enTrazo(a, 0.5);
-      var I = reducir ? 0.4 : luzEn(ox_, oy_), al = Math.min(A_MAX, (0.14 + 0.30 * vis) + (0.18 + 0.22 * vis) * I);
+      var I = reducir ? 0.4 : luzEn(ox_, oy_), al = Math.min(A_MAX, (0.14 + 0.30 * vis) + (0.18 + 0.22 * vis) * I + 0.2 * fz);
+      if (focoF > 0.01) al *= 1 - 0.7 * focoF * (1 - fe);
       var fa = Math.max(firmeza(a.a), firmeza(a.b)) * 0.6 + (a.Se - 22) / 280 * 0.4, tono = TON[a.b.d];
       ctx.strokeStyle = rgba(mezcla(mezcla(col.ink, tono, 0.55), tono, Math.min(1, fa)), al);
-      ctx.lineWidth = (a.k === 'arbol' && a.t === 'p' ? 1.3 : 1) + (a.k === 'arbol' && a.b.rol === 'e' ? 0.9 : 0) + 1.0 * vis * (1 + Math.min(1, fa));   // el eje, algo más grueso: es la raíz principal
+      ctx.lineWidth = (a.k === 'arbol' && a.t === 'p' ? 1.3 : 1) + (a.k === 'arbol' && a.b.rol === 'e' ? 0.9 : 0) + 1.0 * vis * (1 + Math.min(1, fa)) + 0.8 * fz;   // el eje, algo más grueso: es la raíz principal
       if (a.t === 'r') ctx.setLineDash([3, 4]); else ctx.setLineDash([]);
-      trazo(a, a.p); ctx.stroke();
-      if (a.t === 'p' && a.p >= 1 && a.w > 0.3) {       // punta de flecha hacia el que depende
+      trazo(a, pp); ctx.stroke();
+      if (a.t === 'p' && pp >= 1 && (a.w > 0.3 || fz > 0.3)) {       // punta de flecha hacia el que depende
         enTrazo(a, 0.6); var ang = ang_, ex = ox_, ey = oy_;
         ctx.setLineDash([]); ctx.fillStyle = ctx.strokeStyle; ctx.beginPath();
         ctx.moveTo(ex + Math.cos(ang) * 5, ey + Math.sin(ang) * 5);
@@ -846,16 +889,19 @@ footer{border-top:1px solid var(--rule);padding-block:1.5rem 2.5rem;font-family:
     var cerca = [];
     for (i = 0; i < nodos.length; i++) {
       n = nodos[i]; var m = n.m;
-      if (m.s <= OLVIDO) { n.v = 0; continue; }
-      var s_ = Math.pow(m.s, 0.8), I2 = reducir ? 0.4 : luzEn(n.px, n.py), fi = firmeza(n);
+      var sE = n.fo && focoF > 0.01 ? Math.max(m.s, 0.92 * focoF) : m.s;     // lo enfocado se ve aunque se hubiera olvidado
+      if (sE <= OLVIDO) { n.v = 0; continue; }
+      var s_ = Math.pow(sE, 0.8), I2 = reducir ? 0.4 : luzEn(n.px, n.py), fi = firmeza(n);
       n.v = I2;
       var al2 = Math.min(A_MAX, (0.42 + 0.22 * s_) + (0.20 + 0.10 * s_) * I2);
-      var rad = 3 + 2.2 * s_ + 2.0 * fi + 1.8 * I2, ap = m.aparece > 0 ? 1 - Math.max(0, m.aparece) / 1.2 : 1;
+      if (focoF > 0.01 && !n.fo) al2 *= 1 - 0.7 * focoF;
+      var rad = 3 + 2.2 * s_ + 2.0 * fi + 1.8 * I2 + (n.fo ? 1.6 * focoF : 0), ap = m.aparece > 0 ? 1 - Math.max(0, m.aparece) / 1.2 : 1;
       if (ap < 1) rad *= 0.4 + 0.6 * suave(ap);
       var tn = TON[n.d];
       ctx.fillStyle = rgba(mezcla(mezcla(tn, col.ink, 0.35 * (1 - fi)), tn, 0.4 * fi), al2);
       forma(n.d, n.px, n.py, rad); ctx.fill();
-      if (fi > 0.2) { ctx.strokeStyle = rgba(tn, Math.min(A_MAX, 0.55 * fi * (0.6 + 0.4 * I2))); ctx.lineWidth = 1; forma(n.d, n.px, n.py, rad + 3 + 2 * fi); ctx.stroke(); }
+      if (fi > 0.2) { ctx.strokeStyle = rgba(tn, Math.min(A_MAX, 0.55 * fi * (0.6 + 0.4 * I2) * (focoF > 0.01 && !n.fo ? 1 - 0.7 * focoF : 1))); ctx.lineWidth = 1; forma(n.d, n.px, n.py, rad + 3 + 2 * fi); ctx.stroke(); }
+      if (n.fo && focoF > 0.01) { ctx.strokeStyle = rgba(tn, Math.min(A_MAX, 0.75 * focoF)); ctx.lineWidth = 1.4; forma(n.d, n.px, n.py, rad + 4.5); ctx.stroke(); }
       if (I2 > 0.25) cerca.push(n);
     }
     // anillos del repaso
@@ -902,6 +948,7 @@ footer{border-top:1px solid var(--rule);padding-block:1.5rem 2.5rem;font-family:
     act += (objAct - act) * (1 - Math.exp(-real / (objAct ? 0.12 : 0.35)));
     if (act < 0.01 && objAct === 0) act = 0;
     agit *= Math.exp(-real / 1.6);
+    focoF += (focoObj - focoF) * (1 - Math.exp(-real / 0.16)); if (Math.abs(focoObj - focoF) < 0.004) focoF = focoObj;
     estela();
     var q0 = performance.now(); posicionar(reloj * 1000); var q1 = performance.now(); paso(dt, real); tPos += q1 - q0; tPaso += performance.now() - q1;
     for (var i = 0; i < anillos.length; i++) anillos[i].t += real;
@@ -930,17 +977,21 @@ footer{border-top:1px solid var(--rule);padding-block:1.5rem 2.5rem;font-family:
   new MutationObserver(function () { leerColores(); if (reducir || pausado) { posicionar(reloj * 1000); dibujar(); } }).observe(raiz, { attributes: true, attributeFilter: ['data-theme'] });
 
   construir();
+  if (document.fonts && document.fonts.load) document.fonts.load('500 11.5px "Bricolage Grotesque"').then(function () {
+    nodos.forEach(function (n) { n.sp = null; }); tLay = -9;
+    if (reducir || pausado) { posicionar(reloj * 1000); dibujar(); }
+  }, function () {});
   var API = {
     estado: function () {
       var vivos = nodos.filter(vivo), cons = nodos.filter(function (n) { return vivo(n) && firmeza(n) > 0.3; });
       return { nodos: nodos.length, tope: tope, vivos: vivos.length, consolidados: cons.length, ritmo: +ritmo.toFixed(3), reloj: +reloj.toFixed(1), reducir: reducir, movil: movil, R: Math.round(R),
-        modo: modo, margen: { xl: Math.round(xl), xr: Math.round(xr), xc: Math.round(xc), y0: y0, y1: y1, colIzq: Math.round(colIzq) },
+        foco: foco, focoF: +focoF.toFixed(2), modo: modo, margen: { xl: Math.round(xl), xr: Math.round(xr), xc: Math.round(xc), y0: y0, y1: y1, colIzq: Math.round(colIzq) },
         aristas: aristas.filter(function (a) { return a.w > 0.04; }).length, creciendo: creciendo(), etiquetas: nEtiq, aVista: nVis, sellos: sellos.length, bajo: bajo, luz: +act.toFixed(2), vel: Math.round(vel),
-        conceptos: nodos.map(function (n) { return { id: n.id, d: n.d, pa: n.pa ? n.pa.id : null, s: +n.m.s.toFixed(3), S: Math.round(n.m.S), rep: n.m.rep, x: Math.round(n.px), y: Math.round(n.py), bx: Math.round(n.x), by: Math.round(n.y) }; }) };
+        conceptos: nodos.map(function (n) { return { id: n.id, d: n.d, pa: n.pa ? n.pa.id : null, s: +n.m.s.toFixed(3), S: Math.round(n.m.S), rep: n.m.rep, fo: n.fo, x: Math.round(n.px), y: Math.round(n.py), bx: Math.round(n.x), by: Math.round(n.y) }; }) };
     },
     avanzar: function (seg) { var k = Math.round(seg * 30); for (var i = 0; i < k; i++) avanzarReal(1 / 30); if (pausado || reducir) { dibujar(); } else cerca_ = dibujar(); },
-    apuntar: apuntar, soltar: soltar,
-    rotulos: function () { return nodos.filter(function (n) { return n.lo && n.m.s > OLVIDO; }).map(function (n) { return { t: n.et, x: n.px + n.lo[0], y: n.py + n.lo[1] - 9, w: n.lw, h: 14 }; }); },
+    apuntar: apuntar, soltar: soltar, enfocar: enfocar,
+    rotulos: function () { return nodos.filter(function (n) { return n.lo && aVista(n); }).map(function (n) { return { id: n.id, t: n.et, x: n.px + n.lo[0], y: n.py + n.lo[1] - 6.5 * n.nl - 2.5, w: n.lw, h: 13 * n.nl + 1, fo: n.fo }; }); },
     desglose: function () { var n = Math.max(1, costoN); return { posicionar: +(tPos / n).toFixed(3), paso: +(tPaso / n).toFixed(3), dibujar: +(tDib / n).toFixed(3), aristas: +(tEd / n).toFixed(3), conceptos: +(tNo / n).toFixed(3), etiquetas: +(tEt / n).toFixed(3) }; },
     costoMs: function () { return costoN ? +(costoSum / costoN).toFixed(3) : 0; }, cuadros: function () { return costoN; },
     llenar: function (luz) {   // peor caso para el contraste: todo a la vista, consolidado y, si luz, con la luz en todas partes
@@ -953,6 +1004,31 @@ footer{border-top:1px solid var(--rule);padding-block:1.5rem 2.5rem;font-family:
   };
   window.redConceptos = API;
 
+  /* ---- las tarjetas: cursor, teclado y dedo enfocan una herramienta. Con el cursor o el teclado, mientras estén sobre ella. Con el dedo, mientras lo mantienes
+     apoyado (un toque abre la herramienta, así que no cabe esperar un segundo toque); además, en pantallas táctiles la herramienta que estás leyendo
+     (la que cruza la línea al 45 % del alto) enciende sus conceptos al desplazarte. Sin texto nuevo. ---- */
+  var tarjetas = [].slice.call(document.querySelectorAll('[data-herr]')), tactil = !!(window.matchMedia && window.matchMedia('(hover: none)').matches), sostiene = 0, tScr = null;
+  function porLectura() {
+    if (!tactil || performance.now() < sostiene) return;
+    var ae = document.activeElement; if (ae && ae.closest && ae.closest('[data-herr]')) return;   // el teclado manda sobre la lectura
+    var yl = H * 0.45, id = null;
+    tarjetas.forEach(function (el) { var r = el.getBoundingClientRect(); if (r.top <= yl && r.bottom >= yl) id = el.getAttribute('data-herr'); });
+    enfocar(id);
+  }
+  tarjetas.forEach(function (el) {
+    var id = el.getAttribute('data-herr');
+    el.addEventListener('pointerenter', function (e) { if (e.pointerType !== 'touch') enfocar(id); });
+    el.addEventListener('pointerleave', function (e) { if (e.pointerType !== 'touch') enfocar(document.activeElement && document.activeElement.closest && document.activeElement.closest('[data-herr]') === el ? id : null); });
+    el.addEventListener('pointerdown', function (e) { if (e.pointerType === 'touch') { tactil = true; sostiene = performance.now() + 3600000; enfocar(id); } });
+    var suelta = function (e) { if (e.pointerType === 'touch') { sostiene = performance.now() + 2200; setTimeout(porLectura, 2300); } };
+    el.addEventListener('pointerup', suelta); el.addEventListener('pointercancel', suelta);
+    el.addEventListener('focusin', function () { enfocar(id); });
+    el.addEventListener('focusout', function (e) { if (!e.relatedTarget || !el.contains(e.relatedTarget)) enfocar(null); });
+  });
+  window.addEventListener('touchstart', function () { tactil = true; }, { passive: true, once: true });
+  window.addEventListener('scroll', function () { if (tactil && !tScr) tScr = setTimeout(function () { tScr = null; porLectura(); }, 90); }, { passive: true });
+  porLectura();
+
   var bp = document.getElementById('pausa');
   if (reducir) {
     posicionar(0); dibujar(); return;
@@ -960,7 +1036,7 @@ footer{border-top:1px solid var(--rule);padding-block:1.5rem 2.5rem;font-family:
   if (bp) {
     bp.hidden = false;
     bp.addEventListener('click', function () {
-      API.pausa(!pausado); bp.setAttribute('aria-pressed', pausado ? 'true' : 'false'); bp.textContent = pausado ? 'Reanudar fondo' : 'Pausar fondo';
+      API.pausa(!pausado); bp.setAttribute('aria-pressed', pausado ? 'true' : 'false'); bp.firstChild.textContent = pausado ? 'Reanudar' : 'Pausar'; bp.setAttribute('aria-label', pausado ? 'Reanudar fondo' : 'Pausar fondo');
     });
   }
   window.addEventListener('pointermove', function (e) { if (e.pointerType !== 'touch') apuntar(e.clientX, e.clientY); });
