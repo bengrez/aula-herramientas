@@ -719,3 +719,16 @@ h3 { margin-bottom: 8px; font-size: 1.18rem; }
   .access-qr { width: 86mm; height: 86mm; }
   .public-url { font-size: 11pt; }
 }
+
+/* Enlace de vuelta al hub «Herramientas de aula» (arriba y en el pie). Va aquí y no en la página porque la CSP no admite estilos en línea. */
+.aula-volver {
+  margin: 0;
+  padding: 6px max(16px, env(safe-area-inset-left));
+  background: var(--paper);
+  color: var(--ink);
+  font-size: 0.8rem;
+  line-height: 1.4;
+}
+.aula-volver a { color: inherit; text-underline-offset: 0.18em; }
+.aula-pie { color: inherit; text-underline-offset: 0.18em; }
+@media print { .aula-volver, .aula-pie { display: none; } }

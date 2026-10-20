@@ -45,16 +45,17 @@ de aula del IDE; se listan separados para no mezclarlos.
 
 Página de entrada con el lenguaje visual de https://bengrez.github.io (papel y tinta, claro y oscuro, la misma clave `tema` del
 navegador) y una ficha «Para / Entrena» por herramienta. El fondo es una **red de conceptos que crece como una raíz y aprende**, dibujada en un canvas
-(bloque `RED-CONCEPTOS-START … END` del propio `index.html`, sin dependencias ni llamadas externas; no usa fuentes web):
+(bloque `RED-CONCEPTOS-START … END` del propio `index.html`, sin dependencias ni llamadas externas). Las fuentes del sitio (Bricolage Grotesque, Source Serif 4 e IBM Plex Mono) están en `fuentes/` como WOFF2 con subconjunto latino y su licencia OFL; no se pide nada a Google Fonts:
 
 - **Crece como la raíz de la página principal** (`quimiotaxis.js`, iteración 043): nace arriba, en el margen izquierdo, centrada entre el borde
   de la ventana y la columna de texto, y baja por colonización del espacio (atractores, puntas que compiten, gravitropismo en el eje y
   plagiotropismo en las laterales). Cada punta que avanza **descubre un concepto**: el eje es una cadena de prerrequisitos (flecha) y las
-  laterales brotan de él como relaciones (punteadas); algunas relaciones cruzadas cierran la red. Con un margen menor de ≈ 190 px (celular,
-  tablet) la raíz crece bajo el texto, con el velo del sitio.
+  laterales brotan de él como relaciones (punteadas); algunas relaciones cruzadas cierran la red. La raíz vive siempre en el margen, sin velo sobre
+  el texto: la columna es la del sitio (72 rem) y, si el margen natural queda bajo `--riel` (de 7 rem en el celular a 11,5 rem), el CSS corre el texto lo justo para
+  dar ese ancho (`.pagina`). Así los nombres caben y se leen también en pantallas angostas (en el celular se parten en dos líneas).
 - **Nodos** = conceptos de ciencias del currículum escolar (biología, química, física; incluyen los temas de las herramientas), con su nombre
   al lado. Cada disciplina tiene un tono (derivado del acento del tema) y una forma (círculo, hexágono, triángulo). Los conceptos están en el
-  arreglo `C` al comienzo del bloque (`[id, etiqueta, disciplina, padre, tipo, rol, herramienta, prioridad]`) y las relaciones cruzadas en `EX`.
+  arreglo `C` al comienzo del bloque (`[id, etiqueta, disciplina, padre, tipo, rol, prioridad]`) y las relaciones cruzadas en `EX`.
 - **Aprende:** una punta crece desde su prerrequisito (si está a la vista) y al llegar deja el concepto; si la luz del cursor (o del dedo) se
   queda cerca ≥ 0,9 s se **repasa** (la memoria vuelve a 1 y su estabilidad crece, más cuanto más se había olvidado); sin repaso se
   **olvida** (≈ 45 s). Los vínculos repasados duran más. Tono pleno y aro = consolidado.
@@ -63,10 +64,15 @@ navegador) y una ficha «Para / Entrena» por herramienta. El fondo es una **red
   Con la pestaña oculta o con el botón «Pausar fondo» no dibuja. Con `prefers-reduced-motion` muestra un estado final fijo.
 - **Sin texto al pasar el cursor:** el nodo sólo se resalta (la luz lo agranda y lo hace más opaco); no hay línea ni cuadro que lo describa. La alternativa
   accesible es la lista plegada «Conceptos y relaciones de la red» (`#red-lista`). La red no se guarda entre visitas (sin `localStorage`; ése sólo guarda el tema).
-- Para pruebas: `window.redConceptos` (`estado()`, `avanzar(seg)`, `apuntar(x, y)`, `soltar()`, `costoMs()`, `desglose()`, `rotulos()`, `llenar(luz)`, `pausa(b)`).
+- **Herramienta ↔ conceptos:** al pasar el cursor por una tarjeta (o enfocarla con el teclado, o apoyar el dedo en ella) se iluminan en la red los conceptos que
+  esa herramienta trabaja y los vínculos entre ellos, y el resto se atenúa; al salir, vuelve. Sin texto nuevo. Lo enfocado se muestra aunque la red lo hubiera
+  olvidado, sin contar como repaso. En pantallas táctiles, donde un toque abre la herramienta, además se ilumina la que está en la línea de lectura (45 % del alto)
+  mientras te desplazas. **El mapeo está en un solo archivo, `datos/herramienta-conceptos.js`** (herramienta → ids de conceptos, con el criterio de cada una);
+  `node tests/mapeo.mjs` comprueba que sus ids existan en `C` y que cada tarjeta (`data-herr`) tenga entrada.
+- Para pruebas: `window.redConceptos` (`estado()`, `avanzar(seg)`, `apuntar(x, y)`, `soltar()`, `costoMs()`, `desglose()`, `rotulos()`, `llenar(luz)`, `pausa(b)`, `enfocar(id)`).
 
-Cada herramienta (salvo `diagnostico-paes/`, una PWA con service worker y CSP propia) trae un enlace «← Aula herramientas» al principio y el
-mismo pie. Las imágenes de `img/` son copias de las del sitio personal.
+Cada herramienta trae un enlace «← Herramientas de aula» al principio y un pie con él. En `diagnostico-paes/` (PWA con service worker y CSP que no admite estilos
+en línea) el estilo está en `src/styles.css` y se subió `CACHE_VERSION` en `sw.js` para que el modo sin conexión recoja el cambio. Las imágenes de `img/` son copias de las del sitio personal.
 
 ## Convención
 

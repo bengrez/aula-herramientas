@@ -1,5 +1,5 @@
 const CACHE_PREFIX = "diagnostic-shell";
-const CACHE_VERSION = "v1-2026-08-02.01";
+const CACHE_VERSION = "v1-2026-10-19.02";
 const CACHE_NAME = `${CACHE_PREFIX}-${CACHE_VERSION}`;
 
 function offlineUrlsFromActive(active, activeUrl) {
