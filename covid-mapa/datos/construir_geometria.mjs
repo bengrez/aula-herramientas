@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // Preproyecta la geometría del mapa: contornos de Natural Earth (paquete world-atlas@2.0.2) -> caminos SVG.
-// Uso: node construir_geometria.mjs <carpeta-con-node_modules> [salida.json] [--res 50m|110m] [--retener 0.25]
+// Uso: node construir_geometria.mjs <carpeta-con-node_modules> [salida.json] [--res 50m|110m] [--retener 0.14]
 //   La carpeta debe tener instalados: d3-geo@3.1.1 topojson-client@3.1.0 topojson-simplify@3.0.3 world-atlas@2.0.2
 //   (npm install --prefix <carpeta> d3-geo@3.1.1 topojson-client@3.1.0 topojson-simplify@3.0.3 world-atlas@2.0.2)
 // Salida: geometria.json con los 12 países (camino SVG propio), el resto del mundo fundido en un solo camino gris,
@@ -13,13 +13,13 @@ import { createRequire } from 'node:module';
 const args = process.argv.slice(2);
 const opt = (n, d) => { const i = args.indexOf(n); return i >= 0 && args[i + 1] ? args[i + 1] : d; };
 const pos = args.filter(function (a, i) { return a.indexOf('--') !== 0 && args[i - 1] !== '--res' && args[i - 1] !== '--retener'; });
-if (!pos.length) { console.error('Uso: node construir_geometria.mjs <carpeta-con-node_modules> [salida.json] [--res 50m|110m] [--retener 0.25]'); process.exit(2); }
+if (!pos.length) { console.error('Uso: node construir_geometria.mjs <carpeta-con-node_modules> [salida.json] [--res 50m|110m] [--retener 0.14]'); process.exit(2); }
 const req = createRequire(path.resolve(pos[0]) + '/');
 const d3 = req('d3-geo');
 const tj = req('topojson-client');
 const ts = req('topojson-simplify');
 const RES = opt('--res', '50m');
-const RETENER = Number(opt('--retener', '0.25')); // fracción de puntos que se conservan (topojson-simplify.quantile)
+const RETENER = Number(opt('--retener', '0.14')); // fracción de puntos que se conservan (topojson-simplify.quantile)
 const SALIDA = pos[1] || path.join(path.dirname(new URL(import.meta.url).pathname), 'geometria.json');
 
 // País (clave del mapa = nombre en inglés de OWID) -> id numérico ISO 3166-1 en world-atlas, nombre en español y marcador (lon, lat)

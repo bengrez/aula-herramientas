@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Vacunas, rebaño y COVID-19: presentación</title>
+<style>
+  :root { --marfil:#FBFBFA; --linea:#E5E7EB; --borde:#CBD5E1; --pizarra:#1E293B; --suave:#475569; --cobalto:#2563EB; --cobalto-fondo:#EFF4FF; --ambar:#B45309; --pa:#1D4ED8; --pb:#C2410C; }
+  * { box-sizing:border-box; }
+  html, body { margin:0; height:100%; overflow:hidden; background:#0f172a; }
+  body { display:flex; flex-direction:column; font-family:Inter,"Segoe UI",system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif; color:var(--pizarra); }
+  #vista { position:relative; flex:1 1 auto; min-height:0; overflow:hidden; }
+  #escenario { position:absolute; left:0; top:0; width:1280px; height:720px; transform-origin:0 0; background:var(--marfil); overflow:hidden; }
+  .lamina { display:none; position:absolute; left:0; top:0; width:1280px; height:720px; padding:44px 64px 40px; flex-direction:column; font-size:32px; line-height:1.35; }
+  .lamina.activa { display:flex; }
+  .eyebrow { color:var(--ambar); font-size:22px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; margin:0 0 8px; }
+  h1 { font-size:58px; line-height:1.12; margin:0 0 20px; }
+  h2 { font-size:44px; line-height:1.15; margin:0 0 18px; }
+  p { margin:0 0 14px; }
+  ul, ol { margin:0 0 14px; padding-left:34px; } li { margin-bottom:10px; }
+  .grande { font-size:40px; font-weight:700; line-height:1.25; }
+  .suave { color:var(--suave); font-size:26px; }
+  .formula { display:inline-block; background:var(--cobalto-fondo); border:2px solid #BFD3FF; border-radius:10px; padding:10px 26px; font-size:48px; font-weight:800; margin:6px 0 18px; }
+  table { border-collapse:collapse; font-size:34px; margin:6px 0 10px; }
+  th, td { border:2px solid var(--borde); padding:5px 34px; text-align:center; }
+  th { background:var(--cobalto-fondo); }
+  sub { font-size:.6em; }
+  .cols { display:flex; gap:40px; align-items:flex-start; }
+  .cols > * { flex:1 1 0; min-width:0; }
+  .supuestos { list-style:none; padding:0; margin:0; }
+  .supuestos li { display:flex; align-items:center; gap:22px; background:#fff; border:2px solid var(--borde); border-radius:10px; padding:12px 22px; margin-bottom:12px; font-size:34px; }
+  .num { flex:none; width:52px; height:52px; border-radius:50%; background:var(--pizarra); color:#fff; font-size:30px; font-weight:800; display:flex; align-items:center; justify-content:center; }
+  .qr { background:#fff; border:2px solid var(--borde); border-radius:10px; padding:10px; }
+  .qr svg { display:block; width:100%; height:auto; }
+  .url { font-size:22px; word-break:break-all; color:var(--suave); }
+  .roles { display:grid; grid-template-columns:1fr 1fr; gap:18px; }
+  .rol { background:#fff; border:2px solid var(--borde); border-radius:12px; padding:14px 20px; display:flex; gap:18px; align-items:flex-start; font-size:32px; line-height:1.25; }
+  .rol .num { width:60px; height:60px; font-size:36px; }
+  .rol strong { display:block; font-size:34px; }
+  .rol span { color:var(--suave); font-size:26px; }
+  .rol span.num { color:#fff; font-size:36px; }
+  .linea { width:100%; border-collapse:collapse; font-size:30px; margin:0; }
+  .linea td { border:0; border-bottom:2px solid var(--linea); padding:6px 14px; text-align:left; vertical-align:middle; }
+  .linea td:first-child { width:150px; font-weight:800; color:var(--cobalto); white-space:nowrap; }
+  .linea td.dur { width:120px; color:var(--suave); font-size:26px; }
+  .linea td.cr { width:210px; text-align:right; }
+  button, a.boton { font:inherit; font-weight:700; min-height:52px; padding:6px 16px; border-radius:8px; border:2px solid var(--cobalto); background:#fff; color:var(--cobalto); cursor:pointer; line-height:1.2; touch-action:manipulation; text-decoration:none; display:inline-block; }
+  button.principal { background:var(--pizarra); border-color:var(--pizarra); color:#fff; }
+  button:focus-visible, a:focus-visible { outline:3px solid var(--ambar); outline-offset:2px; }
+  .crono { font-size:26px; min-width:150px; }
+  .crono[aria-pressed="true"] { background:var(--cobalto); color:#fff; }
+  .crono.fin { background:var(--ambar); border-color:var(--ambar); color:#fff; }
+  .pares { display:grid; grid-template-columns:repeat(4,1fr); gap:20px; flex:1 1 auto; align-content:start; }
+  .pares.tres { grid-template-columns:repeat(3,1fr); }
+  .par { background:#fff; border:2px solid var(--borde); border-radius:12px; padding:14px 16px; display:flex; flex-direction:column; gap:10px; }
+  .par .tit { font-size:28px; font-weight:800; line-height:1.15; }
+  .par .guia { font-size:22px; line-height:1.25; color:var(--suave); }
+  .par .qr { padding:8px; }
+  .par .cod { font-size:16px; color:var(--suave); overflow-wrap:anywhere; line-height:1.2; }
+  .pares.tres .par { flex-direction:column; }
+  .pares.tres .par .texto { display:flex; flex-direction:column; gap:10px; }
+  .pares.tres .par .qr { width:250px; align-self:center; }
+  .pie-lamina { margin-top:auto; font-size:20px; color:var(--suave); }
+  .decir { background:var(--cobalto-fondo); border-left:8px solid var(--cobalto); border-radius:8px; padding:20px 30px; font-size:44px; font-weight:700; line-height:1.4; margin:10px 0 24px; }
+  #barra { flex:none; display:flex; align-items:center; gap:10px; padding:6px 12px; background:#0f172a; color:#e2e8f0; font-size:18px; min-height:64px; }
+  #barra button { min-width:52px; min-height:52px; background:#1e293b; color:#fff; border-color:#475569; font-size:20px; }
+  #barra button:focus-visible { outline-color:#FBBF24; }
+  #cuenta { min-width:76px; text-align:center; font-weight:700; }
+  #reloj { margin-left:auto; font-weight:800; font-size:22px; min-width:170px; text-align:right; }
+  #reloj.fin { color:#FBBF24; }
+  .solo-lector { position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; margin:-1px; padding:0; border:0; }
+  @media (prefers-reduced-motion: reduce) { * { animation:none !important; transition:none !important; } }
+</style>
+</head>
+<body>
+<div id="vista">
+<div id="escenario">
+
+  <section class="lamina activa" aria-label="Lámina 1">
+    <p class="eyebrow">Bienestar y salud · Vacunas e inmunidad de rebaño</p>
+    <h1>¿Por qué una persona no vacunada puede no enfermarse?</h1>
+    <p class="grande">Escribe tu hipótesis en tu cuaderno.</p>
+    <p>Trabajo individual, sin conversar. Una frase basta: ¿qué la protege?</p>
+    <p style="margin-top:20px"><button type="button" class="crono" data-seg="60" data-nom="Hipótesis">▶ 1:00</button></p>
+  </section>
+
+  <section class="lamina" aria-label="Lámina 2">
+    <p class="eyebrow">El modelo</p>
+    <h2>¿Cuánta gente tiene que estar inmune?</h2>
+    <p><strong>R<sub>0</sub></strong>: cuántas personas contagia, en promedio, una persona enferma cuando nadie es inmune.</p>
+    <p>Umbral de inmunidad de rebaño: la parte de la población que debe ser inmune para que el brote se apague.</p>
+    <div class="cols" style="align-items:center">
+      <div style="text-align:center"><span class="formula">1 − 1/R<sub>0</sub></span></div>
+      <table style="margin:0 auto">
+        <thead><tr><th>R<sub>0</sub></th><th>Umbral</th></tr></thead>
+        <tbody><tr><td>2</td><td>50 %</td></tr><tr><td>3</td><td>67 %</td></tr><tr><td>5</td><td>80 %</td></tr><tr><td>8</td><td>88 %</td></tr></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="lamina" aria-label="Lámina 3">
+    <p class="eyebrow">El modelo</p>
+    <h2>Cinco supuestos del modelo</h2>
+    <ol class="supuestos">
+      <li><span class="num">1</span>La vacuna protege al 100 %.</li>
+      <li><span class="num">2</span>La protección dura para siempre.</li>
+      <li><span class="num">3</span>El virus no cambia.</li>
+      <li><span class="num">4</span>El contacto es al azar.</li>
+      <li><span class="num">5</span>Quien se contagió no se reinfecta.</li>
+    </ol>
+    <p class="suave">Anota cuáles crees que no se cumplen en la realidad. Lo retomas más adelante.</p>
+  </section>
+
+  <section class="lamina" aria-label="Lámina 4">
+    <p class="eyebrow">Simulador · minutos 15 a 25</p>
+    <h2>Abre el simulador en tu celular</h2>
+    <div class="cols">
+      <div>
+        <ol>
+          <li>Abre el enlace o escanea el código.</li>
+          <li>Marca tus predicciones <strong>antes</strong> de correr cada caso.</li>
+          <li>Anota en tu cuaderno qué pasó y por qué.</li>
+        </ol>
+        <p class="url">https://bengrez.github.io/aula-herramientas/vacunas-rebano/</p>
+        <p><button type="button" class="crono" data-seg="600" data-nom="Simulador">▶ 10:00</button></p>
+      </div>
+      <div class="qr" style="flex:0 0 330px">{{QR_VACUNAS}}</div>
+    </div>
+  </section>
+
+  <section class="lamina" aria-label="Lámina 5">
+    <p class="eyebrow">El mapa de la pandemia</p>
+    <h2>Cómo se lee el mapa</h2>
+    <div class="cols">
+      <div>
+        <p class="grande" style="font-size:34px">Tres capas, un deslizador:</p>
+        <ul>
+          <li><strong>Exceso de muertes del mes</strong>: cuántas personas más murieron que las esperadas, por millón de habitantes.</li>
+          <li><strong>% con vacunación completa</strong>.</li>
+          <li><strong>Rigurosidad de las medidas</strong>: de 0 a 100.</li>
+        </ul>
+      </div>
+      <div>
+        <ol>
+          <li>Elige la capa.</li>
+          <li>Mueve el mes con el deslizador o reproduce.</li>
+          <li>Toca un país para leer su valor.</li>
+        </ol>
+        <p class="suave">Exceso del mes = acumulado de este mes − acumulado del mes anterior. Si es negativo, murió menos gente de la esperada. Gris con trama: sin dato.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="lamina" aria-label="Lámina 6">
+    <p class="eyebrow">Trabajo en grupos de 4 · minutos 25 a 50</p>
+    <h2>Cada persona tiene un rol</h2>
+    <div class="roles">
+      <div class="rol"><span class="num">A</span><div><strong>Modelo y supuestos</strong><span>Qué supuestos del modelo se cumplen y cuáles no, según los datos de tu par.</span></div></div>
+      <div class="rol"><span class="num">B</span><div><strong>Comparar medidas</strong><span>Cómo se compara la rigurosidad de los dos países.</span></div></div>
+      <div class="rol"><span class="num">C</span><div><strong>Comparar vacunación y su momento</strong><span>Qué % vacunado había en cada momento clave.</span></div></div>
+      <div class="rol"><span class="num">D</span><div><strong>Causas alternativas</strong><span>Qué otra cosa pudo influir y qué dato la comprobaría.</span></div></div>
+    </div>
+    <p style="margin:14px 0 10px;font-size:30px">Tu grupo trabaja un par con el mapa. Las respuestas van en la hoja de papel.</p>
+    <p><button type="button" class="crono" data-seg="1500" data-nom="Trabajo por rol">▶ 25:00</button></p>
+  </section>
+
+  <section class="lamina" aria-label="Lámina 7">
+    <p class="eyebrow">Línea de tiempo de la clase · 90 minutos</p>
+    <h2 style="font-size:40px;margin-bottom:10px">Cada etapa tiene su cronómetro</h2>
+    <table class="linea">
+      <tbody>
+        <tr><td>0–15</td><td>Entrada y modelo</td><td class="dur">15 min</td><td class="cr"><button type="button" class="crono" data-seg="900" data-nom="Entrada y modelo">▶ 15:00</button></td></tr>
+        <tr><td>15–25</td><td>Simulador</td><td class="dur">10 min</td><td class="cr"><button type="button" class="crono" data-seg="600" data-nom="Simulador">▶ 10:00</button></td></tr>
+        <tr><td>25–50</td><td>Trabajo por rol</td><td class="dur">25 min</td><td class="cr"><button type="button" class="crono" data-seg="1500" data-nom="Trabajo por rol">▶ 25:00</button></td></tr>
+        <tr><td>50–70</td><td>Puesta en común (4 min por experto)</td><td class="dur">20 min</td><td class="cr"><button type="button" class="crono" data-seg="240" data-nom="Un experto">▶ 4:00</button></td></tr>
+        <tr><td>70–85</td><td>Conclusión del grupo</td><td class="dur">15 min</td><td class="cr"><button type="button" class="crono" data-seg="900" data-nom="Conclusión del grupo">▶ 15:00</button></td></tr>
+        <tr><td>85–90</td><td>Cierre y entrega</td><td class="dur">5 min</td><td class="cr"><button type="button" class="crono" data-seg="300" data-nom="Cierre y entrega">▶ 5:00</button></td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="lamina" aria-label="Lámina 8">
+    <p class="eyebrow">Los siete pares · 1 de 2</p>
+    <h2 style="font-size:38px;margin-bottom:12px">Escanea el código de tu par</h2>
+    <div class="pares">{{PARES_1}}</div>
+  </section>
+
+  <section class="lamina" aria-label="Lámina 9">
+    <p class="eyebrow">Los siete pares · 2 de 2</p>
+    <h2 style="font-size:38px;margin-bottom:12px">Escanea el código de tu par</h2>
+    <div class="pares tres">{{PARES_2}}</div>
+  </section>
+
+  <section class="lamina" aria-label="Lámina 10">
+    <p class="eyebrow">Antes de concluir</p>
+    <h2>Los límites de los datos</h2>
+    <ul>
+      <li>El exceso incluye muertes que no son COVID-19.</li>
+      <li>La rigurosidad mide lo decretado, no lo cumplido.</li>
+      <li>La vacunación completa no cuenta los refuerzos.</li>
+      <li>Falta el exceso de Perú en los últimos meses de 2022.</li>
+      <li>El mapa muestra correlación, no causa.</li>
+    </ul>
+    <p class="pie-lamina">Fuente: Our World in Data, «Coronavirus Pandemic (COVID-19)», CC BY 4.0. Datos congelados el 19 de agosto de 2024.</p>
+  </section>
+
+  <section class="lamina" aria-label="Lámina 11">
+    <p class="eyebrow">Cierre · minutos 85 a 90</p>
+    <h2>Tu conclusión, con límites</h2>
+    <div class="decir">Puedo decir que…<br>pero no puedo decir que…</div>
+    <ol>
+      <li>Vuelve a tu hipótesis del comienzo y reescríbela con lo que aprendiste.</li>
+      <li>Entrega la hoja de tu grupo.</li>
+    </ol>
+    <p><button type="button" class="crono" data-seg="300" data-nom="Cierre y entrega">▶ 5:00</button></p>
+  </section>
+
+</div>
+</div>
+<div id="barra">
+  <button type="button" id="ant" aria-label="Lámina anterior">◀</button>
+  <span id="cuenta" aria-live="off"></span>
+  <button type="button" id="sig" class="principal" aria-label="Lámina siguiente">▶</button>
+  <button type="button" id="pant">Pantalla completa</button>
+  <span id="reloj" aria-hidden="true"></span>
+</div>
+<p id="anuncio" class="solo-lector" aria-live="polite" aria-atomic="true"></p>
+<script>
+(function () {
+  'use strict';
+  var $ = function (id) { return document.getElementById(id); };
+  var laminas = document.querySelectorAll('.lamina'), n = laminas.length, actual = 0;
+  var esc = $('escenario'), vista = $('vista');
+
+  function ajustar() {
+    var w = vista.clientWidth, h = vista.clientHeight, s = Math.min(w / 1280, h / 720);
+    if (!(s > 0)) s = 1;
+    esc.style.transform = 'scale(' + s + ')';
+    esc.style.left = Math.max(0, (w - 1280 * s) / 2) + 'px';
+    esc.style.top = Math.max(0, (h - 720 * s) / 2) + 'px';
+  }
+  function ir(i, silencio) {
+    if (i < 0 || i >= n) return;
+    laminas[actual].className = 'lamina'; actual = i; laminas[actual].className = 'lamina activa';
+    $('cuenta').textContent = (actual + 1) + ' / ' + n;
+    $('ant').setAttribute('aria-disabled', actual === 0 ? 'true' : 'false');
+    $('sig').setAttribute('aria-disabled', actual === n - 1 ? 'true' : 'false');
+    try { if (history.replaceState) history.replaceState(null, '', '#' + (actual + 1)); } catch (e) { /* archivo local */ }
+    if (!silencio) $('anuncio').textContent = 'Lámina ' + (actual + 1) + ' de ' + n;
+  }
+  function mover(d) { ir(actual + d); }
+
+  // Cronómetro simple: uno a la vez, cuenta hacia atrás
+  var rest = 0, tim = null, activo = null;
+  function fmt(s) { var m = Math.floor(s / 60), r = s % 60; return m + ':' + (r < 10 ? '0' : '') + r; }
+  function marcar(btn, txt) { btn.textContent = txt; }
+  function detener(volver) {
+    if (tim) { clearInterval(tim); tim = null; }
+    if (activo && volver) { activo.setAttribute('aria-pressed', 'false'); activo.className = 'crono'; marcar(activo, '▶ ' + fmt(Number(activo.getAttribute('data-seg')))); }
+    if (volver) { activo = null; $('reloj').textContent = ''; $('reloj').className = ''; }
+  }
+  function pulsar(btn) {
+    if (activo === btn && tim) { // pausa
+      clearInterval(tim); tim = null; btn.setAttribute('aria-pressed', 'false'); marcar(btn, '▶ ' + fmt(rest)); return;
+    }
+    if (activo !== btn) { detener(true); activo = btn; rest = Number(btn.getAttribute('data-seg')); }
+    if (rest <= 0) rest = Number(btn.getAttribute('data-seg'));
+    btn.className = 'crono'; btn.setAttribute('aria-pressed', 'true'); marcar(btn, '❚❚ ' + fmt(rest));
+    $('reloj').textContent = btn.getAttribute('data-nom') + ' ' + fmt(rest); $('reloj').className = '';
+    tim = setInterval(function () {
+      rest--;
+      if (rest <= 0) {
+        rest = 0; clearInterval(tim); tim = null;
+        btn.setAttribute('aria-pressed', 'false'); btn.className = 'crono fin'; marcar(btn, 'Tiempo');
+        $('reloj').textContent = btn.getAttribute('data-nom') + ': tiempo'; $('reloj').className = 'fin';
+        $('anuncio').textContent = 'Terminó el tiempo: ' + btn.getAttribute('data-nom') + '.';
+        activo = btn; return;
+      }
+      marcar(btn, '❚❚ ' + fmt(rest)); $('reloj').textContent = btn.getAttribute('data-nom') + ' ' + fmt(rest);
+    }, 1000);
+  }
+  var cr = document.querySelectorAll('.crono'), i;
+  for (i = 0; i < cr.length; i++) (function (b) { b.setAttribute('aria-pressed', 'false'); b.addEventListener('click', function (ev) { ev.stopPropagation(); pulsar(b); }); })(cr[i]);
+
+  $('ant').addEventListener('click', function () { mover(-1); });
+  $('sig').addEventListener('click', function () { mover(1); });
+  document.addEventListener('keydown', function (ev) {
+    var k = ev.key, t = ev.target && ev.target.tagName;
+    if (ev.altKey || ev.ctrlKey || ev.metaKey) return;
+    if (k === 'ArrowRight' || k === 'PageDown' || (k === ' ' && t !== 'BUTTON') || k === 'Right') { ev.preventDefault(); mover(1); }
+    else if (k === 'ArrowLeft' || k === 'PageUp' || k === 'Left') { ev.preventDefault(); mover(-1); }
+    else if (k === 'Home') { ev.preventDefault(); ir(0); }
+    else if (k === 'End') { ev.preventDefault(); ir(n - 1); }
+  });
+  // Clic en la lámina (fuera de botones y enlaces): mitad derecha avanza, tercio izquierdo retrocede
+  vista.addEventListener('click', function (ev) {
+    var t = ev.target; while (t && t !== vista) { if (t.tagName === 'BUTTON' || t.tagName === 'A') return; t = t.parentNode; }
+    var r = vista.getBoundingClientRect(), x = ev.clientX - r.left;
+    if (x < r.width / 3) mover(-1); else mover(1);
+  });
+  // Deslizar con el dedo
+  var x0 = null, y0 = null;
+  vista.addEventListener('touchstart', function (ev) { if (ev.touches.length === 1) { x0 = ev.touches[0].clientX; y0 = ev.touches[0].clientY; } else x0 = null; }, { passive: true });
+  vista.addEventListener('touchend', function (ev) {
+    if (x0 === null) return;
+    var t = ev.changedTouches[0], dx = t.clientX - x0, dy = t.clientY - y0; x0 = null;
+    if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.5) { ev.preventDefault(); mover(dx < 0 ? 1 : -1); }
+  }, false);
+  // Pantalla completa
+  function pantallaCompleta() {
+    var d = document, e = d.documentElement;
+    if (d.fullscreenElement || d.webkitFullscreenElement) { (d.exitFullscreen || d.webkitExitFullscreen).call(d); return; }
+    var f = e.requestFullscreen || e.webkitRequestFullscreen;
+    if (f) { try { var p = f.call(e); if (p && p.catch) p.catch(function () {}); } catch (x) { /* no disponible */ } }
+  }
+  $('pant').addEventListener('click', pantallaCompleta);
+  if (!(document.documentElement.requestFullscreen || document.documentElement.webkitRequestFullscreen)) $('pant').hidden = true;
+  document.addEventListener('fullscreenchange', ajustar); document.addEventListener('webkitfullscreenchange', ajustar);
+  window.addEventListener('resize', ajustar); window.addEventListener('orientationchange', ajustar);
+  window.addEventListener('hashchange', function () { var m = /^#(\d+)$/.exec(location.hash); if (m) ir(Number(m[1]) - 1, true); });
+
+  ajustar();
+  var m0 = /^#(\d+)$/.exec(location.hash || '');
+  ir(m0 && Number(m0[1]) >= 1 && Number(m0[1]) <= n ? Number(m0[1]) - 1 : 0, true);
+  setTimeout(ajustar, 50);
+})();
+</script>
+</body>
+</html>
