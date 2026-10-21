@@ -2,25 +2,25 @@
   "pares": [
     {
       "a": "peru", "b": "nueva-zelanda",
-      "guia": "¿Qué país tuvo medidas más estrictas en 2020 y cuál acumuló más muertes en exceso?",
+      "guia": "Dos países de tamaño y geografía muy distintos frente al mismo virus. ¿Qué podría explicar sus resultados?",
       "hitos": [
         { "mes": "2020-05", "items": [
           { "t": "L", "q": "Mira el exceso del mes de cada país. ¿Cuál subió primero: Perú o Nueva Zelanda?" },
-          { "t": "L", "q": "¿Qué rigurosidad de las medidas tenía cada país este mes?" } ] },
+          { "t": "L", "q": "Compara el exceso acumulado de los dos países este mes." } ] },
         { "mes": "2021-04", "items": [
           { "t": "L", "q": "¿Qué % con vacunación completa tenía cada país?" },
           { "t": "L", "q": "Compara el exceso del mes de los dos países." } ] },
         { "mes": "2021-12", "items": [
           { "t": "L", "q": "Lee el % vacunado y el exceso acumulado de cada país. ¿Cuál estaba más vacunado y cuál tenía más muertes acumuladas?" },
-          { "t": "I", "q": "Anota una causa, distinta de las medidas y de la vacuna, que pudo influir en esa diferencia, y qué dato tendrías que comparar para comprobarla." } ] }
+          { "t": "I", "q": "Anota una causa, distinta de la vacuna, que pudo influir en esa diferencia, y qué dato tendrías que comparar para comprobarla." } ] }
       ]
     },
     {
       "a": "suecia", "b": "noruega",
-      "guia": "En 2020, ¿en qué se diferenciaron más estos dos países: en las medidas o en las muertes en exceso?",
+      "guia": "Vecinos de tamaño parecido y con vacunación parecida. ¿Qué los distingue?",
       "hitos": [
         { "mes": "2020-04", "items": [
-          { "t": "L", "q": "¿Qué país tenía el exceso del mes más alto? ¿Y las medidas más estrictas?" } ] },
+          { "t": "L", "q": "¿Qué país tenía el exceso del mes más alto? ¿Cuánto era el exceso acumulado de cada uno?" } ] },
         { "mes": "2021-06", "items": [
           { "t": "L", "q": "Lee el % vacunado de cada país. ¿Son parecidos?" },
           { "t": "L", "q": "Lee el exceso del mes de cada país. ¿Son parecidos?" } ] },
@@ -35,7 +35,7 @@
       "hitos": [
         { "mes": "2020-06", "items": [
           { "t": "L", "q": "Mira el exceso del mes de cada país. ¿Cuál subió primero?" },
-          { "t": "L", "q": "¿Qué rigurosidad de las medidas tenía cada país?" } ] },
+          { "t": "L", "q": "Compara el exceso acumulado de los dos países." } ] },
         { "mes": "2021-05", "items": [
           { "t": "L", "q": "De los dos países, ¿cuál tuvo el exceso del mes más alto? ¿Qué % vacunado tenía cada uno?" } ] },
         { "mes": "2022-02", "items": [
@@ -72,12 +72,12 @@
     },
     {
       "a": "estados-unidos", "b": "reino-unido",
-      "guia": "¿Cómo se compararon sus medidas, su vacunación y su exceso de muertes mes a mes?",
+      "guia": "¿Cómo se compararon su vacunación y su exceso de muertes mes a mes?",
       "hitos": [
         { "mes": "2020-04", "items": [
-          { "t": "L", "q": "¿Qué país subió más este mes? ¿Qué rigurosidad de las medidas tenía cada uno?" } ] },
+          { "t": "L", "q": "¿Qué país subió más este mes? ¿Cuánto era el exceso acumulado de cada uno?" } ] },
         { "mes": "2021-01", "items": [
-          { "t": "L", "q": "Compara el exceso del mes y la rigurosidad de los dos países." },
+          { "t": "L", "q": "Compara el exceso del mes de los dos países." },
           { "t": "L", "q": "¿Qué % vacunado tenía cada uno?" } ] },
         { "mes": "2022-01", "items": [
           { "t": "L", "q": "Compara el % vacunado y el exceso del mes de cada país." },
@@ -86,10 +86,10 @@
     },
     {
       "a": "australia", "b": "nueva-zelanda",
-      "guia": "¿Qué pasó con el exceso de cada país en 2022, cuando bajó la rigurosidad de sus medidas?",
+      "guia": "¿Qué pasó con el exceso de cada país en 2022, con la vacunación ya sobre 75 % en los dos?",
       "hitos": [
         { "mes": "2020-06", "items": [
-          { "t": "L", "q": "¿Qué país tenía las medidas más estrictas este mes?" },
+          { "t": "L", "q": "Lee el exceso acumulado de cada país." },
           { "t": "L", "q": "¿El exceso del mes de cada país es positivo o negativo?" } ] },
         { "mes": "2021-12", "items": [
           { "t": "L", "q": "Lee el % vacunado de cada país. ¿Son parecidos?" },

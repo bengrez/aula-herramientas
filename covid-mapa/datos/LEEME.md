@@ -19,7 +19,7 @@ En Android se abre con Chrome; con el archivo recibido no se pueden agregar par�
 - Fuente: Our World in Data, «Coronavirus Pandemic (COVID-19)» (Mathieu, Ritchie, Rodés-Guirao et al.), licencia **CC BY 4.0**.
   Repositorio `owid/covid-19-data` congelado el **19 de agosto de 2024**.
 - Serie mensual 2020-01 a 2022-12 de 12 países: `e` = muertes en exceso acumuladas por millón (último valor del mes; `null` si no hay),
-  `v` = % con vacunación completa (último valor publicado hasta fin de mes; 0,0 antes del primero), `s` = rigurosidad de Oxford (promedio mensual).
+  `v` = % con vacunación completa (último valor publicado hasta fin de mes; 0,0 antes del primero), `s` = rigurosidad de Oxford (promedio mensual). **Desde el 21-oct-2026 la rigurosidad no se usa ni se muestra** (confundía más de lo que ayudaba): `s` queda en `serie.json` por trazabilidad, pero `ensamblar.mjs` no la incluye en las páginas. El mapa tiene dos capas (exceso del mes y % con vacunación completa).
 - `extraer_doce.py` copia los 12 países desde la variable `D` de `../../vacunas-rebano/index.html` (ya verificada) y comprueba las anclas
   (exceso al cierre de 2020, 2021 y 2022; % vacunado al cierre de 2021 y 2022). No procesa el CSV completo.
   La serie de `vacunas-rebano` sale de `../../vacunas-rebano/datos/construir_datos.py`.
@@ -66,7 +66,7 @@ También acepta el orden invertido, mayúsculas y las tildes o los `%20` (se nor
   mensaje flotante al pasar sobre un país y clic para leer su valor. Con teclado: Tab, flechas en el deslizador, espacio para reproducir o pausar,
   Enter sobre un círculo para leer. **Celular (< 1024 px):** una columna, objetivos de 44 px.
 - La lista sin parámetros muestra los 7 pares **numerados** del 1 al 7 (el número de la hoja impresa). Abre `index.html` y elige el par N.
-- «Términos clave» (colapsable) repite en el mapa las definiciones de exceso de mortalidad, cobertura y rigurosidad; son las mismas del paso 1 y de la presentación.
+- «Términos clave» (colapsable) repite en el mapa las definiciones de exceso de mortalidad y cobertura; son las mismas del paso 1 y de la presentación.
 - **Presentación (13 láminas):** flechas, PageUp/PageDown, Inicio/Fin, clic (tercio izquierdo retrocede, el resto avanza), deslizar, botones, tecla `I` o
   botón «Índice» con enlace directo a cada lámina (`#1` … `#13`), pantalla completa y cronómetros por etapa. La dirección cambia con cada lámina, así que el
   botón Atrás del navegador vuelve a la lámina anterior. Los enlaces a los 7 pares (láminas 10 y 11) son relativos (`index.html?a=…&b=…`) y se abren en

@@ -86,7 +86,7 @@
   .sel { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin:0; padding:0 12px 12px; }
   .sel label { display:block; font-size:.9rem; font-weight:700; }
   .sel select { display:block; width:100%; font:inherit; font-weight:500; min-height:44px; padding:6px 6px; margin-top:2px; border:2px solid var(--borde); border-radius:8px; background:#fff; color:var(--pizarra); }
-  .capas { display:grid; grid-template-columns:repeat(3,1fr); gap:6px; margin:0 0 10px; }
+  .capas { display:grid; grid-template-columns:repeat(2,1fr); gap:6px; margin:0 0 10px; }
   .capas button { padding:6px 4px; font-size:.92rem; min-height:56px; }
   #mes-texto { font-size:1.6rem; font-weight:800; line-height:1.2; margin:0 0 2px; }
   .tiempo { display:grid; grid-template-columns:1fr 2fr 1fr; gap:6px; margin:4px 0 2px; }
@@ -128,7 +128,6 @@
   .ln { display:inline-block; width:26px; height:0; border-top:3px solid; vertical-align:middle; margin-right:5px; }
   .ln.a { border-top-color:var(--pa); }
   .ln.b { border-top-color:var(--pb); border-top-style:dashed; }
-  .ln.fina { border-top-width:1.5px; opacity:.6; }
 
   /* Pie */
   #pie h2 { font-size:1.1rem; }
@@ -151,7 +150,7 @@
     body.trabajando header { display:none; }
     .pares { grid-template-columns:1fr 1fr; }
     .pares a { padding:10px 14px; }
-    #glosario-1 { columns:3; column-gap:28px; }
+    #glosario-1 { columns:2; column-gap:28px; }
     #glosario-1 dt { margin-top:0; }
     #glosario-1 .t { break-inside:avoid; -webkit-column-break-inside:avoid; page-break-inside:avoid; }
     #trabajo.con-visor { display:grid; grid-template-columns:250px minmax(0,1.15fr) minmax(300px,1fr); column-gap:14px; align-items:start; padding:10px 12px; margin-top:6px; }
@@ -224,7 +223,7 @@
 
     <div data-paso="1">
       <p>Lee estos términos. Los vas a usar en todo el trabajo.</p>
-      <dl class="glosario" id="glosario-1"><div class="t"><dt>Exceso de mortalidad</dt><dd>Muertes totales por sobre las que se esperaban en un año normal, por millón de habitantes. Incluye muertes por COVID y por otras causas. En el mapa se ve «del mes» (cuánto subió ese mes).</dd></div><div class="t"><dt>Cobertura (vacunación completa)</dt><dd>Porcentaje de la población que recibió todas las dosis del esquema inicial. No cuenta los refuerzos.</dd></div><div class="t"><dt>Rigurosidad de las medidas</dt><dd>Índice de 0 a 100 (Universidad de Oxford) que resume qué tan estrictas eran las medidas decretadas, como cuarentenas, cierre de colegios y restricciones de viaje. Mide lo decretado, no lo cumplido.</dd></div></dl>
+      <dl class="glosario" id="glosario-1"><div class="t"><dt>Exceso de mortalidad</dt><dd>Muertes totales por sobre las que se esperaban en un año normal, por millón de habitantes. Incluye muertes por COVID y por otras causas. En el mapa se ve «del mes» (cuánto subió ese mes).</dd></div><div class="t"><dt>Cobertura (vacunación completa)</dt><dd>Porcentaje de la población que recibió todas las dosis del esquema inicial. No cuenta los refuerzos.</dd></div></dl>
       <p class="ojo">En la tabla de la página verás también el exceso <em>acumulado</em>: la suma de todos los meses desde enero de 2020.</p>
       <p class="pregunta">Antes de mirar el mapa, predice: ¿qué país tendrá más muertes en exceso acumuladas al final del período (la suma de todos los meses de 2020 a 2022)?</p>
       <div class="ops" id="pred-ops" role="group" aria-label="Tu predicción"></div>
@@ -275,7 +274,7 @@
     <p id="aviso" role="status" hidden></p>
     <details class="terminos" id="terminos">
       <summary>Términos clave</summary>
-      <dl class="glosario"><div class="t"><dt>Exceso de mortalidad</dt><dd>Muertes totales por sobre las que se esperaban en un año normal, por millón de habitantes. Incluye muertes por COVID y por otras causas. En el mapa se ve «del mes» (cuánto subió ese mes).</dd></div><div class="t"><dt>Cobertura (vacunación completa)</dt><dd>Porcentaje de la población que recibió todas las dosis del esquema inicial. No cuenta los refuerzos.</dd></div><div class="t"><dt>Rigurosidad de las medidas</dt><dd>Índice de 0 a 100 (Universidad de Oxford) que resume qué tan estrictas eran las medidas decretadas, como cuarentenas, cierre de colegios y restricciones de viaje. Mide lo decretado, no lo cumplido.</dd></div></dl>
+      <dl class="glosario"><div class="t"><dt>Exceso de mortalidad</dt><dd>Muertes totales por sobre las que se esperaban en un año normal, por millón de habitantes. Incluye muertes por COVID y por otras causas. En el mapa se ve «del mes» (cuánto subió ese mes).</dd></div><div class="t"><dt>Cobertura (vacunación completa)</dt><dd>Porcentaje de la población que recibió todas las dosis del esquema inicial. No cuenta los refuerzos.</dd></div></dl>
     </details>
     </div>
 
@@ -284,7 +283,6 @@
       <div class="capas g1" id="capas" role="group" aria-label="Qué se muestra en el mapa">
         <button type="button" data-capa="exceso" aria-pressed="true">Exceso de muertes del mes</button>
         <button type="button" data-capa="vac" aria-pressed="false">% con vacunación completa</button>
-        <button type="button" data-capa="rig" aria-pressed="false">Rigurosidad de las medidas</button>
       </div>
       <div class="ctl-mes g1">
         <p id="mes-texto"></p>
@@ -318,10 +316,10 @@
       <h3 class="grafico-t g4">Exceso de muertes del mes<small>Por millón de habitantes. Bajo 0: murió menos gente de la esperada. La raya vertical marca el mes elegido; toca el gráfico para cambiarlo.</small></h3>
       <svg class="grafico g4" id="g-exc" viewBox="0 0 340 170" role="img" aria-label="Exceso de muertes del mes"></svg>
       <div class="g-ley g4" id="g-ley1"></div>
-      <h3 class="grafico-t g4">% con vacunación completa y rigurosidad<small>Línea gruesa: % vacunado. Línea fina y tenue: rigurosidad de las medidas (0 a 100).</small></h3>
-      <svg class="grafico g4" id="g-vac" viewBox="0 0 340 170" role="img" aria-label="Vacunación completa y rigurosidad"></svg>
+      <h3 class="grafico-t g4">% con vacunación completa<small>Porcentaje de la población (de 0 a 100). La raya vertical marca el mes elegido.</small></h3>
+      <svg class="grafico g4" id="g-vac" viewBox="0 0 340 170" role="img" aria-label="Vacunación completa"></svg>
       <div class="g-ley g4" id="g-ley"></div>
-      <p class="ojo g4 nota-ejes">Los dos gráficos son distintos: el primero usa muertes por millón; el segundo, una escala de 0 a 100.</p>
+      <p class="ojo g4 nota-ejes">Los dos gráficos son distintos: el primero usa muertes por millón; el segundo, porcentaje de 0 a 100.</p>
       <details class="cambiar g5" id="cambiar">
         <summary>Cambiar de país</summary>
         <div class="sel">
@@ -339,7 +337,6 @@
     <p><strong>Antes de concluir, ten presente que:</strong></p>
     <ul>
       <li>El exceso incluye muertes que no son COVID-19 (por ejemplo, las que dejó un hospital saturado).</li>
-      <li>La rigurosidad mide lo que se decretó, no lo que la gente cumplió.</li>
       <li>La vacunación completa no cuenta los refuerzos.</li>
       <li>Falta el exceso de Perú en los últimos meses de 2022 (noviembre y diciembre): se ve gris con trama.</li>
       <li>El mapa muestra que dos cosas van juntas, no que una cause la otra.</li>
@@ -408,18 +405,9 @@
       bin: function (v) { return v < 1 ? 0 : v < 10 ? 1 : v < 25 ? 2 : v < 40 ? 3 : v < 55 ? 4 : v < 70 ? 5 : v < 85 ? 6 : 7; },
       val: function (k, i) { return S.p[k].v[i]; },
       txt: function (v) { return v === null ? 'sin dato' : String(v).replace('.', ',') + ' %'; }
-    },
-    rig: {
-      titulo: 'Rigurosidad de las medidas (0 a 100)',
-      corto: 'Rigurosidad',
-      col: ['#edf8fb', '#bfd3e6', '#9ebcda', '#8c96c6', '#8c6bb1', '#810f7c', '#4d004b'],
-      lab: ['0 a 14', '15 a 29', '30 a 44', '45 a 59', '60 a 74', '75 a 89', '90 a 100'],
-      bin: function (v) { return v < 15 ? 0 : v < 30 ? 1 : v < 45 ? 2 : v < 60 ? 3 : v < 75 ? 4 : v < 90 ? 5 : 6; },
-      val: function (k, i) { return S.p[k].s[i]; },
-      txt: function (v) { return v === null ? 'sin dato' : v + ' de 100'; }
     }
   };
-  var NOMBRE_CAPA = { exceso: 'exceso del mes', vac: '% con vacunación completa', rig: 'rigurosidad de las medidas' };
+  var NOMBRE_CAPA = { exceso: 'exceso del mes', vac: '% con vacunación completa' };
 
   var est = { A: null, B: null, capa: 'exceso', mes: 0, reg: 'mundo', paso: 1, pred: null, predFija: false, foco: null, hito: -1, causas: [], play: false, par: null, pasoMax: 1 };
   var timer = null, reducido = false, svg = $('mapa'), nodos = {}, lector = '';
@@ -600,7 +588,6 @@
     $('tabla-cuerpo').innerHTML =
       fila(est.capa === 'exceso', 'Exceso del mes', sinUn(CAPAS.exceso.txt(MENS[A][i])), sinUn(CAPAS.exceso.txt(MENS[B][i]))) +
       fila(est.capa === 'vac', '% vacunado', CAPAS.vac.txt(S.p[A].v[i]), CAPAS.vac.txt(S.p[B].v[i])) +
-      fila(est.capa === 'rig', 'Rigurosidad', CAPAS.rig.txt(S.p[A].s[i]), CAPAS.rig.txt(S.p[B].s[i])) +
       fila(false, 'Exceso acumulado', ea(A), ea(B));
   }
   function trazo(arr, X, Y) {
@@ -647,17 +634,15 @@
       { a: mb, col: '#c2410c', w: 2.5, dash: '7 4', marca: true, forma: 'cuadro' }
     ], bot, top, ticks, function (v) { return (v < 0 ? MIN : '') + Math.abs(v); });
     dibujarGrafico('g-vac', [
-      { a: S.p[A].s, col: '#1d4ed8', w: 1.5, op: 0.4 },
-      { a: S.p[B].s, col: '#c2410c', w: 1.5, op: 0.4, dash: '5 3' },
       { a: S.p[A].v, col: '#1d4ed8', w: 2.8, marca: true },
       { a: S.p[B].v, col: '#c2410c', w: 2.8, dash: '7 4', marca: true, forma: 'cuadro' }
     ], 0, 100, [0, 25, 50, 75, 100], function (v) { return v + ''; });
     var ley = '<span><span class="ln a"></span>' + PORK[A].n + ' (A)</span><span><span class="ln b"></span>' + PORK[B].n + ' (B)</span>';
     $('g-ley1').innerHTML = ley;
-    $('g-ley').innerHTML = ley + '<span><span class="ln a fina"></span><span class="ln b fina"></span>rigurosidad (tenue)</span>';
+    $('g-ley').innerHTML = ley;
     var v = est.mes;
     $('g-exc').setAttribute('aria-label', 'Exceso de muertes del mes. En ' + fm(v) + ': ' + PORK[A].n + ' ' + CAPAS.exceso.txt(ma[v]) + ', ' + PORK[B].n + ' ' + CAPAS.exceso.txt(mb[v]) + '.');
-    $('g-vac').setAttribute('aria-label', '% con vacunación completa y rigurosidad. En ' + fm(v) + ': ' + PORK[A].n + ' ' + CAPAS.vac.txt(S.p[A].v[v]) + ' vacunado y rigurosidad ' + CAPAS.rig.txt(S.p[A].s[v]) + '; ' + PORK[B].n + ' ' + CAPAS.vac.txt(S.p[B].v[v]) + ' vacunado y rigurosidad ' + CAPAS.rig.txt(S.p[B].s[v]) + '.');
+    $('g-vac').setAttribute('aria-label', '% con vacunación completa. En ' + fm(v) + ': ' + PORK[A].n + ' ' + CAPAS.vac.txt(S.p[A].v[v]) + '; ' + PORK[B].n + ' ' + CAPAS.vac.txt(S.p[B].v[v]) + '.');
   }
   function clicGrafico(ev) {
     var s = this, r = s.getBoundingClientRect(), cx = ev.clientX !== undefined ? ev.clientX : (ev.changedTouches ? ev.changedTouches[0].clientX : 0);

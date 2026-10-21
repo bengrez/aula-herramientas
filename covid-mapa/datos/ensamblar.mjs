@@ -13,7 +13,10 @@ const poner = (marca, valor) => {
   html = html.replace(marca, () => JSON.stringify(valor));
 };
 poner('/*GEOMETRIA*/', geom);
-poner('/*SERIE*/', JSON.parse(lee('serie.json')));
+// La rigurosidad (campo s) queda en serie.json pero no se usa ni se muestra: no se incluye en la página.
+const serie = JSON.parse(lee('serie.json'));
+Object.keys(serie.p).forEach((k) => { delete serie.p[k].s; });
+poner('/*SERIE*/', serie);
 poner('/*PARES*/', JSON.parse(lee('pares.json')));
 fs.writeFileSync(path.join(aqui, '..', 'index.html'), html);
 fs.writeFileSync(path.join(aqui, '..', 'sin-conexion.html'), html);
