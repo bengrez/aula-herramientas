@@ -155,6 +155,7 @@
     #trabajo.con-visor { display:grid; grid-template-columns:250px minmax(0,1.15fr) minmax(300px,1fr); column-gap:14px; align-items:start; padding:10px 12px; margin-top:6px; }
     #trabajo.con-visor #col-paso { display:block; max-height:calc(100vh - 64px); overflow-y:auto; padding-right:6px; font-size:.95rem; line-height:1.45; }
     #trabajo.con-visor #p-titulo { font-size:1.05rem; }
+    #trabajo.con-visor .nav { position:sticky; bottom:0; z-index:2; background:#fff; padding:8px 0 4px; margin-top:8px; }
     #trabajo.con-visor #visor { display:contents; }
     #trabajo.con-visor .v-izq, #trabajo.con-visor .v-der { display:block; min-width:0; }
     .g1, .g2, .g3, .g4, .g5 { order:0; }
@@ -162,9 +163,9 @@
     .capas { margin:0 0 6px; }
     .capas button { min-height:44px; font-size:.88rem; padding:4px 6px; }
     .ctl-mes { display:flex; align-items:center; justify-content:space-between; }
-    #mes-texto { font-size:1.3rem; margin:0 10px 0 0; white-space:nowrap; }
-    .tiempo { width:330px; margin:0; }
-    .tiempo button { min-height:44px; padding:4px; font-size:.95rem; }
+    #mes-texto { font-size:1.15rem; width:150px; flex:none; margin:0 8px 0 0; white-space:nowrap; }
+    .tiempo { flex:1 1 0; min-width:0; max-width:340px; margin:0; grid-template-columns:1fr 1.7fr 1fr; }
+    .tiempo button { min-height:44px; padding:4px 2px; font-size:.9rem; white-space:nowrap; }
     #t { height:34px; margin:2px 0 0; }
     .anios { margin:-2px 0 4px; }
     .regiones { margin:0 0 6px; }
@@ -183,7 +184,7 @@
     details.cambiar summary { min-height:40px; padding:8px 12px; }
   }
   @media (min-width: 1024px) and (pointer: coarse) { #t { height:44px; } .regiones button, details.cambiar summary, details.terminos summary { min-height:44px; } }
-  @media (min-width: 1200px) { #trabajo.con-visor { grid-template-columns:290px minmax(0,1.15fr) minmax(340px,1fr); } }
+  @media (min-width: 1200px) { #mes-texto { font-size:1.3rem; width:185px; } #trabajo.con-visor { grid-template-columns:290px minmax(0,1.15fr) minmax(340px,1fr); } }
 </style>
 <style>
 /* Enlace al hub «Herramientas de aula» y su pie (igual que en las otras herramientas). */
@@ -521,14 +522,17 @@
   }
   // Mouse: mensaje flotante al pasar sobre un país
   var ultimoToque = 0;
-  function ocultarTip() { $('tip').hidden = true; svg.style.cursor = 'default'; }
+  var tipPais = null;
+  function ocultarTip() { $('tip').hidden = true; tipPais = null; svg.style.cursor = 'default'; }
+  function textoTip(k) { var c = CAPAS[est.capa]; return PORK[k].n + ' · ' + fmc(est.mes) + ' · ' + c.corto + ': ' + c.txt(c.val(k, est.mes)); }
+  function refrescarTip() { if (tipPais && !$('tip').hidden) $('tip').textContent = textoTip(tipPais); }
   function moverMapa(ev) {
     if (new Date().getTime() - ultimoToque < 800) return;
     var k = paisBajo(ev, 16), tip = $('tip');
     if (!k) { ocultarTip(); return; }
-    var c = CAPAS[est.capa], cj = $('mapa-caja').getBoundingClientRect();
-    svg.style.cursor = 'pointer';
-    tip.textContent = PORK[k].n + ' · ' + fmc(est.mes) + ' · ' + c.corto + ': ' + c.txt(c.val(k, est.mes));
+    var cj = $('mapa-caja').getBoundingClientRect();
+    svg.style.cursor = 'pointer'; tipPais = k;
+    tip.textContent = textoTip(k);
     tip.hidden = false;
     var x = ev.clientX - cj.left + 14, y = ev.clientY - cj.top + 14, w = tip.offsetWidth, h = tip.offsetHeight;
     if (x + w > cj.width - 4) x = ev.clientX - cj.left - w - 12;
@@ -536,9 +540,11 @@
     tip.style.left = Math.max(2, x) + 'px'; tip.style.top = Math.max(2, y) + 'px';
   }
   function ajustarRegion() {
-    var r = G.regiones[est.reg], k = r.vb[2] / px(); // unidades del lienzo por pixel de pantalla
+    var r = G.regiones[est.reg];
     svg.setAttribute('viewBox', r.vb.join(' '));
     $('mapa-caja').style.paddingBottom = (r.ratio * 100) + '%';
+    var cr = $('mapa-caja').getBoundingClientRect(), kw = r.vb[2] / (cr.width || 340), kh = r.vb[3] / (cr.height || 150);
+    var k = Math.max(kw, kh); // unidades del lienzo por pixel de pantalla (la caja puede limitar por el alto)
     var w = 7 * k;
     $('trama').setAttribute('width', w); $('trama').setAttribute('height', w);
     $('trama-f').setAttribute('width', w); $('trama-f').setAttribute('height', w);
@@ -690,7 +696,7 @@
   }
 
   // ---------- estado del visor ----------
-  function pintarTodo() { pintarMapa(); tabla(); graficos(); pintarLectura(); $('mes-texto').textContent = fm(est.mes); $('t').value = est.mes; $('t').setAttribute('aria-valuetext', fm(est.mes)); }
+  function pintarTodo() { pintarMapa(); tabla(); graficos(); pintarLectura(); $('mes-texto').textContent = fm(est.mes); refrescarTip(); $('t').value = est.mes; $('t').setAttribute('aria-valuetext', fm(est.mes)); }
   function irMes(i, avisar) {
     est.mes = Math.max(0, Math.min(NMES - 1, i));
     pintarTodo();

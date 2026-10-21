@@ -8,10 +8,10 @@ y los scripts que los arman; no se cargan en el navegador.
 
 ```
 node ensamblar.mjs                # mapa.fuente.html + geometria.json + serie.json + pares.json -> ../index.html y ../sin-conexion.html
-node ensamblar_presentacion.mjs   # presentacion.fuente.html + pares.json + qrencode -> ../presentacion.html
+node ensamblar_presentacion.mjs   # presentacion.fuente.html + pares.json + qrencode -> ../presentacion.html y ../presentacion-sin-conexion.html
 ```
 
-`../sin-conexion.html` es una copia idéntica de `../index.html` (ya es autosuficiente): sirve para compartirla por WhatsApp, Drive o Bluetooth.
+`../sin-conexion.html` es una copia idéntica de `../index.html` y `../presentacion-sin-conexion.html` lo es de `../presentacion.html` (ya es autosuficiente): sirve para compartirla por WhatsApp, Drive o Bluetooth.
 En Android se abre con Chrome; con el archivo recibido no se pueden agregar parámetros a la dirección, así que el par se elige con los botones de la lista.
 
 ## Datos (`serie.json`)
@@ -58,3 +58,17 @@ También acepta el orden invertido, mayúsculas y las tildes o los `%20` (se nor
 
 `pares.json` guarda, para cada par, su pregunta guía y los tres hitos (mes y preguntas). Cada pregunta lleva `t`: `L` si es de lectura directa
 (se responde mirando un valor del mapa, la tabla o los gráficos) o `I` si pide interpretar. La página no muestra esa marca ni ninguna respuesta.
+
+## Pantallas y uso (clase en sala de computación, 21-oct-2026)
+
+- **Escritorio (≥ 1024 px de ancho):** tres columnas: instrucciones del paso (con scroll propio), mapa con sus controles y panel del par (tabla y dos
+  curvas). A 1366×768, 1920×1080, 1280×720 y 1024×768 el mapa, el deslizador, la capa y las curvas caben sin scroll vertical de la página. Con mouse:
+  mensaje flotante al pasar sobre un país y clic para leer su valor. Con teclado: Tab, flechas en el deslizador, espacio para reproducir o pausar,
+  Enter sobre un círculo para leer. **Celular (< 1024 px):** una columna, objetivos de 44 px.
+- La lista sin parámetros muestra los 7 pares **numerados** del 1 al 7 (el número de la hoja impresa). Abre `index.html` y elige el par N.
+- «Términos clave» (colapsable) repite en el mapa las definiciones de exceso de mortalidad, cobertura y rigurosidad; son las mismas del paso 1 y de la presentación.
+- **Presentación (13 láminas):** flechas, PageUp/PageDown, Inicio/Fin, clic (tercio izquierdo retrocede, el resto avanza), deslizar, botones, tecla `I` o
+  botón «Índice» con enlace directo a cada lámina (`#1` … `#13`), pantalla completa y cronómetros por etapa. La dirección cambia con cada lámina, así que el
+  botón Atrás del navegador vuelve a la lámina anterior. Los enlaces a los 7 pares (láminas 10 y 11) son relativos (`index.html?a=…&b=…`) y se abren en
+  pestaña nueva; los códigos QR apuntan a la dirección pública. Sin roles: todo el grupo explora el mismo par y completa una sola hoja.
+- Secuencia de la clase: 0–20 entrada y términos clave · 20–30 simulador · 30–65 exploración del par en el mapa · 65–80 conclusión del grupo · 80–90 cierre y ticket individual.
