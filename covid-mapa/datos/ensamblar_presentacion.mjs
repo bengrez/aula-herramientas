@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 // Arma ../presentacion.html: inserta los códigos QR (hechos con qrencode, SVG en línea) y los siete pares (desde pares.json).
+// Escribe también ../presentacion-sin-conexion.html (copia idéntica, un solo archivo para llevar en pendrive).
 // Uso: node ensamblar_presentacion.mjs   (requiere qrencode instalado)
 import fs from 'node:fs';
 import path from 'node:path';
@@ -23,17 +24,19 @@ function qr(url) {
   return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="' + (-q) + ' ' + (-q) + ' ' + (n + 2 * q) + ' ' + (n + 2 * q) + '" shape-rendering="crispEdges" role="img" aria-label="Código QR: ' + url + '"><rect x="' + (-q) + '" y="' + (-q) + '" width="' + (n + 2 * q) + '" height="' + (n + 2 * q) + '" fill="#fff"/><path d="' + d + '" fill="#000"/></svg>';
 }
 const pares = JSON.parse(fs.readFileSync(path.join(aqui, 'pares.json'), 'utf8')).pares;
-function tarjeta(p, i, grande) {
+function tarjeta(p, i) {
+  const rel = 'index.html?a=' + p.a + '&amp;b=' + p.b;
   const url = BASE + 'covid-mapa/?a=' + p.a + '&b=' + p.b;
-  const tit = (i + 1) + '. ' + NOMBRES[p.a] + ' – ' + NOMBRES[p.b];
-  const cuerpo = '<div class="tit">' + tit + '</div><div class="guia">' + p.guia + '</div>';
-  const cod = '<div class="qr">' + qr(url) + '</div><div class="cod">covid-mapa/?a=' + p.a + '&amp;b=' + p.b + '</div>';
-  return grande ? '<div class="par"><div class="texto">' + cuerpo + '<div class="cod">covid-mapa/?a=' + p.a + '&amp;b=' + p.b + '</div></div><div class="qr">' + qr(url) + '</div></div>' : '<div class="par">' + cuerpo + cod + '</div>';
+  return '<div class="par"><div class="texto"><div class="tit">' + (i + 1) + '. ' + NOMBRES[p.a] + ' – ' + NOMBRES[p.b] + '</div><div class="guia">' + p.guia + '</div><a class="boton" href="' + rel + '" target="_blank" rel="noopener">Abrir el mapa del par ' + (i + 1) + '</a></div><div class="qr">' + qr(url) + '</div></div>';
+}
+function tarjetaLista() {
+  return '<div class="par"><div class="texto"><div class="tit">¿No sabes cuál es tu par?</div><div class="guia">Abre la lista y elige el número de tu hoja.</div><a class="boton" href="index.html" target="_blank" rel="noopener">Abrir la lista de pares</a></div><div class="qr">' + qr(BASE + 'covid-mapa/') + '</div></div>';
 }
 let html = fs.readFileSync(path.join(aqui, 'presentacion.fuente.html'), 'utf8');
 const poner = (marca, v) => { if (html.indexOf(marca) < 0) throw new Error('Falta ' + marca); html = html.replace(marca, () => v); };
 poner('{{QR_VACUNAS}}', qr(BASE + 'vacunas-rebano/'));
-poner('{{PARES_1}}', pares.slice(0, 4).map((p, i) => tarjeta(p, i, false)).join(''));
-poner('{{PARES_2}}', pares.slice(4).map((p, i) => tarjeta(p, i + 4, true)).join(''));
+poner('{{PARES_1}}', pares.slice(0, 4).map((p, i) => tarjeta(p, i)).join(''));
+poner('{{PARES_2}}', pares.slice(4).map((p, i) => tarjeta(p, i + 4)).join('') + tarjetaLista());
 fs.writeFileSync(path.join(aqui, '..', 'presentacion.html'), html);
+fs.writeFileSync(path.join(aqui, '..', 'presentacion-sin-conexion.html'), html);
 console.log('presentacion.html: ' + (Buffer.byteLength(html) / 1024).toFixed(1) + ' KB');

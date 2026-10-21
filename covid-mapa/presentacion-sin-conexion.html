@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Vacunas, rebaño y COVID-19: presentación</title>
+<style>
+  :root { --marfil:#FBFBFA; --linea:#E5E7EB; --borde:#CBD5E1; --pizarra:#1E293B; --suave:#475569; --cobalto:#2563EB; --cobalto-fondo:#EFF4FF; --ambar:#B45309; --pa:#1D4ED8; --pb:#C2410C; }
+  * { box-sizing:border-box; }
+  html, body { margin:0; height:100%; overflow:hidden; background:#0f172a; }
+  body { display:flex; flex-direction:column; font-family:Inter,"Segoe UI",system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif; color:var(--pizarra); }
+  #vista { position:relative; flex:1 1 auto; min-height:0; overflow:hidden; }
+  #escenario { position:absolute; left:0; top:0; width:1280px; height:720px; transform-origin:0 0; background:var(--marfil); overflow:hidden; }
+  .lamina { display:none; position:absolute; left:0; top:0; width:1280px; height:720px; padding:44px 64px 40px; flex-direction:column; font-size:32px; line-height:1.35; }
+  .lamina.activa { display:flex; }
+  .eyebrow { color:var(--ambar); font-size:22px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; margin:0 0 8px; }
+  h1 { font-size:58px; line-height:1.12; margin:0 0 20px; }
+  h2 { font-size:44px; line-height:1.15; margin:0 0 18px; }
+  p { margin:0 0 14px; }
+  ul, ol { margin:0 0 14px; padding-left:34px; } li { margin-bottom:10px; }
+  .grande { font-size:40px; font-weight:700; line-height:1.25; }
+  .suave { color:var(--suave); font-size:26px; }
+  .formula { display:inline-block; background:var(--cobalto-fondo); border:2px solid #BFD3FF; border-radius:10px; padding:10px 26px; font-size:48px; font-weight:800; margin:6px 0 18px; }
+  table { border-collapse:collapse; font-size:34px; margin:6px 0 10px; }
+  th, td { border:2px solid var(--borde); padding:5px 34px; text-align:center; }
+  th { background:var(--cobalto-fondo); }
+  sub { font-size:.6em; }
+  .cols { display:flex; gap:40px; align-items:flex-start; }
+  .cols > * { flex:1 1 0; min-width:0; }
+  dl.terminos { margin:6px 0 0; font-size:30px; line-height:1.3; }
+  dl.terminos dt { font-weight:800; color:var(--cobalto); margin-top:14px; }
+  dl.terminos dd { margin:2px 0 0; }
+  #indice { position:fixed; left:0; top:0; right:0; bottom:0; z-index:20; background:rgba(15,23,42,.85); display:flex; align-items:center; justify-content:center; padding:20px; }
+  #indice[hidden] { display:none; }
+  #indice .caja { background:#fff; border-radius:12px; padding:20px 26px; max-width:760px; width:100%; max-height:100%; overflow:auto; }
+  #indice ol { list-style:none; padding:0; margin:0 0 12px; columns:2; column-gap:20px; }
+  #indice li { margin:0 0 6px; break-inside:avoid; }
+  #indice li a { display:block; min-height:44px; padding:8px 12px; border:2px solid var(--borde); border-radius:8px; color:var(--pizarra); text-decoration:none; font-size:18px; line-height:1.25; }
+  #indice li a.actual { border-color:var(--cobalto); background:var(--cobalto-fondo); font-weight:700; }
+  #indice li a:focus-visible { outline:3px solid var(--ambar); outline-offset:2px; }
+  .supuestos { list-style:none; padding:0; margin:0; }
+  .supuestos li { display:flex; align-items:center; gap:22px; background:#fff; border:2px solid var(--borde); border-radius:10px; padding:12px 22px; margin-bottom:12px; font-size:34px; }
+  .num { flex:none; width:52px; height:52px; border-radius:50%; background:var(--pizarra); color:#fff; font-size:30px; font-weight:800; display:flex; align-items:center; justify-content:center; }
+  .qr { background:#fff; border:2px solid var(--borde); border-radius:10px; padding:10px; }
+  .qr svg { display:block; width:100%; height:auto; }
+  .url { font-size:22px; word-break:break-all; color:var(--suave); }
+  .roles { display:grid; grid-template-columns:1fr 1fr; gap:18px; }
+  .rol { background:#fff; border:2px solid var(--borde); border-radius:12px; padding:14px 20px; display:flex; gap:18px; align-items:flex-start; font-size:32px; line-height:1.25; }
+  .rol .num { width:60px; height:60px; font-size:36px; }
+  .rol strong { display:block; font-size:34px; }
+  .rol span { color:var(--suave); font-size:26px; }
+  .rol span.num { color:#fff; font-size:36px; }
+  .linea { width:100%; border-collapse:collapse; font-size:30px; margin:0; }
+  .linea td { border:0; border-bottom:2px solid var(--linea); padding:6px 14px; text-align:left; vertical-align:middle; }
+  .linea td:first-child { width:150px; font-weight:800; color:var(--cobalto); white-space:nowrap; }
+  .linea td.dur { width:120px; color:var(--suave); font-size:26px; }
+  .linea td.cr { width:210px; text-align:right; }
+  button, a.boton { font:inherit; font-weight:700; min-height:52px; padding:6px 16px; border-radius:8px; border:2px solid var(--cobalto); background:#fff; color:var(--cobalto); cursor:pointer; line-height:1.2; touch-action:manipulation; text-decoration:none; display:inline-block; }
+  button.principal { background:var(--pizarra); border-color:var(--pizarra); color:#fff; }
+  button:focus-visible, a:focus-visible { outline:3px solid var(--ambar); outline-offset:2px; }
+  .crono { font-size:26px; min-width:150px; }
+  .crono[aria-pressed="true"] { background:var(--cobalto); color:#fff; }
+  .crono.fin { background:var(--ambar); border-color:var(--ambar); color:#fff; }
+  .pares { display:grid; grid-template-columns:1fr 1fr; gap:14px; flex:1 1 auto; align-content:start; }
+  .par { background:#fff; border:2px solid var(--borde); border-radius:12px; padding:12px 16px; display:flex; flex-direction:row; align-items:center; }
+  .par .texto { flex:1 1 auto; min-width:0; display:flex; flex-direction:column; }
+  .par .tit { font-size:30px; font-weight:800; line-height:1.15; margin-bottom:6px; }
+  .par .guia { font-size:23px; line-height:1.25; color:#334155; margin-bottom:10px; }
+  .par a.boton { align-self:flex-start; font-size:24px; }
+  .par .qr { flex:none; width:176px; margin-left:14px; padding:6px; }
+  .par .cod { display:none; }
+  .pie-lamina { margin-top:auto; font-size:20px; color:var(--suave); }
+  .decir { background:var(--cobalto-fondo); border-left:8px solid var(--cobalto); border-radius:8px; padding:20px 30px; font-size:44px; font-weight:700; line-height:1.4; margin:10px 0 24px; }
+  #barra { flex:none; display:flex; align-items:center; gap:10px; padding:6px 12px; background:#0f172a; color:#e2e8f0; font-size:18px; min-height:64px; }
+  #barra button { min-width:52px; min-height:52px; background:#1e293b; color:#fff; border-color:#475569; font-size:20px; }
+  #barra button:focus-visible { outline-color:#FBBF24; }
+  #cuenta { min-width:76px; text-align:center; font-weight:700; }
+  #reloj { margin-left:auto; font-weight:800; font-size:22px; min-width:170px; text-align:right; }
+  #reloj.fin { color:#FBBF24; }
+  .solo-lector { position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; margin:-1px; padding:0; border:0; }
+  @media (prefers-reduced-motion: reduce) { * { animation:none !important; transition:none !important; } }
+</style>
+</head>
+<body>
+<div id="vista">
+<div id="escenario">
+
+  <section class="lamina activa" data-titulo="Pregunta de entrada" aria-label="Lámina 1">
+    <p class="eyebrow">Bienestar y salud · Vacunas e inmunidad de rebaño</p>
+    <h1>¿Por qué una persona no vacunada puede no enfermarse?</h1>
+    <p class="grande">Escribe tu hipótesis en tu cuaderno.</p>
+    <p>Trabajo individual, sin conversar. Una frase basta: ¿qué la protege?</p>
+    <p style="margin-top:20px"><button type="button" class="crono" data-seg="60" data-nom="Hipótesis">▶ 1:00</button></p>
+  </section>
+
+  <section class="lamina" data-titulo="Términos clave 1: contagiosidad, rebaño, umbral" aria-label="Lámina 2">
+    <p class="eyebrow">Términos clave · 1 de 3</p>
+    <h2>Contagio y protección</h2>
+    <dl class="terminos">
+      <dt>Contagiosidad (R₀):</dt><dd>número promedio de personas que contagia una persona infectada cuando nadie tiene defensas. Con R₀ = 5, cada contagiado contagia a 5 personas.</dd>
+      <dt>Inmunidad de rebaño:</dt><dd>cuando hay tanta gente inmune que el virus casi no encuentra a quién contagiar, y las personas no inmunes quedan protegidas de forma indirecta.</dd>
+      <dt>Umbral de inmunidad:</dt><dd>porcentaje de personas inmunes necesario para frenar el contagio. Se calcula 1 − 1/R₀. Con R₀ = 5 es 80 %.</dd>
+    </dl>
+  </section>
+
+  <section class="lamina" data-titulo="Términos clave 2: cobertura, exceso, rigurosidad" aria-label="Lámina 3">
+    <p class="eyebrow">Términos clave · 2 de 3</p>
+    <h2>Lo que muestra el mapa</h2>
+    <dl class="terminos">
+      <dt>Cobertura (vacunación completa):</dt><dd>porcentaje de la población que recibió todas las dosis del esquema inicial. No cuenta los refuerzos.</dd>
+      <dt>Exceso de mortalidad:</dt><dd>muertes totales por sobre las que se esperaban en un año normal, por millón de habitantes. Incluye muertes por COVID y por otras causas. En el mapa se ve «del mes» (cuánto subió ese mes).</dd>
+      <dt>Rigurosidad de las medidas:</dt><dd>índice de 0 a 100 (Universidad de Oxford) que resume qué tan estrictas eran las medidas decretadas, como cuarentenas, cierre de colegios y restricciones de viaje. Mide lo decretado, no lo cumplido.</dd>
+    </dl>
+  </section>
+
+  <section class="lamina" data-titulo="Términos clave 3: variante, supuesto, correlación" aria-label="Lámina 4">
+    <p class="eyebrow">Términos clave · 3 de 3</p>
+    <h2>Cuidado al concluir</h2>
+    <dl class="terminos">
+      <dt>Variante:</dt><dd>versión del virus con cambios; puede contagiar más o escapar en parte a la inmunidad.</dd>
+      <dt>Supuesto del modelo:</dt><dd>condición que el modelo da por cierta para simplificar (por ejemplo, que la vacuna protege al 100 %). Los 5 supuestos: la vacuna protege al 100 %, la protección dura para siempre, el virus no cambia, el contacto es al azar, quien se contagió no se reinfecta.</dd>
+      <dt>Correlación y causa:</dt><dd>que dos cosas ocurran juntas no prueba que una cause la otra.</dd>
+    </dl>
+  </section>
+
+  <section class="lamina" data-titulo="El modelo: umbral 1 − 1/R₀" aria-label="Lámina 5">
+    <p class="eyebrow">El modelo</p>
+    <h2>¿Cuánta gente tiene que estar inmune?</h2>
+    <p>El umbral de inmunidad depende de R₀:</p>
+    <div class="cols" style="align-items:center">
+      <div style="text-align:center"><span class="formula">1 − 1/R<sub>0</sub></span></div>
+      <table style="margin:0 auto">
+        <thead><tr><th>R<sub>0</sub></th><th>Umbral</th></tr></thead>
+        <tbody><tr><td>2</td><td>50 %</td></tr><tr><td>3</td><td>67 %</td></tr><tr><td>5</td><td>80 %</td></tr><tr><td>8</td><td>88 %</td></tr></tbody>
+      </table>
+    </div>
+    <p class="suave">Anota cuáles de los cinco supuestos crees que no se cumplen en la realidad. Lo retomas más adelante.</p>
+  </section>
+
+  <section class="lamina" data-titulo="Simulador (minutos 20 a 30)" aria-label="Lámina 6">
+    <p class="eyebrow">Simulador · minutos 20 a 30</p>
+    <h2>Abre el simulador en tu computador</h2>
+    <div class="cols">
+      <div>
+        <ol>
+          <li>Abre el enlace o escanea el código.</li>
+          <li>Marca tus predicciones <strong>antes</strong> de correr cada caso.</li>
+          <li>Anota en tu cuaderno qué pasó y por qué.</li>
+        </ol>
+        <p><a class="boton" href="../vacunas-rebano/" target="_blank" rel="noopener">Abrir el simulador</a></p>
+        <p class="url">bengrez.github.io/aula-herramientas/vacunas-rebano/</p>
+        <p><button type="button" class="crono" data-seg="600" data-nom="Simulador">▶ 10:00</button></p>
+      </div>
+      <div class="qr" style="flex:0 0 310px"><svg xmlns="http://www.w3.org/2000/svg" viewBox="-2 -2 37 37" shape-rendering="crispEdges" role="img" aria-label="Código QR: https://bengrez.github.io/aula-herramientas/vacunas-rebano/"><rect x="-2" y="-2" width="37" height="37" fill="#fff"/><path d="M0 0h7v1h-7zM9 0h1v1h-1zM12 0h1v1h-1zM16 0h1v1h-1zM18 0h4v1h-4zM23 0h1v1h-1zM26 0h7v1h-7zM0 1h1v1h-1zM6 1h1v1h-1zM9 1h1v1h-1zM11 1h1v1h-1zM15 1h1v1h-1zM17 1h2v1h-2zM20 1h1v1h-1zM22 1h1v1h-1zM24 1h1v1h-1zM26 1h1v1h-1zM32 1h1v1h-1zM0 2h1v1h-1zM2 2h3v1h-3zM6 2h1v1h-1zM8 2h2v1h-2zM14 2h3v1h-3zM18 2h1v1h-1zM20 2h2v1h-2zM23 2h2v1h-2zM26 2h1v1h-1zM28 2h3v1h-3zM32 2h1v1h-1zM0 3h1v1h-1zM2 3h3v1h-3zM6 3h1v1h-1zM8 3h3v1h-3zM12 3h1v1h-1zM17 3h1v1h-1zM20 3h1v1h-1zM22 3h1v1h-1zM26 3h1v1h-1zM28 3h3v1h-3zM32 3h1v1h-1zM0 4h1v1h-1zM2 4h3v1h-3zM6 4h1v1h-1zM8 4h4v1h-4zM14 4h3v1h-3zM18 4h4v1h-4zM23 4h1v1h-1zM26 4h1v1h-1zM28 4h3v1h-3zM32 4h1v1h-1zM0 5h1v1h-1zM6 5h1v1h-1zM8 5h5v1h-5zM17 5h2v1h-2zM20 5h3v1h-3zM26 5h1v1h-1zM32 5h1v1h-1zM0 6h7v1h-7zM8 6h1v1h-1zM10 6h1v1h-1zM12 6h1v1h-1zM14 6h1v1h-1zM16 6h1v1h-1zM18 6h1v1h-1zM20 6h1v1h-1zM22 6h1v1h-1zM24 6h1v1h-1zM26 6h7v1h-7zM8 7h2v1h-2zM11 7h2v1h-2zM14 7h1v1h-1zM16 7h1v1h-1zM18 7h1v1h-1zM20 7h4v1h-4zM0 8h1v1h-1zM2 8h5v1h-5zM10 8h1v1h-1zM13 8h1v1h-1zM17 8h4v1h-4zM22 8h2v1h-2zM26 8h5v1h-5zM7 9h4v1h-4zM12 9h2v1h-2zM16 9h1v1h-1zM18 9h6v1h-6zM26 9h2v1h-2zM29 9h4v1h-4zM1 10h4v1h-4zM6 10h2v1h-2zM10 10h2v1h-2zM13 10h4v1h-4zM21 10h1v1h-1zM25 10h1v1h-1zM28 10h1v1h-1zM30 10h2v1h-2zM2 11h1v1h-1zM4 11h2v1h-2zM7 11h1v1h-1zM12 11h2v1h-2zM15 11h2v1h-2zM21 11h3v1h-3zM25 11h1v1h-1zM28 11h4v1h-4zM0 12h1v1h-1zM3 12h1v1h-1zM5 12h2v1h-2zM8 12h3v1h-3zM12 12h1v1h-1zM14 12h2v1h-2zM17 12h1v1h-1zM19 12h1v1h-1zM22 12h1v1h-1zM24 12h2v1h-2zM27 12h3v1h-3zM31 12h1v1h-1zM1 13h3v1h-3zM5 13h1v1h-1zM9 13h2v1h-2zM15 13h1v1h-1zM17 13h3v1h-3zM23 13h2v1h-2zM26 13h1v1h-1zM30 13h3v1h-3zM0 14h3v1h-3zM4 14h5v1h-5zM11 14h3v1h-3zM15 14h3v1h-3zM20 14h1v1h-1zM25 14h2v1h-2zM31 14h1v1h-1zM2 15h4v1h-4zM7 15h3v1h-3zM12 15h2v1h-2zM16 15h1v1h-1zM18 15h2v1h-2zM21 15h1v1h-1zM23 15h8v1h-8zM3 16h1v1h-1zM5 16h2v1h-2zM9 16h1v1h-1zM16 16h2v1h-2zM24 16h2v1h-2zM27 16h3v1h-3zM32 16h1v1h-1zM0 17h1v1h-1zM2 17h1v1h-1zM5 17h1v1h-1zM8 17h1v1h-1zM13 17h2v1h-2zM16 17h1v1h-1zM18 17h4v1h-4zM23 17h1v1h-1zM26 17h2v1h-2zM29 17h2v1h-2zM32 17h1v1h-1zM0 18h3v1h-3zM4 18h1v1h-1zM6 18h3v1h-3zM12 18h1v1h-1zM15 18h4v1h-4zM24 18h5v1h-5zM30 18h2v1h-2zM0 19h1v1h-1zM2 19h1v1h-1zM5 19h1v1h-1zM7 19h2v1h-2zM15 19h1v1h-1zM18 19h1v1h-1zM20 19h4v1h-4zM26 19h5v1h-5zM2 20h2v1h-2zM5 20h3v1h-3zM9 20h3v1h-3zM13 20h3v1h-3zM17 20h1v1h-1zM20 20h1v1h-1zM22 20h2v1h-2zM25 20h1v1h-1zM27 20h3v1h-3zM32 20h1v1h-1zM0 21h2v1h-2zM4 21h1v1h-1zM7 21h1v1h-1zM10 21h1v1h-1zM13 21h1v1h-1zM17 21h4v1h-4zM22 21h2v1h-2zM25 21h2v1h-2zM30 21h1v1h-1zM32 21h1v1h-1zM0 22h1v1h-1zM2 22h1v1h-1zM5 22h4v1h-4zM10 22h2v1h-2zM14 22h3v1h-3zM18 22h1v1h-1zM20 22h1v1h-1zM22 22h1v1h-1zM31 22h1v1h-1zM0 23h1v1h-1zM2 23h1v1h-1zM4 23h2v1h-2zM8 23h4v1h-4zM14 23h1v1h-1zM16 23h1v1h-1zM21 23h1v1h-1zM24 23h1v1h-1zM26 23h1v1h-1zM28 23h5v1h-5zM0 24h1v1h-1zM2 24h1v1h-1zM4 24h3v1h-3zM8 24h2v1h-2zM12 24h1v1h-1zM14 24h1v1h-1zM17 24h1v1h-1zM20 24h1v1h-1zM22 24h1v1h-1zM24 24h5v1h-5zM32 24h1v1h-1zM8 25h2v1h-2zM11 25h1v1h-1zM14 25h1v1h-1zM16 25h1v1h-1zM18 25h4v1h-4zM24 25h1v1h-1zM28 25h1v1h-1zM30 25h1v1h-1zM32 25h1v1h-1zM0 26h7v1h-7zM12 26h1v1h-1zM15 26h2v1h-2zM18 26h1v1h-1zM20 26h5v1h-5zM26 26h1v1h-1zM28 26h1v1h-1zM30 26h2v1h-2zM0 27h1v1h-1zM6 27h1v1h-1zM8 27h3v1h-3zM13 27h1v1h-1zM16 27h1v1h-1zM21 27h4v1h-4zM28 27h4v1h-4zM0 28h1v1h-1zM2 28h3v1h-3zM6 28h1v1h-1zM8 28h1v1h-1zM11 28h2v1h-2zM17 28h1v1h-1zM19 28h1v1h-1zM22 28h1v1h-1zM24 28h6v1h-6zM31 28h2v1h-2zM0 29h1v1h-1zM2 29h3v1h-3zM6 29h1v1h-1zM8 29h3v1h-3zM13 29h1v1h-1zM16 29h6v1h-6zM23 29h3v1h-3zM28 29h1v1h-1zM30 29h3v1h-3zM0 30h1v1h-1zM2 30h3v1h-3zM6 30h1v1h-1zM8 30h2v1h-2zM12 30h1v1h-1zM15 30h1v1h-1zM17 30h1v1h-1zM22 30h3v1h-3zM26 30h2v1h-2zM29 30h2v1h-2zM0 31h1v1h-1zM6 31h1v1h-1zM10 31h5v1h-5zM16 31h1v1h-1zM19 31h4v1h-4zM25 31h1v1h-1zM28 31h3v1h-3zM0 32h7v1h-7zM8 32h4v1h-4zM14 32h1v1h-1zM17 32h3v1h-3zM22 32h3v1h-3zM27 32h1v1h-1zM31 32h1v1h-1z" fill="#000"/></svg></div>
+    </div>
+  </section>
+
+  <section class="lamina" data-titulo="Cómo se lee el mapa" aria-label="Lámina 7">
+    <p class="eyebrow">El mapa de la pandemia</p>
+    <h2>Cómo se lee el mapa</h2>
+    <div class="cols">
+      <div>
+        <p class="grande" style="font-size:34px">Tres capas y un deslizador:</p>
+        <ul>
+          <li><strong>Exceso de muertes del mes</strong>.</li>
+          <li><strong>% con vacunación completa</strong>.</li>
+          <li><strong>Rigurosidad de las medidas</strong>, de 0 a 100.</li>
+        </ul>
+        <p class="suave">Gris con trama: sin dato. El color nunca es la única señal: lee el valor en la tabla.</p>
+      </div>
+      <div>
+        <ol>
+          <li>Elige la capa.</li>
+          <li>Mueve el mes con el deslizador o reproduce.</li>
+          <li>Pasa el mouse sobre un país para ver su valor; haz clic para elegirlo.</li>
+        </ol>
+        <p class="suave">Teclado: Tab para moverte, flechas en el deslizador, espacio para reproducir o pausar.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="lamina" data-titulo="Cómo trabajamos" aria-label="Lámina 8">
+    <p class="eyebrow">Exploración del par · minutos 30 a 65</p>
+    <h2>Cómo trabajamos</h2>
+    <ol class="supuestos">
+      <li><span class="num">1</span>Grupos de 4.</li>
+      <li><span class="num">2</span>Todos abren el mapa de su par.</li>
+      <li><span class="num">3</span>Una hoja por grupo.</li>
+      <li><span class="num">4</span>Turnen quién escribe.</li>
+      <li><span class="num">5</span>Cada etapa tiene su cronómetro.</li>
+    </ol>
+    <p style="margin:6px 0 0"><button type="button" class="crono" data-seg="2100" data-nom="Exploración del par">▶ 35:00</button></p>
+  </section>
+
+  <section class="lamina" data-titulo="Línea de tiempo de la clase" aria-label="Lámina 9">
+    <p class="eyebrow">Línea de tiempo de la clase · 90 minutos</p>
+    <h2 style="font-size:40px;margin-bottom:10px">Cada etapa tiene su cronómetro</h2>
+    <table class="linea">
+      <tbody>
+        <tr><td>0–20</td><td>Entrada y términos clave</td><td class="dur">20 min</td><td class="cr"><button type="button" class="crono" data-seg="1200" data-nom="Entrada y términos clave">▶ 20:00</button></td></tr>
+        <tr><td>20–30</td><td>Simulador</td><td class="dur">10 min</td><td class="cr"><button type="button" class="crono" data-seg="600" data-nom="Simulador">▶ 10:00</button></td></tr>
+        <tr><td>30–65</td><td>Exploración del par en el mapa</td><td class="dur">35 min</td><td class="cr"><button type="button" class="crono" data-seg="2100" data-nom="Exploración del par">▶ 35:00</button></td></tr>
+        <tr><td>65–80</td><td>Conclusión del grupo</td><td class="dur">15 min</td><td class="cr"><button type="button" class="crono" data-seg="900" data-nom="Conclusión del grupo">▶ 15:00</button></td></tr>
+        <tr><td>80–90</td><td>Cierre y ticket individual</td><td class="dur">10 min</td><td class="cr"><button type="button" class="crono" data-seg="600" data-nom="Cierre y ticket">▶ 10:00</button></td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="lamina" data-titulo="Los siete pares (1 a 4)" aria-label="Lámina 10">
+    <p class="eyebrow">Los siete pares · 1 de 2</p>
+    <h2 style="font-size:38px;margin-bottom:8px">Abre el mapa de tu par</h2>
+    <div class="pares"><div class="par"><div class="texto"><div class="tit">1. Perú – Nueva Zelanda</div><div class="guia">¿Qué país tuvo medidas más estrictas en 2020 y cuál acumuló más muertes en exceso?</div><a class="boton" href="index.html?a=peru&amp;b=nueva-zelanda" target="_blank" rel="noopener">Abrir el mapa del par 1</a></div><div class="qr"><svg xmlns="http://www.w3.org/2000/svg" viewBox="-2 -2 41 41" shape-rendering="crispEdges" role="img" aria-label="Código QR: https://bengrez.github.io/aula-herramientas/covid-mapa/?a=peru&b=nueva-zelanda"><rect x="-2" y="-2" width="41" height="41" fill="#fff"/><path d="M0 0h7v1h-7zM8 0h1v1h-1zM10 0h3v1h-3zM15 0h4v1h-4zM22 0h1v1h-1zM30 0h7v1h-7zM0 1h1v1h-1zM6 1h1v1h-1zM8 1h2v1h-2zM11 1h12v1h-12zM28 1h1v1h-1zM30 1h1v1h-1zM36 1h1v1h-1zM0 2h1v1h-1zM2 2h3v1h-3zM6 2h1v1h-1zM8 2h1v1h-1zM10 2h4v1h-4zM18 2h1v1h-1zM20 2h2v1h-2zM25 2h1v1h-1zM27 2h1v1h-1zM30 2h1v1h-1zM32 2h3v1h-3zM36 2h1v1h-1zM0 3h1v1h-1zM2 3h3v1h-3zM6 3h1v1h-1zM10 3h1v1h-1zM17 3h1v1h-1zM19 3h1v1h-1zM21 3h2v1h-2zM24 3h2v1h-2zM27 3h2v1h-2zM30 3h1v1h-1zM32 3h3v1h-3zM36 3h1v1h-1zM0 4h1v1h-1zM2 4h3v1h-3zM6 4h1v1h-1zM8 4h1v1h-1zM10 4h1v1h-1zM14 4h4v1h-4zM19 4h1v1h-1zM21 4h1v1h-1zM26 4h1v1h-1zM30 4h1v1h-1zM32 4h3v1h-3zM36 4h1v1h-1zM0 5h1v1h-1zM6 5h1v1h-1zM9 5h2v1h-2zM13 5h3v1h-3zM17 5h1v1h-1zM20 5h1v1h-1zM23 5h1v1h-1zM28 5h1v1h-1zM30 5h1v1h-1zM36 5h1v1h-1zM0 6h7v1h-7zM8 6h1v1h-1zM10 6h1v1h-1zM12 6h1v1h-1zM14 6h1v1h-1zM16 6h1v1h-1zM18 6h1v1h-1zM20 6h1v1h-1zM22 6h1v1h-1zM24 6h1v1h-1zM26 6h1v1h-1zM28 6h1v1h-1zM30 6h7v1h-7zM9 7h3v1h-3zM13 7h3v1h-3zM18 7h2v1h-2zM22 7h1v1h-1zM24 7h4v1h-4zM0 8h1v1h-1zM3 8h7v1h-7zM11 8h1v1h-1zM14 8h1v1h-1zM17 8h1v1h-1zM19 8h1v1h-1zM23 8h1v1h-1zM26 8h1v1h-1zM29 8h1v1h-1zM32 8h1v1h-1zM34 8h3v1h-3zM0 9h1v1h-1zM2 9h1v1h-1zM4 9h1v1h-1zM11 9h1v1h-1zM13 9h2v1h-2zM16 9h1v1h-1zM18 9h2v1h-2zM21 9h1v1h-1zM23 9h1v1h-1zM26 9h3v1h-3zM31 9h2v1h-2zM34 9h2v1h-2zM0 10h1v1h-1zM3 10h2v1h-2zM6 10h5v1h-5zM12 10h1v1h-1zM15 10h2v1h-2zM18 10h1v1h-1zM22 10h4v1h-4zM27 10h6v1h-6zM34 10h1v1h-1zM36 10h1v1h-1zM2 11h1v1h-1zM4 11h2v1h-2zM9 11h2v1h-2zM12 11h1v1h-1zM14 11h1v1h-1zM16 11h3v1h-3zM26 11h1v1h-1zM28 11h2v1h-2zM31 11h6v1h-6zM1 12h2v1h-2zM4 12h5v1h-5zM10 12h1v1h-1zM13 12h1v1h-1zM15 12h2v1h-2zM19 12h2v1h-2zM24 12h1v1h-1zM27 12h1v1h-1zM30 12h2v1h-2zM33 12h1v1h-1zM36 12h1v1h-1zM0 13h4v1h-4zM5 13h1v1h-1zM7 13h3v1h-3zM11 13h6v1h-6zM18 13h1v1h-1zM23 13h1v1h-1zM25 13h4v1h-4zM32 13h2v1h-2zM0 14h3v1h-3zM6 14h2v1h-2zM10 14h1v1h-1zM12 14h2v1h-2zM15 14h2v1h-2zM18 14h2v1h-2zM24 14h4v1h-4zM30 14h1v1h-1zM32 14h5v1h-5zM0 15h1v1h-1zM7 15h4v1h-4zM14 15h1v1h-1zM20 15h1v1h-1zM22 15h2v1h-2zM29 15h3v1h-3zM33 15h3v1h-3zM0 16h5v1h-5zM6 16h2v1h-2zM9 16h3v1h-3zM13 16h3v1h-3zM17 16h4v1h-4zM22 16h1v1h-1zM24 16h2v1h-2zM27 16h1v1h-1zM30 16h1v1h-1zM34 16h1v1h-1zM0 17h2v1h-2zM3 17h3v1h-3zM7 17h4v1h-4zM13 17h2v1h-2zM17 17h4v1h-4zM22 17h1v1h-1zM25 17h3v1h-3zM31 17h1v1h-1zM33 17h1v1h-1zM0 18h1v1h-1zM6 18h2v1h-2zM11 18h1v1h-1zM13 18h2v1h-2zM16 18h8v1h-8zM25 18h3v1h-3zM30 18h1v1h-1zM32 18h1v1h-1zM36 18h1v1h-1zM0 19h1v1h-1zM3 19h2v1h-2zM8 19h4v1h-4zM15 19h2v1h-2zM19 19h1v1h-1zM22 19h1v1h-1zM25 19h1v1h-1zM27 19h4v1h-4zM33 19h1v1h-1zM36 19h1v1h-1zM0 20h1v1h-1zM6 20h1v1h-1zM8 20h1v1h-1zM10 20h5v1h-5zM17 20h1v1h-1zM23 20h2v1h-2zM26 20h1v1h-1zM28 20h5v1h-5zM1 21h2v1h-2zM5 21h1v1h-1zM7 21h1v1h-1zM9 21h2v1h-2zM12 21h1v1h-1zM14 21h2v1h-2zM17 21h3v1h-3zM23 21h2v1h-2zM27 21h1v1h-1zM32 21h1v1h-1zM34 21h1v1h-1zM1 22h8v1h-8zM10 22h1v1h-1zM12 22h1v1h-1zM15 22h1v1h-1zM21 22h1v1h-1zM23 22h5v1h-5zM29 22h3v1h-3zM33 22h1v1h-1zM35 22h2v1h-2zM0 23h2v1h-2zM3 23h1v1h-1zM7 23h3v1h-3zM11 23h1v1h-1zM15 23h1v1h-1zM18 23h1v1h-1zM20 23h1v1h-1zM24 23h1v1h-1zM27 23h8v1h-8zM2 24h1v1h-1zM6 24h2v1h-2zM14 24h1v1h-1zM17 24h1v1h-1zM20 24h1v1h-1zM22 24h2v1h-2zM27 24h1v1h-1zM30 24h2v1h-2zM35 24h2v1h-2zM0 25h1v1h-1zM3 25h2v1h-2zM7 25h1v1h-1zM9 25h1v1h-1zM11 25h2v1h-2zM14 25h1v1h-1zM17 25h2v1h-2zM23 25h3v1h-3zM27 25h1v1h-1zM31 25h3v1h-3zM0 26h3v1h-3zM6 26h2v1h-2zM10 26h1v1h-1zM12 26h1v1h-1zM14 26h2v1h-2zM19 26h3v1h-3zM24 26h4v1h-4zM29 26h1v1h-1zM31 26h1v1h-1zM33 26h1v1h-1zM35 26h2v1h-2zM0 27h1v1h-1zM3 27h3v1h-3zM7 27h1v1h-1zM11 27h4v1h-4zM16 27h1v1h-1zM23 27h2v1h-2zM26 27h2v1h-2zM31 27h4v1h-4zM0 28h1v1h-1zM2 28h2v1h-2zM5 28h2v1h-2zM8 28h1v1h-1zM10 28h1v1h-1zM12 28h1v1h-1zM14 28h2v1h-2zM20 28h1v1h-1zM22 28h4v1h-4zM28 28h7v1h-7zM8 29h1v1h-1zM11 29h2v1h-2zM15 29h1v1h-1zM17 29h3v1h-3zM21 29h2v1h-2zM27 29h2v1h-2zM32 29h1v1h-1zM34 29h1v1h-1zM0 30h7v1h-7zM8 30h1v1h-1zM12 30h1v1h-1zM15 30h1v1h-1zM17 30h3v1h-3zM21 30h1v1h-1zM23 30h1v1h-1zM25 30h1v1h-1zM28 30h1v1h-1zM30 30h1v1h-1zM32 30h1v1h-1zM36 30h1v1h-1zM0 31h1v1h-1zM6 31h1v1h-1zM8 31h2v1h-2zM11 31h4v1h-4zM16 31h1v1h-1zM19 31h2v1h-2zM22 31h1v1h-1zM25 31h1v1h-1zM27 31h2v1h-2zM32 31h1v1h-1zM35 31h2v1h-2zM0 32h1v1h-1zM2 32h3v1h-3zM6 32h1v1h-1zM8 32h1v1h-1zM15 32h2v1h-2zM18 32h2v1h-2zM24 32h1v1h-1zM27 32h6v1h-6zM36 32h1v1h-1zM0 33h1v1h-1zM2 33h3v1h-3zM6 33h1v1h-1zM8 33h2v1h-2zM13 33h2v1h-2zM17 33h1v1h-1zM19 33h1v1h-1zM21 33h1v1h-1zM23 33h1v1h-1zM25 33h3v1h-3zM29 33h2v1h-2zM36 33h1v1h-1zM0 34h1v1h-1zM2 34h3v1h-3zM6 34h1v1h-1zM10 34h5v1h-5zM17 34h2v1h-2zM20 34h5v1h-5zM26 34h1v1h-1zM29 34h1v1h-1zM32 34h1v1h-1zM36 34h1v1h-1zM0 35h1v1h-1zM6 35h1v1h-1zM10 35h4v1h-4zM15 35h1v1h-1zM17 35h1v1h-1zM19 35h1v1h-1zM22 35h1v1h-1zM29 35h2v1h-2zM32 35h5v1h-5zM0 36h7v1h-7zM8 36h2v1h-2zM11 36h4v1h-4zM16 36h1v1h-1zM20 36h1v1h-1zM23 36h1v1h-1zM27 36h2v1h-2zM30 36h2v1h-2zM33 36h1v1h-1zM36 36h1v1h-1z" fill="#000"/></svg></div></div><div class="par"><div class="texto"><div class="tit">2. Suecia – Noruega</div><div class="guia">En 2020, ¿en qué se diferenciaron más estos dos países: en las medidas o en las muertes en exceso?</div><a class="boton" href="index.html?a=suecia&amp;b=noruega" target="_blank" rel="noopener">Abrir el mapa del par 2</a></div><div class="qr"><svg xmlns="http://www.w3.org/2000/svg" viewBox="-2 -2 41 41" shape-rendering="crispEdges" role="img" aria-label="Código QR: https://bengrez.github.io/aula-herramientas/covid-mapa/?a=suecia&b=noruega"><rect x="-2" y="-2" width="41" height="41" fill="#fff"/><path d="M0 0h7v1h-7zM10 0h1v1h-1zM15 0h2v1h-2zM23 0h1v1h-1zM25 0h2v1h-2zM28 0h1v1h-1zM30 0h7v1h-7zM0 1h1v1h-1zM6 1h1v1h-1zM9 1h5v1h-5zM15 1h4v1h-4zM20 1h1v1h-1zM22 1h1v1h-1zM25 1h4v1h-4zM30 1h1v1h-1zM36 1h1v1h-1zM0 2h1v1h-1zM2 2h3v1h-3zM6 2h1v1h-1zM8 2h2v1h-2zM11 2h2v1h-2zM14 2h3v1h-3zM18 2h1v1h-1zM21 2h2v1h-2zM27 2h2v1h-2zM30 2h1v1h-1zM32 2h3v1h-3zM36 2h1v1h-1zM0 3h1v1h-1zM2 3h3v1h-3zM6 3h1v1h-1zM8 3h1v1h-1zM10 3h2v1h-2zM13 3h1v1h-1zM16 3h2v1h-2zM20 3h1v1h-1zM23 3h4v1h-4zM30 3h1v1h-1zM32 3h3v1h-3zM36 3h1v1h-1zM0 4h1v1h-1zM2 4h3v1h-3zM6 4h1v1h-1zM8 4h2v1h-2zM11 4h1v1h-1zM13 4h1v1h-1zM16 4h2v1h-2zM19 4h2v1h-2zM23 4h1v1h-1zM30 4h1v1h-1zM32 4h3v1h-3zM36 4h1v1h-1zM0 5h1v1h-1zM6 5h1v1h-1zM8 5h1v1h-1zM10 5h2v1h-2zM15 5h3v1h-3zM20 5h1v1h-1zM22 5h1v1h-1zM25 5h1v1h-1zM27 5h1v1h-1zM30 5h1v1h-1zM36 5h1v1h-1zM0 6h7v1h-7zM8 6h1v1h-1zM10 6h1v1h-1zM12 6h1v1h-1zM14 6h1v1h-1zM16 6h1v1h-1zM18 6h1v1h-1zM20 6h1v1h-1zM22 6h1v1h-1zM24 6h1v1h-1zM26 6h1v1h-1zM28 6h1v1h-1zM30 6h7v1h-7zM8 7h1v1h-1zM11 7h2v1h-2zM15 7h4v1h-4zM20 7h2v1h-2zM24 7h1v1h-1zM26 7h1v1h-1zM0 8h1v1h-1zM2 8h5v1h-5zM9 8h8v1h-8zM22 8h2v1h-2zM25 8h2v1h-2zM28 8h1v1h-1zM30 8h5v1h-5zM0 9h2v1h-2zM7 9h2v1h-2zM12 9h4v1h-4zM18 9h1v1h-1zM20 9h1v1h-1zM23 9h2v1h-2zM26 9h1v1h-1zM31 9h1v1h-1zM33 9h1v1h-1zM35 9h1v1h-1zM0 10h1v1h-1zM5 10h2v1h-2zM11 10h1v1h-1zM13 10h1v1h-1zM15 10h5v1h-5zM22 10h1v1h-1zM24 10h5v1h-5zM30 10h2v1h-2zM34 10h3v1h-3zM1 11h1v1h-1zM3 11h3v1h-3zM7 11h4v1h-4zM12 11h4v1h-4zM18 11h7v1h-7zM26 11h2v1h-2zM31 11h2v1h-2zM36 11h1v1h-1zM1 12h1v1h-1zM3 12h1v1h-1zM6 12h2v1h-2zM9 12h2v1h-2zM13 12h1v1h-1zM15 12h1v1h-1zM17 12h1v1h-1zM19 12h1v1h-1zM22 12h1v1h-1zM24 12h7v1h-7zM32 12h5v1h-5zM0 13h4v1h-4zM5 13h1v1h-1zM8 13h1v1h-1zM10 13h1v1h-1zM16 13h1v1h-1zM18 13h3v1h-3zM23 13h1v1h-1zM28 13h1v1h-1zM31 13h1v1h-1zM1 14h1v1h-1zM3 14h2v1h-2zM6 14h6v1h-6zM13 14h1v1h-1zM15 14h1v1h-1zM18 14h1v1h-1zM22 14h1v1h-1zM24 14h1v1h-1zM26 14h3v1h-3zM30 14h4v1h-4zM35 14h2v1h-2zM0 15h3v1h-3zM4 15h1v1h-1zM8 15h2v1h-2zM11 15h1v1h-1zM13 15h4v1h-4zM21 15h3v1h-3zM26 15h7v1h-7zM35 15h1v1h-1zM1 16h1v1h-1zM3 16h1v1h-1zM6 16h2v1h-2zM9 16h3v1h-3zM13 16h3v1h-3zM18 16h2v1h-2zM22 16h6v1h-6zM29 16h2v1h-2zM32 16h1v1h-1zM34 16h2v1h-2zM1 17h1v1h-1zM3 17h1v1h-1zM10 17h1v1h-1zM12 17h1v1h-1zM14 17h3v1h-3zM21 17h3v1h-3zM25 17h1v1h-1zM28 17h2v1h-2zM31 17h1v1h-1zM34 17h2v1h-2zM2 18h2v1h-2zM5 18h2v1h-2zM9 18h1v1h-1zM13 18h2v1h-2zM18 18h1v1h-1zM20 18h2v1h-2zM24 18h1v1h-1zM27 18h5v1h-5zM34 18h3v1h-3zM0 19h3v1h-3zM5 19h1v1h-1zM7 19h1v1h-1zM10 19h5v1h-5zM16 19h1v1h-1zM21 19h3v1h-3zM26 19h1v1h-1zM28 19h5v1h-5zM36 19h1v1h-1zM0 20h1v1h-1zM3 20h1v1h-1zM6 20h2v1h-2zM9 20h2v1h-2zM13 20h1v1h-1zM16 20h2v1h-2zM22 20h1v1h-1zM24 20h3v1h-3zM29 20h2v1h-2zM32 20h1v1h-1zM34 20h1v1h-1zM0 21h2v1h-2zM7 21h2v1h-2zM11 21h3v1h-3zM16 21h9v1h-9zM26 21h1v1h-1zM28 21h1v1h-1zM33 21h1v1h-1zM3 22h4v1h-4zM8 22h1v1h-1zM10 22h1v1h-1zM14 22h2v1h-2zM17 22h1v1h-1zM20 22h1v1h-1zM24 22h1v1h-1zM26 22h2v1h-2zM30 22h4v1h-4zM36 22h1v1h-1zM0 23h1v1h-1zM5 23h1v1h-1zM7 23h2v1h-2zM10 23h4v1h-4zM16 23h3v1h-3zM20 23h2v1h-2zM23 23h2v1h-2zM26 23h1v1h-1zM30 23h3v1h-3zM35 23h1v1h-1zM1 24h1v1h-1zM3 24h5v1h-5zM9 24h1v1h-1zM11 24h3v1h-3zM16 24h1v1h-1zM19 24h1v1h-1zM22 24h1v1h-1zM24 24h7v1h-7zM32 24h1v1h-1zM34 24h1v1h-1zM36 24h1v1h-1zM0 25h1v1h-1zM2 25h1v1h-1zM4 25h2v1h-2zM7 25h1v1h-1zM9 25h1v1h-1zM11 25h1v1h-1zM13 25h1v1h-1zM15 25h1v1h-1zM17 25h8v1h-8zM0 26h1v1h-1zM2 26h9v1h-9zM13 26h4v1h-4zM20 26h3v1h-3zM26 26h4v1h-4zM33 26h4v1h-4zM0 27h1v1h-1zM2 27h3v1h-3zM13 27h1v1h-1zM15 27h1v1h-1zM19 27h4v1h-4zM24 27h1v1h-1zM28 27h1v1h-1zM31 27h1v1h-1zM0 28h1v1h-1zM3 28h1v1h-1zM5 28h2v1h-2zM9 28h1v1h-1zM12 28h1v1h-1zM15 28h1v1h-1zM17 28h1v1h-1zM22 28h1v1h-1zM24 28h3v1h-3zM28 28h7v1h-7zM8 29h1v1h-1zM11 29h2v1h-2zM14 29h1v1h-1zM16 29h1v1h-1zM18 29h2v1h-2zM21 29h1v1h-1zM23 29h1v1h-1zM28 29h1v1h-1zM32 29h2v1h-2zM35 29h1v1h-1zM0 30h7v1h-7zM9 30h1v1h-1zM11 30h1v1h-1zM13 30h1v1h-1zM15 30h2v1h-2zM18 30h1v1h-1zM20 30h3v1h-3zM25 30h1v1h-1zM28 30h1v1h-1zM30 30h1v1h-1zM32 30h1v1h-1zM34 30h3v1h-3zM0 31h1v1h-1zM6 31h1v1h-1zM8 31h1v1h-1zM11 31h3v1h-3zM15 31h2v1h-2zM21 31h2v1h-2zM26 31h1v1h-1zM28 31h1v1h-1zM32 31h2v1h-2zM35 31h2v1h-2zM0 32h1v1h-1zM2 32h3v1h-3zM6 32h1v1h-1zM8 32h2v1h-2zM11 32h5v1h-5zM18 32h1v1h-1zM22 32h1v1h-1zM24 32h9v1h-9zM34 32h1v1h-1zM36 32h1v1h-1zM0 33h1v1h-1zM2 33h3v1h-3zM6 33h1v1h-1zM8 33h6v1h-6zM15 33h3v1h-3zM19 33h2v1h-2zM23 33h1v1h-1zM25 33h1v1h-1zM28 33h3v1h-3zM32 33h3v1h-3zM36 33h1v1h-1zM0 34h1v1h-1zM2 34h3v1h-3zM6 34h1v1h-1zM8 34h2v1h-2zM11 34h1v1h-1zM14 34h1v1h-1zM18 34h1v1h-1zM20 34h3v1h-3zM35 34h2v1h-2zM0 35h1v1h-1zM6 35h1v1h-1zM9 35h2v1h-2zM16 35h1v1h-1zM20 35h2v1h-2zM24 35h1v1h-1zM27 35h2v1h-2zM30 35h1v1h-1zM32 35h1v1h-1zM36 35h1v1h-1zM0 36h7v1h-7zM8 36h1v1h-1zM12 36h1v1h-1zM14 36h1v1h-1zM17 36h1v1h-1zM22 36h2v1h-2zM25 36h3v1h-3zM29 36h2v1h-2zM32 36h5v1h-5z" fill="#000"/></svg></div></div><div class="par"><div class="texto"><div class="tit">3. Chile – Uruguay</div><div class="guia">¿Cuándo subió el exceso de cada país y qué % vacunado tenía en ese momento?</div><a class="boton" href="index.html?a=chile&amp;b=uruguay" target="_blank" rel="noopener">Abrir el mapa del par 3</a></div><div class="qr"><svg xmlns="http://www.w3.org/2000/svg" viewBox="-2 -2 41 41" shape-rendering="crispEdges" role="img" aria-label="Código QR: https://bengrez.github.io/aula-herramientas/covid-mapa/?a=chile&b=uruguay"><rect x="-2" y="-2" width="41" height="41" fill="#fff"/><path d="M0 0h7v1h-7zM8 0h1v1h-1zM10 0h1v1h-1zM12 0h1v1h-1zM14 0h6v1h-6zM26 0h1v1h-1zM30 0h7v1h-7zM0 1h1v1h-1zM6 1h1v1h-1zM9 1h1v1h-1zM11 1h1v1h-1zM14 1h1v1h-1zM16 1h2v1h-2zM19 1h1v1h-1zM21 1h2v1h-2zM24 1h3v1h-3zM28 1h1v1h-1zM30 1h1v1h-1zM36 1h1v1h-1zM0 2h1v1h-1zM2 2h3v1h-3zM6 2h1v1h-1zM8 2h1v1h-1zM10 2h2v1h-2zM14 2h2v1h-2zM17 2h2v1h-2zM21 2h1v1h-1zM23 2h1v1h-1zM25 2h3v1h-3zM30 2h1v1h-1zM32 2h3v1h-3zM36 2h1v1h-1zM0 3h1v1h-1zM2 3h3v1h-3zM6 3h1v1h-1zM10 3h4v1h-4zM15 3h1v1h-1zM17 3h5v1h-5zM25 3h3v1h-3zM30 3h1v1h-1zM32 3h3v1h-3zM36 3h1v1h-1zM0 4h1v1h-1zM2 4h3v1h-3zM6 4h1v1h-1zM9 4h1v1h-1zM14 4h1v1h-1zM17 4h1v1h-1zM21 4h2v1h-2zM25 4h2v1h-2zM28 4h1v1h-1zM30 4h1v1h-1zM32 4h3v1h-3zM36 4h1v1h-1zM0 5h1v1h-1zM6 5h1v1h-1zM8 5h1v1h-1zM11 5h1v1h-1zM13 5h1v1h-1zM16 5h1v1h-1zM20 5h2v1h-2zM24 5h2v1h-2zM30 5h1v1h-1zM36 5h1v1h-1zM0 6h7v1h-7zM8 6h1v1h-1zM10 6h1v1h-1zM12 6h1v1h-1zM14 6h1v1h-1zM16 6h1v1h-1zM18 6h1v1h-1zM20 6h1v1h-1zM22 6h1v1h-1zM24 6h1v1h-1zM26 6h1v1h-1zM28 6h1v1h-1zM30 6h7v1h-7zM14 7h1v1h-1zM18 7h1v1h-1zM20 7h1v1h-1zM26 7h2v1h-2zM0 8h1v1h-1zM2 8h1v1h-1zM6 8h2v1h-2zM9 8h1v1h-1zM12 8h1v1h-1zM14 8h1v1h-1zM16 8h4v1h-4zM31 8h1v1h-1zM34 8h1v1h-1zM36 8h1v1h-1zM0 9h2v1h-2zM5 9h1v1h-1zM8 9h3v1h-3zM12 9h1v1h-1zM14 9h1v1h-1zM16 9h1v1h-1zM18 9h1v1h-1zM21 9h4v1h-4zM27 9h1v1h-1zM30 9h2v1h-2zM35 9h2v1h-2zM0 10h1v1h-1zM2 10h3v1h-3zM6 10h1v1h-1zM10 10h1v1h-1zM13 10h2v1h-2zM16 10h1v1h-1zM18 10h2v1h-2zM23 10h1v1h-1zM27 10h1v1h-1zM29 10h2v1h-2zM32 10h1v1h-1zM36 10h1v1h-1zM0 11h2v1h-2zM4 11h1v1h-1zM7 11h1v1h-1zM10 11h2v1h-2zM13 11h4v1h-4zM22 11h1v1h-1zM24 11h1v1h-1zM26 11h1v1h-1zM30 11h4v1h-4zM0 12h2v1h-2zM5 12h2v1h-2zM10 12h1v1h-1zM13 12h2v1h-2zM16 12h1v1h-1zM19 12h2v1h-2zM24 12h1v1h-1zM27 12h1v1h-1zM30 12h2v1h-2zM33 12h1v1h-1zM36 12h1v1h-1zM1 13h1v1h-1zM3 13h1v1h-1zM5 13h1v1h-1zM8 13h2v1h-2zM11 13h1v1h-1zM15 13h3v1h-3zM19 13h2v1h-2zM23 13h3v1h-3zM27 13h2v1h-2zM30 13h2v1h-2zM33 13h1v1h-1zM36 13h1v1h-1zM0 14h2v1h-2zM4 14h3v1h-3zM11 14h2v1h-2zM14 14h3v1h-3zM19 14h3v1h-3zM23 14h5v1h-5zM29 14h2v1h-2zM33 14h2v1h-2zM36 14h1v1h-1zM1 15h1v1h-1zM5 15h1v1h-1zM7 15h2v1h-2zM10 15h1v1h-1zM13 15h1v1h-1zM16 15h2v1h-2zM22 15h3v1h-3zM28 15h2v1h-2zM31 15h3v1h-3zM35 15h2v1h-2zM2 16h1v1h-1zM4 16h3v1h-3zM9 16h1v1h-1zM11 16h1v1h-1zM13 16h3v1h-3zM17 16h1v1h-1zM20 16h1v1h-1zM27 16h2v1h-2zM30 16h2v1h-2zM0 17h1v1h-1zM2 17h2v1h-2zM7 17h2v1h-2zM10 17h4v1h-4zM20 17h1v1h-1zM23 17h1v1h-1zM25 17h1v1h-1zM27 17h5v1h-5zM33 17h4v1h-4zM2 18h1v1h-1zM4 18h3v1h-3zM10 18h1v1h-1zM12 18h1v1h-1zM14 18h2v1h-2zM17 18h2v1h-2zM20 18h8v1h-8zM30 18h1v1h-1zM32 18h1v1h-1zM36 18h1v1h-1zM0 19h2v1h-2zM9 19h3v1h-3zM13 19h2v1h-2zM18 19h3v1h-3zM22 19h2v1h-2zM26 19h4v1h-4zM31 19h3v1h-3zM1 20h1v1h-1zM3 20h2v1h-2zM6 20h2v1h-2zM9 20h2v1h-2zM15 20h1v1h-1zM20 20h1v1h-1zM23 20h2v1h-2zM28 20h1v1h-1zM30 20h2v1h-2zM35 20h1v1h-1zM0 21h1v1h-1zM2 21h3v1h-3zM8 21h2v1h-2zM11 21h3v1h-3zM15 21h2v1h-2zM19 21h2v1h-2zM22 21h2v1h-2zM25 21h4v1h-4zM30 21h1v1h-1zM36 21h1v1h-1zM0 22h1v1h-1zM3 22h1v1h-1zM5 22h3v1h-3zM9 22h3v1h-3zM14 22h6v1h-6zM23 22h8v1h-8zM33 22h4v1h-4zM0 23h1v1h-1zM4 23h1v1h-1zM8 23h1v1h-1zM10 23h1v1h-1zM12 23h1v1h-1zM15 23h2v1h-2zM18 23h1v1h-1zM20 23h1v1h-1zM22 23h2v1h-2zM26 23h2v1h-2zM31 23h3v1h-3zM35 23h2v1h-2zM0 24h2v1h-2zM3 24h1v1h-1zM5 24h6v1h-6zM12 24h1v1h-1zM16 24h3v1h-3zM20 24h1v1h-1zM23 24h2v1h-2zM27 24h1v1h-1zM30 24h2v1h-2zM35 24h2v1h-2zM1 25h1v1h-1zM4 25h2v1h-2zM16 25h3v1h-3zM22 25h3v1h-3zM27 25h1v1h-1zM30 25h1v1h-1zM33 25h1v1h-1zM36 25h1v1h-1zM0 26h2v1h-2zM4 26h1v1h-1zM6 26h4v1h-4zM12 26h1v1h-1zM14 26h1v1h-1zM16 26h2v1h-2zM19 26h1v1h-1zM21 26h1v1h-1zM23 26h3v1h-3zM27 26h1v1h-1zM31 26h3v1h-3zM36 26h1v1h-1zM2 27h1v1h-1zM5 27h1v1h-1zM8 27h2v1h-2zM12 27h1v1h-1zM15 27h2v1h-2zM18 27h1v1h-1zM22 27h3v1h-3zM27 27h2v1h-2zM30 27h2v1h-2zM33 27h1v1h-1zM35 27h1v1h-1zM0 28h2v1h-2zM4 28h1v1h-1zM6 28h3v1h-3zM13 28h2v1h-2zM16 28h1v1h-1zM20 28h1v1h-1zM23 28h2v1h-2zM28 28h6v1h-6zM35 28h1v1h-1zM8 29h3v1h-3zM13 29h1v1h-1zM15 29h3v1h-3zM19 29h1v1h-1zM23 29h3v1h-3zM27 29h2v1h-2zM32 29h1v1h-1zM35 29h2v1h-2zM0 30h7v1h-7zM8 30h1v1h-1zM14 30h2v1h-2zM19 30h1v1h-1zM21 30h1v1h-1zM23 30h1v1h-1zM25 30h1v1h-1zM28 30h1v1h-1zM30 30h1v1h-1zM32 30h1v1h-1zM36 30h1v1h-1zM0 31h1v1h-1zM6 31h1v1h-1zM10 31h1v1h-1zM12 31h3v1h-3zM16 31h2v1h-2zM22 31h1v1h-1zM24 31h1v1h-1zM27 31h2v1h-2zM32 31h1v1h-1zM35 31h1v1h-1zM0 32h1v1h-1zM2 32h3v1h-3zM6 32h1v1h-1zM9 32h1v1h-1zM11 32h1v1h-1zM15 32h1v1h-1zM17 32h1v1h-1zM19 32h1v1h-1zM23 32h2v1h-2zM27 32h6v1h-6zM35 32h2v1h-2zM0 33h1v1h-1zM2 33h3v1h-3zM6 33h1v1h-1zM9 33h2v1h-2zM12 33h2v1h-2zM17 33h1v1h-1zM19 33h3v1h-3zM23 33h1v1h-1zM25 33h1v1h-1zM27 33h3v1h-3zM32 33h1v1h-1zM34 33h1v1h-1zM0 34h1v1h-1zM2 34h3v1h-3zM6 34h1v1h-1zM8 34h2v1h-2zM12 34h1v1h-1zM15 34h1v1h-1zM17 34h3v1h-3zM21 34h1v1h-1zM23 34h1v1h-1zM25 34h2v1h-2zM28 34h2v1h-2zM31 34h2v1h-2zM34 34h1v1h-1zM36 34h1v1h-1zM0 35h1v1h-1zM6 35h1v1h-1zM9 35h3v1h-3zM13 35h1v1h-1zM18 35h1v1h-1zM24 35h1v1h-1zM28 35h1v1h-1zM32 35h2v1h-2zM0 36h7v1h-7zM8 36h1v1h-1zM10 36h2v1h-2zM13 36h4v1h-4zM19 36h2v1h-2zM23 36h1v1h-1zM27 36h2v1h-2zM30 36h2v1h-2zM33 36h1v1h-1zM36 36h1v1h-1z" fill="#000"/></svg></div></div><div class="par"><div class="texto"><div class="tit">4. Chile – Brasil</div><div class="guia">¿Qué país vacunó más rápido y cómo se movió el exceso de cada uno en 2021?</div><a class="boton" href="index.html?a=chile&amp;b=brasil" target="_blank" rel="noopener">Abrir el mapa del par 4</a></div><div class="qr"><svg xmlns="http://www.w3.org/2000/svg" viewBox="-2 -2 41 41" shape-rendering="crispEdges" role="img" aria-label="Código QR: https://bengrez.github.io/aula-herramientas/covid-mapa/?a=chile&b=brasil"><rect x="-2" y="-2" width="41" height="41" fill="#fff"/><path d="M0 0h7v1h-7zM8 0h2v1h-2zM11 0h3v1h-3zM16 0h2v1h-2zM19 0h2v1h-2zM26 0h1v1h-1zM30 0h7v1h-7zM0 1h1v1h-1zM6 1h1v1h-1zM8 1h5v1h-5zM15 1h1v1h-1zM17 1h3v1h-3zM21 1h2v1h-2zM24 1h1v1h-1zM28 1h1v1h-1zM30 1h1v1h-1zM36 1h1v1h-1zM0 2h1v1h-1zM2 2h3v1h-3zM6 2h1v1h-1zM8 2h1v1h-1zM11 2h1v1h-1zM16 2h1v1h-1zM18 2h2v1h-2zM21 2h1v1h-1zM23 2h3v1h-3zM27 2h1v1h-1zM30 2h1v1h-1zM32 2h3v1h-3zM36 2h1v1h-1zM0 3h1v1h-1zM2 3h3v1h-3zM6 3h1v1h-1zM9 3h1v1h-1zM11 3h1v1h-1zM14 3h4v1h-4zM21 3h2v1h-2zM24 3h2v1h-2zM27 3h2v1h-2zM30 3h1v1h-1zM32 3h3v1h-3zM36 3h1v1h-1zM0 4h1v1h-1zM2 4h3v1h-3zM6 4h1v1h-1zM8 4h3v1h-3zM19 4h1v1h-1zM21 4h1v1h-1zM26 4h1v1h-1zM30 4h1v1h-1zM32 4h3v1h-3zM36 4h1v1h-1zM0 5h1v1h-1zM6 5h1v1h-1zM9 5h1v1h-1zM14 5h1v1h-1zM16 5h1v1h-1zM20 5h4v1h-4zM25 5h1v1h-1zM28 5h1v1h-1zM30 5h1v1h-1zM36 5h1v1h-1zM0 6h7v1h-7zM8 6h1v1h-1zM10 6h1v1h-1zM12 6h1v1h-1zM14 6h1v1h-1zM16 6h1v1h-1zM18 6h1v1h-1zM20 6h1v1h-1zM22 6h1v1h-1zM24 6h1v1h-1zM26 6h1v1h-1zM28 6h1v1h-1zM30 6h7v1h-7zM9 7h1v1h-1zM12 7h1v1h-1zM15 7h1v1h-1zM17 7h3v1h-3zM24 7h2v1h-2zM27 7h1v1h-1zM0 8h1v1h-1zM3 8h10v1h-10zM15 8h1v1h-1zM19 8h1v1h-1zM23 8h2v1h-2zM26 8h1v1h-1zM29 8h1v1h-1zM32 8h1v1h-1zM34 8h3v1h-3zM1 9h1v1h-1zM4 9h2v1h-2zM7 9h1v1h-1zM10 9h2v1h-2zM13 9h2v1h-2zM16 9h1v1h-1zM18 9h1v1h-1zM21 9h3v1h-3zM26 9h3v1h-3zM31 9h2v1h-2zM34 9h2v1h-2zM0 10h1v1h-1zM6 10h2v1h-2zM9 10h4v1h-4zM14 10h3v1h-3zM18 10h3v1h-3zM22 10h2v1h-2zM25 10h1v1h-1zM27 10h6v1h-6zM34 10h1v1h-1zM36 10h1v1h-1zM1 11h2v1h-2zM4 11h2v1h-2zM10 11h4v1h-4zM16 11h5v1h-5zM23 11h1v1h-1zM26 11h1v1h-1zM28 11h2v1h-2zM31 11h6v1h-6zM1 12h1v1h-1zM4 12h1v1h-1zM6 12h4v1h-4zM11 12h3v1h-3zM15 12h2v1h-2zM20 12h1v1h-1zM24 12h1v1h-1zM27 12h1v1h-1zM30 12h2v1h-2zM33 12h1v1h-1zM36 12h1v1h-1zM4 13h2v1h-2zM8 13h1v1h-1zM11 13h2v1h-2zM15 13h2v1h-2zM18 13h1v1h-1zM23 13h1v1h-1zM26 13h3v1h-3zM32 13h2v1h-2zM0 14h2v1h-2zM3 14h2v1h-2zM6 14h2v1h-2zM12 14h2v1h-2zM15 14h2v1h-2zM18 14h2v1h-2zM21 14h2v1h-2zM24 14h2v1h-2zM27 14h1v1h-1zM30 14h1v1h-1zM32 14h5v1h-5zM1 15h4v1h-4zM7 15h1v1h-1zM9 15h1v1h-1zM11 15h2v1h-2zM14 15h1v1h-1zM20 15h1v1h-1zM23 15h1v1h-1zM26 15h1v1h-1zM29 15h3v1h-3zM33 15h3v1h-3zM0 16h1v1h-1zM4 16h1v1h-1zM6 16h3v1h-3zM10 16h1v1h-1zM15 16h1v1h-1zM17 16h3v1h-3zM22 16h1v1h-1zM25 16h1v1h-1zM27 16h1v1h-1zM30 16h1v1h-1zM34 16h1v1h-1zM1 17h1v1h-1zM3 17h1v1h-1zM9 17h1v1h-1zM11 17h2v1h-2zM14 17h1v1h-1zM17 17h1v1h-1zM24 17h2v1h-2zM27 17h1v1h-1zM31 17h1v1h-1zM33 17h1v1h-1zM0 18h1v1h-1zM3 18h2v1h-2zM6 18h3v1h-3zM10 18h5v1h-5zM16 18h4v1h-4zM21 18h7v1h-7zM30 18h1v1h-1zM32 18h1v1h-1zM36 18h1v1h-1zM0 19h4v1h-4zM8 19h2v1h-2zM12 19h1v1h-1zM14 19h3v1h-3zM19 19h2v1h-2zM22 19h4v1h-4zM27 19h4v1h-4zM33 19h1v1h-1zM36 19h1v1h-1zM1 20h1v1h-1zM3 20h1v1h-1zM6 20h2v1h-2zM12 20h2v1h-2zM17 20h1v1h-1zM19 20h1v1h-1zM24 20h1v1h-1zM26 20h1v1h-1zM28 20h5v1h-5zM1 21h2v1h-2zM4 21h2v1h-2zM12 21h2v1h-2zM15 21h1v1h-1zM17 21h3v1h-3zM23 21h3v1h-3zM27 21h1v1h-1zM32 21h1v1h-1zM34 21h1v1h-1zM0 22h2v1h-2zM3 22h1v1h-1zM5 22h2v1h-2zM9 22h1v1h-1zM11 22h2v1h-2zM15 22h1v1h-1zM23 22h2v1h-2zM26 22h2v1h-2zM29 22h3v1h-3zM33 22h1v1h-1zM35 22h2v1h-2zM0 23h2v1h-2zM3 23h1v1h-1zM7 23h1v1h-1zM11 23h5v1h-5zM18 23h1v1h-1zM20 23h1v1h-1zM24 23h1v1h-1zM26 23h9v1h-9zM0 24h2v1h-2zM3 24h1v1h-1zM5 24h3v1h-3zM9 24h3v1h-3zM13 24h1v1h-1zM17 24h1v1h-1zM20 24h1v1h-1zM23 24h2v1h-2zM27 24h1v1h-1zM30 24h2v1h-2zM35 24h2v1h-2zM0 25h1v1h-1zM4 25h2v1h-2zM9 25h1v1h-1zM12 25h3v1h-3zM17 25h3v1h-3zM23 25h1v1h-1zM25 25h3v1h-3zM31 25h3v1h-3zM0 26h8v1h-8zM10 26h1v1h-1zM12 26h1v1h-1zM14 26h2v1h-2zM21 26h1v1h-1zM24 26h4v1h-4zM29 26h1v1h-1zM31 26h1v1h-1zM33 26h1v1h-1zM35 26h2v1h-2zM0 27h1v1h-1zM2 27h1v1h-1zM4 27h1v1h-1zM7 27h1v1h-1zM9 27h1v1h-1zM11 27h1v1h-1zM14 27h1v1h-1zM16 27h1v1h-1zM19 27h1v1h-1zM23 27h1v1h-1zM26 27h2v1h-2zM31 27h4v1h-4zM36 27h1v1h-1zM0 28h1v1h-1zM3 28h5v1h-5zM9 28h1v1h-1zM13 28h1v1h-1zM15 28h1v1h-1zM19 28h2v1h-2zM22 28h4v1h-4zM28 28h8v1h-8zM8 29h1v1h-1zM12 29h1v1h-1zM14 29h2v1h-2zM17 29h3v1h-3zM21 29h2v1h-2zM25 29h1v1h-1zM27 29h2v1h-2zM32 29h1v1h-1zM34 29h1v1h-1zM0 30h7v1h-7zM8 30h2v1h-2zM11 30h1v1h-1zM13 30h3v1h-3zM17 30h3v1h-3zM21 30h3v1h-3zM25 30h1v1h-1zM28 30h1v1h-1zM30 30h1v1h-1zM32 30h1v1h-1zM36 30h1v1h-1zM0 31h1v1h-1zM6 31h1v1h-1zM8 31h1v1h-1zM10 31h2v1h-2zM13 31h1v1h-1zM16 31h1v1h-1zM19 31h2v1h-2zM22 31h1v1h-1zM25 31h4v1h-4zM32 31h1v1h-1zM35 31h2v1h-2zM0 32h1v1h-1zM2 32h3v1h-3zM6 32h1v1h-1zM8 32h2v1h-2zM11 32h1v1h-1zM14 32h3v1h-3zM18 32h2v1h-2zM24 32h1v1h-1zM26 32h7v1h-7zM36 32h1v1h-1zM0 33h1v1h-1zM2 33h3v1h-3zM6 33h1v1h-1zM8 33h1v1h-1zM11 33h1v1h-1zM13 33h2v1h-2zM17 33h1v1h-1zM20 33h8v1h-8zM29 33h2v1h-2zM36 33h1v1h-1zM0 34h1v1h-1zM2 34h3v1h-3zM6 34h1v1h-1zM10 34h4v1h-4zM17 34h2v1h-2zM20 34h4v1h-4zM26 34h1v1h-1zM29 34h1v1h-1zM32 34h1v1h-1zM36 34h1v1h-1zM0 35h1v1h-1zM6 35h1v1h-1zM9 35h2v1h-2zM12 35h1v1h-1zM14 35h2v1h-2zM17 35h1v1h-1zM20 35h1v1h-1zM22 35h2v1h-2zM29 35h2v1h-2zM32 35h5v1h-5zM0 36h7v1h-7zM8 36h3v1h-3zM12 36h1v1h-1zM14 36h1v1h-1zM16 36h1v1h-1zM20 36h1v1h-1zM23 36h1v1h-1zM27 36h2v1h-2zM30 36h2v1h-2zM33 36h1v1h-1zM36 36h1v1h-1z" fill="#000"/></svg></div></div></div>
+  </section>
+
+  <section class="lamina" data-titulo="Los siete pares (5 a 7)" aria-label="Lámina 11">
+    <p class="eyebrow">Los siete pares · 2 de 2</p>
+    <h2 style="font-size:38px;margin-bottom:8px">Abre el mapa de tu par</h2>
+    <div class="pares"><div class="par"><div class="texto"><div class="tit">5. Bulgaria – Portugal</div><div class="guia">¿Cuándo se separaron las curvas de exceso y cuánto estaba vacunado cada país en ese momento?</div><a class="boton" href="index.html?a=bulgaria&amp;b=portugal" target="_blank" rel="noopener">Abrir el mapa del par 5</a></div><div class="qr"><svg xmlns="http://www.w3.org/2000/svg" viewBox="-2 -2 41 41" shape-rendering="crispEdges" role="img" aria-label="Código QR: https://bengrez.github.io/aula-herramientas/covid-mapa/?a=bulgaria&b=portugal"><rect x="-2" y="-2" width="41" height="41" fill="#fff"/><path d="M0 0h7v1h-7zM8 0h1v1h-1zM11 0h8v1h-8zM22 0h1v1h-1zM26 0h1v1h-1zM30 0h7v1h-7zM0 1h1v1h-1zM6 1h1v1h-1zM8 1h1v1h-1zM10 1h3v1h-3zM17 1h3v1h-3zM21 1h2v1h-2zM24 1h1v1h-1zM28 1h1v1h-1zM30 1h1v1h-1zM36 1h1v1h-1zM0 2h1v1h-1zM2 2h3v1h-3zM6 2h1v1h-1zM8 2h5v1h-5zM14 2h1v1h-1zM18 2h2v1h-2zM21 2h1v1h-1zM23 2h1v1h-1zM25 2h1v1h-1zM27 2h1v1h-1zM30 2h1v1h-1zM32 2h3v1h-3zM36 2h1v1h-1zM0 3h1v1h-1zM2 3h3v1h-3zM6 3h1v1h-1zM9 3h2v1h-2zM15 3h3v1h-3zM21 3h2v1h-2zM24 3h2v1h-2zM27 3h2v1h-2zM30 3h1v1h-1zM32 3h3v1h-3zM36 3h1v1h-1zM0 4h1v1h-1zM2 4h3v1h-3zM6 4h1v1h-1zM8 4h2v1h-2zM14 4h3v1h-3zM19 4h1v1h-1zM21 4h1v1h-1zM26 4h1v1h-1zM30 4h1v1h-1zM32 4h3v1h-3zM36 4h1v1h-1zM0 5h1v1h-1zM6 5h1v1h-1zM9 5h2v1h-2zM12 5h1v1h-1zM14 5h2v1h-2zM17 5h1v1h-1zM20 5h4v1h-4zM25 5h1v1h-1zM28 5h1v1h-1zM30 5h1v1h-1zM36 5h1v1h-1zM0 6h7v1h-7zM8 6h1v1h-1zM10 6h1v1h-1zM12 6h1v1h-1zM14 6h1v1h-1zM16 6h1v1h-1zM18 6h1v1h-1zM20 6h1v1h-1zM22 6h1v1h-1zM24 6h1v1h-1zM26 6h1v1h-1zM28 6h1v1h-1zM30 6h7v1h-7zM10 7h1v1h-1zM13 7h1v1h-1zM15 7h2v1h-2zM18 7h2v1h-2zM24 7h4v1h-4zM0 8h1v1h-1zM3 8h6v1h-6zM10 8h4v1h-4zM15 8h2v1h-2zM18 8h2v1h-2zM22 8h3v1h-3zM26 8h1v1h-1zM29 8h1v1h-1zM32 8h1v1h-1zM34 8h3v1h-3zM2 9h4v1h-4zM11 9h2v1h-2zM14 9h1v1h-1zM18 9h2v1h-2zM21 9h1v1h-1zM23 9h2v1h-2zM27 9h2v1h-2zM31 9h2v1h-2zM34 9h2v1h-2zM0 10h5v1h-5zM6 10h5v1h-5zM12 10h2v1h-2zM18 10h1v1h-1zM22 10h2v1h-2zM25 10h1v1h-1zM27 10h6v1h-6zM34 10h1v1h-1zM36 10h1v1h-1zM3 11h2v1h-2zM7 11h4v1h-4zM14 11h2v1h-2zM17 11h4v1h-4zM23 11h2v1h-2zM26 11h1v1h-1zM28 11h2v1h-2zM31 11h6v1h-6zM0 12h1v1h-1zM3 12h1v1h-1zM5 12h3v1h-3zM9 12h1v1h-1zM11 12h1v1h-1zM16 12h1v1h-1zM19 12h2v1h-2zM23 12h2v1h-2zM27 12h1v1h-1zM30 12h2v1h-2zM33 12h1v1h-1zM36 12h1v1h-1zM0 13h2v1h-2zM5 13h1v1h-1zM7 13h4v1h-4zM14 13h5v1h-5zM21 13h1v1h-1zM23 13h1v1h-1zM25 13h4v1h-4zM32 13h2v1h-2zM1 14h1v1h-1zM3 14h1v1h-1zM5 14h3v1h-3zM9 14h1v1h-1zM11 14h1v1h-1zM13 14h1v1h-1zM15 14h3v1h-3zM19 14h1v1h-1zM21 14h1v1h-1zM24 14h4v1h-4zM30 14h1v1h-1zM32 14h5v1h-5zM0 15h4v1h-4zM8 15h1v1h-1zM11 15h3v1h-3zM17 15h2v1h-2zM20 15h1v1h-1zM23 15h1v1h-1zM29 15h3v1h-3zM33 15h3v1h-3zM0 16h3v1h-3zM4 16h4v1h-4zM9 16h1v1h-1zM12 16h2v1h-2zM15 16h3v1h-3zM19 16h2v1h-2zM22 16h1v1h-1zM24 16h2v1h-2zM27 16h1v1h-1zM30 16h1v1h-1zM34 16h1v1h-1zM0 17h2v1h-2zM3 17h2v1h-2zM7 17h1v1h-1zM10 17h1v1h-1zM16 17h5v1h-5zM25 17h1v1h-1zM27 17h1v1h-1zM31 17h1v1h-1zM33 17h1v1h-1zM0 18h2v1h-2zM3 18h1v1h-1zM5 18h3v1h-3zM9 18h1v1h-1zM13 18h1v1h-1zM15 18h1v1h-1zM17 18h3v1h-3zM21 18h3v1h-3zM25 18h3v1h-3zM30 18h1v1h-1zM32 18h1v1h-1zM36 18h1v1h-1zM2 19h4v1h-4zM7 19h4v1h-4zM19 19h1v1h-1zM22 19h1v1h-1zM24 19h2v1h-2zM27 19h4v1h-4zM33 19h1v1h-1zM36 19h1v1h-1zM2 20h1v1h-1zM5 20h2v1h-2zM12 20h2v1h-2zM15 20h1v1h-1zM17 20h1v1h-1zM19 20h1v1h-1zM23 20h2v1h-2zM26 20h1v1h-1zM28 20h5v1h-5zM0 21h1v1h-1zM5 21h1v1h-1zM9 21h2v1h-2zM14 21h2v1h-2zM18 21h2v1h-2zM23 21h3v1h-3zM27 21h1v1h-1zM32 21h1v1h-1zM34 21h1v1h-1zM3 22h2v1h-2zM6 22h3v1h-3zM10 22h1v1h-1zM12 22h1v1h-1zM15 22h1v1h-1zM17 22h2v1h-2zM21 22h1v1h-1zM23 22h2v1h-2zM27 22h1v1h-1zM29 22h3v1h-3zM33 22h1v1h-1zM35 22h2v1h-2zM5 23h1v1h-1zM8 23h1v1h-1zM10 23h1v1h-1zM12 23h1v1h-1zM14 23h2v1h-2zM17 23h1v1h-1zM20 23h1v1h-1zM22 23h1v1h-1zM24 23h1v1h-1zM27 23h8v1h-8zM0 24h2v1h-2zM3 24h1v1h-1zM6 24h1v1h-1zM9 24h2v1h-2zM14 24h1v1h-1zM16 24h3v1h-3zM23 24h2v1h-2zM27 24h1v1h-1zM30 24h2v1h-2zM35 24h2v1h-2zM0 25h1v1h-1zM4 25h1v1h-1zM9 25h1v1h-1zM13 25h2v1h-2zM16 25h2v1h-2zM23 25h1v1h-1zM25 25h3v1h-3zM31 25h3v1h-3zM0 26h3v1h-3zM4 26h1v1h-1zM6 26h1v1h-1zM8 26h1v1h-1zM10 26h1v1h-1zM12 26h1v1h-1zM16 26h1v1h-1zM19 26h1v1h-1zM21 26h1v1h-1zM24 26h4v1h-4zM29 26h1v1h-1zM31 26h1v1h-1zM33 26h1v1h-1zM35 26h2v1h-2zM0 27h1v1h-1zM3 27h1v1h-1zM7 27h2v1h-2zM11 27h2v1h-2zM14 27h2v1h-2zM23 27h2v1h-2zM26 27h2v1h-2zM31 27h6v1h-6zM0 28h1v1h-1zM5 28h5v1h-5zM14 28h1v1h-1zM20 28h1v1h-1zM22 28h4v1h-4zM28 28h7v1h-7zM8 29h3v1h-3zM12 29h1v1h-1zM14 29h2v1h-2zM18 29h2v1h-2zM21 29h2v1h-2zM27 29h2v1h-2zM32 29h1v1h-1zM34 29h1v1h-1zM0 30h7v1h-7zM8 30h2v1h-2zM12 30h1v1h-1zM15 30h1v1h-1zM19 30h1v1h-1zM23 30h1v1h-1zM28 30h1v1h-1zM30 30h1v1h-1zM32 30h1v1h-1zM36 30h1v1h-1zM0 31h1v1h-1zM6 31h1v1h-1zM8 31h2v1h-2zM14 31h1v1h-1zM16 31h5v1h-5zM22 31h1v1h-1zM25 31h1v1h-1zM27 31h2v1h-2zM32 31h1v1h-1zM35 31h2v1h-2zM0 32h1v1h-1zM2 32h3v1h-3zM6 32h1v1h-1zM8 32h4v1h-4zM13 32h3v1h-3zM19 32h2v1h-2zM26 32h7v1h-7zM36 32h1v1h-1zM0 33h1v1h-1zM2 33h3v1h-3zM6 33h1v1h-1zM8 33h1v1h-1zM11 33h3v1h-3zM16 33h4v1h-4zM21 33h1v1h-1zM23 33h1v1h-1zM25 33h3v1h-3zM29 33h2v1h-2zM36 33h1v1h-1zM0 34h1v1h-1zM2 34h3v1h-3zM6 34h1v1h-1zM14 34h5v1h-5zM20 34h4v1h-4zM26 34h1v1h-1zM29 34h1v1h-1zM32 34h1v1h-1zM36 34h1v1h-1zM0 35h1v1h-1zM6 35h1v1h-1zM9 35h2v1h-2zM12 35h1v1h-1zM16 35h2v1h-2zM19 35h1v1h-1zM22 35h3v1h-3zM29 35h2v1h-2zM32 35h5v1h-5zM0 36h7v1h-7zM8 36h2v1h-2zM13 36h1v1h-1zM15 36h2v1h-2zM19 36h2v1h-2zM23 36h1v1h-1zM27 36h2v1h-2zM30 36h2v1h-2zM33 36h1v1h-1zM36 36h1v1h-1z" fill="#000"/></svg></div></div><div class="par"><div class="texto"><div class="tit">6. Estados Unidos – Reino Unido</div><div class="guia">¿Cómo se compararon sus medidas, su vacunación y su exceso de muertes mes a mes?</div><a class="boton" href="index.html?a=estados-unidos&amp;b=reino-unido" target="_blank" rel="noopener">Abrir el mapa del par 6</a></div><div class="qr"><svg xmlns="http://www.w3.org/2000/svg" viewBox="-2 -2 45 45" shape-rendering="crispEdges" role="img" aria-label="Código QR: https://bengrez.github.io/aula-herramientas/covid-mapa/?a=estados-unidos&b=reino-unido"><rect x="-2" y="-2" width="45" height="45" fill="#fff"/><path d="M0 0h7v1h-7zM11 0h1v1h-1zM14 0h3v1h-3zM18 0h3v1h-3zM23 0h2v1h-2zM28 0h5v1h-5zM34 0h7v1h-7zM0 1h1v1h-1zM6 1h1v1h-1zM9 1h2v1h-2zM12 1h5v1h-5zM18 1h1v1h-1zM20 1h1v1h-1zM22 1h1v1h-1zM27 1h3v1h-3zM32 1h1v1h-1zM34 1h1v1h-1zM40 1h1v1h-1zM0 2h1v1h-1zM2 2h3v1h-3zM6 2h1v1h-1zM8 2h4v1h-4zM16 2h1v1h-1zM20 2h1v1h-1zM23 2h2v1h-2zM26 2h5v1h-5zM34 2h1v1h-1zM36 2h3v1h-3zM40 2h1v1h-1zM0 3h1v1h-1zM2 3h3v1h-3zM6 3h1v1h-1zM8 3h1v1h-1zM10 3h2v1h-2zM18 3h1v1h-1zM21 3h2v1h-2zM24 3h1v1h-1zM27 3h2v1h-2zM34 3h1v1h-1zM36 3h3v1h-3zM40 3h1v1h-1zM0 4h1v1h-1zM2 4h3v1h-3zM6 4h1v1h-1zM8 4h1v1h-1zM11 4h2v1h-2zM14 4h4v1h-4zM19 4h3v1h-3zM23 4h1v1h-1zM26 4h1v1h-1zM28 4h1v1h-1zM30 4h3v1h-3zM34 4h1v1h-1zM36 4h3v1h-3zM40 4h1v1h-1zM0 5h1v1h-1zM6 5h1v1h-1zM8 5h3v1h-3zM12 5h4v1h-4zM18 5h1v1h-1zM20 5h3v1h-3zM26 5h2v1h-2zM29 5h2v1h-2zM34 5h1v1h-1zM40 5h1v1h-1zM0 6h7v1h-7zM8 6h1v1h-1zM10 6h1v1h-1zM12 6h1v1h-1zM14 6h1v1h-1zM16 6h1v1h-1zM18 6h1v1h-1zM20 6h1v1h-1zM22 6h1v1h-1zM24 6h1v1h-1zM26 6h1v1h-1zM28 6h1v1h-1zM30 6h1v1h-1zM32 6h1v1h-1zM34 6h7v1h-7zM8 7h2v1h-2zM12 7h3v1h-3zM20 7h2v1h-2zM23 7h2v1h-2zM26 7h1v1h-1zM28 7h1v1h-1zM30 7h2v1h-2zM0 8h1v1h-1zM2 8h5v1h-5zM10 8h5v1h-5zM16 8h2v1h-2zM19 8h1v1h-1zM22 8h1v1h-1zM25 8h2v1h-2zM29 8h1v1h-1zM34 8h5v1h-5zM2 9h1v1h-1zM5 9h1v1h-1zM7 9h2v1h-2zM10 9h2v1h-2zM13 9h2v1h-2zM16 9h5v1h-5zM23 9h1v1h-1zM26 9h1v1h-1zM28 9h1v1h-1zM30 9h7v1h-7zM38 9h1v1h-1zM40 9h1v1h-1zM6 10h1v1h-1zM8 10h2v1h-2zM12 10h2v1h-2zM16 10h1v1h-1zM22 10h1v1h-1zM26 10h2v1h-2zM30 10h1v1h-1zM32 10h1v1h-1zM35 10h2v1h-2zM1 11h2v1h-2zM4 11h1v1h-1zM7 11h5v1h-5zM14 11h1v1h-1zM16 11h1v1h-1zM19 11h4v1h-4zM24 11h1v1h-1zM31 11h3v1h-3zM35 11h1v1h-1zM37 11h1v1h-1zM0 12h2v1h-2zM3 12h4v1h-4zM8 12h1v1h-1zM10 12h1v1h-1zM12 12h3v1h-3zM16 12h2v1h-2zM19 12h1v1h-1zM22 12h2v1h-2zM25 12h3v1h-3zM29 12h1v1h-1zM31 12h2v1h-2zM37 12h2v1h-2zM40 12h1v1h-1zM0 13h3v1h-3zM9 13h2v1h-2zM12 13h1v1h-1zM16 13h3v1h-3zM20 13h3v1h-3zM24 13h2v1h-2zM27 13h2v1h-2zM30 13h1v1h-1zM33 13h5v1h-5zM39 13h2v1h-2zM4 14h1v1h-1zM6 14h1v1h-1zM9 14h7v1h-7zM18 14h2v1h-2zM22 14h1v1h-1zM25 14h2v1h-2zM32 14h2v1h-2zM35 14h3v1h-3zM39 14h1v1h-1zM1 15h2v1h-2zM5 15h1v1h-1zM8 15h1v1h-1zM10 15h3v1h-3zM14 15h1v1h-1zM19 15h3v1h-3zM24 15h1v1h-1zM28 15h1v1h-1zM30 15h1v1h-1zM34 15h2v1h-2zM37 15h1v1h-1zM0 16h4v1h-4zM6 16h6v1h-6zM14 16h4v1h-4zM19 16h1v1h-1zM22 16h1v1h-1zM25 16h2v1h-2zM28 16h2v1h-2zM33 16h1v1h-1zM35 16h1v1h-1zM38 16h2v1h-2zM2 17h3v1h-3zM7 17h1v1h-1zM9 17h2v1h-2zM14 17h8v1h-8zM23 17h1v1h-1zM25 17h1v1h-1zM28 17h1v1h-1zM30 17h3v1h-3zM34 17h5v1h-5zM40 17h1v1h-1zM0 18h1v1h-1zM6 18h4v1h-4zM11 18h2v1h-2zM14 18h2v1h-2zM17 18h1v1h-1zM21 18h1v1h-1zM25 18h4v1h-4zM30 18h1v1h-1zM33 18h2v1h-2zM36 18h3v1h-3zM1 19h1v1h-1zM3 19h3v1h-3zM7 19h4v1h-4zM12 19h1v1h-1zM14 19h1v1h-1zM16 19h4v1h-4zM21 19h3v1h-3zM25 19h1v1h-1zM27 19h2v1h-2zM32 19h2v1h-2zM36 19h1v1h-1zM4 20h4v1h-4zM10 20h1v1h-1zM12 20h1v1h-1zM21 20h1v1h-1zM23 20h2v1h-2zM26 20h1v1h-1zM30 20h1v1h-1zM32 20h1v1h-1zM37 20h3v1h-3zM1 21h1v1h-1zM3 21h1v1h-1zM8 21h2v1h-2zM11 21h2v1h-2zM16 21h4v1h-4zM22 21h2v1h-2zM25 21h1v1h-1zM28 21h1v1h-1zM31 21h7v1h-7zM39 21h2v1h-2zM0 22h1v1h-1zM3 22h2v1h-2zM6 22h1v1h-1zM9 22h1v1h-1zM16 22h2v1h-2zM21 22h1v1h-1zM25 22h1v1h-1zM27 22h2v1h-2zM35 22h3v1h-3zM0 23h1v1h-1zM4 23h1v1h-1zM9 23h2v1h-2zM12 23h3v1h-3zM16 23h1v1h-1zM20 23h2v1h-2zM23 23h1v1h-1zM27 23h2v1h-2zM31 23h1v1h-1zM37 23h1v1h-1zM39 23h2v1h-2zM0 24h1v1h-1zM4 24h3v1h-3zM8 24h2v1h-2zM16 24h3v1h-3zM22 24h4v1h-4zM27 24h3v1h-3zM35 24h1v1h-1zM38 24h1v1h-1zM3 25h1v1h-1zM5 25h1v1h-1zM8 25h1v1h-1zM13 25h2v1h-2zM16 25h1v1h-1zM18 25h2v1h-2zM21 25h3v1h-3zM28 25h4v1h-4zM34 25h1v1h-1zM36 25h2v1h-2zM39 25h2v1h-2zM2 26h1v1h-1zM5 26h2v1h-2zM10 26h1v1h-1zM12 26h2v1h-2zM15 26h2v1h-2zM18 26h1v1h-1zM22 26h1v1h-1zM27 26h2v1h-2zM32 26h1v1h-1zM34 26h3v1h-3zM39 26h1v1h-1zM1 27h1v1h-1zM3 27h2v1h-2zM9 27h1v1h-1zM11 27h1v1h-1zM13 27h1v1h-1zM16 27h1v1h-1zM19 27h1v1h-1zM21 27h1v1h-1zM23 27h1v1h-1zM26 27h1v1h-1zM28 27h1v1h-1zM31 27h2v1h-2zM34 27h1v1h-1zM36 27h2v1h-2zM40 27h1v1h-1zM1 28h8v1h-8zM12 28h2v1h-2zM15 28h3v1h-3zM20 28h1v1h-1zM22 28h1v1h-1zM24 28h6v1h-6zM31 28h1v1h-1zM33 28h1v1h-1zM37 28h2v1h-2zM40 28h1v1h-1zM0 29h4v1h-4zM5 29h1v1h-1zM7 29h4v1h-4zM12 29h1v1h-1zM14 29h1v1h-1zM17 29h1v1h-1zM21 29h1v1h-1zM25 29h3v1h-3zM29 29h2v1h-2zM32 29h2v1h-2zM36 29h5v1h-5zM0 30h1v1h-1zM4 30h1v1h-1zM6 30h2v1h-2zM12 30h1v1h-1zM15 30h1v1h-1zM17 30h1v1h-1zM20 30h1v1h-1zM23 30h2v1h-2zM27 30h3v1h-3zM31 30h1v1h-1zM33 30h4v1h-4zM0 31h1v1h-1zM4 31h1v1h-1zM7 31h1v1h-1zM9 31h2v1h-2zM14 31h2v1h-2zM18 31h1v1h-1zM21 31h1v1h-1zM23 31h1v1h-1zM26 31h2v1h-2zM31 31h4v1h-4zM36 31h2v1h-2zM39 31h1v1h-1zM0 32h1v1h-1zM3 32h1v1h-1zM6 32h2v1h-2zM9 32h1v1h-1zM11 32h1v1h-1zM14 32h1v1h-1zM16 32h2v1h-2zM20 32h1v1h-1zM23 32h5v1h-5zM29 32h1v1h-1zM31 32h6v1h-6zM38 32h2v1h-2zM8 33h2v1h-2zM11 33h1v1h-1zM13 33h1v1h-1zM15 33h2v1h-2zM18 33h3v1h-3zM22 33h2v1h-2zM29 33h1v1h-1zM31 33h2v1h-2zM36 33h5v1h-5zM0 34h7v1h-7zM12 34h2v1h-2zM15 34h1v1h-1zM18 34h1v1h-1zM20 34h1v1h-1zM22 34h1v1h-1zM24 34h1v1h-1zM27 34h3v1h-3zM31 34h2v1h-2zM34 34h1v1h-1zM36 34h3v1h-3zM0 35h1v1h-1zM6 35h1v1h-1zM8 35h1v1h-1zM10 35h3v1h-3zM14 35h1v1h-1zM16 35h1v1h-1zM20 35h1v1h-1zM26 35h1v1h-1zM29 35h4v1h-4zM36 35h2v1h-2zM40 35h1v1h-1zM0 36h1v1h-1zM2 36h3v1h-3zM6 36h1v1h-1zM8 36h1v1h-1zM11 36h2v1h-2zM14 36h2v1h-2zM18 36h2v1h-2zM21 36h2v1h-2zM24 36h1v1h-1zM27 36h1v1h-1zM32 36h5v1h-5zM38 36h1v1h-1zM40 36h1v1h-1zM0 37h1v1h-1zM2 37h3v1h-3zM6 37h1v1h-1zM8 37h1v1h-1zM10 37h2v1h-2zM14 37h2v1h-2zM19 37h3v1h-3zM23 37h4v1h-4zM28 37h6v1h-6zM35 37h1v1h-1zM37 37h2v1h-2zM0 38h1v1h-1zM2 38h3v1h-3zM6 38h1v1h-1zM8 38h1v1h-1zM11 38h2v1h-2zM15 38h3v1h-3zM20 38h3v1h-3zM25 38h5v1h-5zM33 38h4v1h-4zM38 38h1v1h-1zM0 39h1v1h-1zM6 39h1v1h-1zM9 39h4v1h-4zM14 39h1v1h-1zM18 39h1v1h-1zM21 39h4v1h-4zM27 39h1v1h-1zM30 39h3v1h-3zM36 39h2v1h-2zM39 39h1v1h-1zM0 40h7v1h-7zM8 40h2v1h-2zM13 40h1v1h-1zM15 40h1v1h-1zM18 40h2v1h-2zM22 40h1v1h-1zM24 40h3v1h-3zM29 40h1v1h-1zM31 40h1v1h-1zM35 40h2v1h-2zM38 40h1v1h-1z" fill="#000"/></svg></div></div><div class="par"><div class="texto"><div class="tit">7. Australia – Nueva Zelanda</div><div class="guia">¿Qué pasó con el exceso de cada país en 2022, cuando bajó la rigurosidad de sus medidas?</div><a class="boton" href="index.html?a=australia&amp;b=nueva-zelanda" target="_blank" rel="noopener">Abrir el mapa del par 7</a></div><div class="qr"><svg xmlns="http://www.w3.org/2000/svg" viewBox="-2 -2 41 41" shape-rendering="crispEdges" role="img" aria-label="Código QR: https://bengrez.github.io/aula-herramientas/covid-mapa/?a=australia&b=nueva-zelanda"><rect x="-2" y="-2" width="41" height="41" fill="#fff"/><path d="M0 0h7v1h-7zM8 0h3v1h-3zM12 0h1v1h-1zM14 0h2v1h-2zM17 0h1v1h-1zM22 0h1v1h-1zM24 0h1v1h-1zM26 0h1v1h-1zM30 0h7v1h-7zM0 1h1v1h-1zM6 1h1v1h-1zM8 1h1v1h-1zM11 1h1v1h-1zM15 1h5v1h-5zM21 1h2v1h-2zM28 1h1v1h-1zM30 1h1v1h-1zM36 1h1v1h-1zM0 2h1v1h-1zM2 2h3v1h-3zM6 2h1v1h-1zM8 2h1v1h-1zM18 2h4v1h-4zM24 2h2v1h-2zM27 2h1v1h-1zM30 2h1v1h-1zM32 2h3v1h-3zM36 2h1v1h-1zM0 3h1v1h-1zM2 3h3v1h-3zM6 3h1v1h-1zM10 3h2v1h-2zM14 3h4v1h-4zM19 3h1v1h-1zM21 3h2v1h-2zM24 3h2v1h-2zM27 3h2v1h-2zM30 3h1v1h-1zM32 3h3v1h-3zM36 3h1v1h-1zM0 4h1v1h-1zM2 4h3v1h-3zM6 4h1v1h-1zM8 4h1v1h-1zM14 4h3v1h-3zM19 4h1v1h-1zM21 4h1v1h-1zM26 4h1v1h-1zM30 4h1v1h-1zM32 4h3v1h-3zM36 4h1v1h-1zM0 5h1v1h-1zM6 5h1v1h-1zM9 5h4v1h-4zM15 5h1v1h-1zM18 5h1v1h-1zM20 5h2v1h-2zM23 5h1v1h-1zM28 5h1v1h-1zM30 5h1v1h-1zM36 5h1v1h-1zM0 6h7v1h-7zM8 6h1v1h-1zM10 6h1v1h-1zM12 6h1v1h-1zM14 6h1v1h-1zM16 6h1v1h-1zM18 6h1v1h-1zM20 6h1v1h-1zM22 6h1v1h-1zM24 6h1v1h-1zM26 6h1v1h-1zM28 6h1v1h-1zM30 6h7v1h-7zM9 7h2v1h-2zM13 7h1v1h-1zM15 7h1v1h-1zM18 7h2v1h-2zM24 7h2v1h-2zM27 7h1v1h-1zM0 8h1v1h-1zM3 8h6v1h-6zM12 8h3v1h-3zM16 8h2v1h-2zM19 8h1v1h-1zM23 8h2v1h-2zM26 8h1v1h-1zM29 8h1v1h-1zM32 8h1v1h-1zM34 8h3v1h-3zM0 9h1v1h-1zM3 9h3v1h-3zM7 9h1v1h-1zM11 9h2v1h-2zM18 9h6v1h-6zM27 9h2v1h-2zM31 9h2v1h-2zM34 9h2v1h-2zM0 10h2v1h-2zM3 10h1v1h-1zM6 10h2v1h-2zM10 10h4v1h-4zM18 10h1v1h-1zM22 10h2v1h-2zM25 10h1v1h-1zM27 10h6v1h-6zM34 10h1v1h-1zM36 10h1v1h-1zM1 11h4v1h-4zM7 11h2v1h-2zM10 11h2v1h-2zM15 11h1v1h-1zM17 11h2v1h-2zM23 11h2v1h-2zM26 11h1v1h-1zM28 11h2v1h-2zM31 11h6v1h-6zM2 12h3v1h-3zM6 12h1v1h-1zM11 12h1v1h-1zM13 12h2v1h-2zM16 12h1v1h-1zM19 12h2v1h-2zM24 12h1v1h-1zM27 12h1v1h-1zM30 12h2v1h-2zM33 12h1v1h-1zM36 12h1v1h-1zM4 13h2v1h-2zM8 13h1v1h-1zM10 13h3v1h-3zM14 13h3v1h-3zM18 13h1v1h-1zM23 13h1v1h-1zM25 13h4v1h-4zM32 13h2v1h-2zM0 14h5v1h-5zM6 14h3v1h-3zM10 14h1v1h-1zM12 14h5v1h-5zM19 14h1v1h-1zM22 14h1v1h-1zM24 14h4v1h-4zM30 14h1v1h-1zM32 14h5v1h-5zM5 15h1v1h-1zM8 15h1v1h-1zM10 15h1v1h-1zM13 15h1v1h-1zM20 15h1v1h-1zM22 15h2v1h-2zM29 15h3v1h-3zM33 15h3v1h-3zM2 16h1v1h-1zM6 16h2v1h-2zM9 16h1v1h-1zM12 16h2v1h-2zM15 16h1v1h-1zM19 16h2v1h-2zM24 16h2v1h-2zM27 16h1v1h-1zM30 16h1v1h-1zM34 16h1v1h-1zM0 17h4v1h-4zM5 17h1v1h-1zM10 17h1v1h-1zM16 17h5v1h-5zM25 17h3v1h-3zM31 17h1v1h-1zM33 17h1v1h-1zM0 18h2v1h-2zM3 18h1v1h-1zM5 18h2v1h-2zM11 18h2v1h-2zM15 18h1v1h-1zM17 18h11v1h-11zM30 18h1v1h-1zM32 18h1v1h-1zM36 18h1v1h-1zM0 19h1v1h-1zM4 19h2v1h-2zM10 19h4v1h-4zM22 19h1v1h-1zM25 19h1v1h-1zM27 19h4v1h-4zM33 19h1v1h-1zM36 19h1v1h-1zM5 20h3v1h-3zM10 20h1v1h-1zM12 20h4v1h-4zM17 20h1v1h-1zM19 20h1v1h-1zM23 20h2v1h-2zM26 20h1v1h-1zM28 20h5v1h-5zM1 21h2v1h-2zM4 21h2v1h-2zM7 21h1v1h-1zM11 21h2v1h-2zM15 21h1v1h-1zM17 21h3v1h-3zM21 21h1v1h-1zM23 21h2v1h-2zM27 21h1v1h-1zM32 21h1v1h-1zM34 21h1v1h-1zM1 22h1v1h-1zM3 22h1v1h-1zM5 22h3v1h-3zM9 22h2v1h-2zM12 22h1v1h-1zM14 22h2v1h-2zM17 22h1v1h-1zM21 22h7v1h-7zM29 22h3v1h-3zM33 22h1v1h-1zM35 22h2v1h-2zM0 23h6v1h-6zM7 23h4v1h-4zM14 23h2v1h-2zM17 23h2v1h-2zM20 23h1v1h-1zM24 23h1v1h-1zM26 23h9v1h-9zM3 24h1v1h-1zM5 24h2v1h-2zM8 24h1v1h-1zM10 24h2v1h-2zM13 24h2v1h-2zM16 24h1v1h-1zM23 24h2v1h-2zM27 24h1v1h-1zM30 24h2v1h-2zM35 24h2v1h-2zM0 25h1v1h-1zM3 25h3v1h-3zM7 25h1v1h-1zM9 25h2v1h-2zM14 25h5v1h-5zM23 25h1v1h-1zM25 25h1v1h-1zM27 25h1v1h-1zM31 25h3v1h-3zM0 26h2v1h-2zM6 26h1v1h-1zM9 26h3v1h-3zM13 26h4v1h-4zM19 26h3v1h-3zM25 26h3v1h-3zM29 26h1v1h-1zM31 26h1v1h-1zM33 26h1v1h-1zM35 26h2v1h-2zM0 27h1v1h-1zM2 27h1v1h-1zM4 27h2v1h-2zM7 27h2v1h-2zM12 27h1v1h-1zM14 27h1v1h-1zM24 27h1v1h-1zM26 27h2v1h-2zM31 27h5v1h-5zM0 28h1v1h-1zM2 28h3v1h-3zM6 28h3v1h-3zM11 28h1v1h-1zM13 28h1v1h-1zM15 28h1v1h-1zM20 28h1v1h-1zM22 28h4v1h-4zM28 28h9v1h-9zM8 29h2v1h-2zM12 29h2v1h-2zM15 29h1v1h-1zM17 29h3v1h-3zM21 29h2v1h-2zM27 29h2v1h-2zM32 29h1v1h-1zM34 29h1v1h-1zM0 30h7v1h-7zM8 30h1v1h-1zM10 30h1v1h-1zM15 30h1v1h-1zM17 30h3v1h-3zM23 30h1v1h-1zM25 30h1v1h-1zM28 30h1v1h-1zM30 30h1v1h-1zM32 30h1v1h-1zM36 30h1v1h-1zM0 31h1v1h-1zM6 31h1v1h-1zM8 31h1v1h-1zM16 31h1v1h-1zM19 31h2v1h-2zM25 31h4v1h-4zM32 31h1v1h-1zM35 31h2v1h-2zM0 32h1v1h-1zM2 32h3v1h-3zM6 32h1v1h-1zM8 32h4v1h-4zM13 32h5v1h-5zM19 32h1v1h-1zM24 32h1v1h-1zM26 32h7v1h-7zM36 32h1v1h-1zM0 33h1v1h-1zM2 33h3v1h-3zM6 33h1v1h-1zM8 33h1v1h-1zM12 33h1v1h-1zM15 33h1v1h-1zM17 33h3v1h-3zM21 33h1v1h-1zM23 33h1v1h-1zM25 33h1v1h-1zM27 33h1v1h-1zM29 33h2v1h-2zM35 33h2v1h-2zM0 34h1v1h-1zM2 34h3v1h-3zM6 34h1v1h-1zM10 34h1v1h-1zM15 34h1v1h-1zM17 34h2v1h-2zM21 34h4v1h-4zM26 34h1v1h-1zM29 34h1v1h-1zM32 34h1v1h-1zM36 34h1v1h-1zM0 35h1v1h-1zM6 35h1v1h-1zM11 35h2v1h-2zM15 35h1v1h-1zM17 35h1v1h-1zM20 35h1v1h-1zM22 35h1v1h-1zM24 35h1v1h-1zM29 35h2v1h-2zM32 35h5v1h-5zM0 36h7v1h-7zM8 36h2v1h-2zM11 36h1v1h-1zM14 36h1v1h-1zM16 36h1v1h-1zM19 36h2v1h-2zM23 36h1v1h-1zM27 36h2v1h-2zM30 36h2v1h-2zM33 36h1v1h-1zM36 36h1v1h-1z" fill="#000"/></svg></div></div><div class="par"><div class="texto"><div class="tit">¿No sabes cuál es tu par?</div><div class="guia">Abre la lista y elige el número de tu hoja.</div><a class="boton" href="index.html" target="_blank" rel="noopener">Abrir la lista de pares</a></div><div class="qr"><svg xmlns="http://www.w3.org/2000/svg" viewBox="-2 -2 37 37" shape-rendering="crispEdges" role="img" aria-label="Código QR: https://bengrez.github.io/aula-herramientas/covid-mapa/"><rect x="-2" y="-2" width="37" height="37" fill="#fff"/><path d="M0 0h7v1h-7zM16 0h1v1h-1zM18 0h4v1h-4zM23 0h1v1h-1zM26 0h7v1h-7zM0 1h1v1h-1zM6 1h1v1h-1zM9 1h1v1h-1zM11 1h2v1h-2zM15 1h1v1h-1zM18 1h1v1h-1zM20 1h1v1h-1zM24 1h1v1h-1zM26 1h1v1h-1zM32 1h1v1h-1zM0 2h1v1h-1zM2 2h3v1h-3zM6 2h1v1h-1zM8 2h3v1h-3zM14 2h3v1h-3zM18 2h1v1h-1zM20 2h5v1h-5zM26 2h1v1h-1zM28 2h3v1h-3zM32 2h1v1h-1zM0 3h1v1h-1zM2 3h3v1h-3zM6 3h1v1h-1zM8 3h3v1h-3zM17 3h1v1h-1zM20 3h1v1h-1zM22 3h1v1h-1zM24 3h1v1h-1zM26 3h1v1h-1zM28 3h3v1h-3zM32 3h1v1h-1zM0 4h1v1h-1zM2 4h3v1h-3zM6 4h1v1h-1zM8 4h1v1h-1zM10 4h2v1h-2zM14 4h3v1h-3zM18 4h4v1h-4zM23 4h1v1h-1zM26 4h1v1h-1zM28 4h3v1h-3zM32 4h1v1h-1zM0 5h1v1h-1zM6 5h1v1h-1zM8 5h2v1h-2zM11 5h1v1h-1zM17 5h2v1h-2zM20 5h3v1h-3zM26 5h1v1h-1zM32 5h1v1h-1zM0 6h7v1h-7zM8 6h1v1h-1zM10 6h1v1h-1zM12 6h1v1h-1zM14 6h1v1h-1zM16 6h1v1h-1zM18 6h1v1h-1zM20 6h1v1h-1zM22 6h1v1h-1zM24 6h1v1h-1zM26 6h7v1h-7zM8 7h1v1h-1zM10 7h2v1h-2zM14 7h1v1h-1zM16 7h1v1h-1zM18 7h1v1h-1zM21 7h3v1h-3zM0 8h1v1h-1zM2 8h5v1h-5zM11 8h3v1h-3zM17 8h2v1h-2zM20 8h1v1h-1zM22 8h2v1h-2zM26 8h5v1h-5zM1 9h3v1h-3zM5 9h1v1h-1zM7 9h1v1h-1zM10 9h2v1h-2zM13 9h1v1h-1zM16 9h1v1h-1zM18 9h3v1h-3zM22 9h2v1h-2zM26 9h2v1h-2zM29 9h4v1h-4zM4 10h7v1h-7zM12 10h5v1h-5zM18 10h1v1h-1zM22 10h1v1h-1zM25 10h1v1h-1zM28 10h1v1h-1zM30 10h2v1h-2zM0 11h1v1h-1zM2 11h4v1h-4zM8 11h1v1h-1zM13 11h1v1h-1zM15 11h2v1h-2zM21 11h3v1h-3zM25 11h1v1h-1zM28 11h4v1h-4zM0 12h2v1h-2zM3 12h2v1h-2zM6 12h2v1h-2zM9 12h2v1h-2zM14 12h6v1h-6zM22 12h1v1h-1zM24 12h2v1h-2zM27 12h3v1h-3zM31 12h1v1h-1zM2 13h2v1h-2zM8 13h2v1h-2zM11 13h3v1h-3zM15 13h1v1h-1zM17 13h4v1h-4zM22 13h3v1h-3zM26 13h1v1h-1zM30 13h3v1h-3zM0 14h3v1h-3zM4 14h1v1h-1zM6 14h6v1h-6zM13 14h5v1h-5zM20 14h1v1h-1zM25 14h2v1h-2zM31 14h1v1h-1zM1 15h1v1h-1zM3 15h2v1h-2zM8 15h3v1h-3zM15 15h1v1h-1zM18 15h1v1h-1zM20 15h2v1h-2zM23 15h8v1h-8zM1 16h1v1h-1zM3 16h2v1h-2zM6 16h1v1h-1zM9 16h1v1h-1zM11 16h2v1h-2zM15 16h3v1h-3zM19 16h1v1h-1zM24 16h2v1h-2zM27 16h3v1h-3zM32 16h1v1h-1zM1 17h2v1h-2zM4 17h1v1h-1zM7 17h4v1h-4zM12 17h1v1h-1zM14 17h1v1h-1zM16 17h6v1h-6zM23 17h1v1h-1zM26 17h2v1h-2zM29 17h2v1h-2zM32 17h1v1h-1zM4 18h1v1h-1zM6 18h3v1h-3zM10 18h1v1h-1zM12 18h1v1h-1zM15 18h3v1h-3zM22 18h1v1h-1zM24 18h5v1h-5zM30 18h2v1h-2zM1 19h1v1h-1zM3 19h2v1h-2zM7 19h3v1h-3zM11 19h1v1h-1zM14 19h2v1h-2zM20 19h2v1h-2zM23 19h1v1h-1zM26 19h5v1h-5zM0 20h4v1h-4zM6 20h2v1h-2zM10 20h6v1h-6zM18 20h1v1h-1zM22 20h2v1h-2zM25 20h1v1h-1zM27 20h3v1h-3zM32 20h1v1h-1zM0 21h2v1h-2zM4 21h2v1h-2zM10 21h2v1h-2zM13 21h1v1h-1zM15 21h6v1h-6zM23 21h1v1h-1zM25 21h2v1h-2zM30 21h1v1h-1zM32 21h1v1h-1zM0 22h1v1h-1zM2 22h1v1h-1zM5 22h2v1h-2zM9 22h3v1h-3zM13 22h1v1h-1zM18 22h1v1h-1zM20 22h1v1h-1zM22 22h1v1h-1zM31 22h1v1h-1zM0 23h1v1h-1zM8 23h2v1h-2zM11 23h1v1h-1zM13 23h2v1h-2zM16 23h1v1h-1zM20 23h2v1h-2zM24 23h1v1h-1zM26 23h1v1h-1zM28 23h5v1h-5zM0 24h1v1h-1zM2 24h3v1h-3zM6 24h1v1h-1zM8 24h1v1h-1zM11 24h2v1h-2zM17 24h1v1h-1zM19 24h2v1h-2zM22 24h1v1h-1zM24 24h5v1h-5zM31 24h1v1h-1zM8 25h3v1h-3zM13 25h2v1h-2zM16 25h5v1h-5zM24 25h1v1h-1zM28 25h1v1h-1zM30 25h1v1h-1zM32 25h1v1h-1zM0 26h7v1h-7zM9 26h1v1h-1zM15 26h3v1h-3zM20 26h2v1h-2zM23 26h2v1h-2zM26 26h1v1h-1zM28 26h1v1h-1zM30 26h2v1h-2zM0 27h1v1h-1zM6 27h1v1h-1zM8 27h1v1h-1zM10 27h1v1h-1zM12 27h3v1h-3zM16 27h3v1h-3zM21 27h4v1h-4zM28 27h4v1h-4zM0 28h1v1h-1zM2 28h3v1h-3zM6 28h1v1h-1zM8 28h1v1h-1zM12 28h2v1h-2zM16 28h1v1h-1zM19 28h1v1h-1zM22 28h1v1h-1zM24 28h6v1h-6zM31 28h2v1h-2zM0 29h1v1h-1zM2 29h3v1h-3zM6 29h1v1h-1zM8 29h2v1h-2zM11 29h1v1h-1zM14 29h2v1h-2zM17 29h3v1h-3zM21 29h1v1h-1zM23 29h3v1h-3zM28 29h1v1h-1zM30 29h3v1h-3zM0 30h1v1h-1zM2 30h3v1h-3zM6 30h1v1h-1zM8 30h3v1h-3zM12 30h1v1h-1zM15 30h3v1h-3zM22 30h3v1h-3zM26 30h2v1h-2zM29 30h2v1h-2zM0 31h1v1h-1zM6 31h1v1h-1zM9 31h1v1h-1zM12 31h4v1h-4zM20 31h3v1h-3zM25 31h1v1h-1zM28 31h3v1h-3zM0 32h7v1h-7zM8 32h5v1h-5zM14 32h2v1h-2zM17 32h2v1h-2zM22 32h3v1h-3zM27 32h1v1h-1zM31 32h1v1h-1z" fill="#000"/></svg></div></div></div>
+  </section>
+
+  <section class="lamina" data-titulo="Los límites de los datos" aria-label="Lámina 12">
+    <p class="eyebrow">Antes de concluir</p>
+    <h2>Los límites de los datos</h2>
+    <ul>
+      <li>El exceso incluye muertes que no son COVID-19.</li>
+      <li>La rigurosidad mide lo decretado, no lo cumplido.</li>
+      <li>La vacunación completa no cuenta los refuerzos.</li>
+      <li>Falta el exceso de Perú en los últimos meses de 2022.</li>
+      <li>El mapa muestra correlación, no causa.</li>
+    </ul>
+    <p class="pie-lamina">Fuente: Our World in Data, «Coronavirus Pandemic (COVID-19)», CC BY 4.0. Datos congelados el 19 de agosto de 2024.</p>
+  </section>
+
+  <section class="lamina" data-titulo="Cierre: puedo decir… pero no puedo decir…" aria-label="Lámina 13">
+    <p class="eyebrow">Cierre · minutos 80 a 90</p>
+    <h2>Tu conclusión, con límites</h2>
+    <div class="decir">Puedo decir que…<br>pero no puedo decir que…</div>
+    <ol>
+      <li>Vuelve a tu hipótesis del comienzo y reescríbela con lo que aprendiste.</li>
+      <li>Entrega la hoja de tu grupo y tu ticket individual.</li>
+    </ol>
+    <p><button type="button" class="crono" data-seg="600" data-nom="Cierre y ticket">▶ 10:00</button></p>
+  </section>
+
+</div>
+</div>
+<div id="indice" hidden role="dialog" aria-label="Índice de láminas"><div class="caja"><p class="eyebrow" style="margin:0 0 6px">Índice de láminas</p><ol id="lista-indice"></ol><button type="button" id="cerrar-indice">Cerrar</button></div></div>
+<div id="barra">
+  <button type="button" id="ant" aria-label="Lámina anterior">◀</button>
+  <span id="cuenta" aria-live="off"></span>
+  <button type="button" id="sig" class="principal" aria-label="Lámina siguiente">▶</button>
+  <button type="button" id="btn-indice">Índice</button>
+  <button type="button" id="pant">Pantalla completa</button>
+  <span id="reloj" aria-hidden="true"></span>
+</div>
+<p id="anuncio" class="solo-lector" aria-live="polite" aria-atomic="true"></p>
+<script>
+(function () {
+  'use strict';
+  var $ = function (id) { return document.getElementById(id); };
+  var laminas = document.querySelectorAll('.lamina'), n = laminas.length, actual = 0;
+  var esc = $('escenario'), vista = $('vista');
+
+  function ajustar() {
+    var w = vista.clientWidth, h = vista.clientHeight, s = Math.min(w / 1280, h / 720);
+    if (!(s > 0)) s = 1;
+    esc.style.transform = 'scale(' + s + ')';
+    esc.style.left = Math.max(0, (w - 1280 * s) / 2) + 'px';
+    esc.style.top = Math.max(0, (h - 720 * s) / 2) + 'px';
+  }
+  // mostrar: solo dibuja la lámina. ir: cambia la dirección (#N) para que el botón «Atrás» del navegador vuelva a la lámina anterior.
+  function mostrar(i, silencio) {
+    if (i < 0 || i >= n) return;
+    laminas[actual].className = 'lamina'; actual = i; laminas[actual].className = 'lamina activa';
+    $('cuenta').textContent = (actual + 1) + ' / ' + n;
+    $('ant').setAttribute('aria-disabled', actual === 0 ? 'true' : 'false');
+    $('sig').setAttribute('aria-disabled', actual === n - 1 ? 'true' : 'false');
+    if (!silencio) $('anuncio').textContent = 'Lámina ' + (actual + 1) + ' de ' + n + ': ' + laminas[actual].getAttribute('data-titulo');
+  }
+  function ir(i, silencio) {
+    if (i < 0 || i >= n) return;
+    mostrar(i, silencio);
+    try { if (location.hash !== '#' + (i + 1)) location.hash = '#' + (i + 1); } catch (e) { /* sin dirección */ }
+  }
+  function mover(d) { ir(actual + d); }
+
+  // Cronómetro simple: uno a la vez, cuenta hacia atrás
+  var rest = 0, tim = null, activo = null;
+  function fmt(s) { var m = Math.floor(s / 60), r = s % 60; return m + ':' + (r < 10 ? '0' : '') + r; }
+  function marcar(btn, txt) { btn.textContent = txt; }
+  function detener(volver) {
+    if (tim) { clearInterval(tim); tim = null; }
+    if (activo && volver) { activo.setAttribute('aria-pressed', 'false'); activo.className = 'crono'; marcar(activo, '▶ ' + fmt(Number(activo.getAttribute('data-seg')))); }
+    if (volver) { activo = null; $('reloj').textContent = ''; $('reloj').className = ''; }
+  }
+  function pulsar(btn) {
+    if (activo === btn && tim) { // pausa
+      clearInterval(tim); tim = null; btn.setAttribute('aria-pressed', 'false'); marcar(btn, '▶ ' + fmt(rest)); return;
+    }
+    if (activo !== btn) { detener(true); activo = btn; rest = Number(btn.getAttribute('data-seg')); }
+    if (rest <= 0) rest = Number(btn.getAttribute('data-seg'));
+    btn.className = 'crono'; btn.setAttribute('aria-pressed', 'true'); marcar(btn, '❚❚ ' + fmt(rest));
+    $('reloj').textContent = btn.getAttribute('data-nom') + ' ' + fmt(rest); $('reloj').className = '';
+    tim = setInterval(function () {
+      rest--;
+      if (rest <= 0) {
+        rest = 0; clearInterval(tim); tim = null;
+        btn.setAttribute('aria-pressed', 'false'); btn.className = 'crono fin'; marcar(btn, 'Tiempo');
+        $('reloj').textContent = btn.getAttribute('data-nom') + ': tiempo'; $('reloj').className = 'fin';
+        $('anuncio').textContent = 'Terminó el tiempo: ' + btn.getAttribute('data-nom') + '.';
+        activo = btn; return;
+      }
+      marcar(btn, '❚❚ ' + fmt(rest)); $('reloj').textContent = btn.getAttribute('data-nom') + ' ' + fmt(rest);
+    }, 1000);
+  }
+  var cr = document.querySelectorAll('.crono'), i;
+  for (i = 0; i < cr.length; i++) (function (b) { b.setAttribute('aria-pressed', 'false'); b.addEventListener('click', function (ev) { ev.stopPropagation(); pulsar(b); }); })(cr[i]);
+
+  $('ant').addEventListener('click', function () { mover(-1); });
+  $('sig').addEventListener('click', function () { mover(1); });
+  document.addEventListener('keydown', function (ev) {
+    var k = ev.key, t = ev.target && ev.target.tagName;
+    if (ev.altKey || ev.ctrlKey || ev.metaKey) return;
+    if (!$('indice').hidden) { if (k === 'Escape' || k === 'Esc') { ev.preventDefault(); cerrarIndice(); } return; }
+    if (k === 'Escape' || k === 'Esc') return;
+    if (t === 'A') { if (k === ' ') return; }
+    if (k === 'ArrowRight' || k === 'PageDown' || (k === ' ' && t !== 'BUTTON') || k === 'Right') { ev.preventDefault(); mover(1); }
+    else if (k === 'ArrowLeft' || k === 'PageUp' || k === 'Left') { ev.preventDefault(); mover(-1); }
+    else if (k === 'Home') { ev.preventDefault(); ir(0); }
+    else if (k === 'End') { ev.preventDefault(); ir(n - 1); }
+    else if (k === 'i' || k === 'I') { ev.preventDefault(); abrirIndice(); }
+  });
+  // Clic en la lámina (fuera de botones y enlaces): mitad derecha avanza, tercio izquierdo retrocede
+  vista.addEventListener('click', function (ev) {
+    var t = ev.target; while (t && t !== vista) { if (t.tagName === 'BUTTON' || t.tagName === 'A') return; t = t.parentNode; }
+    var r = vista.getBoundingClientRect(), x = ev.clientX - r.left;
+    if (x < r.width / 3) mover(-1); else mover(1);
+  });
+  // Deslizar con el dedo
+  var x0 = null, y0 = null;
+  vista.addEventListener('touchstart', function (ev) { if (ev.touches.length === 1) { x0 = ev.touches[0].clientX; y0 = ev.touches[0].clientY; } else x0 = null; }, { passive: true });
+  vista.addEventListener('touchend', function (ev) {
+    if (x0 === null) return;
+    var t = ev.changedTouches[0], dx = t.clientX - x0, dy = t.clientY - y0; x0 = null;
+    if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.5) { ev.preventDefault(); mover(dx < 0 ? 1 : -1); }
+  }, false);
+  // Pantalla completa
+  function pantallaCompleta() {
+    var d = document, e = d.documentElement;
+    if (d.fullscreenElement || d.webkitFullscreenElement) { (d.exitFullscreen || d.webkitExitFullscreen).call(d); return; }
+    var f = e.requestFullscreen || e.webkitRequestFullscreen;
+    if (f) { try { var p = f.call(e); if (p && p.catch) p.catch(function () {}); } catch (x) { /* no disponible */ } }
+  }
+  $('pant').addEventListener('click', pantallaCompleta);
+  if (!(document.documentElement.requestFullscreen || document.documentElement.webkitRequestFullscreen)) $('pant').hidden = true;
+  document.addEventListener('fullscreenchange', ajustar); document.addEventListener('webkitfullscreenchange', ajustar);
+  window.addEventListener('resize', ajustar); window.addEventListener('orientationchange', ajustar);
+  window.addEventListener('hashchange', function () { var m = /^#(\d+)$/.exec(location.hash); if (m && Number(m[1]) >= 1 && Number(m[1]) <= n) mostrar(Number(m[1]) - 1, true); });
+  // Índice con enlace directo a cada lámina
+  var li = '', k;
+  for (k = 0; k < n; k++) li += '<li><a href="#' + (k + 1) + '" data-i="' + k + '">' + (k + 1) + '. ' + laminas[k].getAttribute('data-titulo') + '</a></li>';
+  $('lista-indice').innerHTML = li;
+  function abrirIndice() {
+    var as = $('lista-indice').getElementsByTagName('a'), j;
+    for (j = 0; j < as.length; j++) as[j].className = j === actual ? 'actual' : '';
+    $('indice').hidden = false; as[actual].focus();
+  }
+  function cerrarIndice() { $('indice').hidden = true; $('btn-indice').focus(); }
+  $('btn-indice').addEventListener('click', function (ev) { ev.stopPropagation(); abrirIndice(); });
+  $('cerrar-indice').addEventListener('click', cerrarIndice);
+  $('lista-indice').addEventListener('click', function (ev) {
+    var a = ev.target; while (a && a.tagName !== 'A') a = a.parentNode;
+    if (!a) return; ev.preventDefault(); ir(Number(a.getAttribute('data-i'))); $('indice').hidden = true; $('btn-indice').focus();
+  });
+  $('indice').addEventListener('click', function (ev) { if (ev.target === $('indice')) cerrarIndice(); });
+
+  ajustar();
+  var m0 = /^#(\d+)$/.exec(location.hash || '');
+  mostrar(m0 && Number(m0[1]) >= 1 && Number(m0[1]) <= n ? Number(m0[1]) - 1 : 0, true);
+  setTimeout(ajustar, 50);
+})();
+</script>
+</body>
+</html>

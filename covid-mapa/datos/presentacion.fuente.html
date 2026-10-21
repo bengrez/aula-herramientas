@@ -28,6 +28,17 @@
   sub { font-size:.6em; }
   .cols { display:flex; gap:40px; align-items:flex-start; }
   .cols > * { flex:1 1 0; min-width:0; }
+  dl.terminos { margin:6px 0 0; font-size:30px; line-height:1.3; }
+  dl.terminos dt { font-weight:800; color:var(--cobalto); margin-top:14px; }
+  dl.terminos dd { margin:2px 0 0; }
+  #indice { position:fixed; left:0; top:0; right:0; bottom:0; z-index:20; background:rgba(15,23,42,.85); display:flex; align-items:center; justify-content:center; padding:20px; }
+  #indice[hidden] { display:none; }
+  #indice .caja { background:#fff; border-radius:12px; padding:20px 26px; max-width:760px; width:100%; max-height:100%; overflow:auto; }
+  #indice ol { list-style:none; padding:0; margin:0 0 12px; columns:2; column-gap:20px; }
+  #indice li { margin:0 0 6px; break-inside:avoid; }
+  #indice li a { display:block; min-height:44px; padding:8px 12px; border:2px solid var(--borde); border-radius:8px; color:var(--pizarra); text-decoration:none; font-size:18px; line-height:1.25; }
+  #indice li a.actual { border-color:var(--cobalto); background:var(--cobalto-fondo); font-weight:700; }
+  #indice li a:focus-visible { outline:3px solid var(--ambar); outline-offset:2px; }
   .supuestos { list-style:none; padding:0; margin:0; }
   .supuestos li { display:flex; align-items:center; gap:22px; background:#fff; border:2px solid var(--borde); border-radius:10px; padding:12px 22px; margin-bottom:12px; font-size:34px; }
   .num { flex:none; width:52px; height:52px; border-radius:50%; background:var(--pizarra); color:#fff; font-size:30px; font-weight:800; display:flex; align-items:center; justify-content:center; }
@@ -51,16 +62,14 @@
   .crono { font-size:26px; min-width:150px; }
   .crono[aria-pressed="true"] { background:var(--cobalto); color:#fff; }
   .crono.fin { background:var(--ambar); border-color:var(--ambar); color:#fff; }
-  .pares { display:grid; grid-template-columns:repeat(4,1fr); gap:20px; flex:1 1 auto; align-content:start; }
-  .pares.tres { grid-template-columns:repeat(3,1fr); }
-  .par { background:#fff; border:2px solid var(--borde); border-radius:12px; padding:14px 16px; display:flex; flex-direction:column; gap:10px; }
-  .par .tit { font-size:28px; font-weight:800; line-height:1.15; }
-  .par .guia { font-size:22px; line-height:1.25; color:var(--suave); }
-  .par .qr { padding:8px; }
-  .par .cod { font-size:16px; color:var(--suave); overflow-wrap:anywhere; line-height:1.2; }
-  .pares.tres .par { flex-direction:column; }
-  .pares.tres .par .texto { display:flex; flex-direction:column; gap:10px; }
-  .pares.tres .par .qr { width:250px; align-self:center; }
+  .pares { display:grid; grid-template-columns:1fr 1fr; gap:14px; flex:1 1 auto; align-content:start; }
+  .par { background:#fff; border:2px solid var(--borde); border-radius:12px; padding:12px 16px; display:flex; flex-direction:row; align-items:center; }
+  .par .texto { flex:1 1 auto; min-width:0; display:flex; flex-direction:column; }
+  .par .tit { font-size:30px; font-weight:800; line-height:1.15; margin-bottom:6px; }
+  .par .guia { font-size:23px; line-height:1.25; color:#334155; margin-bottom:10px; }
+  .par a.boton { align-self:flex-start; font-size:24px; }
+  .par .qr { flex:none; width:176px; margin-left:14px; padding:6px; }
+  .par .cod { display:none; }
   .pie-lamina { margin-top:auto; font-size:20px; color:var(--suave); }
   .decir { background:var(--cobalto-fondo); border-left:8px solid var(--cobalto); border-radius:8px; padding:20px 30px; font-size:44px; font-weight:700; line-height:1.4; margin:10px 0 24px; }
   #barra { flex:none; display:flex; align-items:center; gap:10px; padding:6px 12px; background:#0f172a; color:#e2e8f0; font-size:18px; min-height:64px; }
@@ -77,7 +86,7 @@
 <div id="vista">
 <div id="escenario">
 
-  <section class="lamina activa" aria-label="Lámina 1">
+  <section class="lamina activa" data-titulo="Pregunta de entrada" aria-label="Lámina 1">
     <p class="eyebrow">Bienestar y salud · Vacunas e inmunidad de rebaño</p>
     <h1>¿Por qué una persona no vacunada puede no enfermarse?</h1>
     <p class="grande">Escribe tu hipótesis en tu cuaderno.</p>
@@ -85,11 +94,40 @@
     <p style="margin-top:20px"><button type="button" class="crono" data-seg="60" data-nom="Hipótesis">▶ 1:00</button></p>
   </section>
 
-  <section class="lamina" aria-label="Lámina 2">
+  <section class="lamina" data-titulo="Términos clave 1: contagiosidad, rebaño, umbral" aria-label="Lámina 2">
+    <p class="eyebrow">Términos clave · 1 de 3</p>
+    <h2>Contagio y protección</h2>
+    <dl class="terminos">
+      <dt>Contagiosidad (R₀):</dt><dd>número promedio de personas que contagia una persona infectada cuando nadie tiene defensas. Con R₀ = 5, cada contagiado contagia a 5 personas.</dd>
+      <dt>Inmunidad de rebaño:</dt><dd>cuando hay tanta gente inmune que el virus casi no encuentra a quién contagiar, y las personas no inmunes quedan protegidas de forma indirecta.</dd>
+      <dt>Umbral de inmunidad:</dt><dd>porcentaje de personas inmunes necesario para frenar el contagio. Se calcula 1 − 1/R₀. Con R₀ = 5 es 80 %.</dd>
+    </dl>
+  </section>
+
+  <section class="lamina" data-titulo="Términos clave 2: cobertura, exceso, rigurosidad" aria-label="Lámina 3">
+    <p class="eyebrow">Términos clave · 2 de 3</p>
+    <h2>Lo que muestra el mapa</h2>
+    <dl class="terminos">
+      <dt>Cobertura (vacunación completa):</dt><dd>porcentaje de la población que recibió todas las dosis del esquema inicial. No cuenta los refuerzos.</dd>
+      <dt>Exceso de mortalidad:</dt><dd>muertes totales por sobre las que se esperaban en un año normal, por millón de habitantes. Incluye muertes por COVID y por otras causas. En el mapa se ve «del mes» (cuánto subió ese mes).</dd>
+      <dt>Rigurosidad de las medidas:</dt><dd>índice de 0 a 100 (Universidad de Oxford) que resume qué tan estrictas eran las medidas decretadas, como cuarentenas, cierre de colegios y restricciones de viaje. Mide lo decretado, no lo cumplido.</dd>
+    </dl>
+  </section>
+
+  <section class="lamina" data-titulo="Términos clave 3: variante, supuesto, correlación" aria-label="Lámina 4">
+    <p class="eyebrow">Términos clave · 3 de 3</p>
+    <h2>Cuidado al concluir</h2>
+    <dl class="terminos">
+      <dt>Variante:</dt><dd>versión del virus con cambios; puede contagiar más o escapar en parte a la inmunidad.</dd>
+      <dt>Supuesto del modelo:</dt><dd>condición que el modelo da por cierta para simplificar (por ejemplo, que la vacuna protege al 100 %). Los 5 supuestos: la vacuna protege al 100 %, la protección dura para siempre, el virus no cambia, el contacto es al azar, quien se contagió no se reinfecta.</dd>
+      <dt>Correlación y causa:</dt><dd>que dos cosas ocurran juntas no prueba que una cause la otra.</dd>
+    </dl>
+  </section>
+
+  <section class="lamina" data-titulo="El modelo: umbral 1 − 1/R₀" aria-label="Lámina 5">
     <p class="eyebrow">El modelo</p>
     <h2>¿Cuánta gente tiene que estar inmune?</h2>
-    <p><strong>R<sub>0</sub></strong>: cuántas personas contagia, en promedio, una persona enferma cuando nadie es inmune.</p>
-    <p>Umbral de inmunidad de rebaño: la parte de la población que debe ser inmune para que el brote se apague.</p>
+    <p>El umbral de inmunidad depende de R₀:</p>
     <div class="cols" style="align-items:center">
       <div style="text-align:center"><span class="formula">1 − 1/R<sub>0</sub></span></div>
       <table style="margin:0 auto">
@@ -97,24 +135,12 @@
         <tbody><tr><td>2</td><td>50 %</td></tr><tr><td>3</td><td>67 %</td></tr><tr><td>5</td><td>80 %</td></tr><tr><td>8</td><td>88 %</td></tr></tbody>
       </table>
     </div>
+    <p class="suave">Anota cuáles de los cinco supuestos crees que no se cumplen en la realidad. Lo retomas más adelante.</p>
   </section>
 
-  <section class="lamina" aria-label="Lámina 3">
-    <p class="eyebrow">El modelo</p>
-    <h2>Cinco supuestos del modelo</h2>
-    <ol class="supuestos">
-      <li><span class="num">1</span>La vacuna protege al 100 %.</li>
-      <li><span class="num">2</span>La protección dura para siempre.</li>
-      <li><span class="num">3</span>El virus no cambia.</li>
-      <li><span class="num">4</span>El contacto es al azar.</li>
-      <li><span class="num">5</span>Quien se contagió no se reinfecta.</li>
-    </ol>
-    <p class="suave">Anota cuáles crees que no se cumplen en la realidad. Lo retomas más adelante.</p>
-  </section>
-
-  <section class="lamina" aria-label="Lámina 4">
-    <p class="eyebrow">Simulador · minutos 15 a 25</p>
-    <h2>Abre el simulador en tu celular</h2>
+  <section class="lamina" data-titulo="Simulador (minutos 20 a 30)" aria-label="Lámina 6">
+    <p class="eyebrow">Simulador · minutos 20 a 30</p>
+    <h2>Abre el simulador en tu computador</h2>
     <div class="cols">
       <div>
         <ol>
@@ -122,77 +148,78 @@
           <li>Marca tus predicciones <strong>antes</strong> de correr cada caso.</li>
           <li>Anota en tu cuaderno qué pasó y por qué.</li>
         </ol>
-        <p class="url">https://bengrez.github.io/aula-herramientas/vacunas-rebano/</p>
+        <p><a class="boton" href="../vacunas-rebano/" target="_blank" rel="noopener">Abrir el simulador</a></p>
+        <p class="url">bengrez.github.io/aula-herramientas/vacunas-rebano/</p>
         <p><button type="button" class="crono" data-seg="600" data-nom="Simulador">▶ 10:00</button></p>
       </div>
-      <div class="qr" style="flex:0 0 330px">{{QR_VACUNAS}}</div>
+      <div class="qr" style="flex:0 0 310px">{{QR_VACUNAS}}</div>
     </div>
   </section>
 
-  <section class="lamina" aria-label="Lámina 5">
+  <section class="lamina" data-titulo="Cómo se lee el mapa" aria-label="Lámina 7">
     <p class="eyebrow">El mapa de la pandemia</p>
     <h2>Cómo se lee el mapa</h2>
     <div class="cols">
       <div>
-        <p class="grande" style="font-size:34px">Tres capas, un deslizador:</p>
+        <p class="grande" style="font-size:34px">Tres capas y un deslizador:</p>
         <ul>
-          <li><strong>Exceso de muertes del mes</strong>: cuántas personas más murieron que las esperadas, por millón de habitantes.</li>
+          <li><strong>Exceso de muertes del mes</strong>.</li>
           <li><strong>% con vacunación completa</strong>.</li>
-          <li><strong>Rigurosidad de las medidas</strong>: de 0 a 100.</li>
+          <li><strong>Rigurosidad de las medidas</strong>, de 0 a 100.</li>
         </ul>
+        <p class="suave">Gris con trama: sin dato. El color nunca es la única señal: lee el valor en la tabla.</p>
       </div>
       <div>
         <ol>
           <li>Elige la capa.</li>
           <li>Mueve el mes con el deslizador o reproduce.</li>
-          <li>Toca un país para leer su valor.</li>
+          <li>Pasa el mouse sobre un país para ver su valor; haz clic para elegirlo.</li>
         </ol>
-        <p class="suave">Exceso del mes = acumulado de este mes − acumulado del mes anterior. Si es negativo, murió menos gente de la esperada. Gris con trama: sin dato.</p>
+        <p class="suave">Teclado: Tab para moverte, flechas en el deslizador, espacio para reproducir o pausar.</p>
       </div>
     </div>
   </section>
 
-  <section class="lamina" aria-label="Lámina 6">
-    <p class="eyebrow">Trabajo en grupos de 4 · minutos 25 a 50</p>
-    <h2>Cada persona tiene un rol</h2>
-    <div class="roles">
-      <div class="rol"><span class="num">A</span><div><strong>Modelo y supuestos</strong><span>Qué supuestos del modelo se cumplen y cuáles no, según los datos de tu par.</span></div></div>
-      <div class="rol"><span class="num">B</span><div><strong>Comparar medidas</strong><span>Cómo se compara la rigurosidad de los dos países.</span></div></div>
-      <div class="rol"><span class="num">C</span><div><strong>Comparar vacunación y su momento</strong><span>Qué % vacunado había en cada momento clave.</span></div></div>
-      <div class="rol"><span class="num">D</span><div><strong>Causas alternativas</strong><span>Qué otra cosa pudo influir y qué dato la comprobaría.</span></div></div>
-    </div>
-    <p style="margin:14px 0 10px;font-size:30px">Tu grupo trabaja un par con el mapa. Las respuestas van en la hoja de papel.</p>
-    <p><button type="button" class="crono" data-seg="1500" data-nom="Trabajo por rol">▶ 25:00</button></p>
+  <section class="lamina" data-titulo="Cómo trabajamos" aria-label="Lámina 8">
+    <p class="eyebrow">Exploración del par · minutos 30 a 65</p>
+    <h2>Cómo trabajamos</h2>
+    <ol class="supuestos">
+      <li><span class="num">1</span>Grupos de 4.</li>
+      <li><span class="num">2</span>Todos abren el mapa de su par.</li>
+      <li><span class="num">3</span>Una hoja por grupo.</li>
+      <li><span class="num">4</span>Turnen quién escribe.</li>
+      <li><span class="num">5</span>Cada etapa tiene su cronómetro.</li>
+    </ol>
+    <p style="margin:6px 0 0"><button type="button" class="crono" data-seg="2100" data-nom="Exploración del par">▶ 35:00</button></p>
   </section>
 
-  <section class="lamina" aria-label="Lámina 7">
+  <section class="lamina" data-titulo="Línea de tiempo de la clase" aria-label="Lámina 9">
     <p class="eyebrow">Línea de tiempo de la clase · 90 minutos</p>
     <h2 style="font-size:40px;margin-bottom:10px">Cada etapa tiene su cronómetro</h2>
     <table class="linea">
       <tbody>
-        <tr><td>0–15</td><td>Entrada y modelo</td><td class="dur">15 min</td><td class="cr"><button type="button" class="crono" data-seg="900" data-nom="Entrada y modelo">▶ 15:00</button></td></tr>
-        <tr><td>15–25</td><td>Simulador</td><td class="dur">10 min</td><td class="cr"><button type="button" class="crono" data-seg="600" data-nom="Simulador">▶ 10:00</button></td></tr>
-        <tr><td>25–50</td><td>Trabajo por rol</td><td class="dur">25 min</td><td class="cr"><button type="button" class="crono" data-seg="1500" data-nom="Trabajo por rol">▶ 25:00</button></td></tr>
-        <tr><td>50–70</td><td>Puesta en común (4 min por experto)</td><td class="dur">20 min</td><td class="cr"><button type="button" class="crono" data-seg="240" data-nom="Un experto">▶ 4:00</button></td></tr>
-        <tr><td>70–85</td><td>Conclusión del grupo</td><td class="dur">15 min</td><td class="cr"><button type="button" class="crono" data-seg="900" data-nom="Conclusión del grupo">▶ 15:00</button></td></tr>
-        <tr><td>85–90</td><td>Cierre y entrega</td><td class="dur">5 min</td><td class="cr"><button type="button" class="crono" data-seg="300" data-nom="Cierre y entrega">▶ 5:00</button></td></tr>
+        <tr><td>0–20</td><td>Entrada y términos clave</td><td class="dur">20 min</td><td class="cr"><button type="button" class="crono" data-seg="1200" data-nom="Entrada y términos clave">▶ 20:00</button></td></tr>
+        <tr><td>20–30</td><td>Simulador</td><td class="dur">10 min</td><td class="cr"><button type="button" class="crono" data-seg="600" data-nom="Simulador">▶ 10:00</button></td></tr>
+        <tr><td>30–65</td><td>Exploración del par en el mapa</td><td class="dur">35 min</td><td class="cr"><button type="button" class="crono" data-seg="2100" data-nom="Exploración del par">▶ 35:00</button></td></tr>
+        <tr><td>65–80</td><td>Conclusión del grupo</td><td class="dur">15 min</td><td class="cr"><button type="button" class="crono" data-seg="900" data-nom="Conclusión del grupo">▶ 15:00</button></td></tr>
+        <tr><td>80–90</td><td>Cierre y ticket individual</td><td class="dur">10 min</td><td class="cr"><button type="button" class="crono" data-seg="600" data-nom="Cierre y ticket">▶ 10:00</button></td></tr>
       </tbody>
     </table>
   </section>
 
-  <section class="lamina" aria-label="Lámina 8">
+  <section class="lamina" data-titulo="Los siete pares (1 a 4)" aria-label="Lámina 10">
     <p class="eyebrow">Los siete pares · 1 de 2</p>
-    <h2 style="font-size:38px;margin-bottom:12px">Escanea el código de tu par</h2>
+    <h2 style="font-size:38px;margin-bottom:8px">Abre el mapa de tu par</h2>
     <div class="pares">{{PARES_1}}</div>
   </section>
 
-  <section class="lamina" aria-label="Lámina 9">
+  <section class="lamina" data-titulo="Los siete pares (5 a 7)" aria-label="Lámina 11">
     <p class="eyebrow">Los siete pares · 2 de 2</p>
-    <h2 style="font-size:38px;margin-bottom:12px">Escanea el código de tu par</h2>
-    <div class="pares tres">{{PARES_2}}</div>
+    <h2 style="font-size:38px;margin-bottom:8px">Abre el mapa de tu par</h2>
+    <div class="pares">{{PARES_2}}</div>
   </section>
 
-  <section class="lamina" aria-label="Lámina 10">
+  <section class="lamina" data-titulo="Los límites de los datos" aria-label="Lámina 12">
     <p class="eyebrow">Antes de concluir</p>
     <h2>Los límites de los datos</h2>
     <ul>
@@ -205,23 +232,25 @@
     <p class="pie-lamina">Fuente: Our World in Data, «Coronavirus Pandemic (COVID-19)», CC BY 4.0. Datos congelados el 19 de agosto de 2024.</p>
   </section>
 
-  <section class="lamina" aria-label="Lámina 11">
-    <p class="eyebrow">Cierre · minutos 85 a 90</p>
+  <section class="lamina" data-titulo="Cierre: puedo decir… pero no puedo decir…" aria-label="Lámina 13">
+    <p class="eyebrow">Cierre · minutos 80 a 90</p>
     <h2>Tu conclusión, con límites</h2>
     <div class="decir">Puedo decir que…<br>pero no puedo decir que…</div>
     <ol>
       <li>Vuelve a tu hipótesis del comienzo y reescríbela con lo que aprendiste.</li>
-      <li>Entrega la hoja de tu grupo.</li>
+      <li>Entrega la hoja de tu grupo y tu ticket individual.</li>
     </ol>
-    <p><button type="button" class="crono" data-seg="300" data-nom="Cierre y entrega">▶ 5:00</button></p>
+    <p><button type="button" class="crono" data-seg="600" data-nom="Cierre y ticket">▶ 10:00</button></p>
   </section>
 
 </div>
 </div>
+<div id="indice" hidden role="dialog" aria-label="Índice de láminas"><div class="caja"><p class="eyebrow" style="margin:0 0 6px">Índice de láminas</p><ol id="lista-indice"></ol><button type="button" id="cerrar-indice">Cerrar</button></div></div>
 <div id="barra">
   <button type="button" id="ant" aria-label="Lámina anterior">◀</button>
   <span id="cuenta" aria-live="off"></span>
   <button type="button" id="sig" class="principal" aria-label="Lámina siguiente">▶</button>
+  <button type="button" id="btn-indice">Índice</button>
   <button type="button" id="pant">Pantalla completa</button>
   <span id="reloj" aria-hidden="true"></span>
 </div>
@@ -240,14 +269,19 @@
     esc.style.left = Math.max(0, (w - 1280 * s) / 2) + 'px';
     esc.style.top = Math.max(0, (h - 720 * s) / 2) + 'px';
   }
-  function ir(i, silencio) {
+  // mostrar: solo dibuja la lámina. ir: cambia la dirección (#N) para que el botón «Atrás» del navegador vuelva a la lámina anterior.
+  function mostrar(i, silencio) {
     if (i < 0 || i >= n) return;
     laminas[actual].className = 'lamina'; actual = i; laminas[actual].className = 'lamina activa';
     $('cuenta').textContent = (actual + 1) + ' / ' + n;
     $('ant').setAttribute('aria-disabled', actual === 0 ? 'true' : 'false');
     $('sig').setAttribute('aria-disabled', actual === n - 1 ? 'true' : 'false');
-    try { if (history.replaceState) history.replaceState(null, '', '#' + (actual + 1)); } catch (e) { /* archivo local */ }
-    if (!silencio) $('anuncio').textContent = 'Lámina ' + (actual + 1) + ' de ' + n;
+    if (!silencio) $('anuncio').textContent = 'Lámina ' + (actual + 1) + ' de ' + n + ': ' + laminas[actual].getAttribute('data-titulo');
+  }
+  function ir(i, silencio) {
+    if (i < 0 || i >= n) return;
+    mostrar(i, silencio);
+    try { if (location.hash !== '#' + (i + 1)) location.hash = '#' + (i + 1); } catch (e) { /* sin dirección */ }
   }
   function mover(d) { ir(actual + d); }
 
@@ -288,10 +322,14 @@
   document.addEventListener('keydown', function (ev) {
     var k = ev.key, t = ev.target && ev.target.tagName;
     if (ev.altKey || ev.ctrlKey || ev.metaKey) return;
+    if (!$('indice').hidden) { if (k === 'Escape' || k === 'Esc') { ev.preventDefault(); cerrarIndice(); } return; }
+    if (k === 'Escape' || k === 'Esc') return;
+    if (t === 'A') { if (k === ' ') return; }
     if (k === 'ArrowRight' || k === 'PageDown' || (k === ' ' && t !== 'BUTTON') || k === 'Right') { ev.preventDefault(); mover(1); }
     else if (k === 'ArrowLeft' || k === 'PageUp' || k === 'Left') { ev.preventDefault(); mover(-1); }
     else if (k === 'Home') { ev.preventDefault(); ir(0); }
     else if (k === 'End') { ev.preventDefault(); ir(n - 1); }
+    else if (k === 'i' || k === 'I') { ev.preventDefault(); abrirIndice(); }
   });
   // Clic en la lámina (fuera de botones y enlaces): mitad derecha avanza, tercio izquierdo retrocede
   vista.addEventListener('click', function (ev) {
@@ -318,11 +356,28 @@
   if (!(document.documentElement.requestFullscreen || document.documentElement.webkitRequestFullscreen)) $('pant').hidden = true;
   document.addEventListener('fullscreenchange', ajustar); document.addEventListener('webkitfullscreenchange', ajustar);
   window.addEventListener('resize', ajustar); window.addEventListener('orientationchange', ajustar);
-  window.addEventListener('hashchange', function () { var m = /^#(\d+)$/.exec(location.hash); if (m) ir(Number(m[1]) - 1, true); });
+  window.addEventListener('hashchange', function () { var m = /^#(\d+)$/.exec(location.hash); if (m && Number(m[1]) >= 1 && Number(m[1]) <= n) mostrar(Number(m[1]) - 1, true); });
+  // Índice con enlace directo a cada lámina
+  var li = '', k;
+  for (k = 0; k < n; k++) li += '<li><a href="#' + (k + 1) + '" data-i="' + k + '">' + (k + 1) + '. ' + laminas[k].getAttribute('data-titulo') + '</a></li>';
+  $('lista-indice').innerHTML = li;
+  function abrirIndice() {
+    var as = $('lista-indice').getElementsByTagName('a'), j;
+    for (j = 0; j < as.length; j++) as[j].className = j === actual ? 'actual' : '';
+    $('indice').hidden = false; as[actual].focus();
+  }
+  function cerrarIndice() { $('indice').hidden = true; $('btn-indice').focus(); }
+  $('btn-indice').addEventListener('click', function (ev) { ev.stopPropagation(); abrirIndice(); });
+  $('cerrar-indice').addEventListener('click', cerrarIndice);
+  $('lista-indice').addEventListener('click', function (ev) {
+    var a = ev.target; while (a && a.tagName !== 'A') a = a.parentNode;
+    if (!a) return; ev.preventDefault(); ir(Number(a.getAttribute('data-i'))); $('indice').hidden = true; $('btn-indice').focus();
+  });
+  $('indice').addEventListener('click', function (ev) { if (ev.target === $('indice')) cerrarIndice(); });
 
   ajustar();
   var m0 = /^#(\d+)$/.exec(location.hash || '');
-  ir(m0 && Number(m0[1]) >= 1 && Number(m0[1]) <= n ? Number(m0[1]) - 1 : 0, true);
+  mostrar(m0 && Number(m0[1]) >= 1 && Number(m0[1]) <= n ? Number(m0[1]) - 1 : 0, true);
   setTimeout(ajustar, 50);
 })();
 </script>
