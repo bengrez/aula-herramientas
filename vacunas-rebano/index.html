@@ -192,6 +192,40 @@
 .aula-pie{text-align:center;padding-block:1.25rem 1.5rem}
 @media print{.aula-volver,.aula-pie{display:none}}
 </style>
+<style id="px-estilos">
+/* Sección 8 · Del COVID a la próxima pandemia (usa las clases de las otras secciones; todo lo nuevo lleva prefijo px-) */
+#patogeno h3 { margin: 16px 0 6px; }
+#patogeno .aviso-px { background: #FFFBEB; border-left: 4px solid var(--ambar); border-radius: 4px; padding: 8px 10px; font-size: 0.95rem; }
+#patogeno .presets button { min-height: 52px; }
+#px-esc-info { font-size: 0.93rem; min-height: 3.2em; }
+#px-esc-info p { margin: 0 0 4px; }
+.px-ctl { margin: 12px 0 4px; }
+.px-ctl label { display: block; font-weight: 700; }
+.px-ctl output { font-variant-numeric: tabular-nums; }
+.px-sl { display: block; width: 100%; height: 44px; margin: 2px 0 0; accent-color: var(--cobalto); }
+.px-paso-nota { margin: 0 0 4px; font-size: 0.85rem; }
+.px-res { border: 1px solid var(--borde); border-radius: 6px; background: var(--marfil); padding: 8px 12px; margin: 12px 0 8px; }
+.px-res p { margin: 2px 0; }
+.px-calculo { color: var(--suave); font-size: 0.92rem; font-variant-numeric: tabular-nums; }
+.px-umbral { font-size: 1.2rem; }
+.px-umbral strong { font-variant-numeric: tabular-nums; }
+.px-veredicto { font-weight: 700; }
+.px-veredicto.no { color: var(--carmesi); }
+#px-barra { display: block; width: 100%; max-width: 520px; height: auto; background: #fff; border: 1px solid var(--borde); border-radius: 6px; }
+.px-ref { font-size: 0.95rem; margin: 8px 0 4px; }
+#px-pob { display: grid; grid-template-columns: repeat(20, 1fr); gap: 2px; width: 100%; padding: 2px; margin: 8px 0; }
+.px-w { background: #fff; box-shadow: inset 0 0 0 3px var(--cobalto); border-radius: 50%; }
+.c.px-w { background: #fff; box-shadow: inset 0 0 0 2px var(--cobalto); border-radius: 50%; }
+.c.px-w::before { content: ""; position: absolute; left: 35%; top: 35%; width: 30%; height: 30%; background: var(--cobalto); border-radius: 50%; opacity: 0.35; }
+.px-ley { grid-template-columns: 1fr 1fr; }
+.px-datos { border: 1px solid var(--borde); border-radius: 6px; padding: 8px 12px; background: var(--marfil); margin-bottom: 8px; }
+.px-datos p { margin: 2px 0; }
+.px-datos strong { font-variant-numeric: tabular-nums; }
+.px-estado { font-weight: 700; min-height: 1.5em; }
+.px-fuentes ul { margin: 6px 0 0; padding-left: 20px; }
+.px-fuentes li { font-size: 0.9rem; }
+.px-enlace { display: block; min-height: 44px; padding: 10px 0; color: var(--cobalto); font-weight: 700; }
+</style>
 </head>
 <body>
 <p class="aula-volver"><a href="../">← Herramientas de aula</a></p>
@@ -558,6 +592,107 @@
       <li>Perú tuvo medidas más estrictas que Nueva Zelanda durante casi todo 2020 y muchas más muertes. ¿Significa que las medidas no sirven? Argumenta con la causa que anotaste en el cuaderno en el paso 2.</li>
       <li>Chile pasó el 85 % de vacunación y a comienzos de 2022 igual tuvo una ola de muertes. ¿Falló la vacuna? Argumenta con la diferencia entre protegerse del contagio y protegerse de la muerte.</li>
     </ol>
+  </section>
+
+  <section id="patogeno">
+    <h2 class="paso">8 · Del COVID a la próxima pandemia</h2>
+    <p class="pregunta">¿Cuánta cobertura haría falta para frenar un patógeno nuevo?</p>
+    <p>El simulador de la sección 4 supone dos cosas que en la realidad casi nunca se cumplen: que la vacuna protege al 100 % y que R<sub>0</sub> no cambia. Si la vacuna protege solo a una parte de las personas vacunadas, hace falta más cobertura para llegar al mismo umbral:</p>
+    <div class="formula">Umbral efectivo = (1 − 1/R<sub>0</sub>) ÷ eficacia</div>
+    <p class="ojo">Aquí «eficacia» es la protección de la vacuna contra el <strong>contagio</strong>, no contra la enfermedad grave. Si el umbral pasa de 100 %, ni vacunando a todas las personas se frena el brote solo con vacunas.</p>
+    <p class="aviso-px"><strong>Valores aproximados para pensar, no predicciones.</strong></p>
+
+    <ol>
+      <li>Elige un escenario o ajusta R<sub>0</sub>.</li>
+      <li>Elige un ejemplo de eficacia o ajústala.</li>
+      <li>Mueve la cobertura y lee el resultado.</li>
+      <li>Corre la simulación de 400 personas y compárala con el resultado.</li>
+    </ol>
+
+    <h3 id="px-esc-t">Escenarios</h3>
+    <div class="presets" id="px-esc" role="group" aria-labelledby="px-esc-t">
+      <button type="button" data-esc="covid" aria-pressed="true">COVID original<small>R<sub>0</sub> = 2,79</small></button>
+      <button type="button" data-esc="delta" aria-pressed="false">Delta<small>R<sub>0</sub> = 5,08</small></button>
+      <button type="button" data-esc="omicron" aria-pressed="false">Ómicron<small>R<sub>0</sub> ≈ 8,2</small></button>
+      <button type="button" data-esc="sarampion" aria-pressed="false">Sarampión<small>R<sub>0</sub> 12 a 18 (ejemplo: 15)</small></button>
+      <button type="button" data-esc="x" aria-pressed="false">Patógeno X: elige tú<small>mueve R<sub>0</sub></small></button>
+    </div>
+    <div class="dato" id="px-esc-info"></div>
+
+    <h3 id="px-efi-t">Eficacia contra el contagio</h3>
+    <div class="presets px-tres" id="px-efi" role="group" aria-labelledby="px-efi-t">
+      <button type="button" data-efi="90" aria-pressed="false">Alta: 90 %<small>ejemplo ilustrativo</small></button>
+      <button type="button" data-efi="70" aria-pressed="true">Media: 70 %<small>ejemplo ilustrativo</small></button>
+      <button type="button" data-efi="50" aria-pressed="false">Baja: 50 %<small>ejemplo ilustrativo</small></button>
+    </div>
+    <p class="ojo">La eficacia contra el contagio baja con el tiempo y con las variantes, y es mayor contra la enfermedad grave. Estos tres números son ejemplos para practicar, no datos de una vacuna.</p>
+
+    <div class="px-ctl">
+      <label for="px-r0">R<sub>0</sub>: <output id="px-r0-v" for="px-r0"></output></label>
+      <input type="range" id="px-r0" class="px-sl" min="1" max="18" step="0.5" value="5">
+      <p class="ojo px-paso-nota">El deslizador avanza de a 0,5. Un escenario usa su valor exacto.</p>
+    </div>
+    <div class="px-ctl">
+      <label for="px-efi-sl">Eficacia contra el contagio: <output id="px-efi-v" for="px-efi-sl"></output></label>
+      <input type="range" id="px-efi-sl" class="px-sl" min="30" max="100" step="5" value="70">
+    </div>
+    <div class="px-ctl">
+      <label for="px-cob">Cobertura (vacunación completa): <output id="px-cob-v" for="px-cob"></output></label>
+      <input type="range" id="px-cob" class="px-sl" min="0" max="100" step="1" value="60">
+    </div>
+
+    <div id="px-res" class="px-res">
+      <p class="px-calculo" id="px-calculo"></p>
+      <p class="px-umbral">Umbral efectivo: <strong id="px-umbral"></strong></p>
+      <p class="px-veredicto" id="px-veredicto"></p>
+    </div>
+    <svg id="px-barra" viewBox="0 0 340 110" role="img" aria-label="Barra de cobertura, umbral y referencia"></svg>
+    <p class="px-ref" id="px-ref"></p>
+    <p id="px-anuncio" class="solo-lector" aria-live="polite" aria-atomic="true"></p>
+
+    <h3>Simulación de 400 personas</h3>
+    <p>Cada persona contagiada contacta, en la ronda siguiente, a tantas personas al azar como R<sub>0</sub> redondeado (<strong id="px-contactos"></strong>). Se contagian las que no están protegidas. Cada persona vacunada se protege con probabilidad igual a la eficacia. El azar es siempre el mismo (semilla fija): si repites con los mismos valores, sale lo mismo.</p>
+    <div class="acciones">
+      <button type="button" id="px-correr" class="principal">Correr</button>
+      <button type="button" id="px-sig">Siguiente ronda</button>
+      <button type="button" id="px-rep">Repetir</button>
+    </div>
+    <div id="px-pob" role="img" aria-label="Población de 400 personas"></div>
+    <div class="leyenda px-ley">
+      <div><span class="m v"></span>Vacunada y protegida</div>
+      <div><span class="m px-w"></span>Vacunada sin protección</div>
+      <div><span class="m s"></span>No vacunada, sana</div>
+      <div><span class="m i"></span>Contagiada en esta ronda</div>
+      <div><span class="m r"></span>Ya se contagió antes</div>
+    </div>
+    <div id="datos-px" class="px-datos">
+      <p>Ronda: <strong id="px-ronda">0</strong></p>
+      <p>Contagiados: <strong id="px-total">0</strong> de 400</p>
+      <p>Vacunadas y protegidas: <strong id="px-prot">0</strong></p>
+      <p id="px-estado" class="px-estado"></p>
+    </div>
+    <p class="ojo">La simulación redondea R<sub>0</sub> y mezcla a todas las personas al azar: se parece al modelo, no lo reproduce exacto. Una sola corrida no es una predicción.</p>
+
+    <div class="cuaderno"><strong>Para conversar.</strong>
+      <ol>
+        <li>¿Qué tendría que estar listo antes de que llegue un patógeno nuevo?</li>
+        <li>¿Qué medidas compran tiempo mientras llega la vacuna y qué mostraron los países del mapa sobre eso?</li>
+        <li>¿Qué no sabríamos al comienzo de una pandemia?</li>
+      </ol>
+    </div>
+
+    <div class="nota px-fuentes">
+      <h4>Fuentes de las cifras</h4>
+      <p><strong>Valores aproximados para pensar, no predicciones.</strong> Cada R<sub>0</sub> es una estimación que cambia según el estudio, el país y el momento. Se citan las cifras y se enlaza la fuente; no se copian textos ni figuras.</p>
+      <ul>
+        <li>COVID original (2,79) y Delta (5,08): Liu Y, Rocklöv J. <em>J Travel Med</em> 2021;28(7):taab124 (2,79: mediana de 14 estimaciones; 5,08: promedio, con estudios entre 3,2 y 8).<a class="px-enlace" href="https://pmc.ncbi.nlm.nih.gov/articles/PMC8436367" target="_blank" rel="noopener">Abrir el artículo de 2021</a></li>
+        <li>Ómicron (≈ 8,2): Liu Y, Rocklöv J. <em>J Travel Med</em> 2022;29(3):taac037. Es el promedio del resumen del artículo; los estudios que reúne van de 5,5 a 24, y el texto del mismo artículo da un promedio de 9,5.<a class="px-enlace" href="https://pmc.ncbi.nlm.nih.gov/articles/PMC8992231" target="_blank" rel="noopener">Abrir el artículo de 2022</a></li>
+        <li>Sarampión (12 a 18; ejemplo 15): rango citado por Plans-Rubió P., <em>Vaccines</em> 2020;8(2):218, que lo atribuye a una revisión de Anderson y May (1991). Otras revisiones encuentran valores más dispersos (Guerra et al., <em>Lancet Infect Dis</em> 2017). La OMS dice que una persona con sarampión puede contagiar hasta a 18; los CDC, a una docena.<a class="px-enlace" href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7349949/" target="_blank" rel="noopener">Abrir la revisión de 2020</a><a class="px-enlace" href="https://www.who.int/news-room/fact-sheets/detail/measles" target="_blank" rel="noopener">Abrir la hoja informativa de la OMS</a></li>
+        <li>Cobertura de dos dosis de sarampión: los CDC indican que una cobertura de al menos 95 % con ambas dosis previene brotes y protege a la comunidad.<a class="px-enlace" href="https://www.cdc.gov/global-measles-vaccination/about/index.html" target="_blank" rel="noopener">Abrir la página de los CDC</a></li>
+        <li>Cobertura de COVID-19 de la referencia real: Our World in Data, licencia CC BY 4.0 (los mismos datos de la sección 5).</li>
+        <li>Las eficacias de 90, 70 y 50 % son ejemplos ilustrativos, sin fuente.</li>
+      </ul>
+    </div>
   </section>
 
   <footer>En la realidad ninguna vacuna protege al 100 % y las personas no vacunadas suelen vivir cerca unas de otras, así que pueden ocurrir brotes locales aunque la cobertura sea alta.<br><br>Datos de COVID-19 (2020 a 2022), reducidos a series mensuales para esta página: Our World in Data, licencia CC BY 4.0. Muertes en exceso: Human Mortality Database y World Mortality Dataset. Vacunación: reportes oficiales de cada país, recopilados por Mathieu, Ritchie, Ortiz-Ospina et al., «A global database of COVID-19 vaccinations», Nature Human Behaviour (2021). Rigurosidad de las medidas: Oxford COVID-19 Government Response Tracker, Blavatnik School of Government, Universidad de Oxford. Cuando un país dejó de informar vacunación, se mantiene su último dato.</footer>
@@ -1446,6 +1581,222 @@ function conteos(p) {
   requestAnimationFrame(cuadro);
 })();
 /*FONDO-RED-END*/
+</script>
+<script>
+/*PATOGENO-START*/
+/* Sección 8 · Del COVID a la próxima pandemia. ES5, sin librerías, sin envío ni almacenamiento de datos. */
+(function () {
+  'use strict';
+  var $ = function (id) { return document.getElementById(id); };
+  if (!$('patogeno')) return;
+  var NUM = 400, SEMILLA = 20261022;
+  var MIN = '−';
+  var reducir = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+
+  // ---- Referencia real: la cobertura final (dic-2022) más alta entre los países de la variable D de la sección 5.
+  // D vive dentro de otra función de esta página; se lee del texto de ese script para no tocar la sección 5.
+  function leerD() {
+    var ss = document.getElementsByTagName('script'), i, t, a, d, n, c;
+    for (i = 0; i < ss.length; i++) {
+      t = ss[i].text || ''; a = t.indexOf('var D = {');
+      if (a < 0) continue;
+      a += 8; d = 0;
+      for (n = a; n < t.length; n++) {
+        c = t.charAt(n);
+        if (c === '{') d++; else if (c === '}') { d--; if (d === 0) break; }
+      }
+      try { return JSON.parse(t.substring(a, n + 1)); } catch (e) { return null; }
+    }
+    return null;
+  }
+  var REF = null;
+  (function () {
+    var D = leerD(), k, p, v;
+    if (!D || !D.p || !D.meses) return;
+    for (k in D.p) {
+      if (!D.p.hasOwnProperty(k)) continue;
+      p = D.p[k]; v = p.v[p.v.length - 1];
+      if (typeof v === 'number' && (!REF || v > REF.v)) REF = { n: p.n, v: v, mes: D.meses[D.meses.length - 1] };
+    }
+  })();
+
+  // ---- Escenarios: cifras con su fuente (ver el pie de la sección)
+  var ESC = {
+    covid: { n: 'COVID original', r0: 2.79, info: '<p><strong>COVID original: R<sub>0</sub> = 2,79.</strong> Mediana de 14 estimaciones reunidas por Liu y Rocklöv (<em>J Travel Med</em>, 2021).</p>' },
+    delta: { n: 'Delta', r0: 5.08, info: '<p><strong>Delta: R<sub>0</sub> = 5,08.</strong> Promedio de Liu y Rocklöv (<em>J Travel Med</em>, 2021); los estudios que reúne van de 3,2 a 8.</p>' },
+    omicron: { n: 'Ómicron', r0: 8.2, info: '<p><strong>Ómicron: R<sub>0</sub> ≈ 8,2.</strong> Promedio del resumen de Liu y Rocklöv (<em>J Travel Med</em>, 2022). Los estudios que reúne van de 5,5 a 24: es una cifra muy incierta.</p>' },
+    sarampion: { n: 'Sarampión', r0: 15, info: '<p><strong>Sarampión: R<sub>0</sub> entre 12 y 18; aquí usamos 15 como ejemplo.</strong> El rango se cita en la literatura y hay estimaciones más dispersas. Los CDC recomiendan al menos 95 % de cobertura con dos dosis.</p>' },
+    x: { n: 'Patógeno X', r0: null, info: '<p><strong>Patógeno X: elige tú.</strong> No hay una cifra de referencia: mueve R<sub>0</sub> y mira qué pasa con el umbral.</p>' }
+  };
+
+  var est = { esc: 'covid', r0: 2.79, efi: 70, cob: 60 };
+
+  function coma(x) { return String(x).replace('.', ','); }
+  function r1(x) { return Math.round(x * 10) / 10; }
+  function fr0(x) { return coma(x); }
+  function pct(x) { return coma(r1(x)) + ' %'; }
+  function umbral() {
+    // (1 − 1/R0) ÷ eficacia, en %. Con R0 ≤ 1 no hay brote que sostener: umbral 0 %.
+    var base = est.r0 <= 1 ? 0 : 1 - 1 / est.r0;
+    return 100 * base / (est.efi / 100);
+  }
+  function contactos() { return Math.max(1, Math.round(est.r0)); }
+  function anunciar(t) { var a = $('px-anuncio'); a.textContent = ''; a.textContent = t; }
+
+  // ---- Resultado en texto y barra
+  function textoVeredicto(u) {
+    if (u > 100) return { t: 'El umbral efectivo supera 100 %: no se puede frenar solo con vacunación. Aunque se vacunara a todas las personas, la vacuna no alcanza; hacen falta otras medidas.', no: true };
+    if (est.cob >= u) return { t: 'Con esta cobertura (' + est.cob + ' %) se alcanza el umbral.', no: false };
+    return { t: 'Con esta cobertura (' + est.cob + ' %) no se alcanza el umbral: faltan ' + coma(r1(u - est.cob)) + ' puntos de cobertura.', no: true };
+  }
+  function dibujarBarra(u) {
+    var s = $('px-barra'), W = 340, X0 = 14, X1 = 326, y = 46, h = 22, fx = function (p) { return X0 + (X1 - X0) * Math.min(p, 100) / 100; };
+    var out = '', i, fuera = u > 100;
+    out += '<rect x="' + X0 + '" y="' + y + '" width="' + (X1 - X0) + '" height="' + h + '" fill="#fff" stroke="#64748b"/>';
+    out += '<rect x="' + X0 + '" y="' + y + '" width="' + (fx(est.cob) - X0) + '" height="' + h + '" fill="#2563EB"/>';
+    for (i = 0; i <= 100; i += 25) out += '<line x1="' + fx(i) + '" x2="' + fx(i) + '" y1="' + (y + h) + '" y2="' + (y + h + 5) + '" stroke="#64748b"/><text x="' + fx(i) + '" y="' + (y + h + 19) + '" font-size="13" fill="#475569" text-anchor="' + (i === 0 ? 'start' : i === 100 ? 'end' : 'middle') + '">' + i + ' %</text>';
+    // umbral: línea continua con triángulo hacia abajo (arriba de la barra)
+    var xu = fx(u);
+    out += '<line x1="' + xu + '" x2="' + xu + '" y1="22" y2="' + (y + h) + '" stroke="#B91C1C" stroke-width="3"/>';
+    out += '<polygon points="' + (xu - 6) + ',16 ' + (xu + 6) + ',16 ' + xu + ',26" fill="#B91C1C"/>';
+    out += '<text x="' + (xu > 200 ? xu - 9 : xu + 9) + '" y="20" font-size="13" font-weight="700" fill="#B91C1C" text-anchor="' + (xu > 200 ? 'end' : 'start') + '">Umbral' + (fuera ? ' (' + pct(u) + ', fuera de la escala)' : '') + '</text>';
+    // referencia real: línea discontinua con cuadrado (abajo)
+    if (REF) {
+      var xr = fx(REF.v);
+      out += '<line x1="' + xr + '" x2="' + xr + '" y1="' + (y - 4) + '" y2="' + (y + h + 4) + '" stroke="#0f172a" stroke-width="3" stroke-dasharray="4 3"/>';
+      out += '<text x="' + (xr > 200 ? xr - 9 : xr + 9) + '" y="' + (y + h + 36) + '" font-size="13" fill="#0f172a" text-anchor="' + (xr > 200 ? 'end' : 'start') + '">' + REF.n + ' ' + pct(REF.v) + '</text>';
+    }
+    s.innerHTML = out;
+    s.setAttribute('aria-label', 'Barra de 0 a 100 %. Cobertura elegida: ' + est.cob + ' %. Umbral efectivo: ' + pct(u) + (fuera ? ', fuera de la escala' : '') + '.' + (REF ? ' Referencia real: ' + REF.n + ', ' + pct(REF.v) + ' a fines de 2022.' : ''));
+  }
+  function pintarResultado() {
+    var u = umbral(), v = textoVeredicto(u);
+    $('px-r0-v').textContent = fr0(est.r0) + (est.esc !== 'x' ? ' (' + ESC[est.esc].n + ')' : '');
+    $('px-efi-v').textContent = est.efi + ' %';
+    $('px-cob-v').textContent = est.cob + ' %';
+    $('px-umbral').textContent = pct(u);
+    $('px-calculo').innerHTML = '(1 ' + MIN + ' 1/' + fr0(est.r0) + ') ÷ ' + coma(est.efi / 100) + (est.r0 <= 1 ? ' = 0 % (con R<sub>0</sub> = 1 o menos el brote no crece solo)' : ' = ' + pct(u));
+    var ve = $('px-veredicto'); ve.textContent = v.t; ve.className = 'px-veredicto' + (v.no ? ' no' : '');
+    if (REF) $('px-ref').textContent = 'Referencia real: a fines de 2022, el país de la sección 5 con más vacunación completa fue ' + REF.n + ', con ' + pct(REF.v) + '. El umbral efectivo de arriba (' + pct(u) + ') queda ' + (u > REF.v ? 'por encima de lo que alcanzó ese país: ningún país de la sección 5 llegó a ese nivel.' : 'a la altura de lo que alcanzó ese país, o por debajo.');
+    else $('px-ref').textContent = '';
+    $('px-contactos').textContent = contactos() + (contactos() === 1 ? ' persona' : ' personas');
+    dibujarBarra(u);
+    $('px-esc-info').innerHTML = ESC[est.esc].info;
+  }
+  function textoAnuncio() { return 'R0 ' + fr0(est.r0) + ', eficacia ' + est.efi + ' %, cobertura ' + est.cob + ' %. Umbral efectivo ' + pct(umbral()) + '. ' + textoVeredicto(umbral()).t; }
+
+  // ---- Controles
+  function marcar(grupo, attr, valor) {
+    var bs = $(grupo).getElementsByTagName('button'), j;
+    for (j = 0; j < bs.length; j++) bs[j].setAttribute('aria-pressed', bs[j].getAttribute(attr) === String(valor) ? 'true' : 'false');
+  }
+  function nearest05(x) { return Math.max(1, Math.min(18, Math.round(x * 2) / 2)); }
+  function cambio(aviso) { reiniciarSim(); pintarResultado(); if (aviso) anunciar(textoAnuncio()); }
+  function elegirEscenario(k) {
+    est.esc = k; marcar('px-esc', 'data-esc', k);
+    if (ESC[k].r0 !== null) { est.r0 = ESC[k].r0; $('px-r0').value = nearest05(est.r0); }
+    cambio(true);
+  }
+  function elegirEficacia(v) { est.efi = v; $('px-efi-sl').value = v; marcar('px-efi', 'data-efi', v); cambio(true); }
+
+  // ---- Simulación de 400 personas (semilla fija)
+  function mulberry(a) {
+    return function () {
+      a |= 0; a = (a + 0x6D2B79F5) | 0;
+      var t = Math.imul ? Math.imul(a ^ (a >>> 15), 1 | a) : ((a ^ (a >>> 15)) * (1 | a)) | 0;
+      t = (t + (Math.imul ? Math.imul(t ^ (t >>> 7), 61 | t) : ((t ^ (t >>> 7)) * (61 | t)) | 0)) ^ t;
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+  }
+  var sim = null, celdas = [], timer = null, corriendo = false;
+  function construirCeldas() {
+    var cont = $('px-pob'), i, c;
+    cont.innerHTML = '';
+    for (i = 0; i < NUM; i++) { c = document.createElement('span'); c.className = 'c s'; cont.appendChild(c); celdas.push(c); }
+  }
+  function nuevaSim() {
+    var rnd = mulberry(SEMILLA), idx = [], e = [], i, j, t, nv = Math.round(NUM * est.cob / 100), prot = 0, sus = [];
+    for (i = 0; i < NUM; i++) { idx.push(i); e.push('s'); }
+    for (i = NUM - 1; i > 0; i--) { j = Math.floor(rnd() * (i + 1)); t = idx[i]; idx[i] = idx[j]; idx[j] = t; }
+    for (i = 0; i < nv; i++) { if (rnd() < est.efi / 100) { e[idx[i]] = 'v'; prot++; } else e[idx[i]] = 'w'; }
+    for (i = 0; i < NUM; i++) if (e[i] === 's' || e[i] === 'w') sus.push(i);
+    var s = { e: e, rnd: rnd, ronda: 0, nuevos: [], total: 0, prot: prot, fin: false, sinCaso: false };
+    if (sus.length) { j = sus[Math.floor(rnd() * sus.length)]; e[j] = 'i'; s.nuevos = [j]; s.total = 1; } else { s.fin = true; s.sinCaso = true; }
+    return s;
+  }
+  function pasoSim() {
+    var s = sim, e = s.e, i, k, j, sig = [], n = contactos();
+    if (s.fin) return false;
+    for (i = 0; i < s.nuevos.length; i++) {
+      for (k = 0; k < n; k++) {
+        j = Math.floor(s.rnd() * NUM);
+        if (e[j] === 's' || e[j] === 'w') { e[j] = 'i'; sig.push(j); }
+      }
+    }
+    // los que contagiaron esta ronda pasan a «ya se contagió antes»; los nuevos quedan como «esta ronda»
+    for (i = 0; i < s.nuevos.length; i++) e[s.nuevos[i]] = 'r';
+    for (i = 0; i < sig.length; i++) e[sig[i]] = 'i';
+    s.nuevos = sig; s.nuevosNuevos = sig; s.total += sig.length;
+    if (sig.length) s.ronda++; else s.fin = true; // la ronda final, sin contagios nuevos, no se cuenta
+    return true;
+  }
+  var CL = { s: 'c s', v: 'c v', w: 'c px-w', i: 'c i', r: 'c r' };
+  function dibujarSim(animar) {
+    var e = sim.e, i, nuevos = {};
+    if (animar && sim.nuevosNuevos) for (i = 0; i < sim.nuevosNuevos.length; i++) nuevos[sim.nuevosNuevos[i]] = true;
+    for (i = 0; i < NUM; i++) celdas[i].className = CL[e[i]] + (nuevos[i] && !reducir ? ' nuevo' : '');
+    $('px-ronda').textContent = sim.ronda;
+    $('px-total').textContent = sim.total;
+    $('px-prot').textContent = sim.prot;
+    var txt = sim.sinCaso ? 'Con esta cobertura y esta eficacia todas las personas quedaron protegidas: no hay a quién contagiar.' : sim.fin ? 'El brote terminó en la ronda ' + sim.ronda + ': contagiados ' + sim.total + ' de ' + NUM + '.' : '';
+    $('px-estado').textContent = txt;
+    $('px-pob').setAttribute('aria-label', 'Población de 400 personas. Ronda ' + sim.ronda + '. Contagiados: ' + sim.total + ' de ' + NUM + '. Vacunadas y protegidas: ' + sim.prot + '.');
+    $('px-sig').setAttribute('aria-disabled', sim.fin ? 'true' : 'false');
+    $('px-correr').setAttribute('aria-disabled', sim.fin ? 'true' : 'false');
+  }
+  function detener(aviso) {
+    if (timer) { clearTimeout(timer); timer = null; }
+    var estaba = corriendo; corriendo = false;
+    $('px-correr').textContent = 'Correr';
+    if (estaba && aviso) anunciar('Pausa. Ronda ' + sim.ronda + ': contagiados ' + sim.total + ' de ' + NUM + '.');
+  }
+  function reiniciarSim() { detener(false); sim = nuevaSim(); dibujarSim(false); }
+  function terminoSim() { anunciar($('px-estado').textContent || ('Ronda ' + sim.ronda + ': contagiados ' + sim.total + ' de ' + NUM + '.')); }
+  function tic() {
+    timer = null;
+    if (!corriendo) return;
+    pasoSim(); dibujarSim(true);
+    if (sim.fin) { detener(false); terminoSim(); return; }
+    timer = setTimeout(tic, 650);
+  }
+  function correr() {
+    if (corriendo) { detener(true); return; }
+    if (sim.fin) return;
+    if (reducir) { while (!sim.fin) pasoSim(); dibujarSim(false); terminoSim(); return; } // sin animación: misma información, de una vez
+    corriendo = true; $('px-correr').textContent = 'Pausa'; timer = setTimeout(tic, 300);
+  }
+  function siguiente() { if (corriendo) detener(false); if (sim.fin) return; pasoSim(); dibujarSim(true); if (sim.fin) terminoSim(); else anunciar('Ronda ' + sim.ronda + ': contagiados ' + sim.total + ' de ' + NUM + '.'); }
+
+  // ---- Arranque
+  construirCeldas();
+  $('px-esc').addEventListener('click', function (ev) { var b = ev.target; while (b && b !== this && b.tagName !== 'BUTTON') b = b.parentNode; if (b && b !== this) elegirEscenario(b.getAttribute('data-esc')); });
+  $('px-efi').addEventListener('click', function (ev) { var b = ev.target; while (b && b !== this && b.tagName !== 'BUTTON') b = b.parentNode; if (b && b !== this) elegirEficacia(Number(b.getAttribute('data-efi'))); });
+  $('px-r0').addEventListener('input', function () { est.r0 = Number(this.value); est.esc = 'x'; marcar('px-esc', 'data-esc', 'x'); cambio(false); });
+  $('px-r0').addEventListener('change', function () { anunciar(textoAnuncio()); });
+  $('px-efi-sl').addEventListener('input', function () { est.efi = Number(this.value); marcar('px-efi', 'data-efi', est.efi); cambio(false); });
+  $('px-efi-sl').addEventListener('change', function () { anunciar(textoAnuncio()); });
+  $('px-cob').addEventListener('input', function () { est.cob = Number(this.value); cambio(false); });
+  $('px-cob').addEventListener('change', function () { anunciar(textoAnuncio()); });
+  $('px-correr').addEventListener('click', correr);
+  $('px-sig').addEventListener('click', siguiente);
+  $('px-rep').addEventListener('click', function () { reiniciarSim(); anunciar('Simulación reiniciada con los mismos valores.'); });
+  document.addEventListener('visibilitychange', function () { if (document.hidden) detener(false); });
+
+  marcar('px-esc', 'data-esc', est.esc); marcar('px-efi', 'data-efi', est.efi);
+  $('px-r0').value = nearest05(est.r0); $('px-efi-sl').value = est.efi; $('px-cob').value = est.cob;
+  sim = nuevaSim(); pintarResultado(); dibujarSim(false);
+})();
+/*PATOGENO-END*/
 </script>
 <p class="aula-pie"><a href="../">Herramientas de aula</a> · Benjamín Moreira-Grez · Santiago, Chile</p>
 </body>
