@@ -32,6 +32,7 @@
   .nota { background:var(--cobalto-fondo); border:1px solid #BFD3FF; border-radius:6px; padding:10px 12px; font-size:.95rem; }
   .cuaderno { background:#FFFBEB; border-left:4px solid var(--ambar); border-radius:4px; padding:8px 10px; margin:12px 0 4px; font-size:.95rem; }
   .glosario { margin:0 0 12px; font-size:.95rem; }
+  .glosario .t { display:block; }
   .glosario dt { font-weight:700; margin-top:6px; }
   .glosario dd { margin:0 0 4px; color:var(--suave); }
 
@@ -151,7 +152,8 @@
     .pares { grid-template-columns:1fr 1fr; }
     .pares a { padding:10px 14px; }
     #glosario-1 { columns:3; column-gap:28px; }
-    #glosario-1 dt, #glosario-1 dd { break-inside:avoid; }
+    #glosario-1 dt { margin-top:0; }
+    #glosario-1 .t { break-inside:avoid; -webkit-column-break-inside:avoid; page-break-inside:avoid; }
     #trabajo.con-visor { display:grid; grid-template-columns:250px minmax(0,1.15fr) minmax(300px,1fr); column-gap:14px; align-items:start; padding:10px 12px; margin-top:6px; }
     #trabajo.con-visor #col-paso { display:block; max-height:calc(100vh - 64px); overflow-y:auto; padding-right:6px; font-size:.95rem; line-height:1.45; }
     #trabajo.con-visor #p-titulo { font-size:1.05rem; }
@@ -222,14 +224,7 @@
 
     <div data-paso="1">
       <p>Lee estos términos. Los vas a usar en todo el trabajo.</p>
-      <dl class="glosario" id="glosario-1">
-        <dt>Exceso de mortalidad</dt>
-        <dd>Muertes totales por sobre las que se esperaban en un año normal, por millón de habitantes. Incluye muertes por COVID y por otras causas. En el mapa se ve «del mes» (cuánto subió ese mes).</dd>
-        <dt>Cobertura (vacunación completa)</dt>
-        <dd>Porcentaje de la población que recibió todas las dosis del esquema inicial. No cuenta los refuerzos.</dd>
-        <dt>Rigurosidad de las medidas</dt>
-        <dd>Índice de 0 a 100 (Universidad de Oxford) que resume qué tan estrictas eran las medidas decretadas, como cuarentenas, cierre de colegios y restricciones de viaje. Mide lo decretado, no lo cumplido.</dd>
-      </dl>
+      <dl class="glosario" id="glosario-1"><div class="t"><dt>Exceso de mortalidad</dt><dd>Muertes totales por sobre las que se esperaban en un año normal, por millón de habitantes. Incluye muertes por COVID y por otras causas. En el mapa se ve «del mes» (cuánto subió ese mes).</dd></div><div class="t"><dt>Cobertura (vacunación completa)</dt><dd>Porcentaje de la población que recibió todas las dosis del esquema inicial. No cuenta los refuerzos.</dd></div><div class="t"><dt>Rigurosidad de las medidas</dt><dd>Índice de 0 a 100 (Universidad de Oxford) que resume qué tan estrictas eran las medidas decretadas, como cuarentenas, cierre de colegios y restricciones de viaje. Mide lo decretado, no lo cumplido.</dd></div></dl>
       <p class="ojo">En la tabla de la página verás también el exceso <em>acumulado</em>: la suma de todos los meses desde enero de 2020.</p>
       <p class="pregunta">Antes de mirar el mapa, predice: ¿qué país tendrá más muertes en exceso acumuladas al final del período (la suma de todos los meses de 2020 a 2022)?</p>
       <div class="ops" id="pred-ops" role="group" aria-label="Tu predicción"></div>
@@ -280,14 +275,7 @@
     <p id="aviso" role="status" hidden></p>
     <details class="terminos" id="terminos">
       <summary>Términos clave</summary>
-      <dl class="glosario">
-        <dt>Exceso de mortalidad</dt>
-        <dd>Muertes totales por sobre las que se esperaban en un año normal, por millón de habitantes. Incluye muertes por COVID y por otras causas. En el mapa se ve «del mes» (cuánto subió ese mes).</dd>
-        <dt>Cobertura (vacunación completa)</dt>
-        <dd>Porcentaje de la población que recibió todas las dosis del esquema inicial. No cuenta los refuerzos.</dd>
-        <dt>Rigurosidad de las medidas</dt>
-        <dd>Índice de 0 a 100 (Universidad de Oxford) que resume qué tan estrictas eran las medidas decretadas, como cuarentenas, cierre de colegios y restricciones de viaje. Mide lo decretado, no lo cumplido.</dd>
-      </dl>
+      <dl class="glosario"><div class="t"><dt>Exceso de mortalidad</dt><dd>Muertes totales por sobre las que se esperaban en un año normal, por millón de habitantes. Incluye muertes por COVID y por otras causas. En el mapa se ve «del mes» (cuánto subió ese mes).</dd></div><div class="t"><dt>Cobertura (vacunación completa)</dt><dd>Porcentaje de la población que recibió todas las dosis del esquema inicial. No cuenta los refuerzos.</dd></div><div class="t"><dt>Rigurosidad de las medidas</dt><dd>Índice de 0 a 100 (Universidad de Oxford) que resume qué tan estrictas eran las medidas decretadas, como cuarentenas, cierre de colegios y restricciones de viaje. Mide lo decretado, no lo cumplido.</dd></div></dl>
     </details>
     </div>
 
