@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Mapa de la pandemia: compara dos países</title>
+<style>
+  :root { --marfil:#FBFBFA; --linea:#E5E7EB; --borde:#CBD5E1; --pizarra:#1E293B; --suave:#475569; --cobalto:#2563EB; --cobalto-fondo:#EFF4FF; --ambar:#B45309; --carmesi:#DC2626; --pa:#1D4ED8; --pb:#C2410C; }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body { margin:0; font-family: Inter,"Segoe UI",system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif; font-size:17px; line-height:1.55; color:var(--pizarra); background-color:var(--marfil); }
+  main { width:min(680px, calc(100% - 24px)); margin:0 auto; padding:12px 0 48px; }
+  header { padding:8px 4px 4px; }
+  .eyebrow { color:var(--ambar); font-size:.78rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase; margin:0 0 4px; }
+  h1 { font-size:1.75rem; line-height:1.15; margin:0 0 8px; }
+  h2 { font-size:1.25rem; line-height:1.25; margin:0 0 10px; }
+  h3 { font-size:1.1rem; line-height:1.25; margin:0 0 8px; }
+  section { background:rgba(255,255,255,.93); border:1px solid var(--borde); border-radius:8px; padding:16px 14px 14px; margin-top:14px; }
+  section > :last-child { margin-bottom:0; }
+  section[hidden], div[hidden], p[hidden], ul[hidden], span[hidden] { display:none; }
+  p { margin:0 0 10px; } ul, ol { margin:0 0 10px; padding-left:22px; } li { margin-bottom:6px; }
+  .paso { display:inline-block; background:var(--pizarra); color:#fff; border-radius:4px; font-size:.78rem; font-weight:700; line-height:1.55; padding:1px 8px; margin:0 0 6px; }
+  .pregunta { font-size:1.15rem; font-weight:700; }
+  .ojo { font-size:.92rem; color:var(--suave); }
+  .solo-lector { position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; margin:-1px; padding:0; border:0; }
+  button { font:inherit; font-weight:700; min-height:52px; padding:8px 8px; border-radius:8px; border:2px solid var(--cobalto); background:#fff; color:var(--cobalto); cursor:pointer; line-height:1.2; touch-action:manipulation; }
+  button.principal { background:var(--pizarra); border-color:var(--pizarra); color:#fff; }
+  button[aria-pressed="true"] { background:var(--cobalto); color:#fff; }
+  button[aria-disabled="true"] { opacity:.45; cursor:default; }
+  button:focus-visible, a:focus-visible, select:focus-visible, input:focus-visible, summary:focus-visible { outline:3px solid var(--ambar); outline-offset:2px; }
+  .nota { background:var(--cobalto-fondo); border:1px solid #BFD3FF; border-radius:6px; padding:10px 12px; font-size:.95rem; }
+  .cuaderno { background:#FFFBEB; border-left:4px solid var(--ambar); border-radius:4px; padding:8px 10px; margin:12px 0 4px; font-size:.95rem; }
+  .glosario { margin:0 0 12px; font-size:.95rem; }
+  .glosario dt { font-weight:700; margin-top:6px; }
+  .glosario dd { margin:0 0 4px; color:var(--suave); }
+
+  /* Elegir par */
+  .pares { display:grid; gap:8px; margin:8px 0; }
+  .pares a { display:block; min-height:52px; padding:8px 12px; border:2px solid var(--cobalto); border-radius:8px; background:#fff; color:var(--pizarra); text-decoration:none; line-height:1.3; }
+  .pares a strong { display:block; color:var(--cobalto); font-size:1.05rem; }
+  .pares a span { display:block; font-size:.9rem; color:var(--suave); }
+  .aviso-par { font-weight:700; color:var(--ambar); }
+
+  /* Hilo */
+  .par-titulo { display:flex; flex-wrap:wrap; align-items:center; gap:6px 10px; margin:0 0 8px; }
+  .par-titulo .nom { font-weight:700; font-size:1.05rem; }
+  .par-titulo a { display:inline-block; padding:12px 6px; margin:-12px -6px; font-size:.95rem; }
+  .hilo-barra { display:grid; grid-template-columns:repeat(5,1fr); gap:4px; margin:0 0 8px; }
+  .hilo-barra span { display:block; height:6px; border-radius:3px; background:var(--linea); }
+  .hilo-barra span.hecho { background:var(--cobalto); }
+  .hilo-barra span.actual { background:var(--pizarra); }
+  #p-titulo { font-size:1.15rem; line-height:1.25; margin:0 0 8px; scroll-margin-top:8px; }
+  #p-titulo:focus { outline:none; }
+  .opc-q { font-weight:700; margin:0 0 6px; }
+  .ops { display:grid; gap:6px; margin:0 0 10px; }
+  .ops button { min-height:52px; text-align:left; font-weight:600; padding:8px 12px; }
+  .ops button[aria-disabled="true"][aria-pressed="true"] { opacity:1; }
+  .ops button[aria-disabled="true"][aria-pressed="false"] { opacity:.5; }
+  .nav { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-top:14px; }
+  .nav button[hidden] { display:none; }
+  #aviso { font-weight:700; color:var(--ambar); margin:8px 0 0; }
+  .contraste { width:100%; border-collapse:collapse; font-size:.95rem; margin:6px 0 10px; }
+  .contraste th, .contraste td { border:1px solid var(--borde); padding:6px 8px; text-align:left; vertical-align:top; }
+  .contraste th { background:var(--cobalto-fondo); }
+  .causas { display:grid; gap:6px; margin:6px 0 10px; }
+  .causas button { text-align:left; font-weight:600; }
+
+  /* Visor */
+  #visor { margin-top:12px; scroll-margin-top:8px; }
+  .hitos { display:grid; grid-template-columns:repeat(3,1fr); gap:6px; margin:0 0 8px; }
+  .hitos button { font-size:.9rem; padding:6px 4px; }
+  .hito-q { background:#FFFBEB; border-left:4px solid var(--ambar); border-radius:4px; padding:8px 10px; margin:0 0 10px; font-size:.97rem; }
+  .hito-q ol { margin:4px 0 0; padding-left:20px; }
+  .hito-q li:last-child { margin-bottom:0; }
+  details.cambiar { margin:0 0 10px; border:1px solid var(--borde); border-radius:8px; background:#fff; }
+  details.cambiar summary { min-height:44px; padding:10px 12px; font-weight:700; cursor:pointer; color:var(--cobalto); }
+  .sel { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin:0; padding:0 12px 12px; }
+  .sel label { display:block; font-size:.9rem; font-weight:700; }
+  .sel select { display:block; width:100%; font:inherit; font-weight:500; min-height:44px; padding:6px 6px; margin-top:2px; border:2px solid var(--borde); border-radius:8px; background:#fff; color:var(--pizarra); }
+  .capas { display:grid; grid-template-columns:repeat(3,1fr); gap:6px; margin:0 0 10px; }
+  .capas button { padding:6px 4px; font-size:.92rem; min-height:56px; }
+  .mes-fila { display:flex; align-items:baseline; justify-content:space-between; gap:8px; margin:0 0 2px; }
+  #mes-texto { font-size:1.6rem; font-weight:800; line-height:1.2; margin:0; }
+  .mes-fila .ojo { margin:0; }
+  .tiempo { display:grid; grid-template-columns:1fr 2fr 1fr; gap:6px; margin:4px 0 2px; }
+  .tiempo.sin-play { grid-template-columns:1fr 1fr; }
+  #t { display:block; width:100%; margin:6px 0 0; height:44px; accent-color:var(--cobalto); }
+  .anios { display:grid; grid-template-columns:12fr 12fr 11fr; font-size:.8rem; color:var(--suave); margin:-4px 0 6px; }
+  .regiones { display:grid; grid-template-columns:repeat(4,1fr); gap:6px; margin:0 0 8px; }
+  .regiones button { min-height:44px; padding:4px 2px; font-size:.9rem; }
+  .mapa-caja { position:relative; width:100%; height:0; padding-bottom:50%; background:#fff; border:1px solid var(--borde); border-radius:6px; overflow:hidden; }
+  .mapa-caja svg { position:absolute; left:0; top:0; width:100%; height:100%; display:block; touch-action:manipulation; }
+  .mapa-caja svg g.marca { cursor:pointer; }
+  .mapa-caja svg g.marca:focus { outline:none; }
+  .mapa-caja svg g.marca:focus-visible .foco-anillo { stroke:#B45309; stroke-width:3; opacity:1; }
+  .leyenda-t { font-weight:700; font-size:.92rem; margin:8px 0 4px; }
+  #leyenda { list-style:none; padding:0; margin:0 0 8px; display:grid; grid-template-columns:1fr 1fr; gap:3px 8px; font-size:.82rem; }
+  #leyenda li { display:flex; align-items:center; gap:6px; margin:0; line-height:1.2; }
+  #leyenda .sw { flex:none; width:18px; height:18px; border:1px solid #334155; border-radius:3px; }
+  #leyenda .sw.trama { background:repeating-linear-gradient(45deg,#fff 0,#fff 3px,#64748b 3px,#64748b 4px); }
+  #lectura { border:1px solid var(--borde); border-radius:6px; background:var(--marfil); padding:8px 10px; margin:0 0 10px; min-height:84px; font-size:.95rem; }
+  #lectura p { margin:0 0 4px; }
+  #lectura .usar { display:grid; grid-template-columns:1fr 1fr; gap:6px; margin-top:6px; }
+  #lectura .usar button { min-height:44px; font-size:.9rem; }
+  .tabla-par { width:100%; border-collapse:collapse; font-size:.92rem; margin:0 0 10px; table-layout:fixed; }
+  .tabla-par th, .tabla-par td { border:1px solid var(--borde); padding:5px 6px; text-align:left; vertical-align:top; font-variant-numeric:tabular-nums; }
+  .tabla-par thead th { background:var(--cobalto-fondo); font-size:.9rem; }
+  .tabla-par tbody th { font-weight:600; font-size:.85rem; background:#fff; width:34%; }
+  .tabla-par tr.actual th, .tabla-par tr.actual td { background:#FFF7E6; font-weight:700; }
+  .mk { display:inline-block; width:18px; height:18px; line-height:15px; text-align:center; font-size:.78rem; font-weight:800; color:#fff; margin-right:4px; vertical-align:middle; }
+  .mk.a { background:var(--pa); border-radius:50%; border:2px solid #fff; box-shadow:0 0 0 1.5px var(--pa); }
+  .mk.b { background:var(--pb); border-radius:2px; border:2px solid #fff; box-shadow:0 0 0 1.5px var(--pb); }
+  .grafico-t { margin:12px 0 4px; font-size:1rem; line-height:1.25; }
+  .grafico-t small { display:block; font-weight:500; font-size:.82rem; color:var(--suave); }
+  .grafico { display:block; width:100%; height:auto; background:#fff; border:1px solid var(--borde); border-radius:6px; touch-action:manipulation; }
+  .g-ley { display:flex; flex-wrap:wrap; gap:2px 14px; font-size:.85rem; margin:4px 0 0; }
+  .ln { display:inline-block; width:26px; height:0; border-top:3px solid; vertical-align:middle; margin-right:5px; }
+  .ln.a { border-top-color:var(--pa); }
+  .ln.b { border-top-color:var(--pb); border-top-style:dashed; }
+  .ln.fina { border-top-width:1.5px; opacity:.6; }
+
+  /* Pie */
+  #pie h2 { font-size:1.1rem; }
+  #pie ul { font-size:.93rem; }
+  footer { text-align:center; color:var(--suave); font-size:.85rem; margin-top:18px; }
+  @media (max-width: 340px) { h1 { font-size:1.5rem; } .capas button { font-size:.85rem; } .sel select { font-size:.85rem; } }
+  @media (prefers-reduced-motion: reduce) { * { animation:none !important; transition:none !important; scroll-behavior:auto !important; } }
+  .aula-volver a, .aula-pie a { display:inline-block; padding:15px 8px; margin:-15px -8px; }
+</style>
+<style>
+/* Enlace al hub «Herramientas de aula» y su pie (igual que en las otras herramientas). */
+.aula-volver,.aula-pie{margin:0;padding:.55rem 1rem;font:500 .85rem/1.4 system-ui,"Segoe UI",Arial,sans-serif;color:inherit;opacity:.85}
+.aula-volver a,.aula-pie a{color:inherit;text-underline-offset:.18em}
+.aula-pie{text-align:center;padding-block:1.25rem 1.5rem}
+@media print{.aula-volver,.aula-pie{display:none}}
+</style>
+</head>
+<body>
+<p class="aula-volver"><a href="../">← Herramientas de aula</a></p>
+<main>
+  <header>
+    <p class="eyebrow">Bienestar y salud · COVID-19</p>
+    <h1>Mapa de la pandemia: compara dos países</h1>
+    <p>Datos reales de 2020 a 2022 de 12 países. Trabaja con un par y sigue los cinco pasos. Tus respuestas van en la hoja de papel de tu grupo: esta página no guarda nada.</p>
+  </header>
+
+  <noscript><section><p class="pregunta">Esta página necesita JavaScript para mostrar el mapa.</p></section></noscript>
+
+  <section id="elegir" hidden>
+    <h2 class="paso">Elige tu par</h2>
+    <p id="aviso-par" class="aviso-par" hidden></p>
+    <p>Toca el par que te tocó trabajar.</p>
+    <div class="pares" id="pares"></div>
+  </section>
+
+  <section id="trabajo" hidden>
+    <p class="par-titulo"><span class="nom" id="par-nombre"></span> <a href="./" id="otro-par">Elegir otro par</a></p>
+    <div class="hilo-barra" id="hilo-barra" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></div>
+    <h2 id="p-titulo" tabindex="-1"></h2>
+
+    <div data-paso="1">
+      <p>Lee estos tres datos. Los vas a usar en todo el trabajo.</p>
+      <dl class="glosario">
+        <dt>Exceso de muertes</dt>
+        <dd>Cuántas personas más murieron que las esperadas según los años anteriores a la pandemia, por cada millón de habitantes. Si es negativo, murió menos gente que la esperada.</dd>
+        <dt>Vacunación completa</dt>
+        <dd>Porcentaje de la población con las dosis iniciales completas.</dd>
+        <dt>Rigurosidad de las medidas</dt>
+        <dd>Puntaje de 0 a 100 de cuán estrictas eran las medidas decretadas (colegios, trabajo, reuniones, viajes).</dd>
+      </dl>
+      <p class="pregunta">Antes de mirar el mapa, predice: ¿qué país tendrá más muertes en exceso acumuladas entre 2020 y 2022?</p>
+      <div class="ops" id="pred-ops" role="group" aria-label="Tu predicción"></div>
+      <div class="cuaderno"><strong>En tu hoja.</strong> Escribe por qué crees eso. Al pasar al paso 2 tu predicción queda marcada.</div>
+    </div>
+
+    <div data-paso="2" hidden>
+      <p>Toca cada hito. Lee la pregunta y respóndela en tu hoja con lo que ves en el mapa y en la tabla. Mueve el mes para mirar antes y después.</p>
+      <div class="hitos" id="hitos" role="group" aria-label="Hitos"></div>
+      <div class="hito-q" id="hito-q" hidden></div>
+    </div>
+
+    <div data-paso="3" hidden>
+      <p>Compara lo que predijiste con lo que viste. No hay una respuesta correcta que buscar: describe en qué coinciden y en qué no.</p>
+      <table class="contraste">
+        <thead><tr><th>Tu predicción</th><th>Lo que muestran los datos (último mes con dato)</th></tr></thead>
+        <tbody><tr><td id="c-pred"></td><td id="c-dato"></td></tr></tbody>
+      </table>
+      <ol>
+        <li>En tu hoja: ¿tu predicción coincide con lo que viste? ¿En qué sí y en qué no?</li>
+        <li>Mira el mapa en distintos meses. ¿Qué te sorprendió?</li>
+      </ol>
+    </div>
+
+    <div data-paso="4" hidden>
+      <p>Las curvas de tu par no bastan para explicar por qué un país tuvo más muertes que otro. Elige hasta dos causas que pudieron influir. Después escribe en tu hoja qué dato necesitarías para comprobar cada una.</p>
+      <div class="causas" id="causas" role="group" aria-label="Causas posibles"></div>
+      <p class="ojo" id="causa-nota" hidden></p>
+    </div>
+
+    <div data-paso="5" hidden>
+      <p>Escribe tu conclusión en la hoja con este formato:</p>
+      <div class="nota"><strong>Puedo decir que…</strong> (usa al menos un número de tu par)<br><strong>pero no puedo decir que…</strong> (nombra lo que los datos no muestran)</div>
+      <ol>
+        <li>Mira de nuevo tu predicción del paso 1. Escríbela otra vez, ahora con lo que aprendiste.</li>
+        <li>Revisa los límites de los datos al final de la página. Elige uno y úsalo en tu frase.</li>
+        <li>Este mapa muestra que dos cosas ocurren a la vez, no que una cause la otra.</li>
+      </ol>
+    </div>
+
+    <div id="visor" hidden>
+      <details class="cambiar" id="cambiar">
+        <summary>Cambiar de país</summary>
+        <div class="sel">
+          <label>País <span class="mk a" aria-hidden="true">A</span><select id="sel-a"></select></label>
+          <label>País <span class="mk b" aria-hidden="true">B</span><select id="sel-b"></select></label>
+        </div>
+      </details>
+      <div class="capas" id="capas" role="group" aria-label="Qué se muestra en el mapa">
+        <button type="button" data-capa="exceso" aria-pressed="true">Exceso de muertes del mes</button>
+        <button type="button" data-capa="vac" aria-pressed="false">% con vacunación completa</button>
+        <button type="button" data-capa="rig" aria-pressed="false">Rigurosidad de las medidas</button>
+      </div>
+      <div class="mes-fila"><p id="mes-texto"></p><p class="ojo" id="movimiento-nota" hidden>Movimiento reducido: usa el deslizador.</p></div>
+      <div class="tiempo" id="tiempo">
+        <button type="button" id="ant" aria-label="Mes anterior">◀ Mes</button>
+        <button type="button" id="play" class="principal">▶ Reproducir</button>
+        <button type="button" id="sig" aria-label="Mes siguiente">Mes ▶</button>
+      </div>
+      <input type="range" id="t" min="0" max="35" step="1" value="0" aria-label="Mes que se muestra" list="marcas-anio">
+      <datalist id="marcas-anio"><option value="0" label="2020"></option><option value="12" label="2021"></option><option value="24" label="2022"></option></datalist>
+      <div class="anios" aria-hidden="true"><span>2020</span><span>2021</span><span>2022</span></div>
+      <div class="regiones" id="regiones" role="group" aria-label="Zoom a una región">
+        <button type="button" data-reg="mundo" aria-pressed="true">Mundo</button>
+        <button type="button" data-reg="americas" aria-pressed="false">Américas</button>
+        <button type="button" data-reg="europa" aria-pressed="false">Europa</button>
+        <button type="button" data-reg="oceania" aria-pressed="false">Oceanía</button>
+      </div>
+      <div class="mapa-caja" id="mapa-caja"><svg id="mapa" viewBox="0 0 1000 450" role="img" aria-label="Mapa"></svg></div>
+      <p class="leyenda-t" id="leyenda-t"></p>
+      <ul id="leyenda"></ul>
+      <div id="lectura"><p class="ojo">Toca un país del mapa, su círculo o la lista para leer su valor.</p></div>
+      <p id="anuncio" class="solo-lector" aria-live="polite" aria-atomic="true"></p>
+      <table class="tabla-par" id="tabla-par">
+        <thead><tr><th></th><th id="th-a"></th><th id="th-b"></th></tr></thead>
+        <tbody id="tabla-cuerpo"></tbody>
+      </table>
+      <h3 class="grafico-t">Exceso de muertes del mes<small>Por millón de habitantes. Bajo 0: murió menos gente de la esperada. La raya vertical marca el mes elegido; toca el gráfico para cambiarlo.</small></h3>
+      <svg class="grafico" id="g-exc" viewBox="0 0 340 170" role="img" aria-label="Exceso de muertes del mes"></svg>
+      <h3 class="grafico-t">% con vacunación completa y rigurosidad<small>Línea gruesa: % vacunado. Línea fina y tenue: rigurosidad de las medidas (0 a 100).</small></h3>
+      <svg class="grafico" id="g-vac" viewBox="0 0 340 170" role="img" aria-label="Vacunación completa y rigurosidad"></svg>
+      <div class="g-ley" id="g-ley"></div>
+    </div>
+
+    <div class="nav">
+      <button type="button" id="btn-ant">Anterior</button>
+      <button type="button" id="btn-sig" class="principal">Siguiente</button>
+    </div>
+    <p id="aviso" role="status" hidden></p>
+  </section>
+
+  <section id="pie">
+    <h2>Fuente y límites</h2>
+    <p><strong>Fuente:</strong> Our World in Data, «Coronavirus Pandemic (COVID-19)» (Mathieu, Ritchie, Rodés-Guirao et al.), licencia CC BY 4.0. Los datos son del repositorio congelado el 19 de agosto de 2024. Mapa: Natural Earth (dominio público) mediante world-atlas.</p>
+    <p><strong>Antes de concluir, ten presente que:</strong></p>
+    <ul>
+      <li>El exceso incluye muertes que no son COVID-19 (por ejemplo, las que dejó un hospital saturado).</li>
+      <li>La rigurosidad mide lo que se decretó, no lo que la gente cumplió.</li>
+      <li>La vacunación completa no cuenta los refuerzos.</li>
+      <li>Falta el exceso de Perú en los últimos meses de 2022 (noviembre y diciembre): se ve gris con trama.</li>
+      <li>El mapa muestra que dos cosas van juntas, no que una cause la otra.</li>
+    </ul>
+    <p class="ojo">El exceso del mes es la resta entre dos meses seguidos del exceso acumulado.</p>
+  </section>
+  <footer>Funciona sin conexión: es un solo archivo, sin envío ni almacenamiento de datos.</footer>
+</main>
+<p class="aula-pie"><a href="../">← Herramientas de aula</a></p>
+<script>
+(function () {
+  'use strict';
+  var G = /*GEOMETRIA*/;
+  var S = /*SERIE*/;
+  var PARES = /*PARES*/;
+
+  var NS = 'http://www.w3.org/2000/svg';
+  var $ = function (id) { return document.getElementById(id); };
+  var MESES = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+  var MCORTO = ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
+  var MIN = '−';
+
+  // País: k = clave OWID (inglés), slug de la URL, nombre en pantalla, hemisferio y región
+  var PAISES = [
+    { k: 'Peru', slug: 'peru', n: 'Perú', hem: 'sur', reg: 'americas' },
+    { k: 'New Zealand', slug: 'nueva-zelanda', n: 'Nueva Zelanda', hem: 'sur', reg: 'oceania' },
+    { k: 'Sweden', slug: 'suecia', n: 'Suecia', hem: 'norte', reg: 'europa' },
+    { k: 'Norway', slug: 'noruega', n: 'Noruega', hem: 'norte', reg: 'europa' },
+    { k: 'Chile', slug: 'chile', n: 'Chile', hem: 'sur', reg: 'americas' },
+    { k: 'Uruguay', slug: 'uruguay', n: 'Uruguay', hem: 'sur', reg: 'americas' },
+    { k: 'Brazil', slug: 'brasil', n: 'Brasil', hem: 'sur (casi todo el país)', reg: 'americas' },
+    { k: 'Bulgaria', slug: 'bulgaria', n: 'Bulgaria', hem: 'norte', reg: 'europa' },
+    { k: 'Portugal', slug: 'portugal', n: 'Portugal', hem: 'norte', reg: 'europa' },
+    { k: 'United States', slug: 'estados-unidos', n: 'Estados Unidos', hem: 'norte', reg: 'americas' },
+    { k: 'United Kingdom', slug: 'reino-unido', n: 'Reino Unido', hem: 'norte', reg: 'europa' },
+    { k: 'Australia', slug: 'australia', n: 'Australia', hem: 'sur', reg: 'oceania' }
+  ];
+  var PORK = {}, PORSLUG = {};
+  PAISES.forEach(function (p) { PORK[p.k] = p; PORSLUG[p.slug] = p; });
+  var NMES = S.meses.length;
+
+  // Exceso del mes = diferencia de dos meses seguidos del acumulado; sin dato si falta alguno de los dos
+  var MENS = {};
+  PAISES.forEach(function (p) {
+    var e = S.p[p.k].e, d = [null], i;
+    for (i = 1; i < NMES; i++) d.push(e[i] !== null && e[i - 1] !== null ? e[i] - e[i - 1] : null);
+    MENS[p.k] = d;
+  });
+
+  // Escalas fijas para todo el período (no se reescalan por mes)
+  var CAPAS = {
+    exceso: {
+      titulo: 'Muertes en exceso del mes, por millón de habitantes',
+      corto: 'Exceso del mes',
+      col: ['#2166ac', '#92c5de', '#ececec', '#fedcaa', '#fdae61', '#e66101', '#a63603', '#5c1f00'],
+      lab: [MIN + '100 o menos', MIN + '99 a ' + MIN + '25', MIN + '24 a +24', '+25 a +99', '+100 a +249', '+250 a +499', '+500 a +999', '+1000 o más'],
+      bin: function (v) { return v <= -100 ? 0 : v <= -25 ? 1 : v < 25 ? 2 : v < 100 ? 3 : v < 250 ? 4 : v < 500 ? 5 : v < 1000 ? 6 : 7; },
+      val: function (k, i) { return MENS[k][i]; },
+      txt: function (v) { return v === null ? 'sin dato' : (v > 0 ? '+' : v < 0 ? MIN : '') + Math.abs(v) + ' por millón'; }
+    },
+    vac: {
+      titulo: '% de la población con vacunación completa',
+      corto: 'Vacunación completa',
+      col: ['#f7fcb9', '#d9f0a3', '#addd8e', '#78c679', '#41ab5d', '#238443', '#006837', '#004529'],
+      lab: ['menos de 1 %', '1 a 9 %', '10 a 24 %', '25 a 39 %', '40 a 54 %', '55 a 69 %', '70 a 84 %', '85 % o más'],
+      bin: function (v) { return v < 1 ? 0 : v < 10 ? 1 : v < 25 ? 2 : v < 40 ? 3 : v < 55 ? 4 : v < 70 ? 5 : v < 85 ? 6 : 7; },
+      val: function (k, i) { return S.p[k].v[i]; },
+      txt: function (v) { return v === null ? 'sin dato' : String(v).replace('.', ',') + ' %'; }
+    },
+    rig: {
+      titulo: 'Rigurosidad de las medidas (0 a 100)',
+      corto: 'Rigurosidad',
+      col: ['#edf8fb', '#bfd3e6', '#9ebcda', '#8c96c6', '#8c6bb1', '#810f7c', '#4d004b'],
+      lab: ['0 a 14', '15 a 29', '30 a 44', '45 a 59', '60 a 74', '75 a 89', '90 a 100'],
+      bin: function (v) { return v < 15 ? 0 : v < 30 ? 1 : v < 45 ? 2 : v < 60 ? 3 : v < 75 ? 4 : v < 90 ? 5 : 6; },
+      val: function (k, i) { return S.p[k].s[i]; },
+      txt: function (v) { return v === null ? 'sin dato' : v + ' de 100'; }
+    }
+  };
+  var NOMBRE_CAPA = { exceso: 'exceso del mes', vac: '% con vacunación completa', rig: 'rigurosidad de las medidas' };
+
+  var est = { A: null, B: null, capa: 'exceso', mes: 0, reg: 'mundo', paso: 1, pred: null, predFija: false, foco: null, hito: -1, causas: [], play: false, par: null, pasoMax: 1 };
+  var timer = null, reducido = false, svg = $('mapa'), nodos = {}, lector = '';
+
+  // ---------- utilidades ----------
+  function fm(i) { var p = S.meses[i].split('-'); return MESES[Number(p[1]) - 1] + ' ' + p[0]; }
+  function fmc(i) { var p = S.meses[i].split('-'); return MCORTO[Number(p[1]) - 1] + ' ' + p[0]; }
+  function sgn(v) { return v === null ? 'sin dato' : (v > 0 ? '+' : v < 0 ? MIN : '') + Math.abs(v); }
+  function dec(v) { return String(v).replace('.', ','); }
+  function el(tag, attrs, txt) {
+    var e = document.createElement(tag), k;
+    if (attrs) for (k in attrs) if (attrs.hasOwnProperty(k)) e.setAttribute(k, attrs[k]);
+    if (txt !== undefined) e.textContent = txt;
+    return e;
+  }
+  function se(tag, attrs) {
+    var e = document.createElementNS(NS, tag), k;
+    if (attrs) for (k in attrs) if (attrs.hasOwnProperty(k)) e.setAttribute(k, attrs[k]);
+    return e;
+  }
+  function quitar(s) {
+    return String(s).toLowerCase().replace(/[áàä]/g, 'a').replace(/[éèë]/g, 'e').replace(/[íìï]/g, 'i').replace(/[óòö]/g, 'o').replace(/[úùü]/g, 'u').replace(/ñ/g, 'n').replace(/[^a-z]+/g, '-').replace(/^-+|-+$/g, '');
+  }
+  function lum(hex) {
+    var r = parseInt(hex.substr(1, 2), 16) / 255, g = parseInt(hex.substr(3, 2), 16) / 255, b = parseInt(hex.substr(5, 2), 16) / 255;
+    function f(c) { return c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4); }
+    return 0.2126 * f(r) + 0.7152 * f(g) + 0.0722 * f(b);
+  }
+  function anunciar(t) { $('anuncio').textContent = ''; $('anuncio').textContent = t; }
+  function ultimoDato(k) { var e = S.p[k].e, i; for (i = NMES - 1; i >= 0; i--) if (e[i] !== null) return i; return -1; }
+
+  // ---------- mapa ----------
+  function px() { var r = $('mapa-caja').getBoundingClientRect(); return r.width || 340; }
+  function construirMapa() {
+    var defs = se('defs'), pat = se('pattern', { id: 'trama', patternUnits: 'userSpaceOnUse', width: 8, height: 8, patternTransform: 'rotate(45)' });
+    pat.appendChild(se('rect', { id: 'trama-f', width: 8, height: 8, fill: '#fff' }));
+    pat.appendChild(se('line', { id: 'trama-l', x1: 0, y1: 0, x2: 0, y2: 8, stroke: '#475569', 'stroke-width': 2 }));
+    defs.appendChild(pat); svg.appendChild(defs);
+    svg.appendChild(se('path', { d: G.resto, fill: '#c9d1db', 'fill-rule': 'evenodd' }));
+    var gp = se('g'), gr = se('g'), gm = se('g');
+    PAISES.forEach(function (p) {
+      var n = nodos[p.k] = {};
+      n.path = se('path', { d: G.paises[p.k].d, fill: '#ececec', stroke: '#334155', 'stroke-width': 0.8, 'vector-effect': 'non-scaling-stroke', 'stroke-linejoin': 'round', 'fill-rule': 'evenodd', 'data-k': p.k });
+      n.path.style.cursor = 'pointer';
+      n.path.addEventListener('click', function () { tocar(p.k); });
+      gp.appendChild(n.path);
+      n.realce = se('path', { d: G.paises[p.k].d, fill: 'none', 'vector-effect': 'non-scaling-stroke', 'stroke-linejoin': 'round', 'fill-rule': 'evenodd', 'pointer-events': 'none', visibility: 'hidden' });
+      gr.appendChild(n.realce);
+      var m = G.paises[p.k].m;
+      n.marca = se('g', { 'class': 'marca', tabindex: '0', role: 'button', 'aria-label': p.n + ': ver valor' });
+      n.hit = se('circle', { cx: m[0], cy: m[1], r: 10, fill: 'transparent' });
+      n.anillo = se('circle', { 'class': 'foco-anillo', cx: m[0], cy: m[1], r: 10, fill: 'none', stroke: '#0f172a', 'stroke-width': 2.5, opacity: 0, 'pointer-events': 'none' });
+      n.dot = se('circle', { cx: m[0], cy: m[1], r: 5, stroke: '#0f172a', 'stroke-width': 1.5, 'pointer-events': 'none' });
+      n.sq = se('rect', { stroke: '#fff', 'stroke-width': 2, 'pointer-events': 'none', visibility: 'hidden' });
+      n.txt = se('text', { x: m[0], y: m[1], 'text-anchor': 'middle', 'dominant-baseline': 'central', 'font-weight': 800, 'pointer-events': 'none', visibility: 'hidden' });
+      [n.hit, n.anillo, n.dot, n.sq, n.txt].forEach(function (c) { n.marca.appendChild(c); });
+      n.marca.addEventListener('click', function (ev) { ev.stopPropagation(); tocar(p.k); });
+      n.marca.addEventListener('keydown', function (ev) { if (ev.key === 'Enter' || ev.key === ' ' || ev.keyCode === 13 || ev.keyCode === 32) { ev.preventDefault(); tocar(p.k); } });
+      gm.appendChild(n.marca);
+    });
+    svg.appendChild(gp); svg.appendChild(gr); svg.appendChild(gm);
+    nodos._gm = gm;
+  }
+  function ajustarRegion() {
+    var r = G.regiones[est.reg], k = r.vb[2] / px(); // unidades del lienzo por pixel de pantalla
+    svg.setAttribute('viewBox', r.vb.join(' '));
+    $('mapa-caja').style.paddingBottom = (r.ratio * 100) + '%';
+    var w = 7 * k;
+    $('trama').setAttribute('width', w); $('trama').setAttribute('height', w);
+    $('trama-f').setAttribute('width', w); $('trama-f').setAttribute('height', w);
+    $('trama-l').setAttribute('y2', w); $('trama-l').setAttribute('stroke-width', 1.6 * k);
+    PAISES.forEach(function (p) {
+      var n = nodos[p.k], m = G.paises[p.k].m, pequeno = (p.k === 'Uruguay' || p.k === 'Portugal' || p.k === 'New Zealand' || p.k === 'Norway');
+      var esA = p.k === est.A, esB = p.k === est.B;
+      var rv = (esA || esB) ? 11 * k : 5 * k;
+      n.hit.setAttribute('r', (pequeno ? 22 : 16) * k);
+      n.dot.setAttribute('r', rv); n.dot.setAttribute('stroke-width', ((esA || esB) ? 1.5 : 1) * k);
+      n.anillo.setAttribute('r', rv + 5 * k); n.anillo.setAttribute('stroke-width', 2.5 * k);
+      n.sq.setAttribute('x', m[0] - rv); n.sq.setAttribute('y', m[1] - rv); n.sq.setAttribute('width', rv * 2); n.sq.setAttribute('height', rv * 2); n.sq.setAttribute('rx', 2 * k); n.sq.setAttribute('stroke-width', 2 * k);
+      n.txt.setAttribute('font-size', 13 * k);
+    });
+    ajustarGrosores(k);
+  }
+  function ajustarGrosores(k) {
+    var a = nodos[est.A], b = nodos[est.B];
+    // los contornos de realce usan non-scaling-stroke: el ancho va en píxeles de pantalla
+    a.realce.setAttribute('stroke', '#1d4ed8'); a.realce.setAttribute('stroke-width', 3); a.realce.removeAttribute('stroke-dasharray');
+    b.realce.setAttribute('stroke', '#c2410c'); b.realce.setAttribute('stroke-width', 3); b.realce.setAttribute('stroke-dasharray', '9 5');
+  }
+  function pintarMapa() {
+    var c = CAPAS[est.capa], partes = [];
+    PAISES.forEach(function (p) {
+      var n = nodos[p.k], v = c.val(p.k, est.mes), col = v === null ? null : c.col[c.bin(v)];
+      n.path.setAttribute('fill', col || 'url(#trama)');
+      n.dot.setAttribute('fill', col || 'url(#trama)');
+      var esA = p.k === est.A, esB = p.k === est.B;
+      n.realce.setAttribute('visibility', (esA || esB) ? 'visible' : 'hidden');
+      n.sq.setAttribute('visibility', esB ? 'visible' : 'hidden'); n.sq.setAttribute('fill', col || 'url(#trama)');
+      n.dot.setAttribute('visibility', esB ? 'hidden' : 'visible');
+      n.txt.setAttribute('visibility', (esA || esB) ? 'visible' : 'hidden');
+      n.txt.textContent = esA ? 'A' : esB ? 'B' : '';
+      n.txt.setAttribute('fill', col && lum(col) < 0.35 ? '#fff' : '#0f172a');
+      if (esA) { n.dot.setAttribute('stroke', '#1d4ed8'); } else { n.dot.setAttribute('stroke', '#0f172a'); }
+      n.sq.setAttribute('stroke', '#c2410c');
+      n.anillo.setAttribute('opacity', est.foco === p.k ? 1 : 0);
+      partes.push(p.n + ' ' + c.txt(v));
+    });
+    svg.setAttribute('aria-label', 'Mapa de ' + NOMBRE_CAPA[est.capa] + ' en ' + fm(est.mes) + '. A: ' + PORK[est.A].n + ', B: ' + PORK[est.B].n + '. ' + partes.join('; ') + '.');
+    PAISES.forEach(function (p) { nodos[p.k].marca.setAttribute('aria-label', p.n + ': ' + c.txt(c.val(p.k, est.mes)) + ' en ' + fmc(est.mes)); });
+  }
+  function leyenda() {
+    var c = CAPAS[est.capa], ul = $('leyenda'), i, li;
+    $('leyenda-t').textContent = c.titulo;
+    ul.innerHTML = '';
+    for (i = 0; i < c.col.length; i++) {
+      li = el('li'); var sw = el('span', { 'class': 'sw' }); sw.style.background = c.col[i]; li.appendChild(sw); li.appendChild(document.createTextNode(c.lab[i])); ul.appendChild(li);
+    }
+    li = el('li'); li.appendChild(el('span', { 'class': 'sw trama' })); li.appendChild(document.createTextNode('sin dato')); ul.appendChild(li);
+  }
+
+  // ---------- tabla y gráficos ----------
+  function tabla() {
+    var A = est.A, B = est.B, i = est.mes;
+    function fila(cl, tit, fa, fb) { return '<tr class="' + (cl ? 'actual' : '') + '"><th scope="row">' + tit + '</th><td>' + fa + '</td><td>' + fb + '</td></tr>'; }
+    $('th-a').innerHTML = '<span class="mk a" aria-hidden="true">A</span>' + PORK[A].n;
+    $('th-b').innerHTML = '<span class="mk b" aria-hidden="true">B</span>' + PORK[B].n;
+    function ea(k) { var v = S.p[k].e[i]; return v === null ? 'sin dato' : sgn(v); }
+    $('tabla-cuerpo').innerHTML =
+      fila(est.capa === 'exceso', 'Exceso del mes', CAPAS.exceso.txt(MENS[A][i]), CAPAS.exceso.txt(MENS[B][i])) +
+      fila(false, 'Exceso acumulado', ea(A) + (ea(A) === 'sin dato' ? '' : ' por millón'), ea(B) + (ea(B) === 'sin dato' ? '' : ' por millón')) +
+      fila(est.capa === 'vac', '% vacunado', CAPAS.vac.txt(S.p[A].v[i]), CAPAS.vac.txt(S.p[B].v[i])) +
+      fila(est.capa === 'rig', 'Rigurosidad', CAPAS.rig.txt(S.p[A].s[i]), CAPAS.rig.txt(S.p[B].s[i]));
+  }
+  function trazo(arr, X, Y) {
+    var d = '', abierto = false, i;
+    for (i = 0; i < arr.length; i++) {
+      if (arr[i] === null) { abierto = false; continue; }
+      d += (abierto ? 'L' : 'M') + X(i).toFixed(1) + ' ' + Y(arr[i]).toFixed(1); abierto = true;
+    }
+    return d;
+  }
+  function bonito(max) { var p = Math.pow(10, Math.floor(Math.log(max) / Math.LN10)), f = max / p; return (f <= 1 ? 1 : f <= 2 ? 2 : f <= 2.5 ? 2.5 : f <= 5 ? 5 : 10) * p; }
+  function dibujarGrafico(id, series, ymin, ymax, ticks, fmt) {
+    var s = $(id), W = 340, H = 170, L = 46, R = 8, T = 10, Bt = 24;
+    var X = function (i) { return L + (W - L - R) * i / (NMES - 1); };
+    var Y = function (v) { return T + (H - T - Bt) * (1 - (v - ymin) / (ymax - ymin)); };
+    var h = '', i;
+    for (i = 0; i < ticks.length; i++) h += '<line x1="' + L + '" x2="' + (W - R) + '" y1="' + Y(ticks[i]).toFixed(1) + '" y2="' + Y(ticks[i]).toFixed(1) + '" stroke="' + (ticks[i] === 0 ? '#64748b' : '#e2e8f0') + '" stroke-width="1"/><text x="' + (L - 5) + '" y="' + (Y(ticks[i]) + 4).toFixed(1) + '" text-anchor="end" font-size="13" fill="#475569">' + fmt(ticks[i]) + '</text>';
+    [0, 12, 24].forEach(function (m, j) { h += '<text x="' + X(m).toFixed(1) + '" y="' + (H - 6) + '" font-size="13" fill="#475569" text-anchor="' + (j === 0 ? 'start' : 'start') + '">' + (2020 + j) + '</text><line x1="' + X(m).toFixed(1) + '" x2="' + X(m).toFixed(1) + '" y1="' + (H - Bt) + '" y2="' + (H - Bt + 4) + '" stroke="#64748b"/>'; });
+    series.forEach(function (q) {
+      h += '<path d="' + trazo(q.a, X, Y) + '" fill="none" stroke="' + q.col + '" stroke-width="' + q.w + '"' + (q.dash ? ' stroke-dasharray="' + q.dash + '"' : '') + (q.op ? ' opacity="' + q.op + '"' : '') + ' stroke-linejoin="round"/>';
+    });
+    var xm = X(est.mes);
+    h += '<line x1="' + xm.toFixed(1) + '" x2="' + xm.toFixed(1) + '" y1="' + T + '" y2="' + (H - Bt) + '" stroke="#0f172a" stroke-width="1.5"/>';
+    series.forEach(function (q) {
+      if (!q.marca) return;
+      var v = q.a[est.mes]; if (v === null) return;
+      var cx = xm.toFixed(1), cy = Y(v).toFixed(1);
+      h += q.forma === 'cuadro' ? '<rect x="' + (xm - 4.5).toFixed(1) + '" y="' + (Y(v) - 4.5).toFixed(1) + '" width="9" height="9" fill="' + q.col + '" stroke="#fff" stroke-width="1.5"/>' : '<circle cx="' + cx + '" cy="' + cy + '" r="5" fill="' + q.col + '" stroke="#fff" stroke-width="1.5"/>';
+    });
+    s.innerHTML = h;
+    s._x0 = L; s._x1 = W - R; s._W = W;
+  }
+  function graficos() {
+    var A = est.A, B = est.B, ma = MENS[A], mb = MENS[B], vals = [], i;
+    for (i = 0; i < NMES; i++) { if (ma[i] !== null) vals.push(ma[i]); if (mb[i] !== null) vals.push(mb[i]); }
+    var mx = Math.max.apply(null, vals), mn = Math.min.apply(null, vals);
+    var paso = bonito((Math.max(mx, 1) - Math.min(mn, 0)) / 4), top = Math.ceil(Math.max(mx, 1) / paso) * paso, bot = mn < 0 ? Math.floor(mn / paso) * paso : 0;
+    var ticks = [], t; for (t = bot; t <= top + 0.001; t += paso) ticks.push(t);
+    if (ticks.length > 7) { var nt = []; for (i = 0; i < ticks.length; i += 2) nt.push(ticks[i]); ticks = nt; }
+    dibujarGrafico('g-exc', [
+      { a: ma, col: '#1d4ed8', w: 2.5, marca: true },
+      { a: mb, col: '#c2410c', w: 2.5, dash: '7 4', marca: true, forma: 'cuadro' }
+    ], bot, top, ticks, function (v) { return (v < 0 ? MIN : '') + Math.abs(v); });
+    dibujarGrafico('g-vac', [
+      { a: S.p[A].s, col: '#1d4ed8', w: 1.5, op: 0.4 },
+      { a: S.p[B].s, col: '#c2410c', w: 1.5, op: 0.4, dash: '5 3' },
+      { a: S.p[A].v, col: '#1d4ed8', w: 2.8, marca: true },
+      { a: S.p[B].v, col: '#c2410c', w: 2.8, dash: '7 4', marca: true, forma: 'cuadro' }
+    ], 0, 100, [0, 25, 50, 75, 100], function (v) { return v + ''; });
+    $('g-ley').innerHTML = '<span><span class="ln a"></span>' + PORK[A].n + ' (A)</span><span><span class="ln b"></span>' + PORK[B].n + ' (B)</span><span><span class="ln a fina"></span>rigurosidad (tenue)</span>';
+    var v = est.mes;
+    $('g-exc').setAttribute('aria-label', 'Exceso de muertes del mes. En ' + fm(v) + ': ' + PORK[A].n + ' ' + CAPAS.exceso.txt(ma[v]) + ', ' + PORK[B].n + ' ' + CAPAS.exceso.txt(mb[v]) + '.');
+    $('g-vac').setAttribute('aria-label', '% con vacunación completa y rigurosidad. En ' + fm(v) + ': ' + PORK[A].n + ' ' + CAPAS.vac.txt(S.p[A].v[v]) + ' vacunado y rigurosidad ' + CAPAS.rig.txt(S.p[A].s[v]) + '; ' + PORK[B].n + ' ' + CAPAS.vac.txt(S.p[B].v[v]) + ' vacunado y rigurosidad ' + CAPAS.rig.txt(S.p[B].s[v]) + '.');
+  }
+  function clicGrafico(ev) {
+    var s = this, r = s.getBoundingClientRect(), cx = ev.clientX !== undefined ? ev.clientX : (ev.changedTouches ? ev.changedTouches[0].clientX : 0);
+    var x = (cx - r.left) / r.width * s._W, f = (x - s._x0) / (s._x1 - s._x0);
+    irMes(Math.max(0, Math.min(NMES - 1, Math.round(f * (NMES - 1)))), true);
+  }
+
+  // ---------- lectura al tocar ----------
+  function tocar(k) {
+    est.foco = k; lector = k;
+    pintarLectura();
+    pintarMapa();
+    anunciar($('lectura').innerText || $('lectura').textContent);
+  }
+  function pintarLectura() {
+    var k = est.foco, b = $('lectura');
+    if (!k) { b.innerHTML = '<p class="ojo">Toca un país del mapa, su círculo o la lista para leer su valor.</p>'; return; }
+    var i = est.mes, p = PORK[k], c = CAPAS[est.capa], e = S.p[k].e[i];
+    var h = '<p><strong>' + p.n + '</strong> · ' + fm(i) + '</p><p>' + c.corto + ': <strong>' + c.txt(c.val(k, i)) + '</strong>' + (e !== null && est.capa !== 'exceso' ? '' : '') + '</p>';
+    if (est.capa !== 'exceso') h += '<p class="ojo">Exceso del mes: ' + CAPAS.exceso.txt(MENS[k][i]) + '</p>';
+    if (k !== est.A && k !== est.B) h += '<div class="usar"><button type="button" data-usar="A">Usar como A</button><button type="button" data-usar="B">Usar como B</button></div>';
+    else h += '<p class="ojo">' + (k === est.A ? 'Es el país A.' : 'Es el país B.') + '</p>';
+    b.innerHTML = h;
+  }
+
+  // ---------- estado del visor ----------
+  function pintarTodo() { pintarMapa(); tabla(); graficos(); pintarLectura(); $('mes-texto').textContent = fm(est.mes); $('t').value = est.mes; $('t').setAttribute('aria-valuetext', fm(est.mes)); }
+  function irMes(i, avisar) {
+    est.mes = Math.max(0, Math.min(NMES - 1, i));
+    pintarTodo();
+    if (avisar) { parar(true); anunciarEstado(); }
+  }
+  function textoEstado() {
+    var A = est.A, B = est.B, c = CAPAS[est.capa], i = est.mes;
+    return fm(i) + '. ' + c.corto + ': ' + PORK[A].n + ' ' + c.txt(c.val(A, i)) + '; ' + PORK[B].n + ' ' + c.txt(c.val(B, i)) + '.';
+  }
+  function anunciarEstado() { anunciar(textoEstado()); }
+  function cambiarCapa(c) {
+    est.capa = c;
+    var bs = $('capas').getElementsByTagName('button'), j;
+    for (j = 0; j < bs.length; j++) bs[j].setAttribute('aria-pressed', bs[j].getAttribute('data-capa') === c ? 'true' : 'false');
+    leyenda(); pintarTodo(); anunciarEstado();
+  }
+  function cambiarRegion(r) {
+    est.reg = r;
+    var bs = $('regiones').getElementsByTagName('button'), j;
+    for (j = 0; j < bs.length; j++) bs[j].setAttribute('aria-pressed', bs[j].getAttribute('data-reg') === r ? 'true' : 'false');
+    ajustarRegion(); pintarMapa();
+  }
+  function fijarPar(a, b, region) {
+    est.A = a; est.B = b;
+    $('sel-a').value = a; $('sel-b').value = b;
+    $('par-nombre').innerHTML = '<span class="mk a" aria-hidden="true">A</span>' + PORK[a].n + ' <span aria-hidden="true">–</span><span class="solo-lector">y</span> <span class="mk b" aria-hidden="true">B</span>' + PORK[b].n;
+    if (region) cambiarRegion(region); else { ajustarRegion(); }
+    est.foco = null;
+    pintarTodo();
+  }
+
+  // ---------- reproducción ----------
+  function parar(silencio) {
+    if (timer) { clearTimeout(timer); timer = null; }
+    var estaba = est.play; est.play = false;
+    $('play').textContent = '▶ Reproducir'; $('play').setAttribute('aria-label', 'Reproducir');
+    if (estaba && !silencio) anunciarEstado();
+  }
+  function paso() {
+    if (!est.play) return;
+    if (est.mes >= NMES - 1) { parar(false); return; }
+    est.mes++; pintarTodo();
+    if (est.mes >= NMES - 1) { parar(false); return; }
+    timer = setTimeout(paso, 650);
+  }
+  function reproducir() {
+    if (est.play) { parar(false); return; }
+    if (reducido) return;
+    if (est.mes >= NMES - 1) { est.mes = 0; pintarTodo(); }
+    est.play = true; $('play').textContent = '❚❚ Pausa'; $('play').setAttribute('aria-label', 'Pausa');
+    timer = setTimeout(paso, 650);
+  }
+  function aplicarReducido() {
+    reducido = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+    $('play').hidden = reducido; $('movimiento-nota').hidden = !reducido;
+    $('tiempo').className = 'tiempo' + (reducido ? ' sin-play' : '');
+    if (reducido) parar(true);
+  }
+
+  // ---------- hilo ----------
+  var TITULOS = ['Paso 1 de 5 · Predice', 'Paso 2 de 5 · Observa por hitos', 'Paso 3 de 5 · Contrasta', 'Paso 4 de 5 · Causas alternativas', 'Paso 5 de 5 · Concluye con límites'];
+  var CAUSAS = [
+    'La edad de la población',
+    'Las camas de hospital y de cuidados intensivos',
+    'La variante del virus que circulaba',
+    'La estación del año y el hemisferio',
+    'La inmunidad previa (haberse contagiado antes)'
+  ];
+  function irPaso(n, mover) {
+    if (n < 1 || n > 5) return;
+    if (n === 2 && !est.pred) { $('aviso').hidden = false; $('aviso').textContent = 'Marca tu predicción para seguir.'; return; }
+    $('aviso').hidden = true;
+    if (n > 1) fijarPred();
+    est.paso = n; if (n > est.pasoMax) est.pasoMax = n;
+    var ps = $('trabajo').querySelectorAll('[data-paso]'), j;
+    for (j = 0; j < ps.length; j++) ps[j].hidden = Number(ps[j].getAttribute('data-paso')) !== n;
+    var bs = $('hilo-barra').getElementsByTagName('span');
+    for (j = 0; j < bs.length; j++) bs[j].className = j + 1 < n ? 'hecho' : j + 1 === n ? 'actual' : '';
+    $('p-titulo').textContent = TITULOS[n - 1];
+    var visor = n >= 2 && n <= 4; $('visor').hidden = !visor;
+    $('btn-ant').hidden = n === 1; $('btn-sig').hidden = n === 5;
+    if (n === 3) { prepararContraste(); est.mes = NMES - 1; parar(true); }
+    if (visor) { ajustarRegion(); pintarTodo(); }
+    if (mover !== false) { $('p-titulo').focus(); var t = $('p-titulo'); if (t.scrollIntoView) t.scrollIntoView(true); }
+    if (est.play) parar(true);
+  }
+  function fijarPred() {
+    est.predFija = true;
+    var bs = $('pred-ops').getElementsByTagName('button'), j;
+    for (j = 0; j < bs.length; j++) bs[j].setAttribute('aria-disabled', 'true');
+  }
+  function textoPred() {
+    var v = est.pred; if (!v) return 'sin marcar';
+    return v === 'A' ? PORK[est.A].n : v === 'B' ? PORK[est.B].n : 'Parecido en los dos';
+  }
+  function prepararContraste() {
+    $('c-pred').textContent = textoPred();
+    var h = '';
+    [est.A, est.B].forEach(function (k) {
+      var u = ultimoDato(k), e = S.p[k].e[u];
+      h += '<p><strong>' + PORK[k].n + ':</strong> ' + sgn(e) + ' por millón (' + fmc(u) + ')</p>';
+    });
+    $('c-dato').innerHTML = h;
+  }
+  function armarPredicciones() {
+    var cont = $('pred-ops'); cont.innerHTML = '';
+    [['A', PORK[est.A].n], ['B', PORK[est.B].n], ['P', 'Parecido en los dos']].forEach(function (o) {
+      var b = el('button', { type: 'button', 'aria-pressed': 'false', 'data-p': o[0] }, o[1]);
+      cont.appendChild(b);
+    });
+    est.pred = null; est.predFija = false;
+  }
+  function armarHitos() {
+    var cont = $('hitos'); cont.innerHTML = '';
+    est.par.hitos.forEach(function (h, i) {
+      var idx = S.meses.indexOf(h.mes);
+      var b = el('button', { type: 'button', 'aria-pressed': 'false', 'data-h': i }, 'Hito ' + (i + 1));
+      var s = el('small'); s.textContent = ''; b.appendChild(document.createElement('br')); b.appendChild(document.createTextNode(fmc(idx))); cont.appendChild(b);
+    });
+    est.hito = -1; $('hito-q').hidden = true;
+  }
+  function elegirHito(i) {
+    est.hito = i; parar(true);
+    var h = est.par.hitos[i], idx = S.meses.indexOf(h.mes);
+    var bs = $('hitos').getElementsByTagName('button'), j;
+    for (j = 0; j < bs.length; j++) bs[j].setAttribute('aria-pressed', j === i ? 'true' : 'false');
+    var q = $('hito-q');
+    var html = '<strong>Hito ' + (i + 1) + ' · ' + fm(idx) + '</strong><ol>';
+    h.items.forEach(function (it) { html += '<li>' + it.q + '</li>'; });
+    q.innerHTML = html + '</ol><p class="ojo" style="margin:6px 0 0">Responde en tu hoja.</p>'; q.hidden = false;
+    est.mes = idx; pintarTodo(); anunciarEstado();
+    if ($('hitos').scrollIntoView) $('hitos').scrollIntoView(true);
+  }
+  function armarCausas() {
+    var cont = $('causas'); cont.innerHTML = ''; est.causas = [];
+    CAUSAS.forEach(function (c, i) { cont.appendChild(el('button', { type: 'button', 'aria-pressed': 'false', 'data-c': i }, c)); });
+    $('causa-nota').hidden = true;
+  }
+  function elegirCausa(i) {
+    var pos = est.causas.indexOf(i);
+    if (pos >= 0) est.causas.splice(pos, 1); else { if (est.causas.length >= 2) est.causas.shift(); est.causas.push(i); }
+    var bs = $('causas').getElementsByTagName('button'), j;
+    for (j = 0; j < bs.length; j++) bs[j].setAttribute('aria-pressed', est.causas.indexOf(j) >= 0 ? 'true' : 'false');
+    var n = $('causa-nota');
+    if (est.causas.length === 0) { n.hidden = true; return; }
+    var t = 'En tu hoja: escribe qué dato necesitarías para comprobar ' + (est.causas.length > 1 ? 'cada una de estas causas.' : 'esta causa.');
+    if (est.causas.indexOf(3) >= 0) t += ' Hemisferio: ' + PORK[est.A].n + ', ' + PORK[est.A].hem + '; ' + PORK[est.B].n + ', ' + PORK[est.B].hem + '.';
+    n.textContent = t; n.hidden = false;
+    anunciar(t);
+  }
+
+  // ---------- par y arranque ----------
+  function leerParams() {
+    var q = (location.search || '').replace(/^\?/, ''), r = {}, i, kv;
+    if (!q) return r;
+    q = q.split('&');
+    for (i = 0; i < q.length; i++) { kv = q[i].split('='); try { r[kv[0]] = decodeURIComponent((kv[1] || '').replace(/\+/g, ' ')); } catch (e) { r[kv[0]] = kv[1] || ''; } }
+    return r;
+  }
+  function buscarPar(sa, sb) {
+    var i, p;
+    for (i = 0; i < PARES.pares.length; i++) {
+      p = PARES.pares[i];
+      if ((p.a === sa && p.b === sb) || (p.a === sb && p.b === sa)) return { par: p, a: sa, b: sb };
+    }
+    return null;
+  }
+  function regionPar(a, b) { return PORK[a].reg === PORK[b].reg ? PORK[a].reg : 'mundo'; }
+  function urlPar(p) { return '?a=' + p.a + '&b=' + p.b; }
+  function armarListaPares() {
+    var cont = $('pares'); cont.innerHTML = '';
+    PARES.pares.forEach(function (p) {
+      var a = el('a', { href: urlPar(p), 'data-a': p.a, 'data-b': p.b });
+      a.appendChild(el('strong', null, PORSLUG[p.a].n + ' – ' + PORSLUG[p.b].n));
+      a.appendChild(el('span', null, p.guia));
+      cont.appendChild(a);
+    });
+  }
+  function mostrarElegir(aviso) {
+    parar(true);
+    $('elegir').hidden = false; $('trabajo').hidden = true;
+    $('aviso-par').hidden = !aviso; $('aviso-par').textContent = aviso || '';
+    document.title = 'Mapa de la pandemia: compara dos países';
+  }
+  function abrirPar(sa, sb, escribirUrl) {
+    var f = buscarPar(sa, sb); if (!f) { mostrarElegir('No reconocí el par del enlace. Elige uno de la lista.'); return; }
+    est.par = f.par;
+    var a = PORSLUG[sa].k, b = PORSLUG[sb].k;
+    $('elegir').hidden = true; $('trabajo').hidden = false;
+    est.capa = 'exceso'; est.mes = 0; est.foco = null; est.paso = 1; est.pasoMax = 1; est.hito = -1;
+    var bsc = $('capas').getElementsByTagName('button'), j;
+    for (j = 0; j < bsc.length; j++) bsc[j].setAttribute('aria-pressed', j === 0 ? 'true' : 'false');
+    est.A = a; est.B = b;
+    armarPredicciones(); armarHitos(); armarCausas(); leyenda();
+    fijarPar(a, b, regionPar(a, b));
+    est.mes = 0; pintarTodo();
+    irPaso(1, false);
+    document.title = PORK[a].n + ' y ' + PORK[b].n + ' · Mapa de la pandemia';
+    if (escribirUrl) { try { if (history.replaceState) history.replaceState(null, '', urlPar({ a: sa, b: sb })); } catch (e) { /* archivo local sin URL */ } }
+    if (escribirUrl) { var t = $('trabajo'); if (t.scrollIntoView) t.scrollIntoView(true); }
+  }
+  function cambiarPais(slot, k) {
+    if (slot === 'A') { if (k === est.B) est.B = est.A; est.A = k; } else { if (k === est.A) est.A = est.B; est.B = k; }
+    fijarPar(est.A, est.B, null);
+    pintarTodo(); anunciar('País A: ' + PORK[est.A].n + '. País B: ' + PORK[est.B].n + '.');
+    if (est.paso === 1) return;
+  }
+
+  function iniciar() {
+    construirMapa();
+    var selA = $('sel-a'), selB = $('sel-b');
+    PAISES.forEach(function (p) { selA.appendChild(el('option', { value: p.k }, p.n)); selB.appendChild(el('option', { value: p.k }, p.n)); });
+    selA.addEventListener('change', function () { cambiarPais('A', selA.value); });
+    selB.addEventListener('change', function () { cambiarPais('B', selB.value); });
+    armarListaPares();
+    $('pares').addEventListener('click', function (ev) {
+      var a = ev.target; while (a && a !== this && a.tagName !== 'A') a = a.parentNode;
+      if (!a || a === this) return; ev.preventDefault(); abrirPar(a.getAttribute('data-a'), a.getAttribute('data-b'), true);
+    });
+    $('otro-par').addEventListener('click', function (ev) { ev.preventDefault(); try { if (history.replaceState) history.replaceState(null, '', location.pathname); } catch (e) { /* sin URL */ } mostrarElegir(''); window.scrollTo(0, 0); });
+    $('pred-ops').addEventListener('click', function (ev) {
+      var b = ev.target; while (b && b !== this && b.tagName !== 'BUTTON') b = b.parentNode;
+      if (!b || b === this || est.predFija) return;
+      est.pred = b.getAttribute('data-p') === 'P' ? 'P' : b.getAttribute('data-p');
+      var bs = this.getElementsByTagName('button'), j; for (j = 0; j < bs.length; j++) bs[j].setAttribute('aria-pressed', bs[j] === b ? 'true' : 'false');
+      $('aviso').hidden = true; anunciar('Predicción marcada: ' + textoPred() + '.');
+    });
+    $('hitos').addEventListener('click', function (ev) { var b = ev.target; while (b && b !== this && b.tagName !== 'BUTTON') b = b.parentNode; if (b && b !== this) elegirHito(Number(b.getAttribute('data-h'))); });
+    $('causas').addEventListener('click', function (ev) { var b = ev.target; while (b && b !== this && b.tagName !== 'BUTTON') b = b.parentNode; if (b && b !== this) elegirCausa(Number(b.getAttribute('data-c'))); });
+    $('capas').addEventListener('click', function (ev) { var b = ev.target; while (b && b !== this && b.tagName !== 'BUTTON') b = b.parentNode; if (b && b !== this) cambiarCapa(b.getAttribute('data-capa')); });
+    $('regiones').addEventListener('click', function (ev) { var b = ev.target; while (b && b !== this && b.tagName !== 'BUTTON') b = b.parentNode; if (b && b !== this) cambiarRegion(b.getAttribute('data-reg')); });
+    $('lectura').addEventListener('click', function (ev) {
+      var b = ev.target; while (b && b !== this && b.tagName !== 'BUTTON') b = b.parentNode;
+      if (b && b !== this && b.getAttribute('data-usar')) { cambiarPais(b.getAttribute('data-usar'), est.foco); pintarLectura(); }
+    });
+    $('play').addEventListener('click', reproducir);
+    $('ant').addEventListener('click', function () { irMes(est.mes - 1, true); });
+    $('sig').addEventListener('click', function () { irMes(est.mes + 1, true); });
+    $('t').addEventListener('input', function () { est.mes = Number(this.value); parar(true); pintarTodo(); });
+    $('t').addEventListener('change', function () { anunciarEstado(); });
+    $('g-exc').addEventListener('click', clicGrafico);
+    $('g-vac').addEventListener('click', clicGrafico);
+    $('btn-sig').addEventListener('click', function () { irPaso(est.paso + 1); });
+    $('btn-ant').addEventListener('click', function () { irPaso(est.paso - 1); });
+    document.addEventListener('visibilitychange', function () { if (document.hidden) parar(true); });
+    window.addEventListener('resize', function () { if (!$('trabajo').hidden && !$('visor').hidden) ajustarRegion(); });
+    if (window.matchMedia) {
+      var mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+      if (mq.addEventListener) mq.addEventListener('change', aplicarReducido); else if (mq.addListener) mq.addListener(aplicarReducido);
+    }
+    aplicarReducido();
+    var pr = leerParams();
+    if (pr.a || pr.b) {
+      var sa = quitar(pr.a || ''), sb = quitar(pr.b || '');
+      if (PORSLUG[sa] && PORSLUG[sb] && sa !== sb && buscarPar(sa, sb)) abrirPar(sa, sb, false);
+      else mostrarElegir('No reconocí el par del enlace. Elige uno de la lista.');
+    } else mostrarElegir('');
+  }
+  iniciar();
+})();
+</script>
+</body>
+</html>
