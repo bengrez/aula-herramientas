@@ -68,7 +68,13 @@
   .causas button { text-align:left; font-weight:600; }
 
   /* Visor */
-  #visor { margin-top:12px; scroll-margin-top:8px; }
+  #visor { margin-top:12px; scroll-margin-top:8px; display:flex; flex-direction:column; }
+  #visor[hidden], #trabajo[hidden] { display:none; }
+  #trabajo { display:flex; flex-direction:column; }
+  #col-paso { display:contents; }
+  #visor { order:2; } .nav { order:3; } #aviso { order:3; } details.terminos { order:4; }
+  .v-izq, .v-der { display:contents; }
+  .g1 { order:1; } .g2 { order:2; } .g3 { order:3; } .g4 { order:4; } .g5 { order:5; }
   .hitos { display:grid; grid-template-columns:repeat(3,1fr); gap:6px; margin:0 0 8px; }
   .hitos button { font-size:.9rem; padding:6px 4px; }
   .hito-q { scroll-margin-top:8px; background:#FFFBEB; border-left:4px solid var(--ambar); border-radius:4px; padding:8px 10px; margin:0 0 10px; font-size:.97rem; }
@@ -81,9 +87,7 @@
   .sel select { display:block; width:100%; font:inherit; font-weight:500; min-height:44px; padding:6px 6px; margin-top:2px; border:2px solid var(--borde); border-radius:8px; background:#fff; color:var(--pizarra); }
   .capas { display:grid; grid-template-columns:repeat(3,1fr); gap:6px; margin:0 0 10px; }
   .capas button { padding:6px 4px; font-size:.92rem; min-height:56px; }
-  .mes-fila { display:flex; align-items:baseline; justify-content:space-between; gap:8px; margin:0 0 2px; }
-  #mes-texto { font-size:1.6rem; font-weight:800; line-height:1.2; margin:0; }
-  .mes-fila .ojo { margin:0; }
+  #mes-texto { font-size:1.6rem; font-weight:800; line-height:1.2; margin:0 0 2px; }
   .tiempo { display:grid; grid-template-columns:1fr 2fr 1fr; gap:6px; margin:4px 0 2px; }
   .tiempo.sin-play { grid-template-columns:1fr 1fr; }
   #movimiento-nota { margin:4px 0 0; }
@@ -132,6 +136,53 @@
   @media (max-width: 340px) { .regiones button { font-size:.8rem; padding:4px 1px; } h1 { font-size:1.5rem; } .capas button { font-size:.85rem; } .sel select { font-size:.85rem; } }
   @media (prefers-reduced-motion: reduce) { * { animation:none !important; transition:none !important; scroll-behavior:auto !important; } }
   .aula-volver a, .aula-pie a { display:inline-block; padding:15px 8px; margin:-15px -8px; }
+  #tip { position:absolute; z-index:5; pointer-events:none; background:#0f172a; color:#fff; font-size:.85rem; line-height:1.25; padding:5px 8px; border-radius:5px; max-width:220px; box-shadow:0 1px 4px rgba(0,0,0,.35); }
+  #tip[hidden] { display:none; }
+  details.terminos { margin:12px 0 0; border:1px solid var(--borde); border-radius:8px; background:#fff; }
+  details.terminos summary { min-height:44px; padding:10px 12px; font-weight:700; cursor:pointer; color:var(--cobalto); }
+  details.terminos .glosario { padding:0 12px 6px; margin:0; }
+  .pares a .n { display:inline-block; width:30px; height:30px; line-height:30px; text-align:center; border-radius:50%; background:var(--pizarra); color:#fff; font-size:1rem; margin-right:8px; vertical-align:middle; }
+  .pares a strong { display:flex; align-items:center; }
+
+  /* Escritorio (sala de computación): pantalla ancha, mapa y panel del par lado a lado */
+  @media (min-width: 1024px) {
+    main { width:calc(100% - 32px); max-width:1360px; padding-top:4px; }
+    body.trabajando header { display:none; }
+    .pares { grid-template-columns:1fr 1fr; }
+    .pares a { padding:10px 14px; }
+    #glosario-1 { columns:3; column-gap:28px; }
+    #glosario-1 dt, #glosario-1 dd { break-inside:avoid; }
+    #trabajo.con-visor { display:grid; grid-template-columns:250px minmax(0,1.15fr) minmax(300px,1fr); column-gap:14px; align-items:start; padding:10px 12px; margin-top:6px; }
+    #trabajo.con-visor #col-paso { display:block; max-height:calc(100vh - 64px); overflow-y:auto; padding-right:6px; font-size:.95rem; line-height:1.45; }
+    #trabajo.con-visor #p-titulo { font-size:1.05rem; }
+    #trabajo.con-visor #visor { display:contents; }
+    #trabajo.con-visor .v-izq, #trabajo.con-visor .v-der { display:block; min-width:0; }
+    .g1, .g2, .g3, .g4, .g5 { order:0; }
+    #visor { margin-top:0; }
+    .capas { margin:0 0 6px; }
+    .capas button { min-height:44px; font-size:.88rem; padding:4px 6px; }
+    .ctl-mes { display:flex; align-items:center; justify-content:space-between; }
+    #mes-texto { font-size:1.3rem; margin:0 10px 0 0; white-space:nowrap; }
+    .tiempo { width:330px; margin:0; }
+    .tiempo button { min-height:44px; padding:4px; font-size:.95rem; }
+    #t { height:34px; margin:2px 0 0; }
+    .anios { margin:-2px 0 4px; }
+    .regiones { margin:0 0 6px; }
+    .regiones button { min-height:38px; font-size:.88rem; }
+    .mapa-caja { padding-bottom:0 !important; height:calc(100vh - 478px); min-height:200px; max-height:460px; }
+    .leyenda-t { margin:6px 0 2px; font-size:.85rem; }
+    #leyenda { grid-template-columns:repeat(4,1fr); font-size:.76rem; margin:0 0 4px; }
+    #lectura { min-height:48px; padding:5px 8px; margin:0; font-size:.9rem; }
+    .cap-tabla { margin:0; font-size:.82rem; }
+    .tabla-par { font-size:.85rem; margin:2px 0 4px; }
+    .tabla-par th, .tabla-par td { padding:2px 5px; }
+    .grafico-t { font-size:.92rem; margin:6px 0 2px; }
+    .grafico-t small, .nota-ejes, #g-ley1 { display:none; }
+    .g-ley { font-size:.8rem; margin:2px 0 0; }
+    details.cambiar { margin:6px 0 0; }
+    details.cambiar summary { min-height:40px; padding:8px 12px; }
+  }
+  @media (min-width: 1200px) { #trabajo.con-visor { grid-template-columns:290px minmax(0,1.15fr) minmax(340px,1fr); } }
 </style>
 <style>
 /* Enlace al hub «Herramientas de aula» y su pie (igual que en las otras herramientas). */
@@ -156,28 +207,28 @@
   <section id="elegir" hidden>
     <h2 class="paso">Elige tu par</h2>
     <p id="aviso-par" class="aviso-par" hidden></p>
-    <p>Toca el par que te tocó trabajar.</p>
+    <p>Elige el par que te tocó trabajar (el número está en tu hoja).</p>
     <div class="pares" id="pares"></div>
   </section>
 
   <section id="trabajo" hidden>
+    <div id="col-paso">
     <p class="par-titulo"><span class="nom" id="par-nombre"></span> <a href="./" id="otro-par">Elegir otro par</a></p>
     <div class="hilo-barra" id="hilo-barra" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></div>
     <p class="ojo" id="par-guia"></p>
     <h2 id="p-titulo" tabindex="-1"></h2>
 
     <div data-paso="1">
-      <p>Lee estos tres datos. Los vas a usar en todo el trabajo.</p>
-      <dl class="glosario">
-        <dt>Exceso de muertes</dt>
-        <dd>Cuántas personas más murieron que las esperadas según los años anteriores a la pandemia. Se cuenta por cada millón de habitantes, para poder comparar países de distinto tamaño. Si es negativo, murió menos gente que la esperada.</dd>
-        <dt>Exceso del mes y exceso acumulado</dt>
-        <dd>El <em>exceso del mes</em> es lo que se agregó en ese mes. El <em>exceso acumulado</em> es la suma de todos los meses desde enero de 2020. El mapa pinta el exceso del mes; la tabla y el paso 3 muestran los dos.</dd>
-        <dt>Vacunación completa</dt>
-        <dd>Porcentaje de la población con el esquema inicial de dosis completo (sin contar refuerzos).</dd>
+      <p>Lee estos términos. Los vas a usar en todo el trabajo.</p>
+      <dl class="glosario" id="glosario-1">
+        <dt>Exceso de mortalidad</dt>
+        <dd>Muertes totales por sobre las que se esperaban en un año normal, por millón de habitantes. Incluye muertes por COVID y por otras causas. En el mapa se ve «del mes» (cuánto subió ese mes).</dd>
+        <dt>Cobertura (vacunación completa)</dt>
+        <dd>Porcentaje de la población que recibió todas las dosis del esquema inicial. No cuenta los refuerzos.</dd>
         <dt>Rigurosidad de las medidas</dt>
-        <dd>Puntaje de 0 a 100 de cuán estrictas eran las medidas decretadas (colegios, trabajo, reuniones, viajes).</dd>
+        <dd>Índice de 0 a 100 (Universidad de Oxford) que resume qué tan estrictas eran las medidas decretadas, como cuarentenas, cierre de colegios y restricciones de viaje. Mide lo decretado, no lo cumplido.</dd>
       </dl>
+      <p class="ojo">En la tabla de la página verás también el exceso <em>acumulado</em>: la suma de todos los meses desde enero de 2020.</p>
       <p class="pregunta">Antes de mirar el mapa, predice: ¿qué país tendrá más muertes en exceso acumuladas al final del período (la suma de todos los meses de 2020 a 2022)?</p>
       <div class="ops" id="pred-ops" role="group" aria-label="Tu predicción"></div>
       <div class="cuaderno"><strong>En tu hoja.</strong> Escribe por qué crees eso. Al pasar al paso 2 tu predicción queda marcada.</div>
@@ -196,7 +247,7 @@
         <thead><tr><th>Tu predicción</th><th>Exceso acumulado al final (suma de todos los meses, por millón)</th></tr></thead>
         <tbody><tr><td id="c-pred"></td><td id="c-dato"></td></tr></tbody>
       </table>
-      <p class="ojo">El mapa pinta el exceso de un mes; la tabla de arriba y la de abajo muestran también el acumulado.</p>
+      <p class="ojo">El mapa pinta el exceso de un solo mes. La tabla de la página muestra los dos: el del mes y el acumulado.</p>
       <ol>
         <li>En tu hoja: ¿tu predicción coincide con lo que viste? ¿En qué sí y en qué no?</li>
         <li>Mira el mapa en distintos meses. ¿Qué te sorprendió?</li>
@@ -214,57 +265,10 @@
       <div class="nota"><strong>Puedo decir que…</strong> (usa al menos un número de tu par)<br><strong>pero no puedo decir que…</strong> (nombra lo que los datos no muestran)</div>
       <ol>
         <li>Mira de nuevo tu predicción del paso 1. Escríbela otra vez, ahora con lo que aprendiste.</li>
-        <li>Para el número, mira la tabla y los gráficos de abajo; puedes mover el mes.</li>
+        <li>Para el número, mira la tabla y los gráficos; puedes mover el mes.</li>
         <li>Revisa los límites de los datos al final de la página. Elige uno y úsalo en tu frase.</li>
         <li>Este mapa muestra que dos cosas ocurren a la vez, no que una cause la otra.</li>
       </ol>
-    </div>
-
-    <div id="visor" hidden>
-      <div class="capas" id="capas" role="group" aria-label="Qué se muestra en el mapa">
-        <button type="button" data-capa="exceso" aria-pressed="true">Exceso de muertes del mes</button>
-        <button type="button" data-capa="vac" aria-pressed="false">% con vacunación completa</button>
-        <button type="button" data-capa="rig" aria-pressed="false">Rigurosidad de las medidas</button>
-      </div>
-      <div class="mes-fila"><p id="mes-texto"></p></div>
-      <div class="tiempo" id="tiempo">
-        <button type="button" id="ant" aria-label="Mes anterior">◀ Mes</button>
-        <button type="button" id="play" class="principal" aria-label="Reproducir">▶ Reproducir</button>
-        <button type="button" id="sig" aria-label="Mes siguiente">Mes ▶</button>
-      </div>
-      <p class="ojo" id="movimiento-nota" hidden>Movimiento reducido: no hay reproducción automática. Usa el deslizador o los botones de mes.</p>
-      <input type="range" id="t" min="0" max="35" step="1" value="0" aria-label="Mes que se muestra" list="marcas-anio">
-      <datalist id="marcas-anio"><option value="0" label="2020"></option><option value="12" label="2021"></option><option value="24" label="2022"></option></datalist>
-      <div class="anios" aria-hidden="true"><span>2020</span><span>2021</span><span>2022</span></div>
-      <p class="ojo" style="margin:8px 0 0">Mes elegido. Exceso: muertes por millón de habitantes.</p>
-      <table class="tabla-par" id="tabla-par">
-        <thead><tr><th></th><th id="th-a"></th><th id="th-b"></th></tr></thead>
-        <tbody id="tabla-cuerpo"></tbody>
-      </table>
-      <div class="regiones" id="regiones" role="group" aria-label="Zoom a una región">
-        <button type="button" data-reg="mundo" aria-pressed="true">Mundo</button>
-        <button type="button" data-reg="americas" aria-pressed="false">Américas</button>
-        <button type="button" data-reg="europa" aria-pressed="false">Europa</button>
-        <button type="button" data-reg="oceania" aria-pressed="false">Oceanía</button>
-      </div>
-      <div class="mapa-caja" id="mapa-caja"><svg id="mapa" viewBox="0 0 1000 450" role="img" aria-label="Mapa"></svg></div>
-      <p class="leyenda-t" id="leyenda-t"></p>
-      <ul id="leyenda"></ul>
-      <div id="lectura" tabindex="-1"><p class="ojo">Toca un país de color del mapa o su círculo para leer su valor.</p></div>
-      <details class="cambiar" id="cambiar">
-        <summary>Cambiar de país</summary>
-        <div class="sel">
-          <label>País <span class="mk a" aria-hidden="true">A</span><select id="sel-a" aria-label="País A"></select></label>
-          <label>País <span class="mk b" aria-hidden="true">B</span><select id="sel-b" aria-label="País B"></select></label>
-        </div>
-      </details>
-      <h3 class="grafico-t">Exceso de muertes del mes<small>Por millón de habitantes. Bajo 0: murió menos gente de la esperada. La raya vertical marca el mes elegido; toca el gráfico para cambiarlo.</small></h3>
-      <svg class="grafico" id="g-exc" viewBox="0 0 340 170" role="img" aria-label="Exceso de muertes del mes"></svg>
-      <div class="g-ley" id="g-ley1"></div>
-      <h3 class="grafico-t">% con vacunación completa y rigurosidad<small>Línea gruesa: % vacunado. Línea fina y tenue: rigurosidad de las medidas (0 a 100).</small></h3>
-      <svg class="grafico" id="g-vac" viewBox="0 0 340 170" role="img" aria-label="Vacunación completa y rigurosidad"></svg>
-      <div class="g-ley" id="g-ley"></div>
-      <p class="ojo">Los dos gráficos son distintos: el primero usa muertes por millón; el segundo, una escala de 0 a 100.</p>
     </div>
 
     <div class="nav">
@@ -272,6 +276,71 @@
       <button type="button" id="btn-sig" class="principal">Siguiente</button>
     </div>
     <p id="aviso" role="status" hidden></p>
+    <details class="terminos" id="terminos">
+      <summary>Términos clave</summary>
+      <dl class="glosario">
+        <dt>Exceso de mortalidad</dt>
+        <dd>Muertes totales por sobre las que se esperaban en un año normal, por millón de habitantes. Incluye muertes por COVID y por otras causas. En el mapa se ve «del mes» (cuánto subió ese mes).</dd>
+        <dt>Cobertura (vacunación completa)</dt>
+        <dd>Porcentaje de la población que recibió todas las dosis del esquema inicial. No cuenta los refuerzos.</dd>
+        <dt>Rigurosidad de las medidas</dt>
+        <dd>Índice de 0 a 100 (Universidad de Oxford) que resume qué tan estrictas eran las medidas decretadas, como cuarentenas, cierre de colegios y restricciones de viaje. Mide lo decretado, no lo cumplido.</dd>
+      </dl>
+    </details>
+    </div>
+
+    <div id="visor" hidden>
+     <div class="v-izq">
+      <div class="capas g1" id="capas" role="group" aria-label="Qué se muestra en el mapa">
+        <button type="button" data-capa="exceso" aria-pressed="true">Exceso de muertes del mes</button>
+        <button type="button" data-capa="vac" aria-pressed="false">% con vacunación completa</button>
+        <button type="button" data-capa="rig" aria-pressed="false">Rigurosidad de las medidas</button>
+      </div>
+      <div class="ctl-mes g1">
+        <p id="mes-texto"></p>
+        <div class="tiempo" id="tiempo">
+          <button type="button" id="ant" aria-label="Mes anterior">◀ Mes</button>
+          <button type="button" id="play" class="principal" aria-label="Reproducir">▶ Reproducir</button>
+          <button type="button" id="sig" aria-label="Mes siguiente">Mes ▶</button>
+        </div>
+      </div>
+      <p class="ojo g1" id="movimiento-nota" hidden>Movimiento reducido: no hay reproducción automática. Usa el deslizador o los botones de mes.</p>
+      <input class="g1" type="range" id="t" min="0" max="35" step="1" value="0" aria-label="Mes que se muestra" list="marcas-anio">
+      <datalist id="marcas-anio"><option value="0" label="2020"></option><option value="12" label="2021"></option><option value="24" label="2022"></option></datalist>
+      <div class="anios g1" aria-hidden="true"><span>2020</span><span>2021</span><span>2022</span></div>
+      <div class="regiones g3" id="regiones" role="group" aria-label="Zoom a una región">
+        <button type="button" data-reg="mundo" aria-pressed="true">Mundo</button>
+        <button type="button" data-reg="americas" aria-pressed="false">Américas</button>
+        <button type="button" data-reg="europa" aria-pressed="false">Europa</button>
+        <button type="button" data-reg="oceania" aria-pressed="false">Oceanía</button>
+      </div>
+      <div class="mapa-caja g3" id="mapa-caja"><svg id="mapa" viewBox="0 0 1000 450" role="img" aria-label="Mapa"></svg><div id="tip" hidden></div></div>
+      <p class="leyenda-t g3" id="leyenda-t"></p>
+      <ul id="leyenda" class="g3"></ul>
+      <div id="lectura" class="g3" tabindex="-1"><p class="ojo">Toca o haz clic en un país de color del mapa (o su círculo) para leer su valor.</p></div>
+     </div>
+     <div class="v-der">
+      <p class="ojo g2 cap-tabla">Mes elegido. Exceso: muertes por millón de habitantes.</p>
+      <table class="tabla-par g2" id="tabla-par">
+        <thead><tr><th></th><th id="th-a"></th><th id="th-b"></th></tr></thead>
+        <tbody id="tabla-cuerpo"></tbody>
+      </table>
+      <h3 class="grafico-t g4">Exceso de muertes del mes<small>Por millón de habitantes. Bajo 0: murió menos gente de la esperada. La raya vertical marca el mes elegido; toca el gráfico para cambiarlo.</small></h3>
+      <svg class="grafico g4" id="g-exc" viewBox="0 0 340 170" role="img" aria-label="Exceso de muertes del mes"></svg>
+      <div class="g-ley g4" id="g-ley1"></div>
+      <h3 class="grafico-t g4">% con vacunación completa y rigurosidad<small>Línea gruesa: % vacunado. Línea fina y tenue: rigurosidad de las medidas (0 a 100).</small></h3>
+      <svg class="grafico g4" id="g-vac" viewBox="0 0 340 170" role="img" aria-label="Vacunación completa y rigurosidad"></svg>
+      <div class="g-ley g4" id="g-ley"></div>
+      <p class="ojo g4 nota-ejes">Los dos gráficos son distintos: el primero usa muertes por millón; el segundo, una escala de 0 a 100.</p>
+      <details class="cambiar g5" id="cambiar">
+        <summary>Cambiar de país</summary>
+        <div class="sel">
+          <label>País <span class="mk a" aria-hidden="true">A</span><select id="sel-a" aria-label="País A"></select></label>
+          <label>País <span class="mk b" aria-hidden="true">B</span><select id="sel-b" aria-label="País B"></select></label>
+        </div>
+      </details>
+     </div>
+    </div>
   </section>
 
   <section id="pie">
@@ -389,6 +458,7 @@
     function f(c) { return c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4); }
     return 0.2126 * f(r) + 0.7152 * f(g) + 0.0722 * f(b);
   }
+  function esEscritorio() { return !!(window.matchMedia && window.matchMedia('(min-width: 1024px)').matches); }
   function anunciar(t) { $('anuncio').textContent = ''; $('anuncio').textContent = t; }
   function ultimoDato(k) { var e = S.p[k].e, i; for (i = NMES - 1; i >= 0; i--) if (e[i] !== null) return i; return -1; }
 
@@ -416,30 +486,53 @@
       n.sq = se('rect', { stroke: '#fff', 'stroke-width': 2, 'pointer-events': 'none', visibility: 'hidden' });
       n.txt = se('text', { x: m[0], y: m[1], 'text-anchor': 'middle', 'dominant-baseline': 'central', 'font-weight': 800, 'pointer-events': 'none', visibility: 'hidden' });
       [n.hit, n.anillo, n.dot, n.sq, n.txt].forEach(function (c) { n.marca.appendChild(c); });
-      n.marca.addEventListener('keydown', function (ev) { if (ev.key === 'Enter' || ev.key === ' ' || ev.keyCode === 13 || ev.keyCode === 32) { ev.preventDefault(); tocar(p.k); } });
+      n.marca.addEventListener('keydown', function (ev) { if (ev.key === 'Enter' || ev.key === ' ' || ev.keyCode === 13 || ev.keyCode === 32) { ev.preventDefault(); ev.stopPropagation(); tocar(p.k); } });
       gm.appendChild(n.marca);
     });
     svg.appendChild(gp); svg.appendChild(gr); svg.appendChild(gm);
     svg.addEventListener('click', clicMapa);
+    svg.addEventListener('mousemove', moverMapa);
+    svg.addEventListener('mouseleave', ocultarTip);
+    svg.addEventListener('touchstart', function () { ultimoToque = new Date().getTime(); ocultarTip(); }, { passive: true });
     nodos._gm = gm;
   }
-  // Un solo clic para todo el mapa: gana el círculo más cercano al dedo (hasta 22 px); si no hay, el país de color bajo el dedo
-  function clicMapa(ev) {
-    var r = svg.getBoundingClientRect(), vb = G.regiones[est.reg].vb, e = ev.clientX !== undefined ? ev : null;
-    if (!e) return;
-    var f = r.width / vb[2], mejor = null, dm = 23, cx, cy, d;
+  // País bajo el puntero: gana el círculo más cercano (hasta radio px); si no hay, el país de color bajo el puntero
+  function paisBajo(ev, radio) {
+    var r = svg.getBoundingClientRect(), vb = G.regiones[est.reg].vb;
+    var mejor = null, dm = radio + 1, cx, cy, d;
     var vx = Math.min(r.width / vb[2], r.height / vb[3]), ox = (r.width - vb[2] * vx) / 2, oy = (r.height - vb[3] * vx) / 2;
     PAISES.forEach(function (p) {
       var m = G.paises[p.k].m;
       cx = r.left + ox + (m[0] - vb[0]) * vx; cy = r.top + oy + (m[1] - vb[1]) * vx;
-      d = Math.sqrt((e.clientX - cx) * (e.clientX - cx) + (e.clientY - cy) * (e.clientY - cy));
+      d = Math.sqrt((ev.clientX - cx) * (ev.clientX - cx) + (ev.clientY - cy) * (ev.clientY - cy));
       if (d < dm) { dm = d; mejor = p.k; }
     });
-    if (mejor) { tocar(mejor); return; }
+    if (mejor) return mejor;
     var t = ev.target;
-    if (t && t.getAttribute && t.getAttribute('data-k')) { tocar(t.getAttribute('data-k')); return; }
-    $('lectura').innerHTML = '<p class="ojo">Este país no está en la actividad: solo los 12 países de color se pueden leer.</p>';
-    anunciar('Este país no está en la actividad.');
+    return t && t.getAttribute && t.getAttribute('data-k') ? t.getAttribute('data-k') : null;
+  }
+  function clicMapa(ev) {
+    if (ev.clientX === undefined) return;
+    var k = paisBajo(ev, 22);
+    if (k) { tocar(k); return; }
+    $('lectura').innerHTML = '<p class="ojo">Este país no está entre los 12 del estudio: solo los países de color se pueden leer.</p>';
+    anunciar('Este país no está entre los 12 del estudio.');
+  }
+  // Mouse: mensaje flotante al pasar sobre un país
+  var ultimoToque = 0;
+  function ocultarTip() { $('tip').hidden = true; svg.style.cursor = 'default'; }
+  function moverMapa(ev) {
+    if (new Date().getTime() - ultimoToque < 800) return;
+    var k = paisBajo(ev, 16), tip = $('tip');
+    if (!k) { ocultarTip(); return; }
+    var c = CAPAS[est.capa], cj = $('mapa-caja').getBoundingClientRect();
+    svg.style.cursor = 'pointer';
+    tip.textContent = PORK[k].n + ' · ' + fmc(est.mes) + ' · ' + c.corto + ': ' + c.txt(c.val(k, est.mes));
+    tip.hidden = false;
+    var x = ev.clientX - cj.left + 14, y = ev.clientY - cj.top + 14, w = tip.offsetWidth, h = tip.offsetHeight;
+    if (x + w > cj.width - 4) x = ev.clientX - cj.left - w - 12;
+    if (y + h > cj.height - 4) y = ev.clientY - cj.top - h - 12;
+    tip.style.left = Math.max(2, x) + 'px'; tip.style.top = Math.max(2, y) + 'px';
   }
   function ajustarRegion() {
     var r = G.regiones[est.reg], k = r.vb[2] / px(); // unidades del lienzo por pixel de pantalla
@@ -497,8 +590,8 @@
     for (i = 0; i < c.col.length; i++) {
       li = el('li'); var sw = el('span', { 'class': 'sw' }); sw.style.background = c.col[i]; li.appendChild(sw); li.appendChild(document.createTextNode(c.lab[i])); ul.appendChild(li);
     }
-    li = el('li'); li.appendChild(el('span', { 'class': 'sw trama' })); li.appendChild(document.createTextNode(est.capa === 'exceso' ? 'sin dato (ene 2020 no tiene mes anterior; Perú, nov y dic 2022)' : 'sin dato')); ul.appendChild(li);
-    li = el('li'); var g = el('span', { 'class': 'sw' }); g.style.background = '#c9d1db'; li.appendChild(g); li.appendChild(document.createTextNode('gris liso: fuera de la actividad')); ul.appendChild(li);
+    li = el('li'); li.appendChild(el('span', { 'class': 'sw trama' })); li.appendChild(document.createTextNode(est.capa === 'exceso' ? 'sin dato' : 'sin dato')); ul.appendChild(li);
+    li = el('li'); var g = el('span', { 'class': 'sw' }); g.style.background = '#c9d1db'; li.appendChild(g); li.appendChild(document.createTextNode('otro país (gris)')); ul.appendChild(li);
   }
 
   // ---------- tabla y gráficos ----------
@@ -511,9 +604,9 @@
     function ea(k) { var v = S.p[k].e[i]; return v === null ? 'sin dato' : sgn(v); }
     $('tabla-cuerpo').innerHTML =
       fila(est.capa === 'exceso', 'Exceso del mes', sinUn(CAPAS.exceso.txt(MENS[A][i])), sinUn(CAPAS.exceso.txt(MENS[B][i]))) +
-      fila(false, 'Exceso acumulado', ea(A), ea(B)) +
       fila(est.capa === 'vac', '% vacunado', CAPAS.vac.txt(S.p[A].v[i]), CAPAS.vac.txt(S.p[B].v[i])) +
-      fila(est.capa === 'rig', 'Rigurosidad', CAPAS.rig.txt(S.p[A].s[i]), CAPAS.rig.txt(S.p[B].s[i]));
+      fila(est.capa === 'rig', 'Rigurosidad', CAPAS.rig.txt(S.p[A].s[i]), CAPAS.rig.txt(S.p[B].s[i])) +
+      fila(false, 'Exceso acumulado', ea(A), ea(B));
   }
   function trazo(arr, X, Y) {
     var d = '', abierto = false, i;
@@ -525,12 +618,14 @@
   }
   function bonito(max) { var p = Math.pow(10, Math.floor(Math.log(max) / Math.LN10)), f = max / p; return (f <= 1 ? 1 : f <= 2 ? 2 : f <= 2.5 ? 2.5 : f <= 5 ? 5 : 10) * p; }
   function dibujarGrafico(id, series, ymin, ymax, ticks, fmt) {
-    var s = $(id), W = 340, H = 170, L = 46, R = 8, T = 10, Bt = 24;
+    var s = $(id), W = Math.round(s.getBoundingClientRect().width) || 340, H = esEscritorio() ? 120 : 170, L = 46, R = 8, T = 10, Bt = 24;
+    if (W < 200) W = 340;
+    s.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
     var X = function (i) { return L + (W - L - R) * i / (NMES - 1); };
     var Y = function (v) { return T + (H - T - Bt) * (1 - (v - ymin) / (ymax - ymin)); };
     var h = '', i;
-    for (i = 0; i < ticks.length; i++) h += '<line x1="' + L + '" x2="' + (W - R) + '" y1="' + Y(ticks[i]).toFixed(1) + '" y2="' + Y(ticks[i]).toFixed(1) + '" stroke="' + (ticks[i] === 0 ? '#64748b' : '#e2e8f0') + '" stroke-width="1"/><text x="' + (L - 5) + '" y="' + (Y(ticks[i]) + 4).toFixed(1) + '" text-anchor="end" font-size="15.5" fill="#475569">' + fmt(ticks[i]) + '</text>';
-    [0, 12, 24].forEach(function (m, j) { h += '<text x="' + X(m).toFixed(1) + '" y="' + (H - 6) + '" font-size="15.5" fill="#475569" text-anchor="' + (j === 0 ? 'start' : 'start') + '">' + (2020 + j) + '</text><line x1="' + X(m).toFixed(1) + '" x2="' + X(m).toFixed(1) + '" y1="' + (H - Bt) + '" y2="' + (H - Bt + 4) + '" stroke="#64748b"/>'; });
+    for (i = 0; i < ticks.length; i++) h += '<line x1="' + L + '" x2="' + (W - R) + '" y1="' + Y(ticks[i]).toFixed(1) + '" y2="' + Y(ticks[i]).toFixed(1) + '" stroke="' + (ticks[i] === 0 ? '#64748b' : '#e2e8f0') + '" stroke-width="1"/><text x="' + (L - 5) + '" y="' + (Y(ticks[i]) + 4).toFixed(1) + '" text-anchor="end" font-size="13" fill="#475569">' + fmt(ticks[i]) + '</text>';
+    [0, 12, 24].forEach(function (m, j) { h += '<text x="' + X(m).toFixed(1) + '" y="' + (H - 6) + '" font-size="13" fill="#475569" text-anchor="' + (j === 0 ? 'start' : 'start') + '">' + (2020 + j) + '</text><line x1="' + X(m).toFixed(1) + '" x2="' + X(m).toFixed(1) + '" y1="' + (H - Bt) + '" y2="' + (H - Bt + 4) + '" stroke="#64748b"/>'; });
     series.forEach(function (q) {
       h += '<path d="' + trazo(q.a, X, Y) + '" fill="none" stroke="' + q.col + '" stroke-width="' + q.w + '"' + (q.dash ? ' stroke-dasharray="' + q.dash + '"' : '') + (q.op ? ' opacity="' + q.op + '"' : '') + ' stroke-linejoin="round"/>';
     });
@@ -674,13 +769,13 @@
     var bs = $('hilo-barra').getElementsByTagName('span');
     for (j = 0; j < bs.length; j++) bs[j].className = j + 1 < n ? 'hecho' : j + 1 === n ? 'actual' : '';
     $('p-titulo').textContent = TITULOS[n - 1];
-    var visor = n >= 2; $('visor').hidden = !visor;
+    var visor = n >= 2; $('visor').hidden = !visor; $('trabajo').className = visor ? 'con-visor' : '';
     $('btn-ant').hidden = n === 1; $('btn-sig').hidden = n === 5;
     if (n === 3) { prepararContraste(); est.mes = NMES - 1; parar(true); }
     if (n === 2 && est.mes === 0) est.mes = 1;
     $('pred-recuerdo').textContent = 'Tu predicción del paso 1: ' + textoPred() + '.';
     if (visor) { ajustarRegion(); pintarTodo(); }
-    if (mover !== false) { $('p-titulo').focus(); var t = $('p-titulo'); if (t.scrollIntoView) t.scrollIntoView(true); }
+    if (mover !== false) { $('p-titulo').focus(); var t = $('p-titulo'); if (!esEscritorio() && t.scrollIntoView) t.scrollIntoView(true); }
     if (est.play) parar(true);
   }
   function fijarPred() {
@@ -732,7 +827,7 @@
     var cambio = !((est.A === orig[0] && est.B === orig[1]) || (est.A === orig[1] && est.B === orig[0]));
     q.innerHTML = html + '</ol><p class="ojo" style="margin:6px 0 0">' + (cambio ? 'Estas preguntas son del par original (' + PORK[orig[0]].n + ' y ' + PORK[orig[1]].n + '). ' : '') + 'Responde en tu hoja.</p>'; q.hidden = false;
     est.mes = idx; pintarTodo(); anunciarEstado();
-    if (q.scrollIntoView) q.scrollIntoView(true);
+    if (!esEscritorio() && q.scrollIntoView) q.scrollIntoView(true);
   }
   function armarCausas() {
     var cont = $('causas'); cont.innerHTML = ''; est.causas = [];
@@ -776,14 +871,15 @@
     var cont = $('pares'); cont.innerHTML = '';
     PARES.pares.forEach(function (p) {
       var a = el('a', { href: urlPar(p), 'data-a': p.a, 'data-b': p.b });
-      a.appendChild(el('strong', null, PORSLUG[p.a].n + ' – ' + PORSLUG[p.b].n));
+      var st = el('strong'); st.appendChild(el('span', { 'class': 'n', 'aria-hidden': 'true' }, String(PARES.pares.indexOf(p) + 1))); st.appendChild(document.createTextNode('Par ' + (PARES.pares.indexOf(p) + 1) + ': ' + PORSLUG[p.a].n + ' – ' + PORSLUG[p.b].n));
+      a.appendChild(st);
       a.appendChild(el('span', null, p.guia));
       cont.appendChild(a);
     });
   }
   function mostrarElegir(aviso) {
     parar(true);
-    $('elegir').hidden = false; $('trabajo').hidden = true;
+    $('elegir').hidden = false; $('trabajo').hidden = true; $('trabajo').className = ''; document.body.className = '';
     $('aviso-par').hidden = !aviso; $('aviso-par').textContent = aviso || '';
     document.title = 'Mapa de la pandemia: compara dos países';
   }
@@ -791,7 +887,7 @@
     var f = buscarPar(sa, sb); if (!f) { mostrarElegir('No reconocí el par del enlace. Elige uno de la lista.'); return; }
     est.par = f.par;
     var a = PORSLUG[sa].k, b = PORSLUG[sb].k;
-    $('elegir').hidden = true; $('trabajo').hidden = false;
+    $('elegir').hidden = true; $('trabajo').hidden = false; document.body.className = 'trabajando';
     est.capa = 'exceso'; est.mes = 0; est.foco = null; est.paso = 1; est.pasoMax = 1; est.hito = -1;
     var bsc = $('capas').getElementsByTagName('button'), j;
     for (j = 0; j < bsc.length; j++) bsc[j].setAttribute('aria-pressed', j === 0 ? 'true' : 'false');
@@ -800,10 +896,10 @@
     fijarPar(a, b, regionPar(a, b));
     est.mes = 0; pintarTodo();
     irPaso(1, false);
-    $('par-guia').textContent = 'Pregunta guía: ' + f.par.guia;
+    $('par-guia').textContent = 'Pregunta guía (respóndela en el paso 5): ' + f.par.guia;
     document.title = PORK[a].n + ' y ' + PORK[b].n + ' · Mapa de la pandemia';
     if (escribirUrl) { try { if (history.replaceState) history.replaceState(null, '', urlPar({ a: sa, b: sb })); } catch (e) { /* archivo local sin URL */ } }
-    if (escribirUrl) { var t = $('trabajo'); if (t.scrollIntoView) t.scrollIntoView(true); $('p-titulo').focus(); }
+    if (escribirUrl) { var t = $('trabajo'); if (!esEscritorio() && t.scrollIntoView) t.scrollIntoView(true); $('p-titulo').focus(); }
   }
   function cambiarPais(slot, k) {
     if (slot === 'A') { if (k === est.B) est.B = est.A; est.A = k; } else { if (k === est.A) est.A = est.B; est.B = k; }
@@ -848,8 +944,15 @@
     $('g-vac').addEventListener('click', clicGrafico);
     $('btn-sig').addEventListener('click', function () { irPaso(est.paso + 1); });
     $('btn-ant').addEventListener('click', function () { irPaso(est.paso - 1); });
+    document.addEventListener('keydown', function (ev) {
+      if (!(ev.key === ' ' || ev.key === 'Spacebar' || ev.keyCode === 32) || ev.ctrlKey || ev.altKey || ev.metaKey) return;
+      var t = ev.target, tg = t && t.tagName;
+      if (tg === 'BUTTON' || tg === 'A' || tg === 'SELECT' || tg === 'SUMMARY' || tg === 'TEXTAREA' || (tg === 'INPUT' && t.type !== 'range')) return;
+      if ($('trabajo').hidden || $('visor').hidden || reducido) return;
+      ev.preventDefault(); reproducir();
+    });
     document.addEventListener('visibilitychange', function () { if (document.hidden) parar(true); });
-    window.addEventListener('resize', function () { if (!$('trabajo').hidden && !$('visor').hidden) ajustarRegion(); });
+    window.addEventListener('resize', function () { if (!$('trabajo').hidden && !$('visor').hidden) { ajustarRegion(); graficos(); } });
     if (window.matchMedia) {
       var mq = window.matchMedia('(prefers-reduced-motion: reduce)');
       if (mq.addEventListener) mq.addEventListener('change', aplicarReducido); else if (mq.addListener) mq.addListener(aplicarReducido);
