@@ -12,7 +12,7 @@
           { "t": "L", "q": "Compara el exceso del mes de los dos países." } ] },
         { "mes": "2021-12", "items": [
           { "t": "L", "q": "Lee el % vacunado y el exceso acumulado de cada país. ¿Cuál estaba más vacunado y cuál tenía más muertes acumuladas?" },
-          { "t": "I", "q": "Anota una causa, distinta de las medidas y de la vacuna, que pudo influir en esa diferencia." } ] }
+          { "t": "I", "q": "Anota una causa, distinta de las medidas y de la vacuna, que pudo influir en esa diferencia, y qué dato tendrías que comparar para comprobarla." } ] }
       ]
     },
     {
@@ -37,10 +37,10 @@
           { "t": "L", "q": "Mira el exceso del mes de cada país. ¿Cuál subió primero?" },
           { "t": "L", "q": "¿Qué rigurosidad de las medidas tenía cada país?" } ] },
         { "mes": "2021-05", "items": [
-          { "t": "L", "q": "¿Qué país tuvo el exceso del mes más alto? ¿Qué % vacunado tenía cada uno?" } ] },
+          { "t": "L", "q": "De los dos países, ¿cuál tuvo el exceso del mes más alto? ¿Qué % vacunado tenía cada uno?" } ] },
         { "mes": "2022-02", "items": [
           { "t": "L", "q": "Compara el % vacunado y el exceso del mes de los dos países." },
-          { "t": "I", "q": "Anota una causa que pudo influir en lo que ves y el dato que la comprobaría." } ] }
+          { "t": "I", "q": "Anota una causa que pudo influir en lo que ves y qué dato tendrías que comparar para comprobarla." } ] }
       ]
     },
     {
@@ -48,12 +48,12 @@
       "guia": "¿Qué país vacunó más rápido y cómo se movió el exceso de cada uno en 2021?",
       "hitos": [
         { "mes": "2021-03", "items": [
-          { "t": "L", "q": "¿Qué país tuvo el exceso del mes más alto? ¿Qué % vacunado tenía cada uno?" } ] },
+          { "t": "L", "q": "De los dos países, ¿cuál tuvo el exceso del mes más alto? ¿Qué % vacunado tenía cada uno?" } ] },
         { "mes": "2021-08", "items": [
           { "t": "L", "q": "¿Qué país tenía más % vacunado? ¿Qué país tenía el exceso del mes más alto?" } ] },
         { "mes": "2022-02", "items": [
           { "t": "L", "q": "Retrocede un mes con el botón ◀ y compara enero con febrero: ¿qué país tuvo más exceso en cada mes?" },
-          { "t": "I", "q": "Anota una causa que pudo cambiar entre enero y febrero y el dato que la comprobaría." } ] }
+          { "t": "I", "q": "Anota una causa que pudo cambiar entre enero y febrero y qué dato tendrías que comparar para comprobarla." } ] }
       ]
     },
     {
@@ -61,13 +61,13 @@
       "guia": "¿Cuándo se separaron las curvas de exceso y cuánto estaba vacunado cada país en ese momento?",
       "hitos": [
         { "mes": "2020-11", "items": [
-          { "t": "L", "q": "¿Qué país tuvo el exceso del mes más alto? Retrocede un mes con el botón ◀: ¿cómo estaba cada país en octubre?" } ] },
+          { "t": "L", "q": "De los dos países, ¿cuál tuvo el exceso del mes más alto? Retrocede un mes con el botón ◀: ¿cómo estaba cada país en octubre?" } ] },
         { "mes": "2021-01", "items": [
-          { "t": "L", "q": "¿Qué país tuvo el exceso del mes más alto? ¿Qué % vacunado tenía cada uno?" },
-          { "t": "I", "q": "Con el % vacunado de este mes, ¿qué puedes decir sobre la causa de esa alza y qué no puedes decir?" } ] },
+          { "t": "L", "q": "De los dos países, ¿cuál tuvo el exceso del mes más alto? ¿Qué % vacunado tenía cada uno?" },
+          { "t": "I", "q": "Con el % vacunado de este mes, ¿qué puedes decir sobre la causa del exceso de ese país y qué no puedes decir?" } ] },
         { "mes": "2021-10", "items": [
           { "t": "L", "q": "Compara el % vacunado y el exceso del mes de cada país." },
-          { "t": "I", "q": "Anota una causa, además de la vacunación, que pudo marcar la diferencia y el dato que la comprobaría." } ] }
+          { "t": "I", "q": "Anota una causa que pudo marcar la diferencia (puede ser la vacunación u otra) y qué dato tendrías que comparar para comprobarla." } ] }
       ]
     },
     {
@@ -81,7 +81,7 @@
           { "t": "L", "q": "¿Qué % vacunado tenía cada uno?" } ] },
         { "mes": "2022-01", "items": [
           { "t": "L", "q": "Compara el % vacunado y el exceso del mes de cada país." },
-          { "t": "I", "q": "Anota una causa que pudo influir en lo que ves y el dato que la comprobaría." } ] }
+          { "t": "I", "q": "Anota una causa que pudo influir en lo que ves y qué dato tendrías que comparar para comprobarla." } ] }
       ]
     },
     {
@@ -96,7 +96,7 @@
           { "t": "L", "q": "Compara el exceso acumulado de los dos países." } ] },
         { "mes": "2022-03", "items": [
           { "t": "L", "q": "Retrocede con el botón ◀ hasta enero de 2022 y avanza mes a mes: ¿en qué mes empieza a subir el exceso de cada país?" },
-          { "t": "I", "q": "Anota una causa que pudo cambiar en 2022 y el dato que la comprobaría." } ] }
+          { "t": "I", "q": "Anota una causa que pudo cambiar en 2022 y qué dato tendrías que comparar para comprobarla." } ] }
       ]
     }
   ]

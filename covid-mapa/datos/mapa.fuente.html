@@ -10,7 +10,7 @@
   * { box-sizing: border-box; }
   html { -webkit-text-size-adjust: 100%; }
   body { margin:0; font-family: Inter,"Segoe UI",system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif; font-size:17px; line-height:1.55; color:var(--pizarra); background-color:var(--marfil); }
-  main { width:min(680px, calc(100% - 24px)); margin:0 auto; padding:12px 0 48px; }
+  main { width:calc(100% - 24px); max-width:680px; margin:0 auto; padding:12px 0 48px; }
   header { padding:8px 4px 4px; }
   .eyebrow { color:var(--ambar); font-size:.78rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase; margin:0 0 4px; }
   h1 { font-size:1.75rem; line-height:1.15; margin:0 0 8px; }
@@ -43,7 +43,8 @@
   .aviso-par { font-weight:700; color:var(--ambar); }
 
   /* Hilo */
-  .par-titulo { display:flex; flex-wrap:wrap; align-items:center; gap:6px 10px; margin:0 0 8px; }
+  .par-titulo { display:flex; flex-wrap:wrap; align-items:center; margin:0 0 8px; }
+  .par-titulo > * { margin:0 10px 6px 0; }
   .par-titulo .nom { font-weight:700; font-size:1.05rem; }
   .par-titulo a { display:inline-block; padding:12px 6px; margin:-12px -6px; font-size:.95rem; }
   .hilo-barra { display:grid; grid-template-columns:repeat(5,1fr); gap:4px; margin:0 0 8px; }
@@ -70,7 +71,7 @@
   #visor { margin-top:12px; scroll-margin-top:8px; }
   .hitos { display:grid; grid-template-columns:repeat(3,1fr); gap:6px; margin:0 0 8px; }
   .hitos button { font-size:.9rem; padding:6px 4px; }
-  .hito-q { background:#FFFBEB; border-left:4px solid var(--ambar); border-radius:4px; padding:8px 10px; margin:0 0 10px; font-size:.97rem; }
+  .hito-q { scroll-margin-top:8px; background:#FFFBEB; border-left:4px solid var(--ambar); border-radius:4px; padding:8px 10px; margin:0 0 10px; font-size:.97rem; }
   .hito-q ol { margin:4px 0 0; padding-left:20px; }
   .hito-q li:last-child { margin-bottom:0; }
   details.cambiar { margin:0 0 10px; border:1px solid var(--borde); border-radius:8px; background:#fff; }
@@ -85,6 +86,7 @@
   .mes-fila .ojo { margin:0; }
   .tiempo { display:grid; grid-template-columns:1fr 2fr 1fr; gap:6px; margin:4px 0 2px; }
   .tiempo.sin-play { grid-template-columns:1fr 1fr; }
+  #movimiento-nota { margin:4px 0 0; }
   #t { display:block; width:100%; margin:6px 0 0; height:44px; accent-color:var(--cobalto); }
   .anios { display:grid; grid-template-columns:12fr 12fr 11fr; font-size:.8rem; color:var(--suave); margin:-4px 0 6px; }
   .regiones { display:grid; grid-template-columns:repeat(4,1fr); gap:6px; margin:0 0 8px; }
@@ -96,17 +98,19 @@
   .mapa-caja svg g.marca:focus-visible .foco-anillo { stroke:#B45309; stroke-width:3; opacity:1; }
   .leyenda-t { font-weight:700; font-size:.92rem; margin:8px 0 4px; }
   #leyenda { list-style:none; padding:0; margin:0 0 8px; display:grid; grid-template-columns:1fr 1fr; gap:3px 8px; font-size:.82rem; }
-  #leyenda li { display:flex; align-items:center; gap:6px; margin:0; line-height:1.2; }
-  #leyenda .sw { flex:none; width:18px; height:18px; border:1px solid #334155; border-radius:3px; }
+  #leyenda li { display:flex; align-items:center; margin:0; line-height:1.2; }
+  #leyenda .sw { flex:none; width:18px; height:18px; margin-right:6px; border:1px solid #334155; border-radius:3px; }
   #leyenda .sw.trama { background:repeating-linear-gradient(45deg,#fff 0,#fff 3px,#64748b 3px,#64748b 4px); }
+  #lectura:focus { outline:none; }
   #lectura { border:1px solid var(--borde); border-radius:6px; background:var(--marfil); padding:8px 10px; margin:0 0 10px; min-height:84px; font-size:.95rem; }
   #lectura p { margin:0 0 4px; }
   #lectura .usar { display:grid; grid-template-columns:1fr 1fr; gap:6px; margin-top:6px; }
   #lectura .usar button { min-height:44px; font-size:.9rem; }
-  .tabla-par { width:100%; border-collapse:collapse; font-size:.92rem; margin:0 0 10px; table-layout:fixed; }
-  .tabla-par th, .tabla-par td { border:1px solid var(--borde); padding:5px 6px; text-align:left; vertical-align:top; font-variant-numeric:tabular-nums; }
+  .tabla-par { width:100%; border-collapse:collapse; font-size:.9rem; margin:4px 0 10px; table-layout:fixed; }
+  .tabla-par th, .tabla-par td { border:1px solid var(--borde); padding:3px 5px; text-align:left; vertical-align:top; font-variant-numeric:tabular-nums; }
   .tabla-par thead th { background:var(--cobalto-fondo); font-size:.9rem; }
-  .tabla-par tbody th { font-weight:600; font-size:.85rem; background:#fff; width:34%; }
+  .tabla-par small { display:block; font-weight:500; font-size:.78rem; color:var(--suave); }
+  .tabla-par tbody th { font-weight:600; font-size:.85rem; background:#fff; width:32%; }
   .tabla-par tr.actual th, .tabla-par tr.actual td { background:#FFF7E6; font-weight:700; }
   .mk { display:inline-block; width:18px; height:18px; line-height:15px; text-align:center; font-size:.78rem; font-weight:800; color:#fff; margin-right:4px; vertical-align:middle; }
   .mk.a { background:var(--pa); border-radius:50%; border:2px solid #fff; box-shadow:0 0 0 1.5px var(--pa); }
@@ -114,7 +118,8 @@
   .grafico-t { margin:12px 0 4px; font-size:1rem; line-height:1.25; }
   .grafico-t small { display:block; font-weight:500; font-size:.82rem; color:var(--suave); }
   .grafico { display:block; width:100%; height:auto; background:#fff; border:1px solid var(--borde); border-radius:6px; touch-action:manipulation; }
-  .g-ley { display:flex; flex-wrap:wrap; gap:2px 14px; font-size:.85rem; margin:4px 0 0; }
+  .g-ley { display:flex; flex-wrap:wrap; font-size:.85rem; margin:4px 0 0; }
+  .g-ley > span { margin:0 14px 2px 0; }
   .ln { display:inline-block; width:26px; height:0; border-top:3px solid; vertical-align:middle; margin-right:5px; }
   .ln.a { border-top-color:var(--pa); }
   .ln.b { border-top-color:var(--pb); border-top-style:dashed; }
@@ -124,7 +129,7 @@
   #pie h2 { font-size:1.1rem; }
   #pie ul { font-size:.93rem; }
   footer { text-align:center; color:var(--suave); font-size:.85rem; margin-top:18px; }
-  @media (max-width: 340px) { h1 { font-size:1.5rem; } .capas button { font-size:.85rem; } .sel select { font-size:.85rem; } }
+  @media (max-width: 340px) { .regiones button { font-size:.8rem; padding:4px 1px; } h1 { font-size:1.5rem; } .capas button { font-size:.85rem; } .sel select { font-size:.85rem; } }
   @media (prefers-reduced-motion: reduce) { * { animation:none !important; transition:none !important; scroll-behavior:auto !important; } }
   .aula-volver a, .aula-pie a { display:inline-block; padding:15px 8px; margin:-15px -8px; }
 </style>
@@ -145,6 +150,7 @@
     <p>Datos reales de 2020 a 2022 de 12 países. Trabaja con un par y sigue los cinco pasos. Tus respuestas van en la hoja de papel de tu grupo: esta página no guarda nada.</p>
   </header>
 
+  <p id="anuncio" class="solo-lector" aria-live="polite" aria-atomic="true"></p>
   <noscript><section><p class="pregunta">Esta página necesita JavaScript para mostrar el mapa.</p></section></noscript>
 
   <section id="elegir" hidden>
@@ -157,25 +163,29 @@
   <section id="trabajo" hidden>
     <p class="par-titulo"><span class="nom" id="par-nombre"></span> <a href="./" id="otro-par">Elegir otro par</a></p>
     <div class="hilo-barra" id="hilo-barra" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></div>
+    <p class="ojo" id="par-guia"></p>
     <h2 id="p-titulo" tabindex="-1"></h2>
 
     <div data-paso="1">
       <p>Lee estos tres datos. Los vas a usar en todo el trabajo.</p>
       <dl class="glosario">
         <dt>Exceso de muertes</dt>
-        <dd>Cuántas personas más murieron que las esperadas según los años anteriores a la pandemia, por cada millón de habitantes. Si es negativo, murió menos gente que la esperada.</dd>
+        <dd>Cuántas personas más murieron que las esperadas según los años anteriores a la pandemia. Se cuenta por cada millón de habitantes, para poder comparar países de distinto tamaño. Si es negativo, murió menos gente que la esperada.</dd>
+        <dt>Exceso del mes y exceso acumulado</dt>
+        <dd>El <em>exceso del mes</em> es lo que se agregó en ese mes. El <em>exceso acumulado</em> es la suma de todos los meses desde enero de 2020. El mapa pinta el exceso del mes; la tabla y el paso 3 muestran los dos.</dd>
         <dt>Vacunación completa</dt>
-        <dd>Porcentaje de la población con las dosis iniciales completas.</dd>
+        <dd>Porcentaje de la población con el esquema inicial de dosis completo (sin contar refuerzos).</dd>
         <dt>Rigurosidad de las medidas</dt>
         <dd>Puntaje de 0 a 100 de cuán estrictas eran las medidas decretadas (colegios, trabajo, reuniones, viajes).</dd>
       </dl>
-      <p class="pregunta">Antes de mirar el mapa, predice: ¿qué país tendrá más muertes en exceso acumuladas entre 2020 y 2022?</p>
+      <p class="pregunta">Antes de mirar el mapa, predice: ¿qué país tendrá más muertes en exceso acumuladas al final del período (la suma de todos los meses de 2020 a 2022)?</p>
       <div class="ops" id="pred-ops" role="group" aria-label="Tu predicción"></div>
       <div class="cuaderno"><strong>En tu hoja.</strong> Escribe por qué crees eso. Al pasar al paso 2 tu predicción queda marcada.</div>
     </div>
 
     <div data-paso="2" hidden>
-      <p>Toca cada hito. Lee la pregunta y respóndela en tu hoja con lo que ves en el mapa y en la tabla. Mueve el mes para mirar antes y después.</p>
+      <p class="ojo" id="pred-recuerdo"></p>
+      <p>Un hito es un mes clave. Toca cada hito, lee la pregunta y respóndela en tu hoja con lo que ves en la tabla, el mapa y los gráficos. Las preguntas son sobre los dos países de tu par (A y B), no sobre el resto del mapa. Mueve el mes para mirar antes y después.</p>
       <div class="hitos" id="hitos" role="group" aria-label="Hitos"></div>
       <div class="hito-q" id="hito-q" hidden></div>
     </div>
@@ -183,9 +193,10 @@
     <div data-paso="3" hidden>
       <p>Compara lo que predijiste con lo que viste. No hay una respuesta correcta que buscar: describe en qué coinciden y en qué no.</p>
       <table class="contraste">
-        <thead><tr><th>Tu predicción</th><th>Lo que muestran los datos (último mes con dato)</th></tr></thead>
+        <thead><tr><th>Tu predicción</th><th>Exceso acumulado al final (suma de todos los meses, por millón)</th></tr></thead>
         <tbody><tr><td id="c-pred"></td><td id="c-dato"></td></tr></tbody>
       </table>
+      <p class="ojo">El mapa pinta el exceso de un mes; la tabla de arriba y la de abajo muestran también el acumulado.</p>
       <ol>
         <li>En tu hoja: ¿tu predicción coincide con lo que viste? ¿En qué sí y en qué no?</li>
         <li>Mira el mapa en distintos meses. ¿Qué te sorprendió?</li>
@@ -203,33 +214,33 @@
       <div class="nota"><strong>Puedo decir que…</strong> (usa al menos un número de tu par)<br><strong>pero no puedo decir que…</strong> (nombra lo que los datos no muestran)</div>
       <ol>
         <li>Mira de nuevo tu predicción del paso 1. Escríbela otra vez, ahora con lo que aprendiste.</li>
+        <li>Para el número, mira la tabla y los gráficos de abajo; puedes mover el mes.</li>
         <li>Revisa los límites de los datos al final de la página. Elige uno y úsalo en tu frase.</li>
         <li>Este mapa muestra que dos cosas ocurren a la vez, no que una cause la otra.</li>
       </ol>
     </div>
 
     <div id="visor" hidden>
-      <details class="cambiar" id="cambiar">
-        <summary>Cambiar de país</summary>
-        <div class="sel">
-          <label>País <span class="mk a" aria-hidden="true">A</span><select id="sel-a"></select></label>
-          <label>País <span class="mk b" aria-hidden="true">B</span><select id="sel-b"></select></label>
-        </div>
-      </details>
       <div class="capas" id="capas" role="group" aria-label="Qué se muestra en el mapa">
         <button type="button" data-capa="exceso" aria-pressed="true">Exceso de muertes del mes</button>
         <button type="button" data-capa="vac" aria-pressed="false">% con vacunación completa</button>
         <button type="button" data-capa="rig" aria-pressed="false">Rigurosidad de las medidas</button>
       </div>
-      <div class="mes-fila"><p id="mes-texto"></p><p class="ojo" id="movimiento-nota" hidden>Movimiento reducido: usa el deslizador.</p></div>
+      <div class="mes-fila"><p id="mes-texto"></p></div>
       <div class="tiempo" id="tiempo">
         <button type="button" id="ant" aria-label="Mes anterior">◀ Mes</button>
-        <button type="button" id="play" class="principal">▶ Reproducir</button>
+        <button type="button" id="play" class="principal" aria-label="Reproducir">▶ Reproducir</button>
         <button type="button" id="sig" aria-label="Mes siguiente">Mes ▶</button>
       </div>
+      <p class="ojo" id="movimiento-nota" hidden>Movimiento reducido: no hay reproducción automática. Usa el deslizador o los botones de mes.</p>
       <input type="range" id="t" min="0" max="35" step="1" value="0" aria-label="Mes que se muestra" list="marcas-anio">
       <datalist id="marcas-anio"><option value="0" label="2020"></option><option value="12" label="2021"></option><option value="24" label="2022"></option></datalist>
       <div class="anios" aria-hidden="true"><span>2020</span><span>2021</span><span>2022</span></div>
+      <p class="ojo" style="margin:8px 0 0">Mes elegido. Exceso: muertes por millón de habitantes.</p>
+      <table class="tabla-par" id="tabla-par">
+        <thead><tr><th></th><th id="th-a"></th><th id="th-b"></th></tr></thead>
+        <tbody id="tabla-cuerpo"></tbody>
+      </table>
       <div class="regiones" id="regiones" role="group" aria-label="Zoom a una región">
         <button type="button" data-reg="mundo" aria-pressed="true">Mundo</button>
         <button type="button" data-reg="americas" aria-pressed="false">Américas</button>
@@ -239,17 +250,21 @@
       <div class="mapa-caja" id="mapa-caja"><svg id="mapa" viewBox="0 0 1000 450" role="img" aria-label="Mapa"></svg></div>
       <p class="leyenda-t" id="leyenda-t"></p>
       <ul id="leyenda"></ul>
-      <div id="lectura"><p class="ojo">Toca un país del mapa, su círculo o la lista para leer su valor.</p></div>
-      <p id="anuncio" class="solo-lector" aria-live="polite" aria-atomic="true"></p>
-      <table class="tabla-par" id="tabla-par">
-        <thead><tr><th></th><th id="th-a"></th><th id="th-b"></th></tr></thead>
-        <tbody id="tabla-cuerpo"></tbody>
-      </table>
+      <div id="lectura" tabindex="-1"><p class="ojo">Toca un país de color del mapa o su círculo para leer su valor.</p></div>
+      <details class="cambiar" id="cambiar">
+        <summary>Cambiar de país</summary>
+        <div class="sel">
+          <label>País <span class="mk a" aria-hidden="true">A</span><select id="sel-a" aria-label="País A"></select></label>
+          <label>País <span class="mk b" aria-hidden="true">B</span><select id="sel-b" aria-label="País B"></select></label>
+        </div>
+      </details>
       <h3 class="grafico-t">Exceso de muertes del mes<small>Por millón de habitantes. Bajo 0: murió menos gente de la esperada. La raya vertical marca el mes elegido; toca el gráfico para cambiarlo.</small></h3>
       <svg class="grafico" id="g-exc" viewBox="0 0 340 170" role="img" aria-label="Exceso de muertes del mes"></svg>
+      <div class="g-ley" id="g-ley1"></div>
       <h3 class="grafico-t">% con vacunación completa y rigurosidad<small>Línea gruesa: % vacunado. Línea fina y tenue: rigurosidad de las medidas (0 a 100).</small></h3>
       <svg class="grafico" id="g-vac" viewBox="0 0 340 170" role="img" aria-label="Vacunación completa y rigurosidad"></svg>
       <div class="g-ley" id="g-ley"></div>
+      <p class="ojo">Los dos gráficos son distintos: el primero usa muertes por millón; el segundo, una escala de 0 a 100.</p>
     </div>
 
     <div class="nav">
@@ -381,7 +396,7 @@
   function px() { var r = $('mapa-caja').getBoundingClientRect(); return r.width || 340; }
   function construirMapa() {
     var defs = se('defs'), pat = se('pattern', { id: 'trama', patternUnits: 'userSpaceOnUse', width: 8, height: 8, patternTransform: 'rotate(45)' });
-    pat.appendChild(se('rect', { id: 'trama-f', width: 8, height: 8, fill: '#fff' }));
+    pat.appendChild(se('rect', { id: 'trama-f', width: 8, height: 8, fill: '#e8edf3' }));
     pat.appendChild(se('line', { id: 'trama-l', x1: 0, y1: 0, x2: 0, y2: 8, stroke: '#475569', 'stroke-width': 2 }));
     defs.appendChild(pat); svg.appendChild(defs);
     svg.appendChild(se('path', { d: G.resto, fill: '#c9d1db', 'fill-rule': 'evenodd' }));
@@ -390,24 +405,41 @@
       var n = nodos[p.k] = {};
       n.path = se('path', { d: G.paises[p.k].d, fill: '#ececec', stroke: '#334155', 'stroke-width': 0.8, 'vector-effect': 'non-scaling-stroke', 'stroke-linejoin': 'round', 'fill-rule': 'evenodd', 'data-k': p.k });
       n.path.style.cursor = 'pointer';
-      n.path.addEventListener('click', function () { tocar(p.k); });
       gp.appendChild(n.path);
       n.realce = se('path', { d: G.paises[p.k].d, fill: 'none', 'vector-effect': 'non-scaling-stroke', 'stroke-linejoin': 'round', 'fill-rule': 'evenodd', 'pointer-events': 'none', visibility: 'hidden' });
       gr.appendChild(n.realce);
       var m = G.paises[p.k].m;
       n.marca = se('g', { 'class': 'marca', tabindex: '0', role: 'button', 'aria-label': p.n + ': ver valor' });
-      n.hit = se('circle', { cx: m[0], cy: m[1], r: 10, fill: 'transparent' });
+      n.hit = se('circle', { cx: m[0], cy: m[1], r: 10, fill: 'none', 'pointer-events': 'none' });
       n.anillo = se('circle', { 'class': 'foco-anillo', cx: m[0], cy: m[1], r: 10, fill: 'none', stroke: '#0f172a', 'stroke-width': 2.5, opacity: 0, 'pointer-events': 'none' });
       n.dot = se('circle', { cx: m[0], cy: m[1], r: 5, stroke: '#0f172a', 'stroke-width': 1.5, 'pointer-events': 'none' });
       n.sq = se('rect', { stroke: '#fff', 'stroke-width': 2, 'pointer-events': 'none', visibility: 'hidden' });
       n.txt = se('text', { x: m[0], y: m[1], 'text-anchor': 'middle', 'dominant-baseline': 'central', 'font-weight': 800, 'pointer-events': 'none', visibility: 'hidden' });
       [n.hit, n.anillo, n.dot, n.sq, n.txt].forEach(function (c) { n.marca.appendChild(c); });
-      n.marca.addEventListener('click', function (ev) { ev.stopPropagation(); tocar(p.k); });
       n.marca.addEventListener('keydown', function (ev) { if (ev.key === 'Enter' || ev.key === ' ' || ev.keyCode === 13 || ev.keyCode === 32) { ev.preventDefault(); tocar(p.k); } });
       gm.appendChild(n.marca);
     });
     svg.appendChild(gp); svg.appendChild(gr); svg.appendChild(gm);
+    svg.addEventListener('click', clicMapa);
     nodos._gm = gm;
+  }
+  // Un solo clic para todo el mapa: gana el círculo más cercano al dedo (hasta 22 px); si no hay, el país de color bajo el dedo
+  function clicMapa(ev) {
+    var r = svg.getBoundingClientRect(), vb = G.regiones[est.reg].vb, e = ev.clientX !== undefined ? ev : null;
+    if (!e) return;
+    var f = r.width / vb[2], mejor = null, dm = 23, cx, cy, d;
+    var vx = Math.min(r.width / vb[2], r.height / vb[3]), ox = (r.width - vb[2] * vx) / 2, oy = (r.height - vb[3] * vx) / 2;
+    PAISES.forEach(function (p) {
+      var m = G.paises[p.k].m;
+      cx = r.left + ox + (m[0] - vb[0]) * vx; cy = r.top + oy + (m[1] - vb[1]) * vx;
+      d = Math.sqrt((e.clientX - cx) * (e.clientX - cx) + (e.clientY - cy) * (e.clientY - cy));
+      if (d < dm) { dm = d; mejor = p.k; }
+    });
+    if (mejor) { tocar(mejor); return; }
+    var t = ev.target;
+    if (t && t.getAttribute && t.getAttribute('data-k')) { tocar(t.getAttribute('data-k')); return; }
+    $('lectura').innerHTML = '<p class="ojo">Este país no está en la actividad: solo los 12 países de color se pueden leer.</p>';
+    anunciar('Este país no está en la actividad.');
   }
   function ajustarRegion() {
     var r = G.regiones[est.reg], k = r.vb[2] / px(); // unidades del lienzo por pixel de pantalla
@@ -416,12 +448,14 @@
     var w = 7 * k;
     $('trama').setAttribute('width', w); $('trama').setAttribute('height', w);
     $('trama-f').setAttribute('width', w); $('trama-f').setAttribute('height', w);
-    $('trama-l').setAttribute('y2', w); $('trama-l').setAttribute('stroke-width', 1.6 * k);
+    $('trama-l').setAttribute('y2', w); $('trama-l').setAttribute('stroke-width', 2.2 * k);
     PAISES.forEach(function (p) {
       var n = nodos[p.k], m = G.paises[p.k].m, pequeno = (p.k === 'Uruguay' || p.k === 'Portugal' || p.k === 'New Zealand' || p.k === 'Norway');
       var esA = p.k === est.A, esB = p.k === est.B;
-      var rv = (esA || esB) ? 11 * k : 5 * k;
-      n.hit.setAttribute('r', (pequeno ? 22 : 16) * k);
+      var rv = (esA || esB) ? 9.5 * k : 5 * k;
+      n.hit.setAttribute('r', 22 * k);
+      var dentro = m[0] >= r.vb[0] && m[0] <= r.vb[0] + r.vb[2] && m[1] >= r.vb[1] && m[1] <= r.vb[1] + r.vb[3];
+      n.marca.setAttribute('tabindex', dentro ? '0' : '-1'); n.marca.setAttribute('aria-hidden', dentro ? 'false' : 'true');
       n.dot.setAttribute('r', rv); n.dot.setAttribute('stroke-width', ((esA || esB) ? 1.5 : 1) * k);
       n.anillo.setAttribute('r', rv + 5 * k); n.anillo.setAttribute('stroke-width', 2.5 * k);
       n.sq.setAttribute('x', m[0] - rv); n.sq.setAttribute('y', m[1] - rv); n.sq.setAttribute('width', rv * 2); n.sq.setAttribute('height', rv * 2); n.sq.setAttribute('rx', 2 * k); n.sq.setAttribute('stroke-width', 2 * k);
@@ -440,14 +474,14 @@
     PAISES.forEach(function (p) {
       var n = nodos[p.k], v = c.val(p.k, est.mes), col = v === null ? null : c.col[c.bin(v)];
       n.path.setAttribute('fill', col || 'url(#trama)');
-      n.dot.setAttribute('fill', col || 'url(#trama)');
+      n.dot.setAttribute('fill', col || '#fff');
       var esA = p.k === est.A, esB = p.k === est.B;
       n.realce.setAttribute('visibility', (esA || esB) ? 'visible' : 'hidden');
-      n.sq.setAttribute('visibility', esB ? 'visible' : 'hidden'); n.sq.setAttribute('fill', col || 'url(#trama)');
+      n.sq.setAttribute('visibility', esB ? 'visible' : 'hidden'); n.sq.setAttribute('fill', col || '#fff');
       n.dot.setAttribute('visibility', esB ? 'hidden' : 'visible');
       n.txt.setAttribute('visibility', (esA || esB) ? 'visible' : 'hidden');
       n.txt.textContent = esA ? 'A' : esB ? 'B' : '';
-      n.txt.setAttribute('fill', col && lum(col) < 0.35 ? '#fff' : '#0f172a');
+      n.txt.setAttribute('fill', col && 1.05 / (lum(col) + 0.05) > (lum(col) + 0.05) / 0.059 ? '#fff' : '#0f172a');
       if (esA) { n.dot.setAttribute('stroke', '#1d4ed8'); } else { n.dot.setAttribute('stroke', '#0f172a'); }
       n.sq.setAttribute('stroke', '#c2410c');
       n.anillo.setAttribute('opacity', est.foco === p.k ? 1 : 0);
@@ -463,19 +497,21 @@
     for (i = 0; i < c.col.length; i++) {
       li = el('li'); var sw = el('span', { 'class': 'sw' }); sw.style.background = c.col[i]; li.appendChild(sw); li.appendChild(document.createTextNode(c.lab[i])); ul.appendChild(li);
     }
-    li = el('li'); li.appendChild(el('span', { 'class': 'sw trama' })); li.appendChild(document.createTextNode('sin dato')); ul.appendChild(li);
+    li = el('li'); li.appendChild(el('span', { 'class': 'sw trama' })); li.appendChild(document.createTextNode(est.capa === 'exceso' ? 'sin dato (ene 2020 no tiene mes anterior; Perú, nov y dic 2022)' : 'sin dato')); ul.appendChild(li);
+    li = el('li'); var g = el('span', { 'class': 'sw' }); g.style.background = '#c9d1db'; li.appendChild(g); li.appendChild(document.createTextNode('gris liso: fuera de la actividad')); ul.appendChild(li);
   }
 
   // ---------- tabla y gráficos ----------
   function tabla() {
     var A = est.A, B = est.B, i = est.mes;
+    function sinUn(t) { return t.replace(' por millón', ''); }
     function fila(cl, tit, fa, fb) { return '<tr class="' + (cl ? 'actual' : '') + '"><th scope="row">' + tit + '</th><td>' + fa + '</td><td>' + fb + '</td></tr>'; }
     $('th-a').innerHTML = '<span class="mk a" aria-hidden="true">A</span>' + PORK[A].n;
     $('th-b').innerHTML = '<span class="mk b" aria-hidden="true">B</span>' + PORK[B].n;
     function ea(k) { var v = S.p[k].e[i]; return v === null ? 'sin dato' : sgn(v); }
     $('tabla-cuerpo').innerHTML =
-      fila(est.capa === 'exceso', 'Exceso del mes', CAPAS.exceso.txt(MENS[A][i]), CAPAS.exceso.txt(MENS[B][i])) +
-      fila(false, 'Exceso acumulado', ea(A) + (ea(A) === 'sin dato' ? '' : ' por millón'), ea(B) + (ea(B) === 'sin dato' ? '' : ' por millón')) +
+      fila(est.capa === 'exceso', 'Exceso del mes', sinUn(CAPAS.exceso.txt(MENS[A][i])), sinUn(CAPAS.exceso.txt(MENS[B][i]))) +
+      fila(false, 'Exceso acumulado', ea(A), ea(B)) +
       fila(est.capa === 'vac', '% vacunado', CAPAS.vac.txt(S.p[A].v[i]), CAPAS.vac.txt(S.p[B].v[i])) +
       fila(est.capa === 'rig', 'Rigurosidad', CAPAS.rig.txt(S.p[A].s[i]), CAPAS.rig.txt(S.p[B].s[i]));
   }
@@ -493,8 +529,8 @@
     var X = function (i) { return L + (W - L - R) * i / (NMES - 1); };
     var Y = function (v) { return T + (H - T - Bt) * (1 - (v - ymin) / (ymax - ymin)); };
     var h = '', i;
-    for (i = 0; i < ticks.length; i++) h += '<line x1="' + L + '" x2="' + (W - R) + '" y1="' + Y(ticks[i]).toFixed(1) + '" y2="' + Y(ticks[i]).toFixed(1) + '" stroke="' + (ticks[i] === 0 ? '#64748b' : '#e2e8f0') + '" stroke-width="1"/><text x="' + (L - 5) + '" y="' + (Y(ticks[i]) + 4).toFixed(1) + '" text-anchor="end" font-size="13" fill="#475569">' + fmt(ticks[i]) + '</text>';
-    [0, 12, 24].forEach(function (m, j) { h += '<text x="' + X(m).toFixed(1) + '" y="' + (H - 6) + '" font-size="13" fill="#475569" text-anchor="' + (j === 0 ? 'start' : 'start') + '">' + (2020 + j) + '</text><line x1="' + X(m).toFixed(1) + '" x2="' + X(m).toFixed(1) + '" y1="' + (H - Bt) + '" y2="' + (H - Bt + 4) + '" stroke="#64748b"/>'; });
+    for (i = 0; i < ticks.length; i++) h += '<line x1="' + L + '" x2="' + (W - R) + '" y1="' + Y(ticks[i]).toFixed(1) + '" y2="' + Y(ticks[i]).toFixed(1) + '" stroke="' + (ticks[i] === 0 ? '#64748b' : '#e2e8f0') + '" stroke-width="1"/><text x="' + (L - 5) + '" y="' + (Y(ticks[i]) + 4).toFixed(1) + '" text-anchor="end" font-size="15.5" fill="#475569">' + fmt(ticks[i]) + '</text>';
+    [0, 12, 24].forEach(function (m, j) { h += '<text x="' + X(m).toFixed(1) + '" y="' + (H - 6) + '" font-size="15.5" fill="#475569" text-anchor="' + (j === 0 ? 'start' : 'start') + '">' + (2020 + j) + '</text><line x1="' + X(m).toFixed(1) + '" x2="' + X(m).toFixed(1) + '" y1="' + (H - Bt) + '" y2="' + (H - Bt + 4) + '" stroke="#64748b"/>'; });
     series.forEach(function (q) {
       h += '<path d="' + trazo(q.a, X, Y) + '" fill="none" stroke="' + q.col + '" stroke-width="' + q.w + '"' + (q.dash ? ' stroke-dasharray="' + q.dash + '"' : '') + (q.op ? ' opacity="' + q.op + '"' : '') + ' stroke-linejoin="round"/>';
     });
@@ -526,7 +562,9 @@
       { a: S.p[A].v, col: '#1d4ed8', w: 2.8, marca: true },
       { a: S.p[B].v, col: '#c2410c', w: 2.8, dash: '7 4', marca: true, forma: 'cuadro' }
     ], 0, 100, [0, 25, 50, 75, 100], function (v) { return v + ''; });
-    $('g-ley').innerHTML = '<span><span class="ln a"></span>' + PORK[A].n + ' (A)</span><span><span class="ln b"></span>' + PORK[B].n + ' (B)</span><span><span class="ln a fina"></span>rigurosidad (tenue)</span>';
+    var ley = '<span><span class="ln a"></span>' + PORK[A].n + ' (A)</span><span><span class="ln b"></span>' + PORK[B].n + ' (B)</span>';
+    $('g-ley1').innerHTML = ley;
+    $('g-ley').innerHTML = ley + '<span><span class="ln a fina"></span><span class="ln b fina"></span>rigurosidad (tenue)</span>';
     var v = est.mes;
     $('g-exc').setAttribute('aria-label', 'Exceso de muertes del mes. En ' + fm(v) + ': ' + PORK[A].n + ' ' + CAPAS.exceso.txt(ma[v]) + ', ' + PORK[B].n + ' ' + CAPAS.exceso.txt(mb[v]) + '.');
     $('g-vac').setAttribute('aria-label', '% con vacunación completa y rigurosidad. En ' + fm(v) + ': ' + PORK[A].n + ' ' + CAPAS.vac.txt(S.p[A].v[v]) + ' vacunado y rigurosidad ' + CAPAS.rig.txt(S.p[A].s[v]) + '; ' + PORK[B].n + ' ' + CAPAS.vac.txt(S.p[B].v[v]) + ' vacunado y rigurosidad ' + CAPAS.rig.txt(S.p[B].s[v]) + '.');
@@ -546,11 +584,11 @@
   }
   function pintarLectura() {
     var k = est.foco, b = $('lectura');
-    if (!k) { b.innerHTML = '<p class="ojo">Toca un país del mapa, su círculo o la lista para leer su valor.</p>'; return; }
+    if (!k) { b.innerHTML = '<p class="ojo">Toca un país de color del mapa o su círculo para leer su valor.</p>'; return; }
     var i = est.mes, p = PORK[k], c = CAPAS[est.capa], e = S.p[k].e[i];
     var h = '<p><strong>' + p.n + '</strong> · ' + fm(i) + '</p><p>' + c.corto + ': <strong>' + c.txt(c.val(k, i)) + '</strong>' + (e !== null && est.capa !== 'exceso' ? '' : '') + '</p>';
     if (est.capa !== 'exceso') h += '<p class="ojo">Exceso del mes: ' + CAPAS.exceso.txt(MENS[k][i]) + '</p>';
-    if (k !== est.A && k !== est.B) h += '<div class="usar"><button type="button" data-usar="A">Usar como A</button><button type="button" data-usar="B">Usar como B</button></div>';
+    if (k !== est.A && k !== est.B) h += '<div class="usar"><button type="button" data-usar="A">Usar como A</button><button type="button" data-usar="B">Usar como B</button></div><p class="ojo" style="margin:4px 0 0">Cambia el país A o el B de tu par.</p>';
     else h += '<p class="ojo">' + (k === est.A ? 'Es el país A.' : 'Es el país B.') + '</p>';
     b.innerHTML = h;
   }
@@ -636,20 +674,24 @@
     var bs = $('hilo-barra').getElementsByTagName('span');
     for (j = 0; j < bs.length; j++) bs[j].className = j + 1 < n ? 'hecho' : j + 1 === n ? 'actual' : '';
     $('p-titulo').textContent = TITULOS[n - 1];
-    var visor = n >= 2 && n <= 4; $('visor').hidden = !visor;
+    var visor = n >= 2; $('visor').hidden = !visor;
     $('btn-ant').hidden = n === 1; $('btn-sig').hidden = n === 5;
     if (n === 3) { prepararContraste(); est.mes = NMES - 1; parar(true); }
+    if (n === 2 && est.mes === 0) est.mes = 1;
+    $('pred-recuerdo').textContent = 'Tu predicción del paso 1: ' + textoPred() + '.';
     if (visor) { ajustarRegion(); pintarTodo(); }
     if (mover !== false) { $('p-titulo').focus(); var t = $('p-titulo'); if (t.scrollIntoView) t.scrollIntoView(true); }
     if (est.play) parar(true);
   }
   function fijarPred() {
+    if (!est.predFija) est.predTxt = textoPred();
     est.predFija = true;
     var bs = $('pred-ops').getElementsByTagName('button'), j;
     for (j = 0; j < bs.length; j++) bs[j].setAttribute('aria-disabled', 'true');
   }
   function textoPred() {
     var v = est.pred; if (!v) return 'sin marcar';
+    if (est.predTxt) return est.predTxt;
     return v === 'A' ? PORK[est.A].n : v === 'B' ? PORK[est.B].n : 'Parecido en los dos';
   }
   function prepararContraste() {
@@ -657,7 +699,7 @@
     var h = '';
     [est.A, est.B].forEach(function (k) {
       var u = ultimoDato(k), e = S.p[k].e[u];
-      h += '<p><strong>' + PORK[k].n + ':</strong> ' + sgn(e) + ' por millón (' + fmc(u) + ')</p>';
+      h += '<p><strong>' + PORK[k].n + ':</strong> ' + sgn(e) + ' (hasta ' + fmc(u) + ')</p>';
     });
     $('c-dato').innerHTML = h;
   }
@@ -667,7 +709,7 @@
       var b = el('button', { type: 'button', 'aria-pressed': 'false', 'data-p': o[0] }, o[1]);
       cont.appendChild(b);
     });
-    est.pred = null; est.predFija = false;
+    est.pred = null; est.predFija = false; est.predTxt = null;
   }
   function armarHitos() {
     var cont = $('hitos'); cont.innerHTML = '';
@@ -686,9 +728,11 @@
     var q = $('hito-q');
     var html = '<strong>Hito ' + (i + 1) + ' · ' + fm(idx) + '</strong><ol>';
     h.items.forEach(function (it) { html += '<li>' + it.q + '</li>'; });
-    q.innerHTML = html + '</ol><p class="ojo" style="margin:6px 0 0">Responde en tu hoja.</p>'; q.hidden = false;
+    var orig = [PORSLUG[est.par.a].k, PORSLUG[est.par.b].k];
+    var cambio = !((est.A === orig[0] && est.B === orig[1]) || (est.A === orig[1] && est.B === orig[0]));
+    q.innerHTML = html + '</ol><p class="ojo" style="margin:6px 0 0">' + (cambio ? 'Estas preguntas son del par original (' + PORK[orig[0]].n + ' y ' + PORK[orig[1]].n + '). ' : '') + 'Responde en tu hoja.</p>'; q.hidden = false;
     est.mes = idx; pintarTodo(); anunciarEstado();
-    if ($('hitos').scrollIntoView) $('hitos').scrollIntoView(true);
+    if (q.scrollIntoView) q.scrollIntoView(true);
   }
   function armarCausas() {
     var cont = $('causas'); cont.innerHTML = ''; est.causas = [];
@@ -697,13 +741,15 @@
   }
   function elegirCausa(i) {
     var pos = est.causas.indexOf(i);
-    if (pos >= 0) est.causas.splice(pos, 1); else { if (est.causas.length >= 2) est.causas.shift(); est.causas.push(i); }
+    var quito = null;
+    if (pos >= 0) est.causas.splice(pos, 1); else { if (est.causas.length >= 2) quito = est.causas.shift(); est.causas.push(i); }
     var bs = $('causas').getElementsByTagName('button'), j;
     for (j = 0; j < bs.length; j++) bs[j].setAttribute('aria-pressed', est.causas.indexOf(j) >= 0 ? 'true' : 'false');
     var n = $('causa-nota');
     if (est.causas.length === 0) { n.hidden = true; return; }
     var t = 'En tu hoja: escribe qué dato necesitarías para comprobar ' + (est.causas.length > 1 ? 'cada una de estas causas.' : 'esta causa.');
     if (est.causas.indexOf(3) >= 0) t += ' Hemisferio: ' + PORK[est.A].n + ', ' + PORK[est.A].hem + '; ' + PORK[est.B].n + ', ' + PORK[est.B].hem + '.';
+    if (quito !== null) t = 'Solo puedes marcar dos: se desmarcó «' + CAUSAS[quito] + '». ' + t;
     n.textContent = t; n.hidden = false;
     anunciar(t);
   }
@@ -754,9 +800,10 @@
     fijarPar(a, b, regionPar(a, b));
     est.mes = 0; pintarTodo();
     irPaso(1, false);
+    $('par-guia').textContent = 'Pregunta guía: ' + f.par.guia;
     document.title = PORK[a].n + ' y ' + PORK[b].n + ' · Mapa de la pandemia';
     if (escribirUrl) { try { if (history.replaceState) history.replaceState(null, '', urlPar({ a: sa, b: sb })); } catch (e) { /* archivo local sin URL */ } }
-    if (escribirUrl) { var t = $('trabajo'); if (t.scrollIntoView) t.scrollIntoView(true); }
+    if (escribirUrl) { var t = $('trabajo'); if (t.scrollIntoView) t.scrollIntoView(true); $('p-titulo').focus(); }
   }
   function cambiarPais(slot, k) {
     if (slot === 'A') { if (k === est.B) est.B = est.A; est.A = k; } else { if (k === est.A) est.A = est.B; est.B = k; }
@@ -776,7 +823,7 @@
       var a = ev.target; while (a && a !== this && a.tagName !== 'A') a = a.parentNode;
       if (!a || a === this) return; ev.preventDefault(); abrirPar(a.getAttribute('data-a'), a.getAttribute('data-b'), true);
     });
-    $('otro-par').addEventListener('click', function (ev) { ev.preventDefault(); try { if (history.replaceState) history.replaceState(null, '', location.pathname); } catch (e) { /* sin URL */ } mostrarElegir(''); window.scrollTo(0, 0); });
+    $('otro-par').addEventListener('click', function (ev) { ev.preventDefault(); try { if (history.replaceState) history.replaceState(null, '', location.pathname); } catch (e) { /* sin URL */ } mostrarElegir(''); window.scrollTo(0, 0); var l = $('pares').getElementsByTagName('a')[0]; if (l) l.focus(); });
     $('pred-ops').addEventListener('click', function (ev) {
       var b = ev.target; while (b && b !== this && b.tagName !== 'BUTTON') b = b.parentNode;
       if (!b || b === this || est.predFija) return;
@@ -790,7 +837,7 @@
     $('regiones').addEventListener('click', function (ev) { var b = ev.target; while (b && b !== this && b.tagName !== 'BUTTON') b = b.parentNode; if (b && b !== this) cambiarRegion(b.getAttribute('data-reg')); });
     $('lectura').addEventListener('click', function (ev) {
       var b = ev.target; while (b && b !== this && b.tagName !== 'BUTTON') b = b.parentNode;
-      if (b && b !== this && b.getAttribute('data-usar')) { cambiarPais(b.getAttribute('data-usar'), est.foco); pintarLectura(); }
+      if (b && b !== this && b.getAttribute('data-usar')) { cambiarPais(b.getAttribute('data-usar'), est.foco); pintarLectura(); $('lectura').focus(); }
     });
     $('play').addEventListener('click', reproducir);
     $('ant').addEventListener('click', function () { irMes(est.mes - 1, true); });
