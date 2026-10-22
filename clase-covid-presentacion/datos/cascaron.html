@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Clase IV° B: dos países frente al COVID-19</title>
+<style>
+  /* Escenario de 1920 × 1080 escalado a la ventana (con barras si la proporción no calza). La fuente es DM Sans si el equipo la tiene; si no, Arial. No se carga nada de la red. */
+  :root { --amb:#B45309; }
+  * { box-sizing:border-box; }
+  html, body { margin:0; height:100%; overflow:hidden; background:#0f172a; }
+  body { display:flex; flex-direction:column; font-family:'DM Sans', Arial, sans-serif; color:#1E293B; }
+  #vista { position:relative; flex:1 1 auto; min-height:0; overflow:hidden; }
+  #escenario { position:absolute; left:0; top:0; width:1920px; height:1080px; transform-origin:0 0; background:#FBFBFA; overflow:hidden; }
+  .lamina { display:none !important; position:absolute; left:0; top:0; width:1920px; height:1080px; overflow:hidden; margin:0; }
+  .lamina.activa { display:flex !important; animation:fundir .4s ease; }
+  @keyframes fundir { from { opacity:0; } to { opacity:1; } }
+  .lamina h1, .lamina h2, .lamina h3, .lamina p, .lamina ul, .lamina ol { margin:0; }
+  .lamina ul, .lamina ol { padding-left:1.2em; }
+  .lamina li { margin:0 0 .15em; }
+  .lamina table { border-collapse:collapse; }
+  .lamina th, .lamina td { text-align:left; padding:8px 16px; border-bottom:1px solid #CBD5E1; }
+  .lamina th { color:#475569; }
+  .elipse { border-radius:50%; }
+  .emb { border:0; display:block; overflow:hidden; pointer-events:none; }
+  .construye { opacity:0; transform:translateY(36px); transition:opacity .5s ease, transform .5s ease; }
+  .construye.visto { opacity:1; transform:none; }
+  #barra { flex:none; display:flex; align-items:center; padding:6px 12px; background:#0f172a; color:#e2e8f0; font-size:18px; min-height:64px; }
+  #barra > * { margin-right:10px; }
+  #barra button { font:inherit; font-weight:700; min-width:52px; min-height:52px; padding:6px 16px; border-radius:8px; border:2px solid #475569; background:#1e293b; color:#fff; cursor:pointer; line-height:1.2; touch-action:manipulation; font-size:20px; }
+  #barra button.principal { background:#2563EB; border-color:#2563EB; }
+  #barra button[aria-disabled="true"] { opacity:.45; }
+  button:focus-visible, a:focus-visible { outline:3px solid #FBBF24; outline-offset:2px; }
+  #cuenta { min-width:76px; text-align:center; font-weight:700; }
+  #pasos { color:#FBBF24; font-weight:700; }
+  #ayuda { margin-left:auto; margin-right:0; color:#94a3b8; font-size:16px; text-align:right; }
+  body.completa #barra { position:absolute; left:0; right:0; bottom:0; opacity:0; transition:opacity .25s; z-index:5; }
+  body.completa #barra:hover, body.completa #barra:focus-within, body.completa.mueve #barra { opacity:1; }
+  #indice { position:fixed; left:0; top:0; right:0; bottom:0; z-index:20; background:rgba(15,23,42,.88); display:flex; align-items:center; justify-content:center; padding:20px; }
+  #indice[hidden] { display:none; }
+  #indice .caja { background:#fff; border-radius:12px; padding:20px 26px; max-width:860px; width:100%; max-height:100%; overflow:auto; }
+  #indice p { margin:0 0 8px; color:#B45309; font-size:20px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; }
+  #indice ol { list-style:none; padding:0; margin:0 0 12px; columns:2; column-gap:20px; }
+  #indice li { margin:0 0 6px; break-inside:avoid; }
+  #indice li a { display:block; min-height:44px; padding:8px 12px; border:2px solid #CBD5E1; border-radius:8px; color:#1E293B; text-decoration:none; font-size:18px; line-height:1.25; }
+  #indice li a.actual { border-color:#2563EB; background:#EFF4FF; font-weight:700; }
+  #indice li a:focus-visible { outline:3px solid #B45309; outline-offset:2px; }
+  #indice button { font:inherit; font-weight:700; min-height:52px; padding:6px 16px; border-radius:8px; border:2px solid #2563EB; background:#fff; color:#2563EB; cursor:pointer; font-size:18px; }
+  .solo-lector { position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; margin:-1px; padding:0; border:0; }
+  @media (prefers-reduced-motion: reduce) { * { animation:none !important; transition:none !important; } }
+</style>
+</head>
+<body>
+<div id="vista">
+<div id="escenario">
+{{LAMINAS}}
+</div>
+</div>
+<div id="indice" hidden role="dialog" aria-modal="true" aria-label="Índice de láminas"><div class="caja"><p>Índice de láminas</p><ol id="lista-indice"></ol><button type="button" id="cerrar-indice">Cerrar</button></div></div>
+<div id="barra">
+  <button type="button" id="ant" aria-label="Anterior">◀</button>
+  <span id="cuenta" aria-live="off"></span>
+  <button type="button" id="sig" class="principal" aria-label="Siguiente">▶</button>
+  <span id="pasos" aria-hidden="true"></span>
+  <button type="button" id="btn-indice">Índice</button>
+  <button type="button" id="pant">Pantalla completa</button>
+  <span id="ayuda" aria-hidden="true">Flechas, espacio o clic para avanzar · F pantalla completa · I índice</span>
+</div>
+<p id="anuncio" class="solo-lector" aria-live="polite" aria-atomic="true"></p>
+<script>
+(function () {
+  'use strict';
+  var $ = function (id) { return document.getElementById(id); };
+  var laminas = document.querySelectorAll('.lamina'), n = laminas.length, actual = 0, paso = 0;
+  var esc = $('escenario'), vista = $('vista');
+  var W = 1920, H = 1080;
+  var maxPaso = [], i, j;
+  for (i = 0; i < n; i++) {
+    var cs = laminas[i].querySelectorAll('[data-paso]'), m = 0;
+    for (j = 0; j < cs.length; j++) m = Math.max(m, Number(cs[j].getAttribute('data-paso')));
+    maxPaso.push(m);
+  }
+
+  function ajustar() {
+    var w = vista.clientWidth, h = vista.clientHeight, s = Math.min(w / W, h / H);
+    if (!(s > 0)) s = 1;
+    esc.style.transform = 'scale(' + s + ')';
+    esc.style.left = Math.max(0, (w - W * s) / 2) + 'px';
+    esc.style.top = Math.max(0, (h - H * s) / 2) + 'px';
+  }
+  // Las animaciones (iframes con srcdoc) solo corren en la lámina visible y arrancan de cero cada vez que se entra.
+  function animaciones() {
+    var fr = document.querySelectorAll('iframe.emb'), k, f, activa;
+    for (k = 0; k < fr.length; k++) {
+      f = fr[k]; activa = laminas[actual].contains(f);
+      if (activa && !f.getAttribute('data-vivo')) { f.setAttribute('data-vivo', '1'); f.srcdoc = f.getAttribute('data-srcdoc'); }
+      else if (!activa && f.getAttribute('data-vivo')) { f.removeAttribute('data-vivo'); f.srcdoc = ''; }
+    }
+  }
+  function mostrarPasos() {
+    var cs = laminas[actual].querySelectorAll('[data-paso]'), k;
+    for (k = 0; k < cs.length; k++) cs[k].className = cs[k].className.replace(/\s*\bvisto\b/, '') + (Number(cs[k].getAttribute('data-paso')) <= paso ? ' visto' : '');
+    $('pasos').textContent = maxPaso[actual] ? 'Paso ' + paso + ' de ' + maxPaso[actual] : '';
+  }
+  function botones() {
+    $('cuenta').textContent = (actual + 1) + ' / ' + n;
+    $('ant').setAttribute('aria-disabled', actual === 0 && paso === 0 ? 'true' : 'false');
+    $('sig').setAttribute('aria-disabled', actual === n - 1 && paso === maxPaso[actual] ? 'true' : 'false');
+  }
+  // mostrar: dibuja la lámina i con p pasos revelados. ir: además cambia la dirección (#N) para que «Atrás» del navegador funcione.
+  function mostrar(i, p, silencio) {
+    if (i < 0 || i >= n) return;
+    var cambia = i !== actual;
+    if (cambia) { laminas[actual].className = laminas[actual].className.replace(/\s*\bactiva\b/, ''); actual = i; laminas[actual].className += ' activa'; }
+    paso = Math.max(0, Math.min(p, maxPaso[actual]));
+    mostrarPasos(); botones(); animaciones();
+    if (!silencio) $('anuncio').textContent = cambia ? 'Lámina ' + (actual + 1) + ' de ' + n + ': ' + laminas[actual].getAttribute('data-titulo') : 'Paso ' + paso + ' de ' + maxPaso[actual];
+  }
+  function ir(i, p, silencio) {
+    if (i < 0 || i >= n) return;
+    mostrar(i, p, silencio);
+    try { if (location.hash !== '#' + (i + 1)) location.hash = '#' + (i + 1); } catch (e) { /* sin dirección */ }
+  }
+  function avanzar() {
+    if (paso < maxPaso[actual]) mostrar(actual, paso + 1);
+    else ir(actual + 1, 0);
+  }
+  function retroceder() {
+    if (paso > 0) mostrar(actual, paso - 1);
+    else if (actual > 0) ir(actual - 1, maxPaso[actual - 1]);
+  }
+
+  $('ant').addEventListener('click', retroceder);
+  $('sig').addEventListener('click', avanzar);
+  document.addEventListener('keydown', function (ev) {
+    var k = ev.key, t = ev.target && ev.target.tagName;
+    if (ev.altKey || ev.ctrlKey || ev.metaKey) return;
+    if (!$('indice').hidden) {
+      if (k === 'Escape' || k === 'Esc') { ev.preventDefault(); cerrarIndice(); }
+      else if (k === 'Tab') { // el foco no sale del índice
+        var foc = $('indice').querySelectorAll('a, button'), pr = foc[0], ul = foc[foc.length - 1];
+        if (ev.shiftKey && document.activeElement === pr) { ev.preventDefault(); ul.focus(); }
+        else if (!ev.shiftKey && document.activeElement === ul) { ev.preventDefault(); pr.focus(); }
+        else if (!$('indice').contains(document.activeElement)) { ev.preventDefault(); pr.focus(); }
+      }
+      return;
+    }
+    if (k === 'Escape' || k === 'Esc') return;
+    if (k === 'ArrowRight' || k === 'ArrowDown' || k === 'PageDown' || k === 'Right' || k === 'Down' || (k === ' ' && t !== 'BUTTON')) { ev.preventDefault(); avanzar(); }
+    else if (k === 'ArrowLeft' || k === 'ArrowUp' || k === 'PageUp' || k === 'Left' || k === 'Up') { ev.preventDefault(); retroceder(); }
+    else if (k === 'Home') { ev.preventDefault(); ir(0, 0); }
+    else if (k === 'End') { ev.preventDefault(); ir(n - 1, maxPaso[n - 1]); }
+    else if (k === 'f' || k === 'F') { ev.preventDefault(); pantallaCompleta(); }
+    else if (k === 'i' || k === 'I') { ev.preventDefault(); abrirIndice(); }
+  });
+  // Clic o toque en la lámina (fuera de botones): el tercio izquierdo retrocede y el resto avanza
+  vista.addEventListener('click', function (ev) {
+    var t = ev.target; while (t && t !== vista) { if (t.tagName === 'BUTTON' || t.tagName === 'A') return; t = t.parentNode; }
+    var r = vista.getBoundingClientRect(), x = ev.clientX - r.left;
+    if (x < r.width / 3) retroceder(); else avanzar();
+  });
+  // Deslizar con el dedo
+  var x0 = null, y0 = null;
+  vista.addEventListener('touchstart', function (ev) { if (ev.touches.length === 1) { x0 = ev.touches[0].clientX; y0 = ev.touches[0].clientY; } else x0 = null; }, { passive: true });
+  vista.addEventListener('touchend', function (ev) {
+    if (x0 === null) return;
+    var t = ev.changedTouches[0], dx = t.clientX - x0, dy = t.clientY - y0; x0 = null;
+    if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.5) { ev.preventDefault(); if (dx < 0) avanzar(); else retroceder(); }
+  }, false);
+  // Pantalla completa: la barra se esconde y reaparece al mover el mouse
+  function pantallaCompleta() {
+    var d = document, e = d.documentElement;
+    if (d.fullscreenElement || d.webkitFullscreenElement) { (d.exitFullscreen || d.webkitExitFullscreen).call(d); return; }
+    var f = e.requestFullscreen || e.webkitRequestFullscreen;
+    if (f) { try { var p = f.call(e); if (p && p.catch) p.catch(function () {}); } catch (x) { /* no disponible */ } }
+  }
+  function cambioCompleta() {
+    var c = !!(document.fullscreenElement || document.webkitFullscreenElement);
+    document.body.className = c ? 'completa' : '';
+    ajustar(); setTimeout(ajustar, 60);
+  }
+  var tm = null;
+  document.addEventListener('mousemove', function () {
+    if (document.body.className.indexOf('completa') < 0) return;
+    document.body.className = 'completa mueve';
+    if (tm) clearTimeout(tm);
+    tm = setTimeout(function () { if (document.body.className.indexOf('completa') === 0) document.body.className = 'completa'; }, 2500);
+  });
+  $('pant').addEventListener('click', pantallaCompleta);
+  if (!(document.documentElement.requestFullscreen || document.documentElement.webkitRequestFullscreen)) $('pant').hidden = true;
+  document.addEventListener('fullscreenchange', cambioCompleta); document.addEventListener('webkitfullscreenchange', cambioCompleta);
+  window.addEventListener('resize', ajustar); window.addEventListener('orientationchange', ajustar);
+  window.addEventListener('hashchange', function () {
+    var m = /^#(\d+)$/.exec(location.hash);
+    if (m && Number(m[1]) >= 1 && Number(m[1]) <= n && Number(m[1]) - 1 !== actual) mostrar(Number(m[1]) - 1, 0, false);
+  });
+  // Índice con enlace directo a cada lámina
+  var li = '', k;
+  for (k = 0; k < n; k++) li += '<li><a href="#' + (k + 1) + '" data-i="' + k + '">' + (k + 1) + '. ' + laminas[k].getAttribute('data-titulo') + '</a></li>';
+  $('lista-indice').innerHTML = li;
+  function abrirIndice() {
+    var as = $('lista-indice').getElementsByTagName('a'), q;
+    for (q = 0; q < as.length; q++) as[q].className = q === actual ? 'actual' : '';
+    $('indice').hidden = false; as[actual].focus();
+  }
+  function cerrarIndice() { $('indice').hidden = true; $('btn-indice').focus(); }
+  $('btn-indice').addEventListener('click', function (ev) { ev.stopPropagation(); abrirIndice(); });
+  $('cerrar-indice').addEventListener('click', cerrarIndice);
+  $('lista-indice').addEventListener('click', function (ev) {
+    var a = ev.target; while (a && a.tagName !== 'A') a = a.parentNode;
+    if (!a) return; ev.preventDefault(); ir(Number(a.getAttribute('data-i')), 0); $('indice').hidden = true; $('btn-indice').focus();
+  });
+  $('indice').addEventListener('click', function (ev) { if (ev.target === $('indice')) cerrarIndice(); });
+
+  ajustar();
+  var m0 = /^#(\d+)$/.exec(location.hash || '');
+  mostrar(m0 && Number(m0[1]) >= 1 && Number(m0[1]) <= n ? Number(m0[1]) - 1 : 0, 0, true);
+  setTimeout(ajustar, 50);
+})();
+</script>
+</body>
+</html>

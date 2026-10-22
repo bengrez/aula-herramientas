@@ -36,6 +36,13 @@ Publicado con GitHub Pages: https://bengrez.github.io/aula-herramientas/
   celular. Datos de Our World in Data (CC BY 4.0); contornos de Natural Earth mediante world-atlas
   (ISC). `datos/LEEME.md` explica cómo se generan los datos, la geometría y los enlaces por par.
 
+- [`clase-covid-presentacion/`](clase-covid-presentacion/) — Presentación de la clase «Dos países frente al COVID-19» (Cs. para la
+  Ciudadanía, IV° medio). 16 láminas de 1920 × 1080 que se escalan a la pantalla, con tres animaciones (R₀, inmunidad de rebaño, exceso del mes
+  y acumulado), dos relojes con las etapas de la clase y los cinco supuestos del modelo, que aparecen de a uno. Flechas, espacio, Re Pág/Av Pág o
+  clic para avanzar; `F` pantalla completa; `I` índice. Un solo archivo `index.html` sin dependencias externas ni almacenamiento de datos; las
+  animaciones corren en `iframe` con `sandbox`. No incluye las notas del docente. La fuente DM Sans solo se usa si el equipo la tiene (si no, Arial).
+  `datos/convertir.mjs` regenera el archivo desde las láminas originales.
+
 ## Aparte: apoyo escolar en inglés
 
 Recursos para acompañar estudios de secundaria en Australia (Year 8). No forman parte del trabajo

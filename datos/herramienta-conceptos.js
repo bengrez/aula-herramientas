@@ -37,6 +37,18 @@ window.HERRAMIENTA_CONCEPTOS = {
     conceptos: ['inm', 'vac', 'reb', 'cnt', 'r0', 'cob', 'umb', 'cov', 'mod']
   },
 
+  /* Mapa de la pandemia. Ficha: «leer datos reales de COVID-19 de 2020 a 2022 (exceso de mortalidad y vacunación completa) y sacar una conclusión con sus límites». */
+  cm: {
+    nombre: 'Mapa de la pandemia',
+    conceptos: ['vac', 'cob', 'cov']
+  },
+
+  /* Presentación de la clase «Dos países frente al COVID-19». Ficha: «R₀, inmunidad de rebaño y umbral con animaciones; exceso del mes y acumulado; los supuestos del modelo». */
+  cp: {
+    nombre: 'Dos países frente al COVID-19 (presentación)',
+    conceptos: ['r0', 'reb', 'umb', 'cob', 'cov', 'mod']
+  },
+
   /* Atlas, diagnóstico PAES Ciencias. Ficha: «habilidades científicas del marco PAES» y práctica de Biología por unidad. Los conceptos salen de las áreas del marco
      (diagnostico-paes/data/paes-ciencias-2027/framework.v1.json): BIO-01 célula; BIO-03 mitosis, meiosis y genética; BIO-04 fotosíntesis y respiración;
      FIS-01 ondas; FIS-02 movimiento; FIS-04 electricidad; QUI-01 clasificación de la materia y modelos atómicos; QUI-03 conservación de la materia y soluciones.
