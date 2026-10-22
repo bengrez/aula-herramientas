@@ -29,9 +29,9 @@ Publicado con GitHub Pages: https://bengrez.github.io/aula-herramientas/
 
 - [`covid-mapa/`](covid-mapa/) — Mapa de la pandemia (Cs. para la Ciudadanía, IV° medio, Bienestar y
   salud). Mapa animado de 12 países con datos reales de COVID-19 de 2020 a 2022 (exceso de muertes del
-  mes, vacunación completa y rigurosidad de las medidas), siete pares para comparar con un hilo de cinco
+  mes y vacunación completa), dos pares para comparar con un hilo de cinco
   pasos (predice, observa por hitos, contrasta, causas alternativas, concluye con límites), y una
-  presentación de 13 láminas. Cada página es un solo archivo sin dependencias externas, sin envío ni
+  presentación de 12 láminas. Cada página es un solo archivo sin dependencias externas, sin envío ni
   almacenamiento de datos; hay copias `sin-conexion`. Funciona en computador (mouse y teclado) y en
   celular. Datos de Our World in Data (CC BY 4.0); contornos de Natural Earth mediante world-atlas
   (ISC). `datos/LEEME.md` explica cómo se generan los datos, la geometría y los enlaces por par.

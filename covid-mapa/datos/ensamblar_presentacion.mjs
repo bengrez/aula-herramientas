@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// Arma ../presentacion.html: inserta los códigos QR (hechos con qrencode, SVG en línea) y los siete pares (desde pares.json).
+// Arma ../presentacion.html: inserta los códigos QR (hechos con qrencode, SVG en línea) y los pares (desde pares.json).
 // Escribe también ../presentacion-sin-conexion.html (copia idéntica, un solo archivo para llevar en pendrive).
 // Uso: node ensamblar_presentacion.mjs   (requiere qrencode instalado)
 import fs from 'node:fs';
@@ -35,8 +35,7 @@ function tarjetaLista() {
 let html = fs.readFileSync(path.join(aqui, 'presentacion.fuente.html'), 'utf8');
 const poner = (marca, v) => { if (html.indexOf(marca) < 0) throw new Error('Falta ' + marca); html = html.replace(marca, () => v); };
 poner('{{QR_VACUNAS}}', qr(BASE + 'vacunas-rebano/'));
-poner('{{PARES_1}}', pares.slice(0, 4).map((p, i) => tarjeta(p, i)).join(''));
-poner('{{PARES_2}}', pares.slice(4).map((p, i) => tarjeta(p, i + 4)).join('') + tarjetaLista());
+poner('{{PARES}}', pares.map((p, i) => tarjeta(p, i)).join('') + tarjetaLista());
 fs.writeFileSync(path.join(aqui, '..', 'presentacion.html'), html);
 fs.writeFileSync(path.join(aqui, '..', 'presentacion-sin-conexion.html'), html);
 console.log('presentacion.html: ' + (Buffer.byteLength(html) / 1024).toFixed(1) + ' KB');
