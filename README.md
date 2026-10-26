@@ -60,32 +60,28 @@ se lista separado para no mezclarlo.
 ## El hub (`index.html`)
 
 Página de entrada con el lenguaje visual de https://bengrez.github.io (papel y tinta, claro y oscuro, la misma clave `tema` del
-navegador) y una ficha «Para / Entrena» por herramienta. El fondo es una **red de conceptos que crece como una raíz y aprende**, dibujada en un canvas
-(bloque `RED-CONCEPTOS-START … END` del propio `index.html`, sin dependencias ni llamadas externas). Las fuentes del sitio (Bricolage Grotesque, Source Serif 4 e IBM Plex Mono) están en `fuentes/` como WOFF2 con subconjunto latino y su licencia OFL; no se pide nada a Google Fonts:
+navegador) y una ficha «Para / Entrena» por herramienta. A la izquierda vive una **red de temas**: una sola red conectada de 41 conceptos de ciencias,
+agrupados en seis temas que son sus regiones (SVG creado por JS, bloque `RED-TEMAS-START … END` del propio `index.html`, sin dependencias ni llamadas externas).
+Las fuentes del sitio (Bricolage Grotesque, Source Serif 4 e IBM Plex Mono) están en `fuentes/` como WOFF2 con subconjunto latino y su licencia OFL; no se pide nada a Google Fonts:
 
-- **Crece como la raíz de la página principal** (`quimiotaxis.js`, iteración 043): nace arriba, en el margen izquierdo, centrada entre el borde
-  de la ventana y la columna de texto, y baja por colonización del espacio (atractores, puntas que compiten, gravitropismo en el eje y
-  plagiotropismo en las laterales). Cada punta que avanza **descubre un concepto**: el eje es una cadena de prerrequisitos (flecha) y las
-  laterales brotan de él como relaciones (punteadas); algunas relaciones cruzadas cierran la red. La raíz vive siempre en el margen, sin velo sobre
-  el texto: la columna es la del sitio (72 rem) y, si el margen natural queda bajo `--riel` (de 7 rem en el celular a 11,5 rem), el CSS corre el texto lo justo para
-  dar ese ancho (`.pagina`). Así los nombres caben y se leen también en pantallas angostas (en el celular se parten en dos líneas).
-- **Nodos** = conceptos de ciencias del currículum escolar (biología, química, física; incluyen los temas de las herramientas), con su nombre
-  al lado. Cada disciplina tiene un tono (derivado del acento del tema) y una forma (círculo, hexágono, triángulo). Los conceptos están en el
-  arreglo `C` al comienzo del bloque (`[id, etiqueta, disciplina, padre, tipo, rol, prioridad]`) y las relaciones cruzadas en `EX`.
-- **Aprende:** una punta crece desde su prerrequisito (si está a la vista) y al llegar deja el concepto; si la luz del cursor (o del dedo) se
-  queda cerca ≥ 0,9 s se **repasa** (la memoria vuelve a 1 y su estabilidad crece, más cuanto más se había olvidado); sin repaso se
-  **olvida** (≈ 45 s). Los vínculos repasados duran más. Tono pleno y aro = consolidado.
-- **Feeling del sitio:** luz con borde difuso y estela de ≈ 1,5 s; con el scroll quieto 4 s el tiempo baja un 40 %.
-- **Celular:** el toque hace de cursor, 20 conceptos como tope (28 en tablet, 38 en escritorio) y 30 cuadros por segundo como máximo.
-  Con la pestaña oculta o con el botón «Pausar fondo» no dibuja. Con `prefers-reduced-motion` muestra un estado final fijo.
-- **Sin texto al pasar el cursor:** el nodo sólo se resalta (la luz lo agranda y lo hace más opaco); no hay línea ni cuadro que lo describa. La alternativa
-  accesible es la lista plegada «Conceptos y relaciones de la red» (`#red-lista`). La red no se guarda entre visitas (sin `localStorage`; ése sólo guarda el tema).
-- **Herramienta ↔ conceptos:** al pasar el cursor por una tarjeta (o enfocarla con el teclado, o apoyar el dedo en ella) se iluminan en la red los conceptos que
-  esa herramienta trabaja y los vínculos entre ellos, y el resto se atenúa; al salir, vuelve. Sin texto nuevo. Lo enfocado se muestra aunque la red lo hubiera
-  olvidado, sin contar como repaso. En pantallas táctiles, donde un toque abre la herramienta, además se ilumina la que está en la línea de lectura (45 % del alto)
-  mientras te desplazas. **El mapeo está en un solo archivo, `datos/herramienta-conceptos.js`** (herramienta → ids de conceptos, con el criterio de cada una);
-  `node tests/mapeo.mjs` comprueba que sus ids existan en `C` y que cada tarjeta (`data-herr`) tenga entrada.
-- Para pruebas: `window.redConceptos` (`estado()`, `avanzar(seg)`, `apuntar(x, y)`, `soltar()`, `costoMs()`, `desglose()`, `rotulos()`, `llenar(luz)`, `pausa(b)`, `enfocar(id)`).
+- **Una red, seis regiones:** los conceptos son nodos (todos un círculo) y las relaciones son aristas finas de un solo trazo. Los seis temas (Materia y átomos ·
+  Energía y movimiento · Célula y cuerpo · Salud y epidemias · Datos y evidencia · Sociedad e historia) son regiones con su rótulo; los conceptos que unen dos
+  temas son los puentes (sus aristas cruzan el borde). Un solo tono neutro para todo y el acento del tema sólo para lo enfocado; sin color ni forma por disciplina.
+- **Herramienta → temas:** al pasar el cursor por una tarjeta (o enfocarla con el teclado) la red se **encuadra** en los temas que la herramienta trabaja (zoom y paneo
+  suaves de ≈ 0,4 s), atenúa el resto y resalta sus conceptos, con su nombre, y las aristas entre ellos. Al salir vuelve a la vista completa.
+- **Tema → herramientas:** al pasar el cursor (o el foco) por un tema se destacan sus tarjetas. Con clic o Enter el tema se abre: la red se encuadra en él y un panel
+  lista sus conceptos agrupados y sus herramientas (con enlace). Escape cierra y devuelve el foco. Los temas son botones (`role="button"`, Tab y Enter) y la lista
+  equivalente «Temas, conceptos y relaciones de la red» (`#red-lista`, plegada al final de la página) cubre a quien no ve la red.
+- **El mapeo está en dos lugares, y los temas de cada herramienta se derivan:** `datos/herramienta-conceptos.js` (herramienta → ids de conceptos, con el criterio de cada una) y,
+  en `index.html`, `TEMAS` (tema → grupos → conceptos), `C` (`[id, nombre, x, y, concepto del que sale la arista]`, con posiciones a mano) y `EX` (relaciones cruzadas).
+  `node tests/mapeo.mjs` comprueba que cada concepto esté en un solo tema, que la red sea conexa, que cada tema tenga puentes, que las herramientas apunten a conceptos
+  existentes y que cada tarjeta (`data-herr`) tenga entrada.
+- **Celular (< 640 px):** sin red; sólo las tarjetas (y la lista equivalente, plegada). El texto recupera el ancho del margen (`--riel` vale 0). En tablet y escritorio el margen
+  es `--riel` (`clamp(11rem, 26vw, 18rem)`) y la columna de texto se corre lo justo.
+- **Sin animación propia:** sólo se mueve el encuadre, y sólo cuando el cursor o el foco cambian; con `prefers-reduced-motion` salta sin transición. Por eso no hay botón «Pausar».
+- **Aislado para el diseño compartido:** el CSS de la red está en un bloque `/* RED-TEMAS */` que sólo usa los tokens de `:root` (`--bg --surface --ink --muted --rule --rule-strong --accent`);
+  no hay colores en el JS, así que el tema oscuro funciona sólo con CSS.
+- Para pruebas: `window.redTemas` (`estado()`, `herramienta(id|null)`, `tema(id|null)`, `abrir(id|null)`).
 
 Cada herramienta trae un enlace «← Herramientas de aula» al principio y un pie con él. En `diagnostico-paes/` (PWA con service worker y CSP que no admite estilos
 en línea) el estilo está en `src/styles.css` y se subió `CACHE_VERSION` en `sw.js` para que el modo sin conexión recoja el cambio. Las imágenes de `img/` son copias de las del sitio personal.
