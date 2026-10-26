@@ -65,26 +65,26 @@ navegador) y una ficha «Para / Entrena» por herramienta. El fondo es una **red
 
 - **Crece como la raíz de la página principal** (`quimiotaxis.js`, iteración 043): nace arriba, en el margen izquierdo, centrada entre el borde
   de la ventana y la columna de texto, y baja por colonización del espacio (atractores, puntas que compiten, gravitropismo en el eje y
-  plagiotropismo en las laterales). Cada punta que avanza **descubre un concepto**: el eje es una cadena de prerrequisitos (flecha) y las
-  laterales brotan de él como relaciones (punteadas); algunas relaciones cruzadas cierran la red. La raíz vive siempre en el margen, sin velo sobre
-  el texto: la columna es la del sitio (72 rem) y, si el margen natural queda bajo `--riel` (de 7 rem en el celular a 11,5 rem), el CSS corre el texto lo justo para
-  dar ese ancho (`.pagina`). Así los nombres caben y se leen también en pantallas angostas (en el celular se parten en dos líneas).
-- **Nodos** = conceptos de ciencias del currículum escolar (biología, química, física; incluyen los temas de las herramientas), con su nombre
-  al lado. Cada disciplina tiene un tono (derivado del acento del tema) y una forma (círculo, hexágono, triángulo). Los conceptos están en el
-  arreglo `C` al comienzo del bloque (`[id, etiqueta, disciplina, padre, tipo, rol, prioridad]`) y las relaciones cruzadas en `EX`.
+  plagiotropismo en las laterales). Cada punta que avanza **descubre un concepto**: el eje es una cadena de prerrequisitos y las
+  laterales brotan de él como relaciones; algunas relaciones cruzadas cierran la red. La raíz vive siempre en el margen, sin velo sobre
+  el texto: la columna es la del sitio (72 rem) y, si el margen natural queda bajo `--riel` (de 7 rem a 11,5 rem), el CSS corre el texto lo justo para
+  dar ese ancho (`.pagina`). Así los nombres caben y se leen también en tabletas (se parten en dos líneas).
+- **Nodos** = 41 conceptos de ciencias, con su nombre al lado. Visualmente es lo mínimo: un solo tipo de nodo (círculo, de dos tamaños: el de siempre y el resaltado), un solo trazo fino
+  para las relaciones (sin flechas ni punteados), un neutro (`--muted`) para todo, la tinta (`--ink`) para lo que toca la luz y **un acento** (`--accent`) para lo resaltado. No hay tonos ni formas
+  por disciplina (se quitaron `--tq`, `--tb` y `--tf`), ni aros, ni anillos de repaso, ni halos de la estela. Los conceptos están en el arreglo `C` al comienzo del bloque
+  (`[id, etiqueta, padre, tipo, rol, prioridad]`) y las relaciones cruzadas en `EX`.
 - **Aprende:** una punta crece desde su prerrequisito (si está a la vista) y al llegar deja el concepto; si la luz del cursor (o del dedo) se
   queda cerca ≥ 0,9 s se **repasa** (la memoria vuelve a 1 y su estabilidad crece, más cuanto más se había olvidado); sin repaso se
   **olvida** (≈ 45 s). Los vínculos repasados duran más. Tono pleno y aro = consolidado.
-- **Feeling del sitio:** luz con borde difuso y estela de ≈ 1,5 s; con el scroll quieto 4 s el tiempo baja un 40 %.
-- **Celular:** el toque hace de cursor, 20 conceptos como tope (28 en tablet, 38 en escritorio) y 30 cuadros por segundo como máximo.
-  Con la pestaña oculta o con el botón «Pausar fondo» no dibuja. Con `prefers-reduced-motion` muestra un estado final fijo.
-- **Sin texto al pasar el cursor:** el nodo sólo se resalta (la luz lo agranda y lo hace más opaco); no hay línea ni cuadro que lo describa. La alternativa
-  accesible es la lista plegada «Conceptos y relaciones de la red» (`#red-lista`). La red no se guarda entre visitas (sin `localStorage`; ése sólo guarda el tema).
-- **Herramienta ↔ conceptos:** al pasar el cursor por una tarjeta (o enfocarla con el teclado, o apoyar el dedo en ella) se iluminan en la red los conceptos que
-  esa herramienta trabaja y los vínculos entre ellos, y el resto se atenúa; al salir, vuelve. Sin texto nuevo. Lo enfocado se muestra aunque la red lo hubiera
-  olvidado, sin contar como repaso. En pantallas táctiles, donde un toque abre la herramienta, además se ilumina la que está en la línea de lectura (45 % del alto)
-  mientras te desplazas. **El mapeo está en un solo archivo, `datos/herramienta-conceptos.js`** (herramienta → ids de conceptos, con el criterio de cada una);
-  `node tests/mapeo.mjs` comprueba que sus ids existan en `C` y que cada tarjeta (`data-herr`) tenga entrada.
+- **Feeling del sitio:** luz con borde difuso (un solo halo tenue, en neutro) y estela de ≈ 1,5 s que sigue prolongando la reacción; con el scroll quieto 4 s el tiempo baja un 40 %.
+- **Celular (< 640 px): sin red**, sólo las tarjetas (el canvas no se crea y el texto recupera el ancho del margen, `--riel` vale 0). Desde 640 px entran los 41 conceptos
+  (a 30 cuadros por segundo en táctiles). Con la pestaña oculta o con el botón «Pausar fondo» no dibuja. Con `prefers-reduced-motion` muestra un estado final fijo y el botón se oculta.
+- **Sin texto al pasar el cursor:** el nodo sólo se resalta; no hay línea ni cuadro que lo describa. La alternativa accesible es la lista plegada «Conceptos y relaciones de la red»
+  (`#red-lista`). La red no se guarda entre visitas (sin `localStorage`; ése sólo guarda el tema).
+- **Herramienta ↔ conceptos:** al pasar el cursor por una tarjeta (o enfocarla con el teclado, o apoyar el dedo en ella en una tableta) los conceptos que esa herramienta trabaja pasan al
+  acento, con su nombre también en el acento, y los vínculos entre ellos se resaltan; el resto se atenúa. Lo que estaba olvidado o no había crecido aparece al instante y su vínculo crece
+  desde su origen (sin contar como repaso); al salir todo vuelve despacio a su estado (≈ 0,4 s). **El mapeo está en un solo archivo, `datos/herramienta-conceptos.js`**
+  (herramienta → ids de conceptos, con el criterio de cada una); `node tests/mapeo.mjs` comprueba que sus ids existan en `C` y que cada tarjeta (`data-herr`) tenga entrada.
 - Para pruebas: `window.redConceptos` (`estado()`, `avanzar(seg)`, `apuntar(x, y)`, `soltar()`, `costoMs()`, `desglose()`, `rotulos()`, `llenar(luz)`, `pausa(b)`, `enfocar(id)`).
 
 Cada herramienta trae un enlace «← Herramientas de aula» al principio y un pie con él. En `diagnostico-paes/` (PWA con service worker y CSP que no admite estilos
