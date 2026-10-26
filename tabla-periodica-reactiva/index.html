@@ -492,12 +492,16 @@ function verFicha(e) {
   repintarExplorar();
 }
 function razonPosicion(e) {
-  const izq = e.grupo > 0 && e.grupo <= 2, der = e.grupo >= 15 && e.grupo <= 17;
+  // Primero la zona (metal, metaloide, no metal) y después la posición: la columna sola no basta
+  // (el H va en la columna 1 y es no metal; el C es no metal en la 14; Al, Sn, Pb y Bi son metales a la derecha).
   let t = `Está en el período ${e.periodo}, así que tiene <strong>${e.periodo} nivel${e.periodo > 1 ? "es" : ""}</strong> de electrones: ese es su Escudo. `;
-  if (izq) t += `Como está muy a la izquierda, el Imán del núcleo tira poco del último electrón: por eso es <strong>grande</strong> y <strong>suelta</strong> electrones con facilidad.`;
-  else if (der) t += `Como está a la derecha, el Imán del núcleo tira fuerte: por eso es <strong>chico</strong> y <strong>atrae</strong> electrones ajenos.`;
+  if (e.z === 1) t += `Es un caso especial: va en la columna 1, pero es un <strong>no metal</strong>. Con un solo nivel es muy <strong>chico</strong>, y en vez de soltar su electrón como los metales de su columna, normalmente lo <strong>comparte</strong>.`;
   else if (e.familia === "nob") t += `Es un gas noble: ya tiene su último nivel completo, así que normalmente <strong>no forma enlaces</strong>.`;
   else if (e.zona === "metaloide") t += `Está justo en la línea escalonada: se comporta <strong>a medio camino</strong> entre metal y no metal.`;
+  else if (e.zona === "nometal" && e.grupo >= 15) t += `Como está a la derecha, el Imán del núcleo tira fuerte: por eso es <strong>chico</strong> para su fila y <strong>atrae</strong> electrones ajenos.`;
+  else if (e.zona === "nometal") t += `Es un <strong>no metal</strong>, a la derecha de la línea escalonada: el Imán tira con más fuerza que en los metales, así que no suelta electrones con facilidad; normalmente los <strong>comparte</strong>.`;
+  else if (e.grupo === 1 || e.grupo === 2) t += `Como está muy a la izquierda, el Imán del núcleo tira poco del último electrón: por eso es <strong>grande</strong> y <strong>suelta</strong> electrones con facilidad.`;
+  else if (e.grupo >= 13) t += `Es un <strong>metal</strong> aunque está a la derecha, bajo la línea escalonada: tiene más niveles que los elementos de más arriba en su columna, el Escudo pesa más y tiende a <strong>ceder</strong> electrones.`;
   else t += `Está en la zona central de los metales: tiende a <strong>ceder</strong> electrones.`;
   return t;
 }
@@ -515,8 +519,10 @@ function analizar(a, b) {
 /* Límites honestos del método: hay pares que la posición NO resuelve.
    Radio: falla cuando uno está más abajo Y bastante más a la derecha
    (las dos direcciones se contradicen), p. ej. Li vs Ga.
-   Electronegatividad: falla cuando quedan prácticamente empatados,
-   p. ej. Li vs Ca (0,98 contra 1,00 en valores reales). */
+   Electronegatividad: falla cuando las dos direcciones se contradicen
+   (uno más a la derecha pero también más abajo) y quedan casi empatados,
+   p. ej. Li vs Ca (0,98 contra 1,00 en valores reales). En el mismo grupo
+   o en el mismo período una de las dos direcciones empata y la otra decide. */
 function conflictoRadio(a, b) {
   if (a.periodo === b.periodo || a.z === b.z) return false;
   const bajo = a.periodo > b.periodo ? a : b;
@@ -526,19 +532,37 @@ function conflictoRadio(a, b) {
   const dPeriodo = bajo.periodo - alto.periodo;
   return dGrupo >= 3 || dPeriodo <= 1;                 // se contradicen y nadie gana claro
 }
+// Excepción conocida: en los grupos 13 y 14, entre el período 3 y los de más abajo se intercalan los metales
+// de transición y el de abajo atrae más de lo que dice la posición (Pauling: Al 1,61 y Ga 1,81; Si 1,90 y Ge 2,01).
+function excepcionEN(a, b) {
+  return a.grupo === b.grupo && (a.grupo === 13 || a.grupo === 14) && Math.min(a.periodo, b.periodo) === 3;
+}
 function ambiguoEN(a, b) {
-  if (a.z === b.z) return false;
+  if (excepcionEN(a, b)) return true;
+  if (a.z === b.z || a.periodo === b.periodo || (a.grupo === b.grupo && a.grupo !== 0)) return false;
+  const bajo = a.periodo > b.periodo ? a : b, alto = bajo === a ? b : a;
+  if (TIRON_GRUPO[bajo.grupo] <= TIRON_GRUPO[alto.grupo]) return false;   // el de arriba también está más a la derecha: gana por los dos lados
   return Math.abs(a.fuerza - b.fuerza) < 1.5;
 }
+// Practicar sólo pregunta pares con una diferencia clara en el modelo (no sólo los que no son ambiguos).
+const claroEN = (a, b) => Math.abs(a.fuerza - b.fuerza) >= 1.5;
 const AVISO_RADIO = `Este par <strong>no se decide solo por posición</strong>. Uno está más abajo (más niveles, átomo más grande) pero también bastante más a la derecha (el núcleo tira más y lo encoge). Las dos fuerzas se contradicen y ninguna gana claramente. En la Sumativa no te van a preguntar casos así.`;
 const AVISO_EN = `Acá los dos quedan <strong>prácticamente empatados</strong> en electronegatividad: uno está más a la derecha, pero también más abajo. El método por posición no alcanza para separarlos, y no es un caso que entre en la prueba.`;
+const AVISO_EN_EXCEPCION = `Este par es una <strong>excepción conocida</strong>: entre el período 3 y el 4 se intercala la fila de los metales de transición, y eso hace que el de más abajo atraiga los electrones más de lo que dice su posición. El método por posición no alcanza para decidirlo, y no es un caso que entre en la prueba.`;
+const avisoEN = (a, b) => excepcionEN(a, b) ? AVISO_EN_EXCEPCION : AVISO_EN;
 
-function señalDe(a, b) {
-  const s = analizar(a, b);
+function señalDe(a, b, prop = "radio") {
+  const s = analizar(a, b), en = prop === "en";
   if (s.iguales) return { titulo: "Es el mismo elemento", texto: `Los dos átomos son idénticos: mismo Imán, mismo Escudo. No hay nada que comparar — y eso es justamente lo interesante.` };
-  if (s.mismoGrupo) return { titulo: "Mismo grupo", texto: `Los dos están en la columna ${a.grupo}. El Imán tira parecido en ambos, así que <strong>el Escudo decide</strong>: gana el que tenga más niveles.` };
-  if (s.mismoPeriodo) return { titulo: "Mismo período", texto: `Los dos están en la fila ${a.periodo}, o sea que tienen los mismos niveles. El Escudo empata, así que <strong>el Imán decide</strong>: gana el que esté más a la izquierda.` };
-  return { titulo: "Distinto grupo y distinto período", texto: `Acá no hay empate: las dos fuerzas cambian a la vez. Empieza contando los <strong>niveles</strong> (el período), que pesa más.` };
+  if (s.mismoGrupo) return { titulo: "Mismo grupo", texto: en
+    ? `Los dos están en la columna ${a.grupo}. El Imán tira parecido en ambos, así que <strong>el Escudo decide</strong>: con más niveles, el núcleo atrae menos los electrones ajenos. Gana el que tenga <strong>menos</strong> niveles (el de más arriba).`
+    : `Los dos están en la columna ${a.grupo}. El Imán tira parecido en ambos, así que <strong>el Escudo decide</strong>: gana el que tenga más niveles.` };
+  if (s.mismoPeriodo) return { titulo: "Mismo período", texto: en
+    ? `Los dos están en la fila ${a.periodo}, o sea que tienen los mismos niveles. El Escudo empata, así que <strong>el Imán decide</strong>: gana el que esté más a la <strong>derecha</strong>, porque su núcleo tira más fuerte.`
+    : `Los dos están en la fila ${a.periodo}, o sea que tienen los mismos niveles. El Escudo empata, así que <strong>el Imán decide</strong>: gana el que esté más a la izquierda.` };
+  return { titulo: "Distinto grupo y distinto período", texto: en
+    ? `Acá no hay empate: las dos fuerzas cambian a la vez. La electronegatividad sube hacia la <strong>derecha</strong> (el Imán tira más) y hacia <strong>arriba</strong> (menos niveles). Fíjate si uno de los dos gana en las dos direcciones.`
+    : `Acá no hay empate: las dos fuerzas cambian a la vez. Empieza contando los <strong>niveles</strong> (el período), que pesa más.` };
 }
 
 function porQueRadio(a, b) {
@@ -546,7 +570,8 @@ function porQueRadio(a, b) {
   if (s.iguales) return `Son el mismo elemento: tienen exactamente el mismo radio.`;
   if (s.mismoGrupo) return `Mismo grupo, así que el Imán tira igual en los dos y decide el <strong class="gana-escudo">Escudo</strong>. ${s.mayor.simbolo} está más abajo (período ${s.mayor.periodo} contra ${s.menor.periodo}): más niveles, átomo más grande.`;
   if (s.mismoPeriodo) return `Mismo período, así que los dos tienen ${a.periodo} niveles y el Escudo empata. Decide el <strong class="gana-iman">Imán</strong>: ${s.menor.simbolo} está más a la derecha (grupo ${s.menor.grupo} contra ${s.mayor.grupo}) y su núcleo tira más fuerte, encogiéndolo.`;
-  if (s.mayor.periodo > s.menor.periodo) return `${s.mayor.simbolo} tiene más niveles (${s.mayor.periodo} contra ${s.menor.periodo}) <em>y</em> está más a la izquierda. El <strong class="gana-escudo">Escudo</strong> gana por los dos lados.`;
+  if (s.mayor.periodo > s.menor.periodo && TIRON_GRUPO[s.mayor.grupo] < TIRON_GRUPO[s.menor.grupo]) return `${s.mayor.simbolo} tiene más niveles (${s.mayor.periodo} contra ${s.menor.periodo}) <em>y</em> está más a la izquierda. El <strong class="gana-escudo">Escudo</strong> gana por los dos lados.`;
+  if (s.mayor.periodo > s.menor.periodo) return `${s.mayor.simbolo} está un poco más a la derecha, así que su Imán tira algo más, pero tiene ${s.mayor.periodo - s.menor.periodo} nivel${s.mayor.periodo - s.menor.periodo > 1 ? "es" : ""} más (${s.mayor.periodo} contra ${s.menor.periodo}). Pesa más el <strong class="gana-escudo">Escudo</strong>.`;
   return `Las dos fuerzas compiten, pero pesa más el <strong class="gana-escudo">Escudo</strong> de ${s.mayor.simbolo}.`;
 }
 
@@ -659,7 +684,7 @@ function dibujarPar() {
         ${balanzaHTML(a, b)}
         <div class="explica porque"><strong>¿Por qué?</strong> ${porQueRadio(a, b)}</div>
         ${ambiguoEN(a, b)
-          ? `<div class="senal"><strong>Y la electronegatividad:</strong> ${AVISO_EN}</div>`
+          ? `<div class="senal"><strong>Y la electronegatividad:</strong> ${avisoEN(a, b)}</div>`
           : `<div class="explica"><strong>Y la electronegatividad:</strong> va al revés del radio, así que gana <strong>${s.masFuerte.simbolo}</strong>${s.hayNoble ? " — ojo: los gases nobles casi no forman enlaces, así que esta comparación es teórica." : "."}</div>`}`;
     }
     c.appendChild(p2);
@@ -739,7 +764,7 @@ function nuevaPregunta() {
     // solo se pregunta lo que el razonamiento por posición resuelve de verdad
     const sirve = (x, y) => esRadio
       ? (Math.abs(x.radio - y.radio) >= 3 && !conflictoRadio(x, y))
-      : !ambiguoEN(x, y);
+      : claroEN(x, y);
     let [a, b] = alAzar(aptos, 2), i = 0;
     while (!sirve(a, b) && i++ < 60) [a, b] = alAzar(aptos, 2);
     const s = analizar(a, b);
@@ -750,8 +775,10 @@ function nuevaPregunta() {
     opciones = [`${a.nombre} (${a.simbolo})`, `${b.nombre} (${b.simbolo})`];
     correcta = gana === a ? 0 : 1;
     explica = esRadio ? porQueRadio(a, b)
-      : `La electronegatividad va al revés del radio: sube hacia la <strong>derecha</strong> y hacia <strong>arriba</strong>. ${gana.simbolo} (grupo ${gana.grupo}, período ${gana.periodo}) está mejor ubicado para que gane el <strong>Imán</strong>.`;
-    const sen = señalDe(a, b);
+      : s.mismoGrupo
+        ? `La electronegatividad va al revés del radio: sube hacia <strong>arriba</strong>. ${gana.simbolo} (período ${gana.periodo}) tiene menos niveles: su <strong>Escudo</strong> estorba menos y el núcleo atrae más los electrones ajenos.`
+        : `La electronegatividad va al revés del radio: sube hacia la <strong>derecha</strong> y hacia <strong>arriba</strong>. ${gana.simbolo} (grupo ${gana.grupo}, período ${gana.periodo}) está mejor ubicado para que gane el <strong>Imán</strong>.`;
+    const sen = señalDe(a, b, esRadio ? "radio" : "en");
     pistasActuales = [
       "Anota el grupo y el período de cada uno. Todo sale de ahí, no hay que buscar valores.",
       `<strong>${sen.titulo}.</strong> ${sen.texto}`,
