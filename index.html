@@ -420,12 +420,13 @@ footer{border-top:1px solid var(--rule);padding-block:1.5rem 2.5rem;font-family:
 
   /* ---- parámetros ---- */
   var S0 = 15, SMAX = 360, FIRM_K = Math.log(SMAX / S0);          // estabilidad inicial y máxima (s)
-  var OLVIDO = 0.05;                                              // por debajo de esta memoria el concepto se olvida
+  var OLVIDO = 0.05, CASI = 0.12;                                 // por debajo de OLVIDO el concepto se olvida; por debajo de CASI ya está por olvidarse y su punta vuelve a crecer
   var DWELL = 0.9, DWELL_VEL = 80, REPASO_ESPERA = 4;             // s de luz quieta para repasar; px/s; s antes de poder repasarlo de nuevo
   var CALMA_ESPERA = 4, CALMA_F = 0.6, CALMA_T = 1.5;             // la calma del sitio: con el scroll quieto 4 s el tiempo baja un 40 %
   var LUZ_RET = 0.7, LUZ_CAE = 0.8, LUZ_PASO = 34, LUZ_MAX = 26;  // estela: sello que se mantiene 0,7 s y cae en 0,8 s (1,5 s en total, como el sitio)
   var A_MAX = 0.88;                                               // opacidad tope de los puntos y líneas
-  var V_CREC = 62, V_CREC_RAP = 125;                              // velocidad de las puntas (px/s) y la de la primera armada
+  var VEL = 1.33, ARMADO = 14 / VEL;                                 // factor de ritmo del crecimiento (1,33 = un 33 % más rápido) y duración de la primera armada (s)
+  var V_CREC = 62 * VEL, V_CREC_RAP = 125 * VEL;                  // velocidad de las puntas (px/s) y la de la primera armada
   var RZ_GP = 0.6, RZ_KR = 0.2, RZ_ST = 0.03, RZ_PAT = 1.4, RZ_CONO = 0.1, RZ_AC = 7;   // los de quimiotaxis.js (gravitropismo, resorte al centro, ruido, peso de los atractores)
 
   /* ---- estado ---- */
@@ -478,7 +479,7 @@ footer{border-top:1px solid var(--rule);padding-block:1.5rem 2.5rem;font-family:
     dpr = Math.min(window.devicePixelRatio || 1, movil ? 1.25 : 1.5);
     cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr);
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    tope = oculta ? 0 : H < 520 ? 16 : C.length;   // desde 640 px entran todos los conceptos, para que una herramienta pueda mostrar los suyos
+    tope = oculta ? 0 : C.length;   // desde 640 px entran siempre los 41 conceptos: la red debe poder completarse y una herramienta mostrar todos los suyos
     R = movil ? Math.max(120, W * 0.4) : Math.max(150, Math.min(300, W * 0.2));
     var rc = document.querySelector('#contenido .pagina');
     if (rc) { var b = rc.getBoundingClientRect(), gp = parseFloat(getComputedStyle(rc).paddingLeft) || 0; colIzq = b.left + gp; colDer = b.right - gp; }
@@ -661,7 +662,7 @@ footer{border-top:1px solid var(--rule);padding-block:1.5rem 2.5rem;font-family:
   function listo(n) { return vivo(n) && n.m.s > 0.3 && !n.m.crec && n.m.aparece <= 0.3; }
 
   function llegar(n) {              // la punta llegó: el concepto queda a la vista y su memoria empieza a contar
-    var m = n.m; m.crec = false; m.s = 0.06; m.aparece = 1.2; m.esp = 0; m.dw = 0; m.vista = true;
+    var m = n.m; m.crec = false; m.s = 0.06; m.aparece = 1.2 / VEL; m.esp = 0; m.dw = 0; m.vista = true;
   }
   function introducir(n, rapido) {
     var m = n.m; m.S = Math.max(S0 * n.f, m.huella * 0.6); m.esp = 0; m.dw = 0;
@@ -673,14 +674,16 @@ footer{border-top:1px solid var(--rule);padding-block:1.5rem 2.5rem;font-family:
     });
   }
   function elegir() {
-    var libres = nodos.filter(function (n) { return !vivo(n) && !n.m.crec && (!n.pa || listo(n.pa)); });
+    // vuelve a crecer lo que aún no está o ya se olvidó, y también lo que está por olvidarse (s < CASI): así la red no queda nunca incompleta. Crece desde cualquier prerrequisito que aún se vea.
+    var libres = nodos.filter(function (n) { return (!vivo(n) || n.m.s < CASI) && !n.m.crec && !(n.m.aparece > 0) && (!n.pa || (vivo(n.pa) && !n.pa.m.crec)); });
     if (!libres.length) return null;
-    libres.sort(function (p, q) { return (p.m.vista ? 1000 : 0) + p.t - ((q.m.vista ? 1000 : 0) + q.t); });
+    function clave(n) { return vivo(n) ? 2000 + n.m.s * 100 : (n.m.vista ? 1000 : 0) + n.t; }
+    libres.sort(function (p, q) { return clave(p) - clave(q); });
     return libres[Math.floor(Math.random() * Math.min(3, libres.length))];
   }
   function sembrar() {      // al abrir: se parte vacío y las puntas armadas rápido
     nodos.forEach(function (n) { if (!n.m.sembrado) { n.m.s = 0; n.m.crec = false; n.m.sembrado = true; } });
-    if (!nodos.some(vivo)) { tIntro = 0; introEsp = 0.3; }
+    if (!nodos.some(vivo)) { tIntro = 0; introEsp = 0.3 / VEL; }
   }
   function estadoFinal() {  // movimiento reducido: todo a la vista, los más conectados consolidados
     nodos.forEach(function (n) {
@@ -713,7 +716,7 @@ footer{border-top:1px solid var(--rule);padding-block:1.5rem 2.5rem;font-family:
       }
       if (m.aparece > 0) m.aparece -= dt;
       if (m.s > 0) {
-        if (m.aparece > 0) m.s = Math.min(1, m.s + dt / 0.9);       // entra: sube hasta el tope y sólo después empieza a olvidarse
+        if (m.aparece > 0) m.s = Math.min(1, m.s + dt * VEL / 0.9);       // entra: sube hasta el tope y sólo después empieza a olvidarse
         else { m.s *= Math.exp(-dt / m.S); if (m.s <= OLVIDO) { m.s = 0; m.huella = Math.max(m.huella, m.S); } }
       }
       if (m.esp > 0) m.esp -= dt;
@@ -722,15 +725,16 @@ footer{border-top:1px solid var(--rule);padding-block:1.5rem 2.5rem;font-family:
       var a = aristas[i]; if (a.w <= 0) continue;
       if (a.p < 1 && !(a.k === 'arbol' && a.b.m.crec)) a.p = Math.min(1, a.p + dt * (a.v || V_CREC) / a.L);
       a.w *= Math.exp(-dt / a.Se);
+      if (a.k === 'arbol' && a.p >= 1 && vivo(a.a) && vivo(a.b)) a.w = Math.max(a.w, 0.55);     // el hilo del árbol entre dos conceptos a la vista no se corta: la red sigue conectada
       if (!vivo(a.a) || (!vivo(a.b) && !a.b.m.crec)) a.w *= Math.exp(-dt / 2);
       if (a.w < 0.04) { a.w = 0; a.p = 0; }
     }
     // una punta nueva cada cierto tiempo, mientras haya pocos conceptos sin consolidar a la vista
     tIntro += dt;
-    var armando = reloj < 14, tope_vivos = Math.max(4, Math.round(nodos.length * (armando ? 0.45 : movil ? 0.68 : 0.62)));
-    if (tIntro >= introEsp) {
-      tIntro = 0; introEsp = (armando ? 0.3 : 1.5) * (0.7 + Math.random() * 0.6);
-      if (conteoVivos() < tope_vivos && creciendo() < (armando ? 5 : 3)) { var q = elegir(); if (q) introducir(q, armando); }
+    var armando = reloj < ARMADO;
+    if (tIntro >= introEsp) {     // la red debe estar completa: cada vez que algo se olvida o aún no crece, una punta nueva lo hace crecer (hasta que estén los 41)
+      tIntro = 0; introEsp = (armando ? 0.3 : 0.5) / VEL * (0.7 + Math.random() * 0.6);
+      if (creciendo() < (armando ? 5 : 3)) { var q = elegir(); if (q) introducir(q, armando); }
     }
     // las relaciones cruzadas se tienden cuando sus dos extremos están a la vista
     tCruz += dt;
@@ -739,7 +743,7 @@ footer{border-top:1px solid var(--rule);padding-block:1.5rem 2.5rem;font-family:
       for (i = 0; i < aristas.length; i++) {
         var c = aristas[i];
         if (c.k !== 'cruz' || c.w > 0.05 || !listo(c.a) || !listo(c.b)) continue;
-        c.w = 0.7; c.p = 0; c.v = 55; c.desde = c.a.m.s >= c.b.m.s ? c.a : c.b; c.inv = c.desde === c.b;
+        c.w = 0.7; c.p = 0; c.v = 55 * VEL; c.desde = c.a.m.s >= c.b.m.s ? c.a : c.b; c.inv = c.desde === c.b;
       }
     }
     // dwell: la luz quieta cerca de un concepto lo repasa
@@ -870,7 +874,7 @@ footer{border-top:1px solid var(--rule);padding-block:1.5rem 2.5rem;font-family:
     for (i = 0; i < nodos.length; i++) {
       n = nodos[i]; if (!aVista(n)) continue;
       nVis++; if (!n.lo) continue;
-      var am = reducir ? 0.95 : Math.min(1, 0.5 + 0.55 * Math.pow(n.m.s, 0.8) + 0.5 * n.v) * (n.m.aparece > 0 ? 1 - Math.max(0, n.m.aparece) / 1.2 : 1);
+      var am = reducir ? 0.95 : Math.min(1, 0.5 + 0.55 * Math.pow(n.m.s, 0.8) + 0.5 * n.v) * (n.m.aparece > 0 ? 1 - Math.max(0, n.m.aparece) * VEL / 1.2 : 1);
       if (focoF > 0.01) am = n.fo ? Math.max(am, 0.97 * focoF) : am * (1 - 0.7 * focoF);
       if (am < 0.05) continue;
       var lx = n.px + n.lo[0] - 4, ly = n.py + n.lo[1] - 11 - 6.5 * (n.nl - 1), ff = n.fo ? focoF : 0;
@@ -922,7 +926,7 @@ footer{border-top:1px solid var(--rule);padding-block:1.5rem 2.5rem;font-family:
       n.v = I2;
       var al2 = Math.min(A_MAX, (0.42 + 0.22 * s_) + (0.20 + 0.10 * s_) * I2 + 0.14 * fi);
       if (focoF > 0.01) al2 = n.fo ? Math.max(al2, 0.95 * focoF) : al2 * (1 - 0.7 * focoF);
-      var rad = 3.6 + (n.fo ? 1.9 * focoF : 0), ap = m.aparece > 0 ? 1 - Math.max(0, m.aparece) / 1.2 : 1;     // dos tamaños: el de siempre y el resaltado
+      var rad = 3.6 + (n.fo ? 1.9 * focoF : 0), ap = m.aparece > 0 ? 1 - Math.max(0, m.aparece) * VEL / 1.2 : 1;     // dos tamaños: el de siempre y el resaltado
       if (ap < 1) rad *= 0.4 + 0.6 * suave(ap);
       var nc = mezcla(col.mu, col.ink, I2 * 0.8);     // neutro; la luz lo acerca a la tinta
       if (n.fo && focoF > 0.01) nc = mezcla(nc, col.acc, focoF);
@@ -1006,6 +1010,14 @@ footer{border-top:1px solid var(--rule);padding-block:1.5rem 2.5rem;font-family:
         foco: foco, focoF: +focoF.toFixed(2), modo: modo, margen: { xl: Math.round(xl), xr: Math.round(xr), xc: Math.round(xc), y0: y0, y1: y1, colIzq: Math.round(colIzq) },
         aristas: aristas.filter(function (a) { return a.w > 0.04; }).length, creciendo: creciendo(), etiquetas: nEtiq, aVista: nVis, sellos: sellos.length, bajo: bajo, luz: +act.toFixed(2), vel: Math.round(vel),
         conceptos: nodos.map(function (n) { return { id: n.id, pa: n.pa ? n.pa.id : null, s: +n.m.s.toFixed(3), S: Math.round(n.m.S), rep: n.m.rep, fo: n.fo, x: Math.round(n.px), y: Math.round(n.py), bx: Math.round(n.x), by: Math.round(n.y) }; }) };
+    },
+    conexion: function () {   // los conceptos a la vista y en cuántos trozos los unen los hilos que se ven (árbol y cruzadas con w > 0,04)
+      var v = nodos.filter(vivo), padre = {}, k;
+      v.forEach(function (n) { padre[n.id] = n.id; });
+      function raiz(x) { while (padre[x] !== x) { padre[x] = padre[padre[x]]; x = padre[x]; } return x; }
+      aristas.forEach(function (a) { if (a.w > 0.04 && padre[a.a.id] && padre[a.b.id]) padre[raiz(a.a.id)] = raiz(a.b.id); });
+      var r = {}; v.forEach(function (n) { r[raiz(n.id)] = 1; });
+      return { nodos: nodos.length, vivos: v.length, componentes: Object.keys(r).length };
     },
     avanzar: function (seg) { var k = Math.round(seg * 30); for (var i = 0; i < k; i++) avanzarReal(1 / 30); if (pausado || reducir) { dibujar(); } else cerca_ = dibujar(); },
     apuntar: apuntar, soltar: soltar, enfocar: enfocar,

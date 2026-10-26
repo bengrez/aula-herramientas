@@ -75,7 +75,11 @@ navegador) y una ficha «Para / Entrena» por herramienta. El fondo es una **red
   (`[id, etiqueta, padre, tipo, rol, prioridad]`) y las relaciones cruzadas en `EX`.
 - **Aprende:** una punta crece desde su prerrequisito (si está a la vista) y al llegar deja el concepto; si la luz del cursor (o del dedo) se
   queda cerca ≥ 0,9 s se **repasa** (la memoria vuelve a 1 y su estabilidad crece, más cuanto más se había olvidado); sin repaso se
-  **olvida** (≈ 45 s). Los vínculos repasados duran más. Tono pleno y aro = consolidado.
+  **olvida** (≈ 45 s): se desvanece y, antes de desaparecer (memoria < 0,12), su punta vuelve a crecer desde su prerrequisito. Los vínculos repasados duran más.
+- **La red se recrea completa y conexa:** siempre crecen los 41 conceptos (en un margen de cualquier alto, desde 640 px) y, si el olvido deja alguno fuera, otra punta lo hace crecer hasta
+  completarse. Todos cuelgan de una sola raíz (`mat`) por las aristas del árbol, que se trazan siempre y no se cortan mientras sus dos extremos se ven; así toda herramienta queda conectada
+  con las demás por la red. `node tests/mapeo.mjs` falla si el grafo no es conexo o si una herramienta no alcanza a las demás. Medido con `window.redConceptos.avanzar()` (1440×900, 8 pruebas):
+  la red llega a 41 de 41 a los ≈ 12 s de simulación (≈ 16 s de reloj) y se mantiene completa (`conexion()` da 1 componente en todas las muestras). El ritmo de crecimiento es 1,33× (`VEL`).
 - **Feeling del sitio:** luz con borde difuso (un solo halo tenue, en neutro) y estela de ≈ 1,5 s que sigue prolongando la reacción; con el scroll quieto 4 s el tiempo baja un 40 %.
 - **Celular (< 640 px): sin red**, sólo las tarjetas (el canvas no se crea y el texto recupera el ancho del margen, `--riel` vale 0). Desde 640 px entran los 41 conceptos
   (a 30 cuadros por segundo en táctiles). Con la pestaña oculta o con el botón «Pausar fondo» no dibuja. Con `prefers-reduced-motion` muestra un estado final fijo y el botón se oculta.
