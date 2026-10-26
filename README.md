@@ -12,7 +12,7 @@ Publicado con GitHub Pages: https://bengrez.github.io/aula-herramientas/
   preparada actualmente es una demostración técnica bloqueada: los ítems son de relleno y no debe
   aplicarse a estudiantes. Su backend Supabase opcional todavía no está configurado.
 - [`autodiagnostico-bienestar-salud/`](autodiagnostico-bienestar-salud/) — Autodiagnóstico de
-  Bienestar y Salud (III° B medio, Cs. Ciudadanía, Unidad 4). Cuestionario de 24 preguntas en 6
+  Bienestar y Salud (III° medio, Cs. Ciudadanía, Unidad 4). Cuestionario de 24 preguntas en 6
   bloques, semáforo de resultado, sin envío de datos.
 - [`tabla-periodica-reactiva/`](tabla-periodica-reactiva/) — Tabla periódica reactiva, Imán y
   Escudo (8° Básico, Química, Guía N° 3). Explora tendencias por posición, compara dos elementos y
@@ -43,17 +43,17 @@ Publicado con GitHub Pages: https://bengrez.github.io/aula-herramientas/
   animaciones corren en `iframe` con `sandbox`. No incluye las notas del docente. La fuente DM Sans solo se usa si el equipo la tiene (si no, Arial).
   `datos/convertir.mjs` regenera el archivo desde las láminas originales.
 
-## Aparte: apoyo escolar en inglés
+## Aparte: material en inglés
 
-Recursos para acompañar estudios de secundaria en Australia (Year 8). No forman parte del trabajo
-de aula del IDE; se listan separados para no mezclarlos.
+Material en inglés, alineado al currículo australiano (Year 8). No forma parte del trabajo de aula;
+se lista separado para no mezclarlo.
 
 - [`black-death-skills-lab/`](black-death-skills-lab/) — *The Black Death: a historian's skills
   lab* (Year 8 HASS, History). Worksheet en inglés australiano con cuatro fuentes (mapa de
   propagación 1347–1353, crónica de Henry Knighton c. 1390, población de Inglaterra 1290–1522,
   G. M. Trevelyan 1942), diez preguntas en cuatro bloques y tres herramientas del historiador
   reutilizables; definiciones al pasar el mouse y glosario impreso. Se completa junto a un adulto;
-  la última página (en español) es para el adulto y está oculta por defecto (tecla N).
+  incluye una página de apoyo para el adulto, oculta por defecto (tecla N).
   Autocontenido, sin dependencias externas. Las respuestas escritas se guardan sólo en
   `localStorage` del navegador; no envía datos.
 
