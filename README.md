@@ -43,6 +43,7 @@ Publicado con GitHub Pages: https://bengrez.github.io/aula-herramientas/
   animaciones corren en `iframe` con `sandbox`. No incluye las notas del docente. La fuente DM Sans solo se usa si el equipo la tiene (si no, Arial).
   `datos/convertir.mjs` regenera el archivo desde las láminas originales.
 - [`bioelementos-presentacion/`](bioelementos-presentacion/) — Bioelementos (8° básico, Química): por qué la vida usa
+- [`cambios-quimicos-presentacion/`](cambios-quimicos-presentacion/): presentación de 13 láminas sobre cambios físicos y químicos, conservación de la masa y rapidez de reacción, con notas del presentador.
   C, H, O y N. 13 láminas animadas para proyectar, con notas del presentador (N/P), relojes y revelado por pasos.
   Autocontenida, sin dependencias externas ni envío de datos.
 - [`sustancias-sinapsis-presentacion/`](sustancias-sinapsis-presentacion/) — Presentación de la sesión 1 de «Sustancias y sinapsis» (Cs. para la
