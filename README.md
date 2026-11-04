@@ -45,7 +45,7 @@ Publicado con GitHub Pages: https://bengrez.github.io/aula-herramientas/
 - [`sustancias-sinapsis-presentacion/`](sustancias-sinapsis-presentacion/) — Presentación de la sesión 1 de «Sustancias y sinapsis» (Cs. para la
   Ciudadanía, III° medio, Bienestar y Salud OA 1). 12 láminas de 1920 × 1080 que se escalan a la pantalla: pregunta de entrada sobre el café,
   sinapsis química en 4 pasos (SVG), las 4 formas en que una sustancia altera una sinapsis con el curare como ejemplo resuelto, sistema de
-  recompensa, cerebro adolescente, tolerancia y dependencia, y la organización del trabajo en parejas (8 sustancias para elegir, reparto de partes, ruta de 4 sesiones, partes A y B), con notas del presentador (`N`, `P`).
+  recompensa, cerebro adolescente, tolerancia y dependencia, y la organización del trabajo en parejas (8 sustancias para elegir, reparto de partes, ruta de 3 sesiones con infografía en Canva, partes A y B), con notas del presentador (`N`, `P`).
   Misma navegación que la presentación del COVID (flechas, clic, deslizar, `F`, `I`). Un solo `index.html` sin dependencias externas.
 
 ## Aparte: material en inglés
