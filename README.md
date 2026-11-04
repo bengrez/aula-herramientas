@@ -46,8 +46,11 @@ Publicado con GitHub Pages: https://bengrez.github.io/aula-herramientas/
   C, H, O y N. 13 láminas animadas para proyectar, con notas del presentador (N/P), relojes y revelado por pasos.
   Autocontenida, sin dependencias externas ni envío de datos.
 - [`cambios-quimicos-presentacion/`](cambios-quimicos-presentacion/) — Cambios químicos (7° básico, Química): físico o químico,
-  reactivos y productos, conservación de la masa y rapidez de reacción. 13 láminas animadas con notas del presentador (N/P),
-  relojes y revelado por pasos. Autocontenida, sin dependencias externas ni envío de datos.
+  pistas engañosas, reversibilidad, argumentación con evidencia, reactivos y productos y conservación de la masa. 13 láminas
+  animadas con notas del presentador (N/P), relojes y revelado por pasos. Autocontenida, sin dependencias externas ni envío de datos.
+- [`celula-organelos-presentacion/`](celula-organelos-presentacion/) — La célula y sus organelos (8° básico, Biología):
+  procarionte y eucarionte, célula animal y vegetal, membrana, núcleo, ribosomas, mitocondria, cloroplasto, pared y vacuola,
+  y relación estructura-función. 13 láminas animadas con notas del presentador (N/P), relojes y revelado por pasos.
 - [`sustancias-sinapsis-presentacion/`](sustancias-sinapsis-presentacion/) — Presentación de la sesión 1 de «Sustancias y sinapsis» (Cs. para la
   Ciudadanía, III° medio, Bienestar y Salud OA 1). 12 láminas de 1920 × 1080 que se escalan a la pantalla: pregunta de entrada sobre el café,
   sinapsis química en 4 pasos (SVG), las 4 formas en que una sustancia altera una sinapsis con el curare como ejemplo resuelto, sistema de
