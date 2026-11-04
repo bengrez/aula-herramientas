@@ -42,6 +42,9 @@ Publicado con GitHub Pages: https://bengrez.github.io/aula-herramientas/
   clic para avanzar; `F` pantalla completa; `I` índice. Un solo archivo `index.html` sin dependencias externas ni almacenamiento de datos; las
   animaciones corren en `iframe` con `sandbox`. No incluye las notas del docente. La fuente DM Sans solo se usa si el equipo la tiene (si no, Arial).
   `datos/convertir.mjs` regenera el archivo desde las láminas originales.
+- [`bioelementos-presentacion/`](bioelementos-presentacion/) — Bioelementos (8° básico, Química): por qué la vida usa
+  C, H, O y N. 13 láminas animadas para proyectar, con notas del presentador (N/P), relojes y revelado por pasos.
+  Autocontenida, sin dependencias externas ni envío de datos.
 - [`sustancias-sinapsis-presentacion/`](sustancias-sinapsis-presentacion/) — Presentación de la sesión 1 de «Sustancias y sinapsis» (Cs. para la
   Ciudadanía, III° medio, Bienestar y Salud OA 1). 12 láminas de 1920 × 1080 que se escalan a la pantalla: pregunta de entrada sobre el café,
   sinapsis química en 4 pasos (SVG), las 4 formas en que una sustancia altera una sinapsis con el curare como ejemplo resuelto, sistema de
