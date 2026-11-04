@@ -42,6 +42,11 @@ Publicado con GitHub Pages: https://bengrez.github.io/aula-herramientas/
   clic para avanzar; `F` pantalla completa; `I` índice. Un solo archivo `index.html` sin dependencias externas ni almacenamiento de datos; las
   animaciones corren en `iframe` con `sandbox`. No incluye las notas del docente. La fuente DM Sans solo se usa si el equipo la tiene (si no, Arial).
   `datos/convertir.mjs` regenera el archivo desde las láminas originales.
+- [`sustancias-sinapsis-presentacion/`](sustancias-sinapsis-presentacion/) — Presentación de la sesión 1 de «Sustancias y sinapsis» (Cs. para la
+  Ciudadanía, III° medio, Bienestar y Salud OA 1). 19 láminas de 1920 × 1080 que se escalan a la pantalla: pregunta de entrada sobre el café,
+  sinapsis química en 4 pasos (SVG), las 4 formas en que una sustancia altera una sinapsis con el curare como ejemplo resuelto, sistema de
+  recompensa, cerebro adolescente, tolerancia y dependencia, y la organización del trabajo (6 sustancias, roles, ruta de 4 sesiones, partes A y B).
+  Misma navegación que la presentación del COVID (flechas, clic, deslizar, `F`, `I`). Un solo `index.html` sin dependencias externas.
 
 ## Aparte: material en inglés
 
