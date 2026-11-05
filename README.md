@@ -51,6 +51,9 @@ Publicado con GitHub Pages: https://bengrez.github.io/aula-herramientas/
 - [`celula-organelos-presentacion/`](celula-organelos-presentacion/) — La célula y sus organelos (8° básico, Biología):
   procarionte y eucarionte, célula animal y vegetal, membrana, núcleo, ribosomas, mitocondria, cloroplasto, pared y vacuola,
   y relación estructura-función. 13 láminas animadas con notas del presentador (N/P), relojes y revelado por pasos.
+- [`tramas-troficas-presentacion/`](tramas-troficas-presentacion/) — Cadenas y tramas tróficas (I° medio, Biología):
+  productores, consumidores y descomponedores, niveles tróficos, sentido de las flechas, pérdida de energía (~10 %),
+  reciclaje de la materia, trama de la zona central de Chile y de la costa rocosa. 13 láminas animadas con notas (N/P) y relojes.
 - [`sustancias-sinapsis-presentacion/`](sustancias-sinapsis-presentacion/) — Presentación de la sesión 1 de «Sustancias y sinapsis» (Cs. para la
   Ciudadanía, III° medio, Bienestar y Salud OA 1). 12 láminas de 1920 × 1080 que se escalan a la pantalla: pregunta de entrada sobre el café,
   sinapsis química en 4 pasos (SVG), las 4 formas en que una sustancia altera una sinapsis con el curare como ejemplo resuelto, sistema de
