@@ -54,6 +54,12 @@ Publicado con GitHub Pages: https://bengrez.github.io/aula-herramientas/
 - [`tramas-troficas-presentacion/`](tramas-troficas-presentacion/) — Cadenas y tramas tróficas (I° medio, Biología):
   productores, consumidores y descomponedores, niveles tróficos, sentido de las flechas, pérdida de energía (~10 %),
   reciclaje de la materia, trama de la zona central de Chile y de la costa rocosa. 13 láminas animadas con notas (N/P) y relojes.
+- [`energy-lesson/`](energy-lesson/) — Energy: types, transformations and efficiency (Year 8 Science, en inglés). 15 diapositivas
+  interactivas (clasificador, montaña rusa, cadenas de energía, eficiencia y diagramas de Sankey) y checkpoint tipo prueba; notas para el adulto en español (N).
+- [`chemistry-study/`](chemistry-study/) — Atoms and the periodic table (Year 8 Science, en inglés): constructor de átomo, tabla periódica
+  de 118 elementos con cuatro modos de color, tendencias periódicas y metales/no metales.
+- [`rock-cycle/`](rock-cycle/) — The rock cycle (Year 8 Science, en inglés). 10 diapositivas: tipos de roca, modelo de tamaño de cristal,
+  ciclo con procesos clicables, escalas de tiempo, propiedades y usos, «rock detective»; notas para el adulto en español (N).
 - [`sustancias-sinapsis-presentacion/`](sustancias-sinapsis-presentacion/) — Presentación de la sesión 1 de «Sustancias y sinapsis» (Cs. para la
   Ciudadanía, III° medio, Bienestar y Salud OA 1). 12 láminas de 1920 × 1080 que se escalan a la pantalla: pregunta de entrada sobre el café,
   sinapsis química en 4 pasos (SVG), las 4 formas en que una sustancia altera una sinapsis con el curare como ejemplo resuelto, sistema de
@@ -86,8 +92,8 @@ navegador) y una ficha «Para / Entrena» por herramienta. El fondo es una **red
   laterales brotan de él como relaciones (punteadas); algunas relaciones cruzadas cierran la red. La raíz vive siempre en el margen, sin velo sobre
   el texto: la columna es la del sitio (72 rem) y, si el margen natural queda bajo `--riel` (de 7 rem en el celular a 11,5 rem), el CSS corre el texto lo justo para
   dar ese ancho (`.pagina`). Así los nombres caben y se leen también en pantallas angostas (en el celular se parten en dos líneas).
-- **Nodos** = conceptos de ciencias del currículum escolar (biología, química, física; incluyen los temas de las herramientas), con su nombre
-  al lado. Cada disciplina tiene un tono (derivado del acento del tema) y una forma (círculo, hexágono, triángulo). Los conceptos están en el
+- **Nodos** = conceptos de ciencias del currículum escolar (biología, química, física y Tierra; incluyen los temas de las herramientas), con su nombre
+  al lado. Cada disciplina tiene un tono (derivado del acento del tema) y una forma (círculo, hexágono, triángulo, rombo). Los conceptos están en el
   arreglo `C` al comienzo del bloque (`[id, etiqueta, disciplina, padre, tipo, rol, prioridad]`) y las relaciones cruzadas en `EX`.
 - **Aprende:** una punta crece desde su prerrequisito (si está a la vista) y al llegar deja el concepto; si la luz del cursor (o del dedo) se
   queda cerca ≥ 0,9 s se **repasa** (la memoria vuelve a 1 y su estabilidad crece, más cuanto más se había olvidado); sin repaso se

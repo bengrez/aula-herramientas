@@ -1,0 +1,742 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Lesson: energy types, energy transformations and energy efficiency (Year 8 Physical Science).">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='32' fill='%23315c47'/%3E%3Ctext x='32' y='45' text-anchor='middle' font-size='34' font-family='Georgia' fill='%23fbf8f0'%3EE%3C/text%3E%3C/svg%3E">
+<title>Energy: types, transformations and efficiency</title>
+<style>
+:root{
+  --ink:#18251f; --muted:#647069; --paper:#f4f0e6; --paper-light:#fbf8f0;
+  --moss:#315c47; --moss-dark:#1d4030; --coral:#e66a4e; --gold:#e6b954;
+  --line:#c8c3b5; --radius:8px;
+  --kin:#c9552f; --pot:#3f6fa6; --heat:#d9822b; --sound:#7c6396;
+  --use:#315c47; --waste:#b5543f; --in:#6b7a72;
+}
+*{box-sizing:border-box}
+html{scroll-snap-type:y proximity;scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--ink);
+  font:18px/1.5 "Avenir Next",Avenir,"Century Gothic","Segoe UI",sans-serif}
+h1,h2,h3{font-family:"Iowan Old Style","Palatino Linotype","Book Antiqua",Georgia,serif;margin:0;line-height:1.15}
+h3{font-size:1.15rem;margin-bottom:6px}
+p{margin:.4em 0}
+.mono{font-family:"Courier New",monospace}
+.slide{min-height:100vh;scroll-snap-align:start;padding:56px 48px 100px;
+  display:flex;flex-direction:column;justify-content:center}
+.slide > .inner{max-width:1080px;width:100%;margin:0 auto}
+.eyebrow{font:600 .76rem "Courier New",monospace;letter-spacing:.13em;text-transform:uppercase;color:var(--coral);margin:0 0 10px}
+h1{font-size:2.9rem;letter-spacing:-.03em;margin-bottom:12px}
+h2{font-size:2.1rem;letter-spacing:-.02em;margin-bottom:12px}
+.lead{font-size:1.12rem;max-width:64ch;color:#2b3a32}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:16px}
+.cols3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:16px}
+.card{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:16px 18px}
+.card.kin{border-top:6px solid var(--kin)} .card.pot{border-top:6px solid var(--pot)}
+.fam-list{list-style:none;margin:8px 0 0;padding:0}
+.fam-list li{display:flex;gap:10px;align-items:flex-start;padding:7px 0;border-top:1px dashed var(--line)}
+.fam-list li:first-child{border-top:none}
+.fam-list .ico{font-size:1.5rem;line-height:1.2;width:34px;text-align:center;flex:none}
+.fam-list b{display:block}
+.fam-list small{color:var(--muted);font-size:.86rem}
+.keyidea,.watch{margin:16px 0 0;padding:12px 16px;background:var(--paper-light);border-left:5px solid var(--moss);border-radius:var(--radius)}
+.watch{border-left-color:var(--coral)}
+.keyidea > strong:first-child,.watch > strong:first-child{display:block;font:600 .7rem "Courier New",monospace;text-transform:uppercase;letter-spacing:.1em;color:var(--moss);margin-bottom:4px}
+.watch > strong:first-child{color:var(--coral)}
+.btn{font:600 .88rem "Avenir Next",Avenir,"Century Gothic","Segoe UI",sans-serif;border:1.5px solid var(--moss);background:#fff;color:var(--moss);
+  border-radius:20px;padding:6px 14px;cursor:pointer;line-height:1.3}
+.btn:hover{background:var(--moss-dark);border-color:var(--moss-dark);color:#fff}
+.btn.primary{background:var(--moss);color:#fff}
+.btn.small{font-size:.78rem;padding:4px 11px}
+.btn:disabled{opacity:.45;cursor:default}
+.pill{display:inline-block;font:600 .74rem "Courier New",monospace;letter-spacing:.03em;border:1px solid var(--moss);
+  color:var(--moss);border-radius:11px;padding:3px 11px;margin:3px 4px 3px 0;white-space:nowrap}
+.pill.coral{border-color:var(--coral);color:var(--coral)}
+.tag{display:inline-block;font:600 .7rem "Courier New",monospace;letter-spacing:.06em;text-transform:uppercase;padding:2px 8px;border-radius:4px;color:#fff}
+.tag.kin{background:var(--kin)} .tag.pot{background:var(--pot)}
+.tag.use{background:var(--use)} .tag.waste{background:var(--waste)}
+.ok{color:var(--moss);font-weight:700} .bad{color:var(--waste);font-weight:700}
+.toc{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:22px}
+.toc a{display:block;text-decoration:none;color:inherit;background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:14px 16px}
+.toc a:hover{border-color:var(--moss)}
+.toc .n{font:700 .8rem "Courier New",monospace;color:var(--coral)}
+.toc b{display:block;font-size:1.05rem;margin:4px 0 2px}
+.toc small{color:var(--muted)}
+.ladder{list-style:none;margin:12px 0 0;padding:0}
+.ladder li{display:grid;grid-template-columns:140px 1fr;gap:12px;padding:8px 0;border-top:1px dashed var(--line);align-items:baseline}
+.ladder .mono{font-weight:700;color:var(--moss)}
+
+/* sorter */
+.sort-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+.sc{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:10px 12px;display:flex;flex-direction:column;gap:6px}
+.sc .txt{font-weight:600}
+.sc .acts{display:flex;gap:6px;flex-wrap:wrap}
+.sc .fb{font-size:.86rem;color:#2b3a32;display:none}
+.sc.done .fb{display:block}
+.sc.done .acts button{opacity:.55;pointer-events:none}
+.sc.right{border-color:var(--moss);background:#f1f6f2} .sc.wrong{border-color:var(--waste);background:#faf0ed}
+.score{font:600 .85rem "Courier New",monospace;color:var(--moss);margin-top:10px}
+
+/* bars */
+.bars{display:flex;gap:14px;align-items:stretch;height:200px;margin-top:8px}
+.bar{flex:1;display:flex;flex-direction:column}
+.bar .col{flex:1;display:flex;flex-direction:column;justify-content:flex-end;background:#fff;border:1px solid var(--line);border-radius:6px;overflow:hidden}
+.bar i{display:block;height:0%;transition:height .08s linear}
+.bar .lab{text-align:center;font-size:.8rem;margin-top:4px;line-height:1.2}
+.bar .val{font:700 .82rem "Courier New",monospace}
+.bar.gpe i{background:var(--pot)} .bar.ke i{background:var(--kin)} .bar.heat i{background:var(--heat)} .bar.tot i{background:var(--moss)}
+.ctrl{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:10px}
+.ctrl input[type=range]{flex:1;min-width:160px}
+.ctrl label{font-size:.9rem}
+svg.demo{width:100%;height:auto;display:block;background:#fff;border:1px solid var(--line);border-radius:var(--radius)}
+#bounceSvg{max-width:360px;margin:0 auto}
+
+/* chains */
+.chain{display:flex;align-items:center;flex-wrap:wrap;gap:8px;margin:10px 0 6px}
+.box{border:2px solid var(--ink);border-radius:6px;padding:8px 12px;background:#fff;min-width:120px;text-align:center;transition:opacity .25s}
+.box b{display:block;font-size:.98rem}
+.box small{display:block;color:var(--muted);font-size:.78rem;line-height:1.2}
+.box.kin{border-color:var(--kin)} .box.pot{border-color:var(--pot)} .box.use{border-color:var(--use);background:#f1f6f2} .box.waste{border-color:var(--waste);background:#faf0ed;border-style:dashed}
+.arrow{font-size:1.6rem;color:var(--moss);line-height:1}
+.stack{display:flex;flex-direction:column;gap:6px}
+.hidden{opacity:.12}
+.chain-tools{display:flex;gap:8px;margin-top:6px}
+.bld{margin-top:10px;padding:12px 14px;background:#fff;border:1px solid var(--line);border-radius:var(--radius)}
+.bld .row{display:flex;align-items:center;flex-wrap:wrap;gap:8px;margin-top:6px}
+.bld select{font:inherit;font-size:.9rem;padding:5px 8px;border:2px solid var(--line);border-radius:6px;background:#fff;max-width:200px}
+.bld select.ok{border-color:var(--moss);background:#f1f6f2} .bld select.bad{border-color:var(--waste);background:#faf0ed}
+.bld .plus{font-weight:700;color:var(--muted)}
+.bld .msg{font-size:.88rem;margin-top:6px}
+.bld .hint{font-size:.84rem;color:var(--muted)}
+
+/* table */
+table.t{border-collapse:collapse;width:100%;margin-top:10px;font-size:.95rem;background:#fff}
+table.t th,table.t td{border:1px solid var(--line);padding:7px 10px;text-align:left;vertical-align:top}
+table.t th{background:var(--paper-light);font-size:.8rem;text-transform:uppercase;letter-spacing:.06em}
+
+/* formula */
+.formula{font-family:"Courier New",monospace;font-size:1.35rem;font-weight:700;background:#fff;border:2px solid var(--moss);border-radius:var(--radius);padding:14px 18px;margin:10px 0;text-align:center}
+.formula small{display:block;font:500 .82rem "Avenir Next",Avenir,"Century Gothic","Segoe UI",sans-serif;color:var(--muted);margin-top:6px}
+.steps{margin:8px 0 0;padding-left:22px}
+.steps li{margin:4px 0}
+.calc{display:grid;grid-template-columns:1fr 1fr;gap:10px 14px;align-items:end;margin-top:8px}
+.calc label{font-size:.82rem;color:var(--muted);display:block}
+.calc input{font:inherit;width:100%;padding:6px 8px;border:2px solid var(--line);border-radius:6px}
+.calc .out{grid-column:1/-1;font-family:"Courier New",monospace;font-size:.95rem;padding:8px 10px;background:var(--paper-light);border-radius:6px;min-height:2.6em}
+
+/* checkpoint */
+.q{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:12px 14px;margin:10px 0}
+.q .qn{font:700 .8rem "Courier New",monospace;color:var(--moss)}
+.q .qt{font-weight:600;margin:2px 0 8px}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.opts button{text-align:left;font:inherit;font-size:.92rem;padding:7px 10px;border:1.5px solid var(--line);border-radius:6px;background:#fff;cursor:pointer}
+.opts button:hover{border-color:var(--moss)}
+.opts button.ok{border-color:var(--moss);background:#f1f6f2} .opts button.bad{border-color:var(--waste);background:#faf0ed}
+.q .why,.q .model{display:none;margin-top:8px;font-size:.92rem;padding:8px 10px;background:var(--paper-light);border-radius:6px}
+.q.done .why{display:block} .q.show .model{display:block}
+
+/* nav + notes */
+.progress{position:fixed;top:0;left:0;height:4px;width:0;background:var(--coral);z-index:11;transition:width .3s}
+.nav{position:fixed;bottom:0;left:0;right:0;display:flex;justify-content:space-between;align-items:center;gap:10px;
+  padding:9px 18px;background:rgba(251,248,240,.94);border-top:1px solid var(--line);z-index:10;font-size:.86rem}
+.nav .part{font:600 .74rem "Courier New",monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--moss)}
+.nav .cnt{font:700 .86rem "Courier New",monospace}
+.nav .grp{display:flex;gap:6px;align-items:center}
+.notes{display:none;margin-top:18px;padding:10px 14px;background:#fff8dc;border:1px dashed #c9a94a;border-radius:var(--radius);font-size:.88rem;color:#4a3f1c}
+.notes > strong:first-child{display:block;font:600 .68rem "Courier New",monospace;text-transform:uppercase;letter-spacing:.1em;color:#8a6d1f;margin-bottom:3px}
+body.show-notes .notes{display:block}
+.summary{list-style:none;padding:0;margin:14px 0 0;counter-reset:s}
+.summary li{counter-increment:s;padding:8px 0 8px 46px;position:relative;border-top:1px dashed var(--line);font-size:1.02rem}
+.summary li::before{content:counter(s);position:absolute;left:0;top:7px;width:32px;height:32px;border-radius:50%;background:var(--moss);color:#fff;font:700 .95rem "Courier New",monospace;display:flex;align-items:center;justify-content:center}
+
+@media(max-width:820px){
+  body{font-size:16px}
+  .slide{padding:36px 18px 96px}
+  h1{font-size:2rem} h2{font-size:1.55rem}
+  .cols,.cols3,.sort-grid,.opts,.calc{grid-template-columns:1fr}
+  .toc{grid-template-columns:1fr 1fr}
+  .ladder li{grid-template-columns:1fr}
+  .bars{height:150px}
+  table.t{display:block;overflow-x:auto}
+}
+</style>
+<style>
+/* Enlace al hub «Herramientas de aula» y su pie. */
+.aula-volver,.aula-pie{margin:0;padding:.55rem 1rem;font:500 .85rem/1.4 system-ui,"Segoe UI",Arial,sans-serif;color:inherit;opacity:.85}
+.aula-volver a,.aula-pie a{color:inherit;text-underline-offset:.18em}
+.aula-pie{text-align:center;padding-block:1.25rem 4.5rem}
+@media print{.aula-volver,.aula-pie{display:none}}
+</style>
+</head>
+<body>
+<p class="aula-volver"><a href="../">← Herramientas de aula</a></p>
+<div class="progress" id="progress"></div>
+
+<!-- ================= 0 COVER ================= -->
+<section class="slide" data-part="Start">
+<div class="inner">
+  <p class="eyebrow">Year 8 Science &middot; Physical Science &middot; Term 3</p>
+  <h1>Energy: types, transformations and efficiency</h1>
+  <p class="lead">A lesson in three parts, then a quick checkpoint in the same format as the test (multiple choice + short answer).</p>
+  <div class="toc">
+    <a href="#p1"><span class="n">PART 1</span><b>Energy types</b><small>Two families: kinetic and potential</small></a>
+    <a href="#p2"><span class="n">PART 2</span><b>Energy transformations</b><small>Chains, flow diagrams, conservation</small></a>
+    <a href="#p3"><span class="n">PART 3</span><b>Energy efficiency</b><small>Useful vs wasted, the formula, Sankey diagrams</small></a>
+    <a href="#chk"><span class="n">CHECK</span><b>Checkpoint</b><small>9 test-style questions</small></a>
+  </div>
+  <div class="keyidea"><strong>What the test says</strong>
+    Topics to review: <span class="pill">Energy types</span><span class="pill">Energy transformations</span><span class="pill">Energy efficiency</span><br>
+    Bring: <span class="pill coral">ruler</span><span class="pill coral">lead pencil</span><span class="pill coral">pen</span><span class="pill coral">eraser</span><span class="pill coral">calculator</span>
+    &nbsp;&rarr; expect diagrams drawn to scale and efficiency calculations.
+  </div>
+  <p style="color:var(--muted);font-size:.9rem;margin-top:14px">Use &rarr; or space to move on, &larr; to go back. Scroll down to see the rest of a long slide. Press <b>N</b> to show or hide teacher notes.</p>
+  <aside class="notes"><strong>Notas</strong>Plan: 15 + 15 + 20 min y 10 min de checkpoint. Pregunta de entrada antes de avanzar: &laquo;&iquest;qu&eacute; es energ&iacute;a para ti?&raquo;.</aside>
+</div>
+</section>
+
+<!-- ================= 1 WHAT IS ENERGY ================= -->
+<section class="slide" id="p1" data-part="Part 1 · Energy types">
+<div class="inner">
+  <p class="eyebrow">Part 1 &middot; Energy types</p>
+  <h2>What is energy?</h2>
+  <p class="lead"><b>Energy is what makes things happen.</b> It is the ability to cause change: to move something, heat it up, light it, or make a sound. You never see energy itself. You notice it by what it does.</p>
+  <div class="cols">
+    <div class="card">
+      <h3>The unit: the joule (J)</h3>
+      <p>Energy is measured in <b>joules</b>. One thousand joules is a <b>kilojoule (kJ)</b>. Food labels use kJ.</p>
+      <ul class="ladder">
+        <li><span class="mono">&asymp; 1 J</span><span>lifting an apple up 1 metre</span></li>
+        <li><span class="mono">&asymp; 15 J</span><span>lifting a laptop from the floor onto a desk</span></li>
+        <li><span class="mono">&asymp; 40 kJ</span><span>stored in a full phone battery</span></li>
+        <li><span class="mono">&asymp; 300 kJ</span><span>chemical energy in one slice of bread</span></li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Spot the energy</h3>
+      <p>Something is happening in each of these. Name what is changing:</p>
+      <ul>
+        <li>A kettle boils.</li>
+        <li>A phone screen lights up.</li>
+        <li>A soccer ball flies after a kick.</li>
+        <li>A speaker plays music.</li>
+      </ul>
+      <div class="keyidea"><strong>Key idea</strong>Wherever something moves, warms up, lights up or makes a sound, energy is being transferred or transformed.</div>
+    </div>
+  </div>
+  <aside class="notes"><strong>Notas</strong>Insistir en que la energ&iacute;a se reconoce por sus efectos. Que ella nombre tres cosas de su pieza que &laquo;hacen que algo pase&raquo;. No detenerse en los n&uacute;meros de la escalera: son s&oacute;lo para dar sentido a J y kJ.</aside>
+</div>
+</section>
+
+<!-- ================= 2 TWO FAMILIES ================= -->
+<section class="slide" data-part="Part 1 · Energy types">
+<div class="inner">
+  <p class="eyebrow">Part 1 &middot; Energy types</p>
+  <h2>Two families of energy</h2>
+  <p class="lead">Every energy type belongs to one of two families. <b>Kinetic</b> energy is energy in action: something is moving. <b>Potential</b> energy is stored: it is waiting to be released.</p>
+  <div class="cols">
+    <div class="card kin">
+      <h3><span class="tag kin">Kinetic family</span> &nbsp;energy of movement</h3>
+      <ul class="fam-list">
+        <li><span class="ico">&#127939;</span><span><b>Kinetic (movement)</b><small>Anything moving: a car, a ball, running water, wind.</small></span></li>
+        <li><span class="ico">&#128293;</span><span><b>Heat (thermal)</b><small>Particles jiggling faster. Hotter = more heat energy.</small></span></li>
+        <li><span class="ico">&#128266;</span><span><b>Sound</b><small>Vibrations travelling through air, water or solids.</small></span></li>
+        <li><span class="ico">&#128161;</span><span><b>Light (radiant)</b><small>Light travelling from the Sun, a globe, a screen.</small></span></li>
+        <li><span class="ico">&#9889;</span><span><b>Electrical</b><small>Charges moving through a wire.</small></span></li>
+      </ul>
+    </div>
+    <div class="card pot">
+      <h3><span class="tag pot">Potential family</span> &nbsp;stored energy</h3>
+      <ul class="fam-list">
+        <li><span class="ico">&#127957;</span><span><b>Gravitational potential</b><small>Because of height: a diver on a platform, water in a dam.</small></span></li>
+        <li><span class="ico">&#127993;</span><span><b>Elastic potential</b><small>Stretched or squashed: a bow, a spring, a trampoline.</small></span></li>
+        <li><span class="ico">&#128267;</span><span><b>Chemical potential</b><small>In the bonds of food, fuel, batteries, wood.</small></span></li>
+        <li><span class="ico">&#9762;</span><span><b>Nuclear</b><small>Inside the nucleus of atoms: the Sun, power stations.</small></span></li>
+      </ul>
+    </div>
+  </div>
+  <div class="watch"><strong>Watch out</strong>Heat, light, sound and electricity feel like "things", but in every one of them something is moving: particles, waves or charges. That is why they belong to the kinetic family, not the potential family.</div>
+  <aside class="notes"><strong>Notas</strong>La confusi&oacute;n t&iacute;pica: calor, luz y sonido parecen &laquo;cosas&raquo; y no movimiento. En los tres algo se mueve. La profesora puede decir &laquo;thermal&raquo; en vez de &laquo;heat&raquo;: es lo mismo.</aside>
+</div>
+</section>
+
+<!-- ================= 3 SORT IT ================= -->
+<section class="slide" data-part="Part 1 · Energy types">
+<div class="inner">
+  <p class="eyebrow">Part 1 &middot; Energy types &middot; Try it</p>
+  <h2>Sort it: kinetic or potential?</h2>
+  <p class="lead">Say the family <em>and</em> the type out loud before you click. Then check.</p>
+  <div class="sort-grid" id="sortGrid"></div>
+  <div class="score" id="sortScore">0 / 10 sorted</div>
+  <div style="margin-top:8px"><button class="btn small" id="sortReset">Reset</button></div>
+  <aside class="notes"><strong>Notas</strong>Que clasifique en voz alta antes de tocar el bot&oacute;n. Si duda con el t&eacute; caliente: el t&eacute; tiene calor; la energ&iacute;a qu&iacute;mica estaba en el gas o en la electricidad que lo calent&oacute;.</aside>
+</div>
+</section>
+
+<!-- ================= 4 RAMP ================= -->
+<section class="slide" data-part="Part 1 · Energy types">
+<div class="inner">
+  <p class="eyebrow">Part 1 &middot; Energy types &middot; Demo</p>
+  <h2>Height and speed trade places</h2>
+  <p class="lead">A roller coaster cart starts at the top with 1000 J of gravitational potential energy. Drag the slider or press play, and watch the bars.</p>
+  <div class="cols">
+    <div>
+      <svg class="demo" id="rampSvg" viewBox="0 0 600 250" aria-label="Roller coaster track">
+        <line x1="0" y1="236" x2="600" y2="236" stroke="#c8c3b5" stroke-width="2"/>
+        <path id="rampTrack" d="" fill="none" stroke="#18251f" stroke-width="3"/>
+        <circle id="rampBall" r="10" fill="#e66a4e" stroke="#18251f" stroke-width="2"/>
+        <text id="rampCap" x="588" y="22" font-size="14" fill="#647069" text-anchor="end"></text>
+      </svg>
+      <div class="ctrl">
+        <button class="btn small primary" id="rampPlay">&#9654; Play</button>
+        <input type="range" id="rampT" min="0" max="1000" value="0" aria-label="Position along the track">
+        <label><input type="checkbox" id="rampFric"> friction on</label>
+      </div>
+    </div>
+    <div>
+      <div class="bars">
+        <div class="bar gpe"><div class="col"><i id="bGPE"></i></div><div class="lab">Gravitational potential<br><span class="val" id="vGPE">1000 J</span></div></div>
+        <div class="bar ke"><div class="col"><i id="bKE"></i></div><div class="lab">Kinetic<br><span class="val" id="vKE">0 J</span></div></div>
+        <div class="bar heat"><div class="col"><i id="bHEAT"></i></div><div class="lab">Heat (friction)<br><span class="val" id="vHEAT">0 J</span></div></div>
+        <div class="bar tot"><div class="col"><i id="bTOT" style="height:100%"></i></div><div class="lab">Total<br><span class="val">1000 J</span></div></div>
+      </div>
+      <div class="keyidea"><strong>Key idea</strong>At the top: all potential. At the bottom: all kinetic. In between: some of each. With friction on, some energy turns into heat, so the cart cannot climb back as high. The total never changes.</div>
+    </div>
+  </div>
+  <aside class="notes"><strong>Notas</strong>Mover el slider despacio. Preguntar: &iquest;d&oacute;nde va m&aacute;s r&aacute;pido? &iquest;Por qu&eacute; con fricci&oacute;n no vuelve a subir tan alto? La frase clave es &laquo;se transform&oacute; en calor&raquo;, nunca &laquo;se perdi&oacute;&raquo;. Esto siembra la ley de conservaci&oacute;n de la Parte 2.</aside>
+</div>
+</section>
+
+<!-- ================= 5 TRANSFER VS TRANSFORMATION ================= -->
+<section class="slide" id="p2" data-part="Part 2 · Transformations">
+<div class="inner">
+  <p class="eyebrow">Part 2 &middot; Energy transformations</p>
+  <h2>Transfer or transformation?</h2>
+  <p class="lead">Energy is always on the move. Sometimes it moves to a new place, sometimes it changes into a new type. The test uses both words, so keep them apart.</p>
+  <div class="cols">
+    <div class="card">
+      <h3>Energy <u>transfer</u></h3>
+      <p><b>Same type, new place.</b> Energy passes from one object to another without changing type.</p>
+      <div class="chain"><div class="box kin"><b>Kinetic</b><small>the player's foot</small></div><span class="arrow">&rarr;</span><div class="box kin"><b>Kinetic</b><small>the ball</small></div></div>
+      <div class="chain"><div class="box kin"><b>Heat</b><small>the hot spoon</small></div><span class="arrow">&rarr;</span><div class="box kin"><b>Heat</b><small>your hand</small></div></div>
+    </div>
+    <div class="card">
+      <h3>Energy <u>transformation</u></h3>
+      <p><b>New type.</b> Energy changes from one type into another.</p>
+      <div class="chain"><div class="box pot"><b>Chemical</b><small>battery</small></div><span class="arrow">&rarr;</span><div class="box kin"><b>Electrical</b><small>circuit</small></div><span class="arrow">&rarr;</span><div class="box kin"><b>Light</b><small>globe</small></div></div>
+      <div class="chain"><div class="box pot"><b>Elastic potential</b><small>stretched bowstring</small></div><span class="arrow">&rarr;</span><div class="box kin"><b>Kinetic</b><small>the arrow</small></div></div>
+    </div>
+  </div>
+  <div class="keyidea"><strong>Rule of thumb</strong>Same type, new place = <b>transfer</b>. New type = <b>transformation</b>. Most real events do both at once: kicking a ball transfers kinetic energy to the ball <em>and</em> transforms some of it into sound and heat.</div>
+  <aside class="notes"><strong>Notas</strong>Pedirle un ejemplo propio de cada uno. Si dice &laquo;el sol calienta la piscina&raquo;: luz &rarr; calor es transformaci&oacute;n; la piscina calentando tu cuerpo es transferencia.</aside>
+</div>
+</section>
+
+<!-- ================= 6 ENERGY CHAINS ================= -->
+<section class="slide" data-part="Part 2 · Transformations">
+<div class="inner">
+  <p class="eyebrow">Part 2 &middot; Energy transformations</p>
+  <h2>Energy chains (flow diagrams)</h2>
+  <p class="lead">An energy chain shows the transformations in order: a box for each energy type, an arrow for each change. Always include the <b>wasted</b> output. Reveal the boxes one step at a time.</p>
+  <div class="card" style="margin-top:12px">
+    <h3>A torch</h3>
+    <div class="chain" id="chain-torch"></div>
+    <div class="chain-tools"><button class="btn small primary" data-chain="torch" data-act="next">Next step</button><button class="btn small" data-chain="torch" data-act="all">Show all</button><button class="btn small" data-chain="torch" data-act="reset">Reset</button></div>
+  </div>
+  <div class="card" style="margin-top:12px">
+    <h3>A whistling kettle</h3>
+    <div class="chain" id="chain-kettle"></div>
+    <div class="chain-tools"><button class="btn small primary" data-chain="kettle" data-act="next">Next step</button><button class="btn small" data-chain="kettle" data-act="all">Show all</button><button class="btn small" data-chain="kettle" data-act="reset">Reset</button></div>
+  </div>
+  <div class="watch"><strong>Test tip</strong>Label each box with the energy type <em>and</em> where it is ("heat in the water"). Marks are usually one per correct box and one for the wasted output.</div>
+  <aside class="notes"><strong>Notas</strong>Revelar paso a paso. Antes de la &uacute;ltima caja preguntar siempre: &laquo;&iquest;y qu&eacute; se desperdicia?&raquo;. La cadena del hervidor es del mismo estilo que una pregunta real de prueba de Year 8 (eslab&oacute;n faltante).</aside>
+</div>
+</section>
+
+<!-- ================= 7 BUILD THE CHAIN ================= -->
+<section class="slide" data-part="Part 2 · Transformations">
+<div class="inner">
+  <p class="eyebrow">Part 2 &middot; Energy transformations &middot; Try it</p>
+  <h2>Build the chain</h2>
+  <p class="lead">Choose the energy type for each box, then check. Where a device has several outputs, the order does not matter.</p>
+  <div id="builders"></div>
+  <aside class="notes"><strong>Notas</strong>Dejarla construir sola. Si se atasca con el ciclista: &iquest;de d&oacute;nde sale la energ&iacute;a de sus m&uacute;sculos? &iquest;Por qu&eacute; suda? En el secador, el aire que se mueve es cin&eacute;tica y el ruido es la salida desperdiciada.</aside>
+</div>
+</section>
+
+<!-- ================= 8 CONSERVATION ================= -->
+<section class="slide" data-part="Part 2 · Transformations">
+<div class="inner">
+  <p class="eyebrow">Part 2 &middot; Energy transformations</p>
+  <h2>The law of conservation of energy</h2>
+  <div class="formula">Energy cannot be created or destroyed.<br>It can only be transferred or transformed.<small>Total energy in = total energy out. Always.</small></div>
+  <div class="cols">
+    <div>
+      <svg class="demo" id="bounceSvg" viewBox="0 0 320 260" aria-label="Bouncing ball">
+        <line x1="0" y1="238" x2="320" y2="238" stroke="#18251f" stroke-width="3"/>
+        <line x1="40" y1="48" x2="60" y2="48" stroke="#c8c3b5" stroke-width="2"/>
+        <text x="66" y="52" font-size="12" fill="#647069">start: 2.0 m</text>
+        <circle id="bBall" cx="220" r="12" fill="#3f6fa6" stroke="#18251f" stroke-width="2"/>
+        <text id="bCap" x="12" y="22" font-size="13" fill="#647069">Press play</text>
+      </svg>
+      <div class="ctrl"><button class="btn small primary" id="bPlay">&#9654; Play</button><button class="btn small" id="bReset">Reset</button></div>
+    </div>
+    <div>
+      <div class="bars">
+        <div class="bar gpe"><div class="col"><i id="bbGPE" style="height:100%"></i></div><div class="lab">Gravitational potential<br><span class="val" id="bvGPE">100%</span></div></div>
+        <div class="bar ke"><div class="col"><i id="bbKE"></i></div><div class="lab">Kinetic<br><span class="val" id="bvKE">0%</span></div></div>
+        <div class="bar heat"><div class="col"><i id="bbLOST"></i></div><div class="lab">Heat + sound<br>(so far)<br><span class="val" id="bvLOST">0%</span></div></div>
+        <div class="bar tot"><div class="col"><i style="height:100%"></i></div><div class="lab">Total<br><span class="val">100%</span></div></div>
+      </div>
+      <div class="keyidea"><strong>Where did it go?</strong>Each bounce is lower because some energy leaves the ball as <b>heat</b> (ball and floor warm up a little) and <b>sound</b> (you hear the bounce). Add the three bars and you always get the total. <b>Wasted is not destroyed.</b></div>
+    </div>
+  </div>
+  <aside class="notes"><strong>Notas</strong>Que explique ad&oacute;nde fue la energ&iacute;a antes de que la barra naranja lo muestre. Conectar con la monta&ntilde;a rusa con fricci&oacute;n. En la prueba, la respuesta &laquo;la energ&iacute;a se pierde&raquo; suele costar puntos: se transforma en calor y sonido.</aside>
+</div>
+</section>
+
+<!-- ================= 9 USEFUL VS WASTED ================= -->
+<section class="slide" id="p3" data-part="Part 3 · Efficiency">
+<div class="inner">
+  <p class="eyebrow">Part 3 &middot; Energy efficiency</p>
+  <h2>Useful energy and wasted energy</h2>
+  <p class="lead">Every device takes energy <b>in</b> and gives energy <b>out</b>. Part of the output does the job you wanted (<b>useful</b>). The rest goes somewhere you did not want (<b>wasted</b>), and it is almost always heat, sometimes sound.</p>
+  <table class="t">
+    <thead><tr><th>Device</th><th>Energy in</th><th>Useful output</th><th>Wasted output</th></tr></thead>
+    <tbody>
+      <tr><td>Torch</td><td>Chemical (battery)</td><td>Light</td><td>Heat</td></tr>
+      <tr><td>Kettle</td><td>Electrical</td><td>Heat in the water</td><td>Heat to the air, sound</td></tr>
+      <tr><td>Speaker</td><td>Electrical</td><td>Sound</td><td>Heat</td></tr>
+      <tr><td>Electric car motor</td><td>Electrical (battery)</td><td>Kinetic (movement)</td><td>Heat, sound</td></tr>
+      <tr><td>Electric heater</td><td>Electrical</td><td>Heat</td><td>Light (the glowing element), sound</td></tr>
+      <tr><td>Old-style (incandescent) globe</td><td>Electrical</td><td>Light (only a small share)</td><td>Heat (most of it)</td></tr>
+    </tbody>
+  </table>
+  <div class="watch"><strong>Watch out</strong>"Useful" depends on the job. Heat is <em>wasted</em> in a globe but <em>useful</em> in a heater. Read the question: what is the device for?</div>
+  <aside class="notes"><strong>Notas</strong>Probar con: &iquest;qu&eacute; es &uacute;til en un ventilador? &iquest;En una tostadora? &iquest;En un parlante? El calefactor es el caso que rompe la regla &laquo;el calor siempre es desperdicio&raquo;.</aside>
+</div>
+</section>
+
+<!-- ================= 10 THE FORMULA ================= -->
+<section class="slide" data-part="Part 3 · Efficiency">
+<div class="inner">
+  <p class="eyebrow">Part 3 &middot; Energy efficiency &middot; Calculator allowed</p>
+  <h2>Efficiency: the formula</h2>
+  <div class="formula">efficiency (%) = <span style="color:var(--use)">useful energy out</span> &divide; <span style="color:var(--in)">total energy in</span> &times; 100<small>and: wasted energy = total energy in &minus; useful energy out</small></div>
+  <div class="cols">
+    <div class="card">
+      <h3>Worked examples</h3>
+      <p><b>1.</b> A torch takes 200 J from its battery and gives out 30 J of light.</p>
+      <ol class="steps">
+        <li>Formula: efficiency = useful &divide; total &times; 100</li>
+        <li>Substitute: 30 &divide; 200 &times; 100</li>
+        <li>Answer: <b>15%</b>. Wasted = 200 &minus; 30 = <b>170 J</b> (as heat)</li>
+      </ol>
+      <p><b>2.</b> An LED globe is 40% efficient and takes in 50 J. Useful light = 40 &divide; 100 &times; 50 = <b>20 J</b>.</p>
+      <p><b>3.</b> A motor is 60% efficient and delivers 300 J of useful energy. Energy in = 300 &divide; 0.60 = <b>500 J</b>.</p>
+      <div class="watch"><strong>Test tip</strong>Write the formula, then the numbers, then the answer with its unit (% or J). Each line can earn a mark. Efficiency can never be more than 100%.</div>
+    </div>
+    <div class="card">
+      <h3>Try your own numbers</h3>
+      <div class="calc">
+        <div><label>Total energy in (J)</label><input type="number" id="cIn" value="500" min="0"></div>
+        <div><label>Useful energy out (J)</label><input type="number" id="cUse" value="125" min="0"></div>
+        <div class="out" id="cOut1"></div>
+      </div>
+      <div class="calc" style="margin-top:14px">
+        <div><label>Efficiency (%)</label><input type="number" id="cEff" value="25" min="0" max="100"></div>
+        <div><label>Total energy in (J)</label><input type="number" id="cIn2" value="2000" min="0"></div>
+        <div class="out" id="cOut2"></div>
+      </div>
+    </div>
+  </div>
+  <aside class="notes"><strong>Notas</strong>Con calculadora. Siempre tres l&iacute;neas: f&oacute;rmula, sustituci&oacute;n, resultado con unidad. Que resuelva el ejemplo 3 sola antes de mirar. Luego que invente n&uacute;meros para la calculadora y prediga el resultado antes de escribirlos.</aside>
+</div>
+</section>
+
+<!-- ================= 11 SANKEY ================= -->
+<section class="slide" data-part="Part 3 · Efficiency">
+<div class="inner">
+  <p class="eyebrow">Part 3 &middot; Energy efficiency &middot; Ruler and pencil</p>
+  <h2>Sankey diagrams</h2>
+  <p class="lead">A Sankey diagram is an energy chain drawn to scale: the <b>width</b> of each arrow shows how much energy it carries.</p>
+  <div class="cols">
+    <div>
+      <div class="card">
+        <h3>The rules</h3>
+        <ol class="steps" style="margin-top:0">
+          <li>Energy flows from <b>left to right</b>.</li>
+          <li>Arrow width is <b>proportional</b> to the energy. Choose a scale, e.g. 1 mm = 10 J.</li>
+          <li>The input arrow is as wide as <b>all the output arrows added together</b> (conservation of energy).</li>
+          <li><b>Useful</b> energy carries straight on. <b>Wasted</b> energy bends away, usually downwards.</li>
+          <li>Label every arrow with the energy type and the amount (J or %).</li>
+          <li>Use a <b>ruler</b> and draw in <b>pencil</b> first.</li>
+        </ol>
+      </div>
+      <div class="card" style="margin-top:12px">
+        <h3>Build one</h3>
+        <div class="calc">
+          <div><label>Energy in (J)</label><input type="number" id="sIn" value="500" min="1"></div>
+          <div><label>Useful out (J)</label><input type="number" id="sUse" value="100" min="0"></div>
+          <div><label>Wasted as heat (J)</label><input type="number" id="sHeat" value="400" min="0"></div>
+          <div><label>Wasted as sound (J)</label><input type="number" id="sSound" value="0" min="0"></div>
+          <div><label>Scale for drawing on paper</label><select id="sScale"><option value="5">1 mm = 5 J</option><option value="10" selected>1 mm = 10 J</option><option value="20">1 mm = 20 J</option><option value="50">1 mm = 50 J</option></select></div>
+          <div><label>Useful output is</label><select id="sUseLabel"><option>light</option><option>heat</option><option>kinetic</option><option>sound</option><option>electrical</option></select></div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div id="sankeyOut"></div>
+      <div id="sankeyTable"></div>
+    </div>
+  </div>
+  <aside class="notes"><strong>Notas</strong>Elegir escala y medir con regla en papel: la prueba pide regla y l&aacute;piz mina. Probar 1 mm = 10 J con la ampolleta (500 J in, 100 J luz, 400 J calor) y luego cambiar a 1 mm = 20 J para ver que la forma no cambia, s&oacute;lo el tama&ntilde;o. Si los outputs no suman el input, el diagrama muestra el hueco: usarlo para volver a la ley de conservaci&oacute;n.</aside>
+</div>
+</section>
+
+<!-- ================= 12 READ THE SANKEY ================= -->
+<section class="slide" data-part="Part 3 · Efficiency">
+<div class="inner">
+  <p class="eyebrow">Part 3 &middot; Energy efficiency &middot; Try it</p>
+  <h2>Read the Sankey</h2>
+  <div class="cols">
+    <div class="card">
+      <h3>1. An old-style globe</h3>
+      <div id="readA"></div>
+      <p><b>What is the efficiency of the globe?</b></p>
+      <button class="btn small" data-reveal="ansA">Show answer</button>
+      <div id="ansA" class="q model" style="display:none;margin-top:8px;border:none">efficiency = useful &divide; total &times; 100 = 100 &divide; 500 &times; 100 = <b>20%</b>. Wasted: 400 J as heat, so 80% of the energy warms the room instead of lighting it.</div>
+    </div>
+    <div class="card">
+      <h3>2. A hair dryer, in percentages</h3>
+      <div id="readB"></div>
+      <p><b>The dryer takes in 800 J. How many joules are useful?</b></p>
+      <button class="btn small" data-reveal="ansB">Show answer</button>
+      <div id="ansB" class="q model" style="display:none;margin-top:8px;border:none">Useful = 85% of 800 J = 0.85 &times; 800 = <b>680 J</b> (heat in the air plus moving air). Wasted = 15% of 800 J = <b>120 J</b> as sound and heat that escapes from the casing.</div>
+    </div>
+  </div>
+  <div class="keyidea"><strong>Reading order</strong>First find the input arrow (the widest one, on the left). Then decide which output is useful for the job. Only then pick up the calculator.</div>
+  <aside class="notes"><strong>Notas</strong>Leer el diagrama antes de calcular: &iquest;cu&aacute;l es el input? &iquest;cu&aacute;l es &uacute;til? En el secador el calor ES &uacute;til: buen momento para repetir la advertencia de la diapositiva 9.</aside>
+</div>
+</section>
+
+<!-- ================= 13 CHECKPOINT ================= -->
+<section class="slide" id="chk" data-part="Checkpoint">
+<div class="inner">
+  <p class="eyebrow">Checkpoint &middot; Same format as the test</p>
+  <h2>Nine questions</h2>
+  <p class="lead">Multiple choice first, then short answers. Write the short answers on paper before you reveal the model answer.</p>
+  <div id="checkpoint"></div>
+  <aside class="notes"><strong>Notas</strong>Formato de la prueba real: opci&oacute;n m&uacute;ltiple + respuesta corta. Que escriba las cortas en papel, no s&oacute;lo que las diga. Anotar cu&aacute;les fallan: eso define qu&eacute; repasar antes del simulacro cronometrado.</aside>
+</div>
+</section>
+
+<!-- ================= 14 SUMMARY ================= -->
+<section class="slide" data-part="Summary">
+<div class="inner">
+  <p class="eyebrow">Summary</p>
+  <h2>Six things to remember</h2>
+  <ol class="summary">
+    <li><b>Energy makes things happen.</b> Measured in joules (J); 1000 J = 1 kJ.</li>
+    <li><b>Two families.</b> Kinetic = moving (movement, heat, sound, light, electrical). Potential = stored (gravitational, elastic, chemical, nuclear).</li>
+    <li><b>Transfer</b> = same type, new place. <b>Transformation</b> = new type. Draw chains with boxes and arrows, and always show the wasted output.</li>
+    <li><b>Conservation.</b> Energy cannot be created or destroyed. Wasted energy is not lost: it became heat or sound.</li>
+    <li><b>Efficiency</b> = useful &divide; total &times; 100. Write formula, numbers, answer with unit. Never above 100%.</li>
+    <li><b>Sankey diagrams</b> are chains drawn to scale: width = energy, input width = all outputs added, useful straight on, wasted bends down. Ruler, pencil, labels.</li>
+  </ol>
+  <div class="keyidea"><strong>For test day</strong>Ruler, lead pencil, pen, eraser, calculator. Next step: sit the practice test under time, then mark it together.</div>
+  <aside class="notes"><strong>Notas</strong>Cerrar con los seis puntos. Siguiente recurso: simulacro cronometrado con pauta.</aside>
+</div>
+</section>
+
+<div class="nav">
+  <div class="grp"><span class="part" id="navPart">Start</span></div>
+  <div class="grp"><span class="cnt" id="navCnt">1 / 15</span></div>
+  <div class="grp">
+    <button class="btn small" id="navNotes" title="Toggle teacher notes (N)">Notes</button>
+    <button class="btn small" id="navPrev">&larr; Back</button>
+    <button class="btn small primary" id="navNext">Next &rarr;</button>
+  </div>
+</div>
+
+<script>
+(function(){
+'use strict';
+const $=(s,r)=>(r||document).querySelector(s);
+const $$=(s,r)=>Array.from((r||document).querySelectorAll(s));
+const fmt=n=>{const r=Math.round(n*10)/10;return (Number.isInteger(r)?r:r.toFixed(1));};
+
+/* ---------- navigation ---------- */
+const slides=$$('.slide');let cur=0;
+function go(i){i=Math.max(0,Math.min(slides.length-1,i));slides[i].scrollIntoView({behavior:'smooth',block:'start'});}
+function updateNav(){$('#navCnt').textContent=(cur+1)+' / '+slides.length;$('#navPart').textContent=slides[cur].dataset.part||'';$('#progress').style.width=((cur+1)/slides.length*100)+'%';}
+const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){cur=slides.indexOf(e.target);updateNav();}});},{threshold:0.5});
+slides.forEach(s=>io.observe(s));
+$('#navPrev').addEventListener('click',()=>go(curIndex()-1));
+$('#navNext').addEventListener('click',()=>go(curIndex()+1));
+$('#navNotes').addEventListener('click',()=>document.body.classList.toggle('show-notes'));
+function curIndex(){const y=window.scrollY+window.innerHeight*0.35;let i=0;slides.forEach((s,k)=>{if(s.offsetTop<=y)i=k;});return i;}
+document.addEventListener('keydown',e=>{
+  const t=e.target.tagName;if(t==='INPUT'||t==='SELECT'||t==='TEXTAREA')return;
+  if(e.key==='ArrowRight'||(e.key===' '&&t!=='BUTTON')){e.preventDefault();go(curIndex()+1);}
+  else if(e.key==='ArrowLeft'){e.preventDefault();go(curIndex()-1);}
+  else if(e.key==='n'||e.key==='N'){document.body.classList.toggle('show-notes');}
+});
+$$('[data-reveal]').forEach(b=>b.addEventListener('click',()=>{const d=$('#'+b.dataset.reveal);const open=d.style.display==='block';d.style.display=open?'none':'block';b.textContent=open?'Show answer':'Hide answer';}));
+updateNav();
+
+/* ---------- sorter ---------- */
+const SORT=[
+ {t:'A stretched rubber band',f:'pot',sub:'elastic potential',why:'Stretched and waiting to snap back. Stored energy is potential.'},
+ {t:'A car driving along the freeway',f:'kin',sub:'kinetic (movement)',why:'It is moving. Movement is the classic kinetic energy.'},
+ {t:'A hot cup of tea',f:'kin',sub:'heat (thermal)',why:'Heat is particles jiggling fast. Moving particles = kinetic family.'},
+ {t:'A fully charged phone battery',f:'pot',sub:'chemical potential',why:'Stored in the chemicals inside the battery until the phone uses it.'},
+ {t:'A book sitting on the top shelf',f:'pot',sub:'gravitational potential',why:'It is high up. If it falls, that stored energy becomes movement.'},
+ {t:'A guitar string vibrating',f:'kin',sub:'sound (and movement)',why:'The string moves back and forth and pushes the air. Vibration = kinetic family.'},
+ {t:'Sunlight crossing space',f:'kin',sub:'light (radiant)',why:'Light is energy on the move. Kinetic family.'},
+ {t:'Petrol in a car\'s tank',f:'pot',sub:'chemical potential',why:'Stored in the fuel until it burns in the engine.'},
+ {t:'A diver standing still on the 10 m platform',f:'pot',sub:'gravitational potential',why:'Standing still, high up. All of it is stored as height.'},
+ {t:'Electric current flowing through a toaster',f:'kin',sub:'electrical',why:'Charges are moving through the wire. Kinetic family.'}
+];
+const sg=$('#sortGrid');let sortDone=0;
+function renderSort(){sg.innerHTML='';sortDone=0;$('#sortScore').textContent='0 / 10 sorted';
+ SORT.forEach((c,i)=>{const d=document.createElement('div');d.className='sc';
+  d.innerHTML='<div class="txt">'+(i+1)+'. '+c.t+'</div><div class="acts"><button class="btn small" data-f="kin">Kinetic</button><button class="btn small" data-f="pot">Potential</button></div><div class="fb"></div>';
+  d.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{if(d.classList.contains('done'))return;const right=b.dataset.f===c.f;d.classList.add('done',right?'right':'wrong');
+   d.querySelector('.fb').innerHTML=(right?'<span class="ok">Correct.</span> ':'<span class="bad">Not quite.</span> ')+'<span class="tag '+c.f+'">'+(c.f==='kin'?'kinetic':'potential')+'</span> '+c.sub+'. '+c.why;
+   sortDone++;$('#sortScore').textContent=sortDone+' / 10 sorted';}));
+  sg.appendChild(d);});}
+renderSort();$('#sortReset').addEventListener('click',renderSort);
+
+/* ---------- ramp ---------- */
+const KP=[[0,1],[0.28,0.05],[0.55,0.55],[0.8,0.08],[1,0.32]];
+function hAt(t){for(let i=0;i<KP.length-1;i++){const a=KP[i],b=KP[i+1];if(t<=b[0]){const u=(t-a[0])/(b[0]-a[0]);const c=(1-Math.cos(u*Math.PI))/2;return a[1]+(b[1]-a[1])*c;}}return KP[KP.length-1][1];}
+const rx=t=>30+t*540, ry=h=>226-h*190;
+(function(){let d='';for(let i=0;i<=120;i++){const t=i/120;d+=(i?'L':'M')+rx(t).toFixed(1)+','+ry(hAt(t)).toFixed(1)+' ';}$('#rampTrack').setAttribute('d',d);})();
+const E0=1000;let rampT=0,rampPlaying=false,rampRaf=null;
+function rampState(t){const h=hAt(t);const fric=$('#rampFric').checked;const heat=fric?0.35*t*E0:0;const gpe=h*E0;const ke=Math.max(0,E0-gpe-heat);return{h,gpe,ke,heat};}
+function rampRender(){const t=rampT;const s=rampState(t);const ball=$('#rampBall');ball.setAttribute('cx',rx(t));ball.setAttribute('cy',ry(s.h)-11);
+ $('#bGPE').style.height=(s.gpe/E0*100)+'%';$('#bKE').style.height=(s.ke/E0*100)+'%';$('#bHEAT').style.height=(s.heat/E0*100)+'%';
+ $('#vGPE').textContent=Math.round(s.gpe)+' J';$('#vKE').textContent=Math.round(s.ke)+' J';$('#vHEAT').textContent=Math.round(s.heat)+' J';
+ let cap;if(t<0.02)cap='At the top, at rest: all of the energy is gravitational potential.';else if(s.ke>s.gpe&&s.ke>s.heat)cap='Low and fast: most of the energy is now kinetic.';else if(s.heat>s.gpe)cap='Friction has turned a lot of the energy into heat.';else cap='Climbing: kinetic energy is turning back into gravitational potential.';$('#rampCap').textContent=cap;$('#rampT').value=Math.round(t*1000);}
+$('#rampT').addEventListener('input',e=>{rampStop();rampT=e.target.value/1000;rampRender();});
+$('#rampFric').addEventListener('change',rampRender);
+function rampStop(){rampPlaying=false;if(rampRaf)cancelAnimationFrame(rampRaf);$('#rampPlay').innerHTML='&#9654; Play';}
+function rampTick(){if(!rampPlaying)return;const s=rampState(rampT);rampT+=0.0012+0.0065*Math.sqrt(s.ke/E0);if(rampT>=1){rampT=1;rampRender();rampStop();return;}rampRender();rampRaf=requestAnimationFrame(rampTick);}
+$('#rampPlay').addEventListener('click',()=>{if(rampPlaying){rampStop();return;}if(rampT>=1)rampT=0;rampPlaying=true;$('#rampPlay').innerHTML='&#10074;&#10074; Pause';rampTick();});
+rampRender();
+
+/* ---------- chain stepper ---------- */
+const CHAINS={
+ torch:[{t:'Chemical',s:'stored in the battery',k:'pot'},{t:'Electrical',s:'flowing round the circuit',k:'kin'},{br:[{t:'Light',s:'useful output',k:'use'},{t:'Heat',s:'wasted output',k:'waste'}]}],
+ kettle:[{t:'Electrical',s:'from the powerpoint',k:'kin'},{t:'Heat',s:'in the element',k:'kin'},{t:'Heat',s:'in the water (useful)',k:'use'},{t:'Kinetic',s:'steam rushing out',k:'kin'},{t:'Sound',s:'the whistle',k:'kin'}]
+};
+const chainStep={torch:0,kettle:0};
+function boxHTML(b){return '<div class="box '+b.k+'"><b>'+b.t+'</b><small>'+b.s+'</small></div>';}
+function renderChain(name){const el=$('#chain-'+name);const steps=CHAINS[name];const n=chainStep[name];let h='';
+ steps.forEach((st,i)=>{const vis=i<n?'':' hidden';if(i>0)h+='<span class="arrow'+vis+'">&rarr;</span>';
+  if(st.br){h+='<div class="stack'+vis+'">'+st.br.map(boxHTML).join('')+'</div>';}else{h+='<div class="box '+st.k+(vis?' hidden':'')+'"><b>'+st.t+'</b><small>'+st.s+'</small></div>';}});
+ el.innerHTML=h;}
+$$('[data-chain]').forEach(b=>b.addEventListener('click',()=>{const n=b.dataset.chain,a=b.dataset.act;const L=CHAINS[n].length;
+ if(a==='next')chainStep[n]=Math.min(L,chainStep[n]+1);else if(a==='all')chainStep[n]=L;else chainStep[n]=0;renderChain(n);}));
+renderChain('torch');renderChain('kettle');
+
+/* ---------- chain builder ---------- */
+const TYPES=['Chemical','Electrical','Light','Heat','Sound','Kinetic','Gravitational potential','Elastic potential','Nuclear'];
+const BUILD=[
+ {name:'A solar panel charging a phone',groups:[['Light'],['Electrical'],['Chemical']],hint:'Three boxes in a row. Where does the energy end up once the phone is charged?'},
+ {name:'A cyclist riding up a hill',groups:[['Chemical'],['Kinetic','Gravitational potential','Heat']],hint:'One input, three outputs. One of them is wasted.'},
+ {name:'A hair dryer',groups:[['Electrical'],['Heat','Kinetic','Sound']],hint:'One input, three outputs. Two are useful, one is wasted.'},
+ {name:'Firing an arrow from a bow',groups:[['Chemical'],['Elastic potential'],['Kinetic']],hint:'Where is the energy stored just before the arrow flies?'}
+];
+const bl=$('#builders');
+BUILD.forEach((d,di)=>{const w=document.createElement('div');w.className='bld';let h='<b>'+(di+1)+'. '+d.name+'</b> <span class="hint">'+d.hint+'</span><div class="row">';
+ d.groups.forEach((g,gi)=>{if(gi>0)h+='<span class="arrow">&rarr;</span>';g.forEach((_,si)=>{if(si>0)h+='<span class="plus">+</span>';h+='<select data-g="'+gi+'"><option value="">choose&hellip;</option>'+TYPES.map(t=>'<option>'+t+'</option>').join('')+'</select>';});});
+ h+='<button class="btn small primary">Check</button></div><div class="msg"></div>';w.innerHTML=h;
+ w.querySelector('button').addEventListener('click',()=>{let allOk=true;d.groups.forEach((g,gi)=>{const sels=$$('select[data-g="'+gi+'"]',w);const chosen=sels.map(s=>s.value).slice().sort();const want=g.slice().sort();const ok=chosen.join('|')===want.join('|');
+   sels.forEach(s=>{s.classList.remove('ok','bad');const good=ok||(g.includes(s.value)&&chosen.filter(v=>v===s.value).length===1);s.classList.add(good&&s.value?'ok':'bad');});if(!ok)allOk=false;});
+  w.querySelector('.msg').innerHTML=allOk?'<span class="ok">All correct.</span> '+d.groups.map(g=>g.join(' + ')).join(' &rarr; '):'<span class="bad">Not yet.</span> Boxes in red need another look. Remember: within a group the order does not matter, but each type must appear once.';});
+ bl.appendChild(w);});
+
+/* ---------- bouncing ball ---------- */
+const G=9.8,H0=2.0,REST=0.78,EB=G*H0;let bh=H0,bv=0,bRun=false,bRaf=null,bounces=0,wasUp=false;
+function bRender(){const gpe=G*bh,ke=0.5*bv*bv;const lost=Math.max(0,EB-gpe-ke);const p=x=>Math.max(0,Math.min(100,x/EB*100));
+ $('#bbGPE').style.height=p(gpe)+'%';$('#bbKE').style.height=p(ke)+'%';$('#bbLOST').style.height=p(lost)+'%';
+ $('#bvGPE').textContent=Math.round(p(gpe))+'%';$('#bvKE').textContent=Math.round(p(ke))+'%';$('#bvLOST').textContent=Math.round(p(lost))+'%';
+ $('#bBall').setAttribute('cy',238-12-(bh/H0)*178);}
+function bTick(){if(!bRun)return;const dt=1/95;bv-=G*dt;bh+=bv*dt;if(bh<=0){bh=0;bv=-bv*REST;bounces++;wasUp=true;}
+ if(wasUp&&bv<=0&&bh>0){wasUp=false;$('#bCap').textContent='Bounce '+bounces+': peak '+bh.toFixed(2)+' m';}
+ bRender();if(bounces>=10||(bh<0.01&&Math.abs(bv)<0.25)){bRun=false;$('#bPlay').innerHTML='&#9654; Play';$('#bCap').textContent='At rest. All the energy is now heat and sound.';return;}
+ bRaf=requestAnimationFrame(bTick);}
+function bResetFn(){bRun=false;if(bRaf)cancelAnimationFrame(bRaf);bh=H0;bv=0;bounces=0;wasUp=false;$('#bCap').textContent='Press play';$('#bPlay').innerHTML='&#9654; Play';bRender();}
+$('#bPlay').addEventListener('click',()=>{if(bRun){bRun=false;$('#bPlay').innerHTML='&#9654; Play';return;}if(bh<0.01&&bounces>0)bResetFn();bRun=true;$('#bPlay').innerHTML='&#10074;&#10074; Pause';bTick();});
+$('#bReset').addEventListener('click',bResetFn);bRender();
+
+/* ---------- efficiency calculators ---------- */
+function calc1(){const i=+$('#cIn').value,u=+$('#cUse').value;const o=$('#cOut1');if(!(i>0)||u<0){o.textContent='Enter the energy in and the useful energy out.';return;}
+ if(u>i){o.innerHTML='<span class="bad">Useful out cannot be more than energy in.</span> Efficiency would be over 100%.';return;}
+ const e=u/i*100;o.innerHTML='efficiency = '+fmt(u)+' &divide; '+fmt(i)+' &times; 100 = <b>'+fmt(e)+'%</b><br>wasted = '+fmt(i)+' &minus; '+fmt(u)+' = <b>'+fmt(i-u)+' J</b>';}
+function calc2(){const e=+$('#cEff').value,i=+$('#cIn2').value;const o=$('#cOut2');if(!(i>0)||!(e>=0)){o.textContent='Enter the efficiency and the energy in.';return;}
+ if(e>100){o.innerHTML='<span class="bad">Efficiency cannot be above 100%.</span>';return;}
+ const u=e/100*i;o.innerHTML='useful = '+fmt(e)+' &divide; 100 &times; '+fmt(i)+' = <b>'+fmt(u)+' J</b><br>wasted = '+fmt(i)+' &minus; '+fmt(u)+' = <b>'+fmt(i-u)+' J</b>';}
+['#cIn','#cUse'].forEach(s=>$(s).addEventListener('input',calc1));['#cEff','#cIn2'].forEach(s=>$(s).addEventListener('input',calc2));calc1();calc2();
+
+/* ---------- sankey renderer ---------- */
+const COL={in:'#6b7a72',use:'#315c47',heat:'#d9822b',sound:'#7c6396'};
+function sankeySVG(d){
+ const W=640,x0=14,xs=225,xEnd=610,maxH=110;const inV=Math.max(d.input.value,0.0001);const pxJ=maxH/inV;const Hin=inV*pxJ,y0=46;
+ const useful=d.outputs.filter(o=>o.useful&&o.value>0),wasted=d.outputs.filter(o=>!o.useful&&o.value>0);
+ const yEnd=y0+Hin+64;let s='';
+ s+='<path d="M'+x0+','+(y0+Hin/2)+' L'+xs+','+(y0+Hin/2)+'" stroke="'+COL.in+'" stroke-width="'+Hin+'" fill="none"/>';
+ s+='<text x="'+x0+'" y="'+(y0-12)+'" font-size="13" font-weight="700" fill="#18251f">'+d.input.label+' '+d.input.text+'</text>';
+ let y=y0;
+ useful.forEach((o,i)=>{const w=o.value*pxJ,yc=y+w/2;s+='<path d="M'+xs+','+yc+' L'+(xEnd-22)+','+yc+'" stroke="'+o.color+'" stroke-width="'+w+'" fill="none"/>';
+  s+='<polygon points="'+(xEnd-22)+','+(yc-w/2-7)+' '+xEnd+','+yc+' '+(xEnd-22)+','+(yc+w/2+7)+'" fill="'+o.color+'"/>';
+  const ly=i===0?(yc-w/2-9):(yc+w/2+18);
+  s+='<text x="'+(xEnd-2)+'" y="'+ly+'" font-size="13" font-weight="700" text-anchor="end" fill="'+o.color+'">'+o.label+' '+o.text+' (useful)</text>';y+=w;});
+ const n=wasted.length;
+ wasted.forEach((o,i)=>{const w=o.value*pxJ,yc=y+w/2;const fb=n-1-i;const xv=xs+64+fb*95,r=36;
+  s+='<path d="M'+xs+','+yc+' L'+(xv-r)+','+yc+' Q'+xv+','+yc+' '+xv+','+(yc+r)+' L'+xv+','+yEnd+'" stroke="'+o.color+'" stroke-width="'+w+'" fill="none"/>';
+  s+='<polygon points="'+(xv-w/2-7)+','+yEnd+' '+(xv+w/2+7)+','+yEnd+' '+xv+','+(yEnd+18)+'" fill="'+o.color+'"/>';
+  s+='<text x="'+xv+'" y="'+(yEnd+34)+'" font-size="13" font-weight="700" text-anchor="middle" fill="'+o.color+'">'+o.label+' '+o.text+' (wasted)</text>';y+=w;});
+ const sum=d.outputs.reduce((a,o)=>a+Math.max(o.value,0),0);
+ if(Math.abs(sum-inV)>0.001){const missing=inV-sum;
+  if(missing>0){const w=missing*pxJ;s+='<rect x="'+xs+'" y="'+y+'" width="60" height="'+w+'" fill="none" stroke="#b5543f" stroke-dasharray="5 4" stroke-width="2"/>';s+='<text x="'+(xs+68)+'" y="'+(y+w/2+5)+'" font-size="13" fill="#b5543f" font-weight="700">? '+fmt(missing)+' '+d.unit+' unaccounted for</text>';}
+  else{s+='<text x="'+xs+'" y="'+(y0+Hin+20)+'" font-size="13" fill="#b5543f" font-weight="700">Outputs add up to more than the input: impossible!</text>';}}
+ return '<svg class="demo" viewBox="0 0 '+W+' '+(yEnd+48)+'" aria-label="Sankey diagram">'+s+'</svg>';}
+
+function buildSankey(){const inV=+$('#sIn').value,u=+$('#sUse').value,h=+$('#sHeat').value,so=+$('#sSound').value,sc=+$('#sScale').value;const ul=$('#sUseLabel').value;
+ const d={unit:'J',input:{label:'Energy in:',text:fmt(inV)+' J',value:inV},outputs:[{label:'Useful '+ul,text:fmt(u)+' J',value:u,useful:true,color:COL.use},{label:'Heat',text:fmt(h)+' J',value:h,useful:false,color:COL.heat},{label:'Sound',text:fmt(so)+' J',value:so,useful:false,color:COL.sound}]};
+ $('#sankeyOut').innerHTML=sankeySVG(d);
+ const rows=[['Energy in',inV],['Useful '+ul,u],['Wasted heat',h],['Wasted sound',so]].filter(r=>r[1]>0);
+ const eff=inV>0?u/inV*100:0;
+ $('#sankeyTable').innerHTML='<table class="t"><thead><tr><th>Arrow</th><th>Energy</th><th>Width on paper at 1 mm = '+sc+' J</th></tr></thead><tbody>'+rows.map(r=>'<tr><td>'+r[0]+'</td><td>'+fmt(r[1])+' J</td><td><b>'+fmt(r[1]/sc)+' mm</b></td></tr>').join('')+'</tbody></table><p style="font-size:.9rem;margin-top:8px">Efficiency = '+fmt(u)+' &divide; '+fmt(inV)+' &times; 100 = <b>'+fmt(eff)+'%</b></p>';}
+['#sIn','#sUse','#sHeat','#sSound','#sScale','#sUseLabel'].forEach(s=>$(s).addEventListener('input',buildSankey));buildSankey();
+
+$('#readA').innerHTML=sankeySVG({unit:'J',input:{label:'Electrical energy in:',text:'500 J',value:500},outputs:[{label:'Light',text:'100 J',value:100,useful:true,color:COL.use},{label:'Heat',text:'400 J',value:400,useful:false,color:COL.heat}]});
+$('#readB').innerHTML=sankeySVG({unit:'%',input:{label:'Electrical energy in:',text:'100%',value:100},outputs:[{label:'Heat in the air',text:'60%',value:60,useful:true,color:COL.use},{label:'Moving air',text:'25%',value:25,useful:true,color:'#4a7a5f'},{label:'Sound + escaped heat',text:'15%',value:15,useful:false,color:COL.sound}]});
+
+/* ---------- checkpoint ---------- */
+const CHK=[
+ {type:'mc',q:'Which list contains only potential (stored) energy types?',opts:['Chemical, elastic, gravitational, nuclear','Chemical, light, elastic, sound','Kinetic, heat, sound, light','Gravitational, heat, nuclear, electrical'],ans:0,why:'Light, sound, heat, electrical and kinetic all involve something moving, so they are kinetic-family, not stored.'},
+ {type:'mc',q:'A skateboarder pauses, completely still, at the very top of a half-pipe. At that moment she has:',opts:['mostly kinetic energy','mostly gravitational potential energy','equal kinetic and potential energy','no energy at all'],ans:1,why:'Still means no kinetic energy; high up means gravitational potential energy. That stored energy becomes kinetic as she drops.'},
+ {type:'mc',q:'The law of conservation of energy states that:',opts:['we should switch things off to conserve energy','energy cannot be created or destroyed, only transferred or transformed','some energy is destroyed in every transformation','wasted energy disappears'],ans:1,why:'Energy in always equals energy out. "Wasted" energy still exists, usually as heat.'},
+ {type:'mc',q:'In a kettle, the useful energy output is:',opts:['the sound of the water boiling','the heat in the water','the light on the switch','the electrical energy in the cord'],ans:1,why:'The job of a kettle is to heat water. Sound, the indicator light and heat escaping to the air are wasted.'},
+ {type:'sa',q:'Write the energy chain for a torch. Include the wasted output.',model:'Chemical energy (battery) &rarr; electrical energy (circuit) &rarr; light energy (useful) + heat energy (wasted). One mark per box is typical, plus one for showing the wasted output.'},
+ {type:'sa',q:'A hair dryer uses 1500 J of electrical energy and delivers 1200 J as heat and moving air. Calculate its efficiency and the wasted energy.',model:'efficiency = useful &divide; total &times; 100 = 1200 &divide; 1500 &times; 100 = <b>80%</b>. Wasted = 1500 &minus; 1200 = <b>300 J</b>, mostly as sound and heat lost from the casing.'},
+ {type:'sa',q:'A motor is 25% efficient. If 2000 J of electrical energy goes in, how much useful energy comes out, and where does the rest go?',model:'useful = 25 &divide; 100 &times; 2000 = <b>500 J</b> of kinetic energy. The other 1500 J is wasted, mostly as heat (and some sound). It is not destroyed.'},
+ {type:'sa',q:'Explain the difference between an energy transfer and an energy transformation. Give one example of each.',model:'A transfer moves energy from one object to another without changing its type (kinetic energy from a foot to a ball). A transformation changes the type of energy (chemical energy in a battery becoming light in a torch).'},
+ {type:'sa',q:'In a Sankey diagram, why must the input arrow be exactly as wide as all the output arrows added together?',model:'Because of the law of conservation of energy: the energy going in equals the total energy coming out (useful + wasted). Width stands for energy, so the widths must add up too.'}
+];
+const ck=$('#checkpoint');
+CHK.forEach((q,i)=>{const d=document.createElement('div');d.className='q';let h='<div class="qn">Q'+(i+1)+' &middot; '+(q.type==='mc'?'multiple choice':'short answer')+'</div><div class="qt">'+q.q+'</div>';
+ if(q.type==='mc'){h+='<div class="opts">'+q.opts.map((o,j)=>'<button data-j="'+j+'">'+String.fromCharCode(65+j)+') '+o+'</button>').join('')+'</div><div class="why"></div>';}
+ else{h+='<button class="btn small">Show model answer</button><div class="model">'+q.model+'</div>';}
+ d.innerHTML=h;
+ if(q.type==='mc'){d.querySelectorAll('.opts button').forEach(b=>b.addEventListener('click',()=>{if(d.classList.contains('done'))return;const j=+b.dataset.j;d.classList.add('done');const right=j===q.ans;b.classList.add(right?'ok':'bad');if(!right)d.querySelectorAll('.opts button')[q.ans].classList.add('ok');d.querySelector('.why').innerHTML=(right?'<span class="ok">Correct.</span> ':'<span class="bad">Not quite.</span> The answer is '+String.fromCharCode(65+q.ans)+'. ')+q.why;}));}
+ else{d.querySelector('button').addEventListener('click',e=>{d.classList.toggle('show');e.target.textContent=d.classList.contains('show')?'Hide model answer':'Show model answer';});}
+ ck.appendChild(d);});
+})();
+</script>
+<p class="aula-pie"><a href="../">Herramientas de aula</a> · Benjamín Moreira-Grez · Santiago, Chile</p>
+</body>
+</html>

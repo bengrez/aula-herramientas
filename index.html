@@ -28,7 +28,7 @@
 :root{
   --bg:#FAF9F6; --surface:#F0EEE8; --ink:#1B1A17; --muted:#4A4844; --rule:#DAD7CF; --rule-strong:#B5B1A6;
   --accent:#900008; --accent-ink:#7A0007; --velo:rgba(250,249,246,.8);
-  --tq:#7B323C; --tb:#366349; --tf:#39577F;   /* tonos de las disciplinas: el acento girado en el círculo de color (química = el mismo burdeos, más suave; biología, verde; física, azul), con la misma luminosidad */
+  --tq:#7B323C; --tb:#366349; --tf:#39577F; --tt:#6B5A2A;   /* tonos de las disciplinas: el acento girado en el círculo de color (química = el mismo burdeos, más suave; biología, verde; física, azul), con la misma luminosidad */
   --display:"Bricolage Grotesque","Bricolage Respaldo",system-ui,"Segoe UI",Helvetica,Arial,sans-serif;
   --body:"Source Serif 4","Source Serif Respaldo",Georgia,"Times New Roman",serif;
   --mono:"IBM Plex Mono",ui-monospace,"SFMono-Regular",Menlo,Consolas,"Liberation Mono",monospace;
@@ -39,12 +39,12 @@
 @media (prefers-color-scheme:dark){
   :root:not([data-theme="light"]){
     --bg:#131211; --surface:#1C1A18; --ink:#ECE9E2; --muted:#C4C0B8; --rule:#2C2926; --rule-strong:#45413C;
-    --accent:#FF8F74; --accent-ink:#FFA893; --velo:rgba(19,18,17,.8); --tq:#DD9C92; --tb:#93C8A5; --tf:#94B5DB; color-scheme:dark;
+    --accent:#FF8F74; --accent-ink:#FFA893; --velo:rgba(19,18,17,.8); --tq:#DD9C92; --tb:#93C8A5; --tf:#94B5DB; --tt:#CDB98A; color-scheme:dark;
   }
 }
 :root[data-theme="dark"]{
   --bg:#131211; --surface:#1C1A18; --ink:#ECE9E2; --muted:#C4C0B8; --rule:#2C2926; --rule-strong:#45413C;
-  --accent:#FF8F74; --accent-ink:#FFA893; --velo:rgba(19,18,17,.8); --tq:#DD9C92; --tb:#93C8A5; --tf:#94B5DB; color-scheme:dark;
+  --accent:#FF8F74; --accent-ink:#FFA893; --velo:rgba(19,18,17,.8); --tq:#DD9C92; --tb:#93C8A5; --tf:#94B5DB; --tt:#CDB98A; color-scheme:dark;
 }
 *,*::before,*::after{box-sizing:border-box}
 html{scroll-padding-top:calc(var(--bar) + 1rem);overflow-anchor:none}
@@ -150,7 +150,7 @@ footer{border-top:1px solid var(--rule);padding-block:1.5rem 2.5rem;font-family:
 <section class="seccion" aria-labelledby="h-aula">
   <div class="pagina">
     <h2 id="h-aula">Para la sala de clases</h2>
-    <p class="intro">Seis herramientas, de enseñanza básica a cuarto medio. Ninguna pide cuenta ni correo.</p>
+    <p class="intro">Once herramientas y presentaciones, de séptimo básico a cuarto medio. Ninguna pide cuenta ni correo.</p>
 
     <article class="herr" data-herr="tp">
       <div class="herr-medio"><img src="img/tabla-periodica.webp" width="1200" height="1000" alt="" loading="lazy" decoding="async"></div>
@@ -264,6 +264,82 @@ footer{border-top:1px solid var(--rule);padding-block:1.5rem 2.5rem;font-family:
       </div>
     </article>
 
+    <article class="herr" data-herr="bq">
+      <div class="herr-medio"><div class="tipo" aria-hidden="true"><b>13 láminas</b><span>presentación de la clase, 90 minutos</span></div></div>
+      <div>
+        <h3><a href="bioelementos-presentacion/">Bioelementos</a></h3>
+        <p class="sub">Presentación de la clase</p>
+        <p class="estado e-nuevo">recién publicada</p>
+        <dl class="campos">
+          <dt>Para</dt>
+          <dd>Química, 8.º básico. Se proyecta en la sala.</dd>
+          <dt>Entrena</dt>
+          <dd>Los elementos que forman a los seres vivos (C, H, O, N, P, S) y las biomoléculas que construyen.</dd>
+          <dt>Formato</dt>
+          <dd>Láminas de 16:9 que se ajustan a la pantalla, con revelado por pasos y relojes. Flechas, espacio o clic para avanzar; N muestra las notas del presentador y P las abre en otra ventana.</dd>
+          <dt>Datos</dt>
+          <dd>No guarda ni envía nada.</dd>
+        </dl>
+      </div>
+    </article>
+
+    <article class="herr" data-herr="cq">
+      <div class="herr-medio"><div class="tipo" aria-hidden="true"><b>13 láminas</b><span>presentación de la clase, 90 minutos</span></div></div>
+      <div>
+        <h3><a href="cambios-quimicos-presentacion/">Cambios físicos y químicos</a></h3>
+        <p class="sub">Presentación de la clase</p>
+        <p class="estado e-nuevo">recién publicada</p>
+        <dl class="campos">
+          <dt>Para</dt>
+          <dd>Química, 7.º básico (CN07 OA15). Se proyecta en la sala.</dd>
+          <dt>Entrena</dt>
+          <dd>Distinguir un cambio físico de uno químico con evidencias, reactivos y productos, átomos que se reordenan y argumentar con afirmación, evidencia y razonamiento.</dd>
+          <dt>Formato</dt>
+          <dd>Láminas de 16:9 que se ajustan a la pantalla, con revelado por pasos y relojes. Flechas, espacio o clic para avanzar; N muestra las notas del presentador y P las abre en otra ventana.</dd>
+          <dt>Datos</dt>
+          <dd>No guarda ni envía nada.</dd>
+        </dl>
+      </div>
+    </article>
+
+    <article class="herr" data-herr="co">
+      <div class="herr-medio"><div class="tipo" aria-hidden="true"><b>13 láminas</b><span>presentación de la clase, 90 minutos</span></div></div>
+      <div>
+        <h3><a href="celula-organelos-presentacion/">Una ciudad microscópica</a></h3>
+        <p class="sub">La célula y sus organelos</p>
+        <p class="estado e-nuevo">recién publicada</p>
+        <dl class="campos">
+          <dt>Para</dt>
+          <dd>Biología, 8.º básico. Se proyecta en la sala.</dd>
+          <dt>Entrena</dt>
+          <dd>Procarionte y eucarionte, célula animal y vegetal, los organelos principales con la analogía de la ciudad, y la relación entre estructura y función.</dd>
+          <dt>Formato</dt>
+          <dd>Láminas de 16:9 que se ajustan a la pantalla, con revelado por pasos y relojes. Flechas, espacio o clic para avanzar; N muestra las notas del presentador y P las abre en otra ventana.</dd>
+          <dt>Datos</dt>
+          <dd>No guarda ni envía nada.</dd>
+        </dl>
+      </div>
+    </article>
+
+    <article class="herr" data-herr="tt">
+      <div class="herr-medio"><div class="tipo" aria-hidden="true"><b>13 láminas</b><span>presentación de la clase, 90 minutos</span></div></div>
+      <div>
+        <h3><a href="tramas-troficas-presentacion/">¿Quién se come a quién?</a></h3>
+        <p class="sub">Cadenas y tramas tróficas</p>
+        <p class="estado e-nuevo">recién publicada</p>
+        <dl class="campos">
+          <dt>Para</dt>
+          <dd>Biología, primero medio (ecología). Se proyecta en la sala.</dd>
+          <dt>Entrena</dt>
+          <dd>Productores, consumidores y descomponedores, niveles tróficos, el sentido de las flechas, la pérdida de energía por eslabón y cómo un cambio se propaga por una trama, con ejemplos de Chile.</dd>
+          <dt>Formato</dt>
+          <dd>Láminas de 16:9 que se ajustan a la pantalla, con revelado por pasos y relojes. Flechas, espacio o clic para avanzar; N muestra las notas del presentador y P las abre en otra ventana.</dd>
+          <dt>Datos</dt>
+          <dd>No guarda ni envía nada.</dd>
+        </dl>
+      </div>
+    </article>
+
     <article class="herr" data-herr="paes">
       <div class="herr-medio"><div class="tipo" aria-hidden="true"><b>Atlas</b><span>mapa de aprendizaje, sin nota</span></div></div>
       <div>
@@ -286,6 +362,61 @@ footer{border-top:1px solid var(--rule);padding-block:1.5rem 2.5rem;font-family:
   <div class="pagina">
     <h2 id="h-aparte">Aparte: material en inglés</h2>
     <p class="intro">Material en inglés, alineado al currículo australiano (Year 8). No forma parte del trabajo de aula; se lista aparte para no mezclarlo.</p>
+
+    <article class="herr" data-herr="en">
+      <div class="herr-medio"><div class="tipo" aria-hidden="true"><b>15 slides</b><span>lesson + test-style checkpoint</span></div></div>
+      <div>
+        <h3><a href="energy-lesson/">Energy: types, transformations and efficiency</a></h3>
+        <p class="sub">Year 8 Science (Physical Sciences)</p>
+        <dl class="campos">
+          <dt>Para</dt>
+          <dd>Year 8, Physical Sciences. En inglés australiano; se recorre junto a un adulto.</dd>
+          <dt>Entrena</dt>
+          <dd>Tipos de energía, cadenas de transformación, conservación de la energía, eficiencia con su fórmula y diagramas de Sankey a escala.</dd>
+          <dt>Formato</dt>
+          <dd>Una página de diapositivas que se recorre con flechas o espacio; actividades interactivas y notas para el adulto en español (tecla N).</dd>
+          <dt>Datos</dt>
+          <dd>No guarda ni envía nada.</dd>
+        </dl>
+      </div>
+    </article>
+
+    <article class="herr" data-herr="ch">
+      <div class="herr-medio"><div class="tipo" aria-hidden="true"><b>118</b><span>elements, four colour modes</span></div></div>
+      <div>
+        <h3><a href="chemistry-study/">Atoms and the periodic table</a></h3>
+        <p class="sub">Year 8 Science (Chemical Sciences)</p>
+        <dl class="campos">
+          <dt>Para</dt>
+          <dd>Year 8, Chemical Sciences. En inglés australiano; página de estudio.</dd>
+          <dt>Entrena</dt>
+          <dd>Estructura del átomo con un constructor interactivo, la tabla periódica completa, tendencias periódicas y metales, metaloides y no metales; extensión opcional a enlace químico.</dd>
+          <dt>Formato</dt>
+          <dd>Una página de estudio para recorrer a su ritmo.</dd>
+          <dt>Datos</dt>
+          <dd>No guarda ni envía nada.</dd>
+        </dl>
+      </div>
+    </article>
+
+    <article class="herr" data-herr="rc">
+      <div class="herr-medio"><div class="tipo" aria-hidden="true"><b>10 slides</b><span>lesson + rock detective</span></div></div>
+      <div>
+        <h3><a href="rock-cycle/">The rock cycle</a></h3>
+        <p class="sub">Year 8 Science (Earth and Space Sciences)</p>
+        <p class="estado e-nuevo">recién publicada</p>
+        <dl class="campos">
+          <dt>Para</dt>
+          <dd>Year 8, Earth and Space Sciences. En inglés australiano; se recorre junto a un adulto.</dd>
+          <dt>Entrena</dt>
+          <dd>Rocas ígneas, sedimentarias y metamórficas, los procesos que las conectan, sus escalas de tiempo y cómo su formación explica sus propiedades y usos.</dd>
+          <dt>Formato</dt>
+          <dd>Una página de diapositivas que se recorre con flechas o espacio; actividades interactivas y notas para el adulto en español (tecla N).</dd>
+          <dt>Datos</dt>
+          <dd>No guarda ni envía nada.</dd>
+        </dl>
+      </div>
+    </article>
 
     <article class="herr" data-herr="bd">
       <div class="herr-medio"><div class="tipo" aria-hidden="true"><b>1347–1353</b><span>four sources, ten questions</span></div></div>
@@ -346,7 +477,7 @@ footer{border-top:1px solid var(--rule);padding-block:1.5rem 2.5rem;font-family:
    nodo, y el eje es una cadena de prerrequisitos (flechas) mientras que las laterales brotan de él como relaciones (punteadas). Algunas relaciones cruzadas
    unen ramas vecinas y cierran la red.
 
-   Cada concepto es de una disciplina (biología, química o física): tono propio y forma propia (círculo, hexágono, triángulo), así que no depende sólo del color.
+   Cada concepto es de una disciplina (biología, química, física o Tierra): tono propio y forma propia (círculo, hexágono, triángulo, rombo), así que no depende sólo del color.
    Cada concepto tiene una memoria s (0 a 1, lo que se ve) que decae como en la curva del olvido, s·exp(−t/S), con estabilidad S (segundos).
    · Aparece: una punta crece desde su prerrequisito (sólo si éste está a la vista) y al llegar deja el concepto.
    · Se refuerza: si la luz se queda cerca (el cursor o el dedo casi quietos ≥ 0,9 s) se repasa: s vuelve a 1 y S crece, más cuanto más se había olvidado
@@ -376,27 +507,32 @@ footer{border-top:1px solid var(--rule);padding-block:1.5rem 2.5rem;font-family:
     ['enl', 'Enlace químico', 'Q', 'tab', 'p', 'e', 1],
     ['rea', 'Reacciones químicas', 'Q', 'enl', 'p', 'e', 1],
     ['cel', 'Célula', 'B', 'rea', 'p', 'e', 1],
-    ['met', 'Metabolismo celular', 'B', 'cel', 'p', 'e', 1],
+    ['org', 'Organelos celulares', 'B', 'cel', 'p', 'e', 1],
+    ['met', 'Metabolismo celular', 'B', 'org', 'p', 'e', 1],
     ['inm', 'Sistema inmune', 'B', 'met', 'p', 'e', 1],
     ['vac', 'Vacunas', 'B', 'inm', 'p', 'e', 1],
     ['reb', 'Inmunidad de rebaño', 'B', 'vac', 'p', 'e', 1],
     ['cin', 'Modelo cinético de partículas', 'F', 'mat', 'r', 'd', 2],
     ['tem', 'Temperatura y calor', 'F', 'cin', 'p', 'c', 3],
+    ['roc', 'Ciclo de las rocas', 'T', 'tem', 'r', 'c', 3],
     ['med', 'Medición y magnitudes', 'F', 'mat', 'r', 'i', 3],
     ['mov', 'Fuerza y movimiento', 'F', 'med', 'p', 'c', 3],
     ['car', 'Carga eléctrica', 'F', 'ato', 'r', 'i', 2],
     ['ele', 'Electricidad y circuitos', 'F', 'car', 'p', 'c', 3],
     ['rad', 'Radio atómico', 'Q', 'tab', 'r', 'd', 2],
+    ['bio', 'Bioelementos y biomoléculas', 'Q', 'tab', 'r', 'i', 2],
     ['ion', 'Energía de ionización', 'Q', 'rad', 'p', 'c', 3],
     ['neg', 'Electronegatividad', 'Q', 'ion', 'p', 'c', 3],
     ['agu', 'Agua y disoluciones', 'Q', 'enl', 'r', 'i', 2],
     ['phh', 'Ácidos, bases y pH', 'Q', 'agu', 'p', 'c', 3],
     ['ene', 'Energía y sus transformaciones', 'F', 'rea', 'r', 'd', 2],
     ['ond', 'Ondas: luz y sonido', 'F', 'ene', 'r', 'c', 3],
-    ['cons', 'Conservación de la masa', 'Q', 'rea', 'r', 'i', 3],
+    ['cfq', 'Cambios físicos y químicos', 'Q', 'rea', 'r', 'i', 2],
+    ['cons', 'Conservación de la masa', 'Q', 'cfq', 'p', 'c', 3],
     ['mit', 'Mitosis y meiosis', 'B', 'cel', 'r', 'd', 2],
     ['adn', 'ADN y herencia', 'B', 'mit', 'p', 'c', 3],
     ['fot', 'Fotosíntesis', 'B', 'cel', 'r', 'i', 3],
+    ['tro', 'Cadenas y tramas tróficas', 'B', 'fot', 'p', 'c', 3],
     ['ali', 'Alimentación y nutrición', 'B', 'met', 'r', 'i', 2],
     ['act', 'Actividad física', 'B', 'ali', 'p', 'c', 3],
     ['sal', 'Factores de la salud', 'B', 'met', 'r', 'd', 2],
@@ -413,7 +549,8 @@ footer{border-top:1px solid var(--rule);padding-block:1.5rem 2.5rem;font-family:
   var EX = [
     ['ene', 'met', 'r'], ['fot', 'ene', 'r'], ['fot', 'rea', 'r'], ['neg', 'enl', 'p'], ['car', 'enl', 'r'], ['phh', 'rea', 'r'],
     ['r0', 'umb', 'p'], ['mod', 'umb', 'r'], ['pes', 'cnt', 'r'], ['cov', 'med', 'r'], ['tem', 'ene', 'r'], ['sal', 'ali', 'r'],
-    ['mod', 'cov', 'r'], ['cin', 'ato', 'r']
+    ['mod', 'cov', 'r'], ['cin', 'ato', 'r'],
+    ['bio', 'cel', 'r'], ['bio', 'ali', 'r'], ['tro', 'ene', 'r'], ['tro', 'met', 'r'], ['roc', 'mat', 'r'], ['cfq', 'mat', 'r']
   ];
 
   /* ---- la lista de conceptos (para quien no ve el fondo), por disciplina y generada desde los mismos datos ---- */
@@ -454,7 +591,7 @@ footer{border-top:1px solid var(--rule);padding-block:1.5rem 2.5rem;font-family:
   var nodos = [], aristas = [], porId = {};
   var memoria = {};                       // por id: lo que se recuerda aunque la red se reconstruya (s, S, repasos)
   var col = { ink: [27, 26, 23], acc: [144, 0, 8], bg: [250, 249, 246] };
-  var TON = { Q: [123, 50, 60], B: [54, 99, 73], F: [57, 87, 127] };
+  var TON = { Q: [123, 50, 60], B: [54, 99, 73], F: [57, 87, 127], T: [107, 90, 42] };
   var colIzq = 0, colDer = 0;             // columna de texto (px de ventana)
   var mx = -9999, my = -9999, cx = -9999, cy = -9999, act = 0, objAct = 0, vel = 0;
   var sellos = [];                        // estela: {x, y, t}
@@ -473,7 +610,7 @@ footer{border-top:1px solid var(--rule);padding-block:1.5rem 2.5rem;font-family:
     var cs = getComputedStyle(raiz);
     function hex(n, d) { var v = cs.getPropertyValue(n).trim(), m = /^#([0-9a-f]{6})$/i.exec(v); return m ? [parseInt(m[1].substr(0, 2), 16), parseInt(m[1].substr(2, 2), 16), parseInt(m[1].substr(4, 2), 16)] : d; }
     col.ink = hex('--ink', col.ink); col.acc = hex('--accent', col.acc); col.bg = hex('--bg', col.bg);
-    TON.Q = hex('--tq', TON.Q); TON.B = hex('--tb', TON.B); TON.F = hex('--tf', TON.F);
+    TON.Q = hex('--tq', TON.Q); TON.B = hex('--tb', TON.B); TON.F = hex('--tf', TON.F); TON.T = hex('--tt', TON.T);
     halo = null; nodos.forEach(function (n) { n.sp = null; });
   }
   function crearHalo() {
@@ -833,11 +970,12 @@ footer{border-top:1px solid var(--rule);padding-block:1.5rem 2.5rem;font-family:
       for (j = n - 2; j >= 0; j--) { if (a.L - cum[j] <= obj) ctx.lineTo(q[2 * j], q[2 * j + 1]); else { var u2 = (obj - (a.L - cum[j + 1])) / (cum[j + 1] - cum[j]); ctx.lineTo(q[2 * j + 2] + (q[2 * j] - q[2 * j + 2]) * u2, q[2 * j + 3] + (q[2 * j + 1] - q[2 * j + 3]) * u2); break; } }
     }
   }
-  function forma(d, x, y, r) {      // biología: círculo; química: hexágono; física: triángulo
+  function forma(d, x, y, r) {      // biología: círculo; química: hexágono; física: triángulo; Tierra: rombo
     var k;
     ctx.beginPath();
     if (d === 'B') ctx.arc(x, y, r, 0, 6.283);
     else if (d === 'Q') { r *= 1.15; for (k = 0; k < 6; k++) { var an = -1.5708 + k * 1.0472; if (k) ctx.lineTo(x + r * Math.cos(an), y + r * Math.sin(an)); else ctx.moveTo(x + r * Math.cos(an), y + r * Math.sin(an)); } ctx.closePath(); }
+    else if (d === 'T') { r *= 1.25; ctx.moveTo(x, y - r); ctx.lineTo(x + r, y); ctx.lineTo(x, y + r); ctx.lineTo(x - r, y); ctx.closePath(); }
     else { r *= 1.3; ctx.moveTo(x, y - r); ctx.lineTo(x + r * 0.95, y + r * 0.7); ctx.lineTo(x - r * 0.95, y + r * 0.7); ctx.closePath(); }
   }
   var FUENTE = '"Bricolage Grotesque","Bricolage Respaldo",system-ui,"Segoe UI",Helvetica,Arial,sans-serif';

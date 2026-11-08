@@ -11,13 +11,14 @@
 
    Conceptos de la red (id: nombre)
      mat Materia y estados · ato Átomo y modelos atómicos · tab Tabla periódica · enl Enlace químico · rea Reacciones químicas
-     cel Célula · met Metabolismo celular · inm Sistema inmune · vac Vacunas · reb Inmunidad de rebaño
+     cel Célula · org Organelos celulares · met Metabolismo celular · inm Sistema inmune · vac Vacunas · reb Inmunidad de rebaño
      cin Modelo cinético de partículas · tem Temperatura y calor · med Medición y magnitudes · mov Fuerza y movimiento
      car Carga eléctrica · ele Electricidad y circuitos · rad Radio atómico · ion Energía de ionización · neg Electronegatividad
      agu Agua y disoluciones · phh Ácidos, bases y pH · ene Energía y sus transformaciones · ond Ondas: luz y sonido
      cons Conservación de la masa · mit Mitosis y meiosis · adn ADN y herencia · fot Fotosíntesis · ali Alimentación y nutrición
      act Actividad física · sal Factores de la salud · sue Sueño y estrés · cnt Contagio y transmisión · r0 Número reproductivo R₀
-     pes Peste negra · cob Cobertura de vacunación · umb Umbral 1 − 1/R₀ · cov Datos reales de COVID-19 · mod Modelos y simulación */
+     pes Peste negra · cob Cobertura de vacunación · umb Umbral 1 − 1/R₀ · cov Datos reales de COVID-19 · mod Modelos y simulación
+     bio Bioelementos y biomoléculas · cfq Cambios físicos y químicos · tro Cadenas y tramas tróficas · roc Ciclo de las rocas (Tierra) */
 window.HERRAMIENTA_CONCEPTOS = {
   /* Tabla periódica reactiva. Ficha: «tendencias periódicas por posición: radio atómico, energía de ionización, electronegatividad y tipo de enlace». */
   tp: {
@@ -56,6 +57,48 @@ window.HERRAMIENTA_CONCEPTOS = {
   paes: {
     nombre: 'Atlas, diagnóstico PAES Ciencias',
     conceptos: ['cel', 'met', 'fot', 'mit', 'adn', 'ond', 'mov', 'med', 'car', 'ele', 'mat', 'ato', 'cons', 'agu']
+  },
+
+  /* Bioelementos (presentación, 8.º básico). Ficha: «los elementos que forman a los seres vivos y las biomoléculas que construyen». */
+  bq: {
+    nombre: 'Bioelementos (presentación)',
+    conceptos: ['bio', 'ato', 'tab', 'cel']
+  },
+
+  /* Cambios físicos y químicos (presentación, 7.º básico). Ficha: «evidencias, reactivos y productos, átomos que se reordenan». */
+  cq: {
+    nombre: 'Cambios físicos y químicos (presentación)',
+    conceptos: ['cfq', 'mat', 'rea', 'cons']
+  },
+
+  /* Una ciudad microscópica (presentación, 8.º básico). Ficha: «procarionte y eucarionte, animal y vegetal, organelos, estructura y función». */
+  co: {
+    nombre: 'Una ciudad microscópica (presentación)',
+    conceptos: ['cel', 'org', 'met', 'fot']
+  },
+
+  /* ¿Quién se come a quién? (presentación, primero medio). Ficha: «niveles tróficos, pérdida de energía por eslabón, tramas». */
+  tt: {
+    nombre: '¿Quién se come a quién? (presentación)',
+    conceptos: ['tro', 'fot', 'ene', 'met']
+  },
+
+  /* Energy (Year 8 Physical Sciences). Ficha: «tipos de energía, transformaciones, conservación, eficiencia». */
+  en: {
+    nombre: 'Energy: types, transformations and efficiency',
+    conceptos: ['ene', 'mov', 'tem']
+  },
+
+  /* Atoms and the periodic table (Year 8 Chemical Sciences). Ficha: «átomo, tabla periódica, tendencias, metales y no metales; extensión a enlace». */
+  ch: {
+    nombre: 'Atoms and the periodic table',
+    conceptos: ['ato', 'tab', 'rad', 'ion', 'neg', 'enl']
+  },
+
+  /* The rock cycle (Year 8 Earth and Space Sciences). Ficha: «tipos de roca, procesos que las conectan, escalas de tiempo, propiedades y usos». */
+  rc: {
+    nombre: 'The rock cycle',
+    conceptos: ['roc', 'mat', 'tem']
   },
 
   /* The Black Death: a historian's skills lab (Year 8 History). Es una herramienta de historia: sólo toca la peste como enfermedad. */

@@ -1,0 +1,860 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Study page: atomic structure, the periodic table, and why atoms bond.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='32' fill='%23315c47'/%3E%3Ctext x='32' y='45' text-anchor='middle' font-size='34' fill='white'%3E%E2%9A%9B%3C/text%3E%3C/svg%3E">
+<title>Atoms, the Table, and Why Things Stick Together</title>
+<style>
+:root{
+  --ink:#18251f; --muted:#647069; --paper:#f4f0e6; --paper-light:#fbf8f0;
+  --moss:#315c47; --moss-dark:#1d4030; --coral:#e66a4e; --gold:#e6b954;
+  --line:#c8c3b5; --shadow:0 18px 46px rgba(35,48,40,.12); --radius:6px;
+  --metal:#3f7ea6; --metalloid:#b07d3a; --nonmetal:#5f8f4e; --noble:#7c6396;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;color:var(--ink);background:var(--paper);
+  font-family:"Avenir Next",Avenir,"Century Gothic",sans-serif;line-height:1.6}
+button,select,input{font:inherit;color:inherit}
+h1,h2,h3,h4{font-family:"Iowan Old Style","Palatino Linotype","Book Antiqua",Georgia,serif;line-height:1.1}
+main{width:min(1140px,calc(100% - 34px));margin:0 auto}
+a{color:var(--moss-dark)}
+
+/* header + nav */
+.site-header{position:sticky;top:0;z-index:50;background:rgba(244,240,230,.94);
+  backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.header-inner{width:min(1140px,calc(100% - 34px));margin:0 auto;min-height:62px;
+  display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap}
+.brand{display:flex;gap:10px;align-items:center;font-weight:700;text-decoration:none;color:inherit}
+.brand-mark{display:grid;place-items:center;width:30px;height:30px;border-radius:50%;
+  background:var(--moss);color:#fff;font-family:"Courier New",monospace}
+.tabs{display:flex;gap:4px;flex-wrap:wrap;padding:6px 0}
+.tabs a{font:600 .74rem "Courier New",monospace;letter-spacing:.04em;text-transform:uppercase;
+  padding:6px 10px;text-decoration:none;color:var(--muted);border:1px solid transparent;border-radius:3px}
+.tabs a:hover{color:var(--moss-dark);border-color:var(--line);background:var(--paper-light)}
+
+/* hero */
+.hero{padding:56px 0 34px;border-bottom:1px solid var(--line)}
+.eyebrow{font:600 .76rem "Courier New",monospace;color:var(--coral);
+  text-transform:uppercase;letter-spacing:.13em;margin:0}
+h1{margin:14px 0 18px;font-size:clamp(2.5rem,5.6vw,4.4rem);letter-spacing:-.045em;max-width:16ch}
+h1 em{color:var(--moss);font-style:normal;text-decoration:underline;
+  text-decoration-color:var(--gold);text-decoration-thickness:.1em;text-underline-offset:.08em}
+.lede{max-width:62ch;font-size:1.08rem;color:#465149}
+.scope-note{margin:26px 0 0;padding:16px 19px;border-left:4px solid var(--gold);
+  background:#f0ebdd;max-width:70ch;font-size:.93rem}
+
+/* sections */
+section.part{padding:52px 0;border-bottom:1px solid var(--line)}
+.part-kicker{font:600 .74rem "Courier New",monospace;color:var(--coral);
+  text-transform:uppercase;letter-spacing:.11em}
+.part h2{margin:12px 0 20px;font-size:clamp(1.9rem,4vw,3rem);letter-spacing:-.03em}
+.part h3{margin:34px 0 12px;font-size:1.4rem}
+.part h4{margin:24px 0 8px;font-size:1.1rem}
+.part p{max-width:72ch}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:26px;align-items:start}
+.card{background:var(--paper-light);border:1px solid var(--line);padding:22px 24px;border-radius:var(--radius)}
+.card h4{margin-top:0}
+.keyidea{margin:26px 0;padding:20px 24px;background:var(--paper-light);
+  border:1px solid var(--moss);border-left:6px solid var(--moss);border-radius:var(--radius)}
+/* direct child only — the label. `strong` inside the body text must stay inline. */
+.keyidea > strong{display:block;font:600 .72rem "Courier New",monospace;
+  text-transform:uppercase;letter-spacing:.1em;color:var(--moss);margin-bottom:6px}
+.watch{margin:22px 0;padding:18px 22px;background:#fbeee9;border-left:5px solid var(--coral);border-radius:var(--radius)}
+.watch > strong{display:block;font:600 .72rem "Courier New",monospace;
+  text-transform:uppercase;letter-spacing:.1em;color:var(--coral);margin-bottom:6px}
+
+/* tables */
+.table-wrap{overflow-x:auto;margin:22px 0}
+table.data{border-collapse:collapse;width:100%;min-width:560px;background:var(--paper-light);font-size:.92rem}
+table.data caption{text-align:left;font-weight:700;padding-bottom:10px;font-size:1.05rem;
+  font-family:"Iowan Old Style",Georgia,serif}
+table.data th,table.data td{border:1px solid var(--line);padding:9px 12px;text-align:left;vertical-align:top}
+table.data thead th{background:var(--moss);color:#fff;font-size:.86rem}
+table.data tbody th{background:#f0ebdd;font-weight:600;white-space:nowrap}
+.c-metal{color:var(--metal);font-weight:700}
+.c-metalloid{color:var(--metalloid);font-weight:700}
+.c-nonmetal{color:var(--nonmetal);font-weight:700}
+
+/* atom builder */
+.builder{display:grid;grid-template-columns:minmax(260px,340px) 1fr;gap:28px;align-items:start;margin-top:20px}
+.control{margin-bottom:16px}
+.control label{display:block;font:600 .74rem "Courier New",monospace;
+  text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px}
+input[type=range]{width:100%;accent-color:var(--moss)}
+.readout{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-top:14px}
+.readout div{background:var(--paper-light);border:1px solid var(--line);padding:9px 11px;border-radius:3px}
+.readout span{display:block;font:600 .66rem "Courier New",monospace;
+  text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+.readout b{font-size:1.15rem}
+#atom-svg{width:100%;height:auto;background:var(--paper-light);border:1px solid var(--line);border-radius:var(--radius)}
+
+/* periodic table */
+.ptable-controls{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:18px 0 14px}
+.mode-btn{padding:7px 13px;border:1px solid var(--line);background:var(--paper-light);
+  border-radius:3px;cursor:pointer;font-size:.85rem}
+.mode-btn[aria-pressed=true]{background:var(--moss);color:#fff;border-color:var(--moss)}
+.ptable-scroll{overflow-x:auto;padding-bottom:8px}
+.ptable{display:grid;grid-template-columns:repeat(18,minmax(38px,1fr));gap:3px;min-width:760px}
+.el{position:relative;aspect-ratio:1;border:1px solid rgba(24,37,31,.3);border-radius:3px;
+  background:var(--paper-light);cursor:pointer;padding:2px;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;transition:transform .12s,box-shadow .12s}
+.el:hover{transform:scale(1.14);z-index:5;box-shadow:0 6px 14px rgba(0,0,0,.22)}
+.el:focus-visible{outline:3px solid var(--gold);outline-offset:1px;z-index:6}
+.el .sym{font-weight:700;font-size:clamp(.62rem,1.15vw,.9rem);line-height:1}
+.el .z{font:600 .5rem "Courier New",monospace;opacity:.72;line-height:1}
+.el.sel{outline:3px solid var(--coral);outline-offset:1px;z-index:7}
+.el.dim{opacity:.26}
+.frow{grid-column:3 / span 15;display:grid;grid-template-columns:repeat(15,1fr);gap:3px}
+.spacer{grid-column:span 1}
+.legend{display:flex;gap:14px;flex-wrap:wrap;margin-top:14px;font-size:.82rem}
+.legend i{display:inline-block;width:13px;height:13px;border:1px solid rgba(0,0,0,.3);
+  border-radius:2px;margin-right:6px;vertical-align:-2px}
+#el-detail{margin-top:18px;min-height:96px}
+.detail-grid{display:grid;grid-template-columns:auto 1fr;gap:20px;align-items:center}
+.detail-tile{width:92px;height:92px;display:grid;place-items:center;border-radius:var(--radius);
+  border:2px solid var(--ink);color:#fff}
+.detail-tile b{font-size:1.9rem;line-height:1;display:block}
+.detail-tile span{font:600 .6rem "Courier New",monospace}
+
+/* bond predictor */
+.bondbox{margin-top:20px}
+.picker-row{display:grid;grid-template-columns:1fr auto 1fr;gap:14px;align-items:end}
+.picker label{display:block;font:600 .72rem "Courier New",monospace;
+  text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px}
+.picker select{width:100%;padding:10px 12px;border:1px solid var(--line);
+  background:var(--paper-light);border-radius:3px}
+.plus{font-size:1.5rem;padding-bottom:8px;color:var(--muted)}
+#bond-result{margin-top:22px;padding:22px 24px;border:1px solid var(--line);
+  background:var(--paper-light);border-radius:var(--radius)}
+.verdict{font-family:"Iowan Old Style",Georgia,serif;font-size:1.65rem;margin:0 0 4px}
+.delta{font:700 1rem "Courier New",monospace;color:var(--coral)}
+.scale{position:relative;height:38px;margin:20px 0 8px;border:1px solid var(--line);
+  border-radius:3px;overflow:hidden;display:flex}
+.scale div{display:grid;place-items:center;font:600 .68rem "Courier New",monospace;
+  text-align:center;color:#fff;padding:0 4px}
+.s1{background:#7d9b6d;flex:0 0 16%}
+.s2{background:#c9a13f;flex:0 0 52%}
+.s3{background:#b5563c;flex:1}
+#scale-marker{position:absolute;top:-4px;bottom:-4px;width:3px;background:var(--ink);
+  box-shadow:0 0 0 2px rgba(255,255,255,.85);transition:left .25s ease}
+.scale-labels{display:flex;justify-content:space-between;font:600 .66rem "Courier New",monospace;color:var(--muted)}
+
+/* quiz */
+.q{margin:18px 0;padding:20px 22px;background:var(--paper-light);
+  border:1px solid var(--line);border-radius:var(--radius)}
+.q p{margin:0 0 12px;font-weight:600}
+.q ol{margin:0 0 12px 20px;padding:0}
+.q li{margin:4px 0}
+.reveal{border:1px solid var(--line);background:transparent;padding:7px 13px;
+  border-radius:3px;cursor:pointer;font-size:.85rem}
+.answer{margin-top:14px;padding:14px 16px;background:#e4ebdf;border-left:4px solid var(--moss);
+  border-radius:3px;font-size:.94rem}
+.answer[hidden]{display:none}
+
+footer{padding:34px 18px 50px;text-align:center;color:var(--muted);font-size:.82rem}
+@media (max-width:860px){
+  .grid2,.builder{grid-template-columns:1fr}
+  .picker-row{grid-template-columns:1fr;gap:10px}
+  .plus{display:none}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+<style>
+/* Enlace al hub «Herramientas de aula» y su pie. */
+.aula-volver,.aula-pie{margin:0;padding:.55rem 1rem;font:500 .85rem/1.4 system-ui,"Segoe UI",Arial,sans-serif;color:inherit;opacity:.85}
+.aula-volver a,.aula-pie a{color:inherit;text-underline-offset:.18em}
+.aula-pie{text-align:center;padding-block:1.25rem 4.5rem}
+@media print{.aula-volver,.aula-pie{display:none}}
+</style>
+</head>
+<body>
+<p class="aula-volver"><a href="../">← Herramientas de aula</a></p>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="#top"><span class="brand-mark" aria-hidden="true">⚛</span><span>Chemistry</span></a>
+    <nav class="tabs" aria-label="Sections">
+      <a href="#atom">1 · The atom</a>
+      <a href="#table">2 · The table</a>
+      <a href="#trends">3 · Trends</a>
+      <a href="#families">4 · Three families</a>
+      <a href="#bonding">5 · Bonding</a>
+      <a href="#check">6 · Check yourself</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+<section class="hero">
+  <p class="eyebrow">Chemistry · Study page</p>
+  <h1>Atoms, the table, and why things <em>stick together</em></h1>
+  <p class="lede">Everything on this page comes from one idea: an atom's <strong>outer electrons</strong> decide
+  what it does. Where it sits on the periodic table, how strongly it pulls on electrons, what it bonds to and
+  how — all of it follows from that. Work through it in order; each part is built on the one before.</p>
+  <div class="scope-note">
+    <strong>Where this sits in your course.</strong> Your Term 1 Chemistry unit covers elements and atoms, the
+    periodic table, metals and non-metals, and physical versus chemical change. So Parts 1 to 4 of this page are
+    your actual coursework, not extra. Part 5 — bonding and electronegativity — runs ahead of it, and is normally
+    Year 9–10. Nothing there is assumed knowledge; it is built from scratch on the parts before it.
+  </div>
+</section>
+
+<!-- ============ PART 1 ============ -->
+<section class="part" id="atom">
+  <p class="part-kicker">Part 1 — Review</p>
+  <h2>What an atom is made of</h2>
+
+  <p>An atom has a tiny, dense <strong>nucleus</strong> with almost all the mass, and <strong>electrons</strong>
+  around it holding almost all the volume. If the nucleus were a marble on the centre circle of a football oval,
+  the nearest electrons would be out past the boundary fence. Atoms are mostly empty space.</p>
+
+  <div class="table-wrap">
+    <table class="data">
+      <caption>The three subatomic particles</caption>
+      <thead><tr><th>Particle</th><th>Charge</th><th>Mass</th><th>Where it is</th><th>What it decides</th></tr></thead>
+      <tbody>
+        <tr><th>Proton</th><td>+1</td><td>1 unit</td><td>Nucleus</td><td><strong>Which element it is.</strong> Change this and it is a different element.</td></tr>
+        <tr><th>Neutron</th><td>0</td><td>1 unit</td><td>Nucleus</td><td>Which <em>isotope</em> it is. Same element, different mass.</td></tr>
+        <tr><th>Electron</th><td>−1</td><td>~1/1836 unit</td><td>Shells around the nucleus</td><td><strong>All of its chemistry.</strong> Bonding is entirely about electrons.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="keyidea">
+    <strong>Two numbers to keep straight</strong>
+    <p style="margin:0"><b>Atomic number (Z)</b> = number of protons. It is the element's identity and it is the
+    number the periodic table is ordered by.<br>
+    <b>Mass number (A)</b> = protons + neutrons. So <b>neutrons = A − Z</b>.<br>
+    In a <em>neutral</em> atom, electrons = protons. An atom that has gained or lost electrons is an
+    <strong>ion</strong>, and it is no longer neutral.</p>
+  </div>
+
+  <h3>How the models got better</h3>
+  <p>Each model kept what worked and fixed what did not. That is how science normally moves — not one genius
+  getting it right, but each person finding the specific thing the last model could not explain.</p>
+
+  <div class="table-wrap">
+    <table class="data">
+      <caption>Four models, and what each one fixed</caption>
+      <thead><tr><th>Model</th><th>Picture</th><th>What it could not explain</th></tr></thead>
+      <tbody>
+        <tr><th>Dalton (1803)</th><td>Solid indivisible sphere.</td><td>Static electricity — if atoms are solid balls, where does charge come from?</td></tr>
+        <tr><th>Thomson (1897)</th><td>"Plum pudding": electrons dotted through a positive blob.</td><td>Why alpha particles fired at gold foil sometimes bounced straight back.</td></tr>
+        <tr><th>Rutherford (1911)</th><td>Tiny dense positive nucleus, electrons around it.</td><td>Why the orbiting electrons do not spiral in and collapse the atom.</td></tr>
+        <tr><th>Bohr (1913)</th><td>Electrons only in fixed shells, each with a set energy.</td><td>Fine detail for atoms bigger than hydrogen — but it is accurate enough for everything on this page.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Build an atom</h3>
+  <p>Shells fill from the inside out. The first holds 2 electrons, the next 8, the next 8. Drag the slider and
+  watch the outer shell — that is the only shell chemistry cares about.</p>
+
+  <div class="builder">
+    <div>
+      <div class="control">
+        <label for="z-slider">Protons (atomic number Z) — <span id="z-label">1</span></label>
+        <input type="range" id="z-slider" min="1" max="20" value="1" step="1">
+      </div>
+      <div class="readout">
+        <div><span>Element</span><b id="r-name">Hydrogen</b></div>
+        <div><span>Symbol</span><b id="r-sym">H</b></div>
+        <div><span>Protons</span><b id="r-p">1</b></div>
+        <div><span>Neutrons</span><b id="r-n">0</b></div>
+        <div><span>Electrons</span><b id="r-e">1</b></div>
+        <div><span>Mass number</span><b id="r-a">1</b></div>
+        <div><span>Shells</span><b id="r-shells">1</b></div>
+        <div><span>Outer electrons</span><b id="r-val">1</b></div>
+      </div>
+      <p style="font-size:.88rem;color:var(--muted);margin-top:14px" id="r-note"></p>
+    </div>
+    <svg id="atom-svg" viewBox="0 0 400 400" role="img" aria-labelledby="atom-t atom-d">
+      <title id="atom-t">Shell diagram</title>
+      <desc id="atom-d">A nucleus with electron shells drawn around it.</desc>
+    </svg>
+  </div>
+
+  <div class="keyidea">
+    <strong>The one that matters</strong>
+    <p style="margin:0">Electrons in the <strong>outer shell</strong> are called <strong>valence electrons</strong>.
+    Atoms react in order to end up with a full outer shell — 8 electrons for most of the elements you will meet,
+    or 2 for the very small ones. Every bond in Part 5 is an atom solving that problem.</p>
+  </div>
+</section>
+
+<!-- ============ PART 2 ============ -->
+<section class="part" id="table">
+  <p class="part-kicker">Part 2 — Review</p>
+  <h2>Reading the periodic table</h2>
+
+  <div class="grid2">
+    <div class="card">
+      <h4>Columns = groups</h4>
+      <p style="margin-bottom:0">Elements in the same column have the <strong>same number of valence
+      electrons</strong>, so they behave alike. Group 1 all have 1 outer electron and all react violently with
+      water. Group 18 all have a full outer shell and essentially do not react at all.</p>
+    </div>
+    <div class="card">
+      <h4>Rows = periods</h4>
+      <p style="margin-bottom:0">Elements in the same row have the <strong>same number of shells</strong>.
+      Going across a row, you add one proton and one electron each step, filling the same outer shell until
+      it is full — then a new row starts.</p>
+    </div>
+  </div>
+
+  <p style="margin-top:26px">Click any element. Use the buttons to recolour the table — the
+  <strong>electronegativity</strong> view is the one to study before Part 5.</p>
+
+  <div class="ptable-controls" role="group" aria-label="Colour mode">
+    <button class="mode-btn" data-mode="family" aria-pressed="true">Three families</button>
+    <button class="mode-btn" data-mode="category" aria-pressed="false">Full categories</button>
+    <button class="mode-btn" data-mode="en" aria-pressed="false">Electronegativity</button>
+    <button class="mode-btn" data-mode="state" aria-pressed="false">State at room temp</button>
+  </div>
+
+  <div class="ptable-scroll">
+    <div class="ptable" id="ptable"></div>
+  </div>
+  <div class="legend" id="legend"></div>
+  <div id="el-detail" aria-live="polite"></div>
+</section>
+
+<!-- ============ PART 3 ============ -->
+<section class="part" id="trends">
+  <p class="part-kicker">Part 3 — Review</p>
+  <h2>Why the properties trend the way they do</h2>
+
+  <p>Two forces are competing for every outer electron: the <strong>pull of the protons</strong> in the nucleus,
+  and the <strong>shielding</strong> of all the inner electrons in between. Every trend on the table falls out
+  of those two.</p>
+
+  <div class="grid2">
+    <div class="card">
+      <h4>Going across → (left to right)</h4>
+      <p>Protons increase, but electrons are being added to the <em>same</em> shell, so shielding barely changes.
+      Net effect: the nucleus pulls harder.</p>
+      <ul style="margin-bottom:0">
+        <li>Atomic radius <strong>decreases</strong></li>
+        <li>Electronegativity <strong>increases</strong></li>
+        <li>Metallic character <strong>decreases</strong></li>
+      </ul>
+    </div>
+    <div class="card">
+      <h4>Going down ↓ (top to bottom)</h4>
+      <p>Each step adds a whole new shell. The outer electrons are further out and shielded by everything
+      underneath. Net effect: the nucleus pulls more weakly.</p>
+      <ul style="margin-bottom:0">
+        <li>Atomic radius <strong>increases</strong></li>
+        <li>Electronegativity <strong>decreases</strong></li>
+        <li>Metallic character <strong>increases</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="keyidea">
+    <strong>Electronegativity, in one sentence</strong>
+    <p style="margin:0">Electronegativity is <strong>how strongly an atom pulls on the electrons in a
+    bond</strong>. It runs on the Pauling scale from caesium at 0.79 to fluorine at 3.98 — fluorine is the
+    greediest atom there is. Everything in Part 5 is a tug-of-war decided by the difference between two of
+    these numbers.</p>
+  </div>
+
+  <div class="watch">
+    <strong>Common mix-up</strong>
+    <p style="margin:0">Electronegativity is <em>not</em> the same as reactivity. Fluorine is the most
+    electronegative element, but caesium is far more <em>reactive</em> — it is desperate to <strong>give
+    away</strong> its outer electron, which is the opposite behaviour. The most reactive metals sit bottom-left;
+    the most reactive non-metals sit top-right.</p>
+  </div>
+
+  <p>Switch the table in Part 2 to <strong>Electronegativity</strong> and look at it as a landscape: it climbs
+  towards the top-right corner and falls away to the bottom-left. Noble gases are left blank — they generally do
+  not form bonds, so a bond-pulling number would be meaningless for them.</p>
+</section>
+
+<!-- ============ PART 4 ============ -->
+<section class="part" id="families">
+  <p class="part-kicker">Part 4 — The comparison</p>
+  <h2>Metals, non-metals and metalloids</h2>
+
+  <p>A staircase line runs down the right-hand side of the table. Metals sit to its left, non-metals to its
+  right, and the metalloids sit <em>on</em> it — which is exactly why they behave like a bit of both.</p>
+
+  <div class="table-wrap">
+    <table class="data">
+      <caption>Side by side</caption>
+      <thead><tr>
+        <th>Property</th><th class="c-metal">Metals</th><th class="c-metalloid">Metalloids</th><th class="c-nonmetal">Non-metals</th>
+      </tr></thead>
+      <tbody>
+        <tr><th>Where on the table</th><td>Left and centre — most of the table</td><td>On the staircase line</td><td>Top right</td></tr>
+        <tr><th>Appearance</th><td>Shiny (lustrous)</td><td>Often shiny but brittle</td><td>Dull</td></tr>
+        <tr><th>When you hit it</th><td>Bends and flattens — malleable and ductile</td><td>Shatters — brittle</td><td>Shatters if solid; most are gases</td></tr>
+        <tr><th>Conducts electricity</th><td>Yes, well</td><td><strong>Semiconductor</strong> — sometimes, and it can be controlled</td><td>No (graphite is the famous exception)</td></tr>
+        <tr><th>Conducts heat</th><td>Yes, well</td><td>Moderately</td><td>Poorly — they are insulators</td></tr>
+        <tr><th>State at room temp</th><td>Solid, except mercury</td><td>All solid</td><td>Mostly gases; bromine is liquid; carbon, sulfur, phosphorus, iodine are solid</td></tr>
+        <tr><th>Melting point</th><td>Usually high</td><td>High</td><td>Usually low</td></tr>
+        <tr><th>Electronegativity</th><td>Low (about 0.7–2.0)</td><td>Middling (about 1.8–2.2)</td><td>High (about 2.2–4.0)</td></tr>
+        <tr><th>What it does with electrons</th><td><strong>Loses</strong> them → forms positive ions (cations)</td><td>Neither cleanly — tends to <strong>share</strong></td><td><strong>Gains</strong> or shares them → forms negative ions (anions)</td></tr>
+        <tr><th>Its oxide is</th><td>Basic</td><td>Amphoteric — acts as either</td><td>Acidic</td></tr>
+        <tr><th>Bonding it forms</th><td>Metallic (with metals), ionic (with non-metals)</td><td>Covalent, usually giant networks</td><td>Covalent (with non-metals), ionic (with metals)</td></tr>
+        <tr><th>Examples</th><td>Na, Mg, Al, Fe, Cu, Au</td><td>B, Si, Ge, As, Sb, Te</td><td>H, C, N, O, S, Cl, He</td></tr>
+        <tr><th>Where you meet it</th><td>Wiring, saucepans, structural steel</td><td>Every silicon chip you own</td><td>The air you breathe, the water you drink</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="watch">
+    <strong>The staircase is a convention, not a cliff</strong>
+    <p style="margin:0">Element properties change gradually, so the boundary is drawn where it is useful rather
+    than where nature puts a wall. Almost everyone agrees on the six metalloids listed above; polonium and
+    astatine sit right on the line and different textbooks classify them differently. If a source disagrees with
+    another about those two, neither is wrong — the category is ours, not nature's.</p>
+  </div>
+
+  <h3>Where this meets the rest of your unit</h3>
+  <p>The same unit works with <strong>elements, compounds and mixtures</strong>. Everything above is what sits
+  underneath that distinction:</p>
+  <ul>
+    <li>An <strong>element</strong> is one kind of atom — one box on the table. Fe. O.</li>
+    <li>A <strong>compound</strong> is two or more elements chemically <strong>bonded</strong> in a fixed ratio.
+    That bond is exactly what Part 5 is about. H<sub>2</sub>O. NaCl.</li>
+    <li>A <strong>mixture</strong> is substances together but <strong>not bonded</strong>, in any ratio, and
+    separable physically. Air. Seawater.</li>
+  </ul>
+  <p>So the test for compound versus mixture is: <em>is there a chemical bond?</em> Which is why bonding is
+  worth understanding early.</p>
+</section>
+
+<!-- ============ PART 5 ============ -->
+<section class="part" id="bonding">
+  <p class="part-kicker">Part 5 — New</p>
+  <h2>Why atoms bond, and which bond you get</h2>
+
+  <p>Atoms bond for one reason: a full outer shell is a lower-energy, more stable arrangement than an incomplete
+  one. There are three ways to get there, and <strong>which one happens depends on how hard each atom pulls on
+  the electrons</strong>.</p>
+
+  <div class="grid2" style="margin-top:24px">
+    <div class="card">
+      <h4>Ionic — one atom takes</h4>
+      <p>A metal has a weak grip on its outer electrons; a non-metal pulls hard. The electron is
+      <strong>transferred</strong>. Both atoms become ions with full shells, and the opposite charges attract.</p>
+      <p style="margin-bottom:0"><strong>Na + Cl:</strong> sodium gives up its one outer electron and becomes
+      Na<sup>+</sup>. Chlorine takes it, completing its shell, and becomes Cl<sup>−</sup>. The attraction between
+      them is the bond.</p>
+    </div>
+    <div class="card">
+      <h4>Covalent — both atoms share</h4>
+      <p>Two non-metals both pull hard, so neither can take. They <strong>share</strong> a pair of electrons, and
+      the shared pair counts towards both atoms' outer shells.</p>
+      <p style="margin-bottom:0"><strong>H + Cl:</strong> each contributes one electron to a shared pair. If the
+      two atoms pull equally the sharing is even (<em>non-polar</em>); if one pulls harder the pair sits closer to
+      it (<em>polar</em>).</p>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:18px">
+    <h4>Metallic — everyone shares everything</h4>
+    <p style="margin-bottom:0">In a metal, every atom releases its outer electrons into a shared pool. You get a
+    lattice of positive ions in a <strong>sea of delocalised electrons</strong>. Those free-moving electrons are
+    the reason metals conduct electricity, and the reason a metal can be hammered flat without shattering — the
+    ions slide past each other and the electron sea just flows around them.</p>
+  </div>
+
+  <h3>The electronegativity rule</h3>
+  <p>Take the two electronegativities and subtract the smaller from the larger. Call it
+  <strong>ΔEN</strong> ("delta EN"). It tells you how one-sided the tug-of-war is.</p>
+
+  <div class="table-wrap">
+    <table class="data">
+      <caption>The usual cut-offs</caption>
+      <thead><tr><th>ΔEN</th><th>Bond type</th><th>What is happening</th><th>Example</th></tr></thead>
+      <tbody>
+        <tr><th>0 – 0.4</th><td>Non-polar covalent</td><td>Near-equal pull, electrons shared evenly</td><td>Cl<sub>2</sub> (ΔEN 0), CH<sub>4</sub> (0.35)</td></tr>
+        <tr><th>0.4 – 1.7</th><td>Polar covalent</td><td>Shared, but pulled towards the greedier atom</td><td>H<sub>2</sub>O (1.24), HCl (0.96)</td></tr>
+        <tr><th>1.7 and above</th><td>Ionic</td><td>Pull so uneven the electron is transferred</td><td>NaCl (2.23), MgO (2.13)</td></tr>
+        <tr><th>Any, metal + metal</th><td>Metallic</td><td>Both hold loosely — electrons pool and delocalise</td><td>Bronze, steel, pure Cu</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="watch">
+    <strong>The rule is a guide, not a law</strong>
+    <p style="margin:0">ΔEN alone misclassifies real compounds. <strong>HF</strong> has ΔEN = 1.78, which the
+    table above would call ionic — but HF is a polar covalent molecule, because two non-metals cannot form an
+    ionic bond no matter what the numbers say. So always ask <em>both</em> questions: what does ΔEN say, and what
+    kinds of element are these? When they disagree, the element types win. The predictor below applies both.</p>
+  </div>
+
+  <h3>Try it</h3>
+  <p>Pick any two elements. The predictor works out ΔEN, checks which families they come from, and tells you
+  what you get and why.</p>
+
+  <div class="bondbox">
+    <div class="picker-row">
+      <div class="picker">
+        <label for="el-a">First element</label>
+        <select id="el-a"></select>
+      </div>
+      <div class="plus" aria-hidden="true">+</div>
+      <div class="picker">
+        <label for="el-b">Second element</label>
+        <select id="el-b"></select>
+      </div>
+    </div>
+
+    <div id="bond-result" aria-live="polite"></div>
+
+    <div class="scale" aria-hidden="true">
+      <div class="s1">non-polar<br>0 – 0.4</div>
+      <div class="s2">polar covalent<br>0.4 – 1.7</div>
+      <div class="s3">ionic<br>1.7 +</div>
+      <div id="scale-marker"></div>
+    </div>
+    <div class="scale-labels"><span>ΔEN 0</span><span>1.7</span><span>3.2</span></div>
+
+    <p style="font-size:.88rem;color:var(--muted);margin-top:16px">Worth trying: <strong>Na + Cl</strong> (the
+    classic ionic), <strong>H + F</strong> (the exception in the box above), <strong>C + H</strong>
+    (nearly non-polar, and the reason oil and water do not mix), <strong>Cu + Zn</strong> (metallic — this is
+    brass), <strong>Si + O</strong> (a metalloid with a non-metal — sand and glass).</p>
+  </div>
+</section>
+
+<!-- ============ PART 6 ============ -->
+<section class="part" id="check">
+  <p class="part-kicker">Part 6</p>
+  <h2>Check yourself</h2>
+  <p>Answer out loud or on paper <em>before</em> you reveal. Getting it wrong and then reading why is worth far
+  more than reading the answer first.</p>
+  <div id="quiz"></div>
+</section>
+
+</main>
+
+<footer>
+  <p>Study page — extension material. Electronegativity values are Pauling scale.<br>
+  Category boundaries near the staircase vary between sources; see the note in Part 4.</p>
+</footer>
+
+<script>
+"use strict";
+/* ---------- data: Z, symbol, name, category, electronegativity, group, period ---------- */
+const CAT = {
+  am:["Alkali metal","metal","#c0553f"], ae:["Alkaline earth metal","metal","#d08a3e"],
+  tm:["Transition metal","metal","#3f7ea6"], ptm:["Post-transition metal","metal","#5a8fa8"],
+  ml:["Metalloid","metalloid","#b07d3a"], nm:["Non-metal","nonmetal","#5f8f4e"],
+  hl:["Halogen","nonmetal","#7fa83f"], ng:["Noble gas","nonmetal","#7c6396"],
+  ln:["Lanthanide","metal","#8a6fa8"], an:["Actinide","metal","#a06f8f"]
+};
+const FAMILY_COLOUR = {metal:"#3f7ea6", metalloid:"#b07d3a", nonmetal:"#5f8f4e"};
+const E = [
+[1,"H","Hydrogen","nm",2.20,1,1],[2,"He","Helium","ng",null,18,1],
+[3,"Li","Lithium","am",0.98,1,2],[4,"Be","Beryllium","ae",1.57,2,2],[5,"B","Boron","ml",2.04,13,2],
+[6,"C","Carbon","nm",2.55,14,2],[7,"N","Nitrogen","nm",3.04,15,2],[8,"O","Oxygen","nm",3.44,16,2],
+[9,"F","Fluorine","hl",3.98,17,2],[10,"Ne","Neon","ng",null,18,2],
+[11,"Na","Sodium","am",0.93,1,3],[12,"Mg","Magnesium","ae",1.31,2,3],[13,"Al","Aluminium","ptm",1.61,13,3],
+[14,"Si","Silicon","ml",1.90,14,3],[15,"P","Phosphorus","nm",2.19,15,3],[16,"S","Sulfur","nm",2.58,16,3],
+[17,"Cl","Chlorine","hl",3.16,17,3],[18,"Ar","Argon","ng",null,18,3],
+[19,"K","Potassium","am",0.82,1,4],[20,"Ca","Calcium","ae",1.00,2,4],[21,"Sc","Scandium","tm",1.36,3,4],
+[22,"Ti","Titanium","tm",1.54,4,4],[23,"V","Vanadium","tm",1.63,5,4],[24,"Cr","Chromium","tm",1.66,6,4],
+[25,"Mn","Manganese","tm",1.55,7,4],[26,"Fe","Iron","tm",1.83,8,4],[27,"Co","Cobalt","tm",1.88,9,4],
+[28,"Ni","Nickel","tm",1.91,10,4],[29,"Cu","Copper","tm",1.90,11,4],[30,"Zn","Zinc","tm",1.65,12,4],
+[31,"Ga","Gallium","ptm",1.81,13,4],[32,"Ge","Germanium","ml",2.01,14,4],[33,"As","Arsenic","ml",2.18,15,4],
+[34,"Se","Selenium","nm",2.55,16,4],[35,"Br","Bromine","hl",2.96,17,4],[36,"Kr","Krypton","ng",3.00,18,4],
+[37,"Rb","Rubidium","am",0.82,1,5],[38,"Sr","Strontium","ae",0.95,2,5],[39,"Y","Yttrium","tm",1.22,3,5],
+[40,"Zr","Zirconium","tm",1.33,4,5],[41,"Nb","Niobium","tm",1.60,5,5],[42,"Mo","Molybdenum","tm",2.16,6,5],
+[43,"Tc","Technetium","tm",1.90,7,5],[44,"Ru","Ruthenium","tm",2.20,8,5],[45,"Rh","Rhodium","tm",2.28,9,5],
+[46,"Pd","Palladium","tm",2.20,10,5],[47,"Ag","Silver","tm",1.93,11,5],[48,"Cd","Cadmium","tm",1.69,12,5],
+[49,"In","Indium","ptm",1.78,13,5],[50,"Sn","Tin","ptm",1.96,14,5],[51,"Sb","Antimony","ml",2.05,15,5],
+[52,"Te","Tellurium","ml",2.10,16,5],[53,"I","Iodine","hl",2.66,17,5],[54,"Xe","Xenon","ng",2.60,18,5],
+[55,"Cs","Caesium","am",0.79,1,6],[56,"Ba","Barium","ae",0.89,2,6],
+[57,"La","Lanthanum","ln",1.10,null,6],[58,"Ce","Cerium","ln",1.12,null,6],[59,"Pr","Praseodymium","ln",1.13,null,6],
+[60,"Nd","Neodymium","ln",1.14,null,6],[61,"Pm","Promethium","ln",1.13,null,6],[62,"Sm","Samarium","ln",1.17,null,6],
+[63,"Eu","Europium","ln",1.20,null,6],[64,"Gd","Gadolinium","ln",1.20,null,6],[65,"Tb","Terbium","ln",1.10,null,6],
+[66,"Dy","Dysprosium","ln",1.22,null,6],[67,"Ho","Holmium","ln",1.23,null,6],[68,"Er","Erbium","ln",1.24,null,6],
+[69,"Tm","Thulium","ln",1.25,null,6],[70,"Yb","Ytterbium","ln",1.10,null,6],[71,"Lu","Lutetium","ln",1.27,null,6],
+[72,"Hf","Hafnium","tm",1.30,4,6],[73,"Ta","Tantalum","tm",1.50,5,6],[74,"W","Tungsten","tm",2.36,6,6],
+[75,"Re","Rhenium","tm",1.90,7,6],[76,"Os","Osmium","tm",2.20,8,6],[77,"Ir","Iridium","tm",2.20,9,6],
+[78,"Pt","Platinum","tm",2.28,10,6],[79,"Au","Gold","tm",2.54,11,6],[80,"Hg","Mercury","tm",2.00,12,6],
+[81,"Tl","Thallium","ptm",1.62,13,6],[82,"Pb","Lead","ptm",2.33,14,6],[83,"Bi","Bismuth","ptm",2.02,15,6],
+[84,"Po","Polonium","ptm",2.00,16,6],[85,"At","Astatine","hl",2.20,17,6],[86,"Rn","Radon","ng",2.20,18,6],
+[87,"Fr","Francium","am",0.70,1,7],[88,"Ra","Radium","ae",0.90,2,7],
+[89,"Ac","Actinium","an",1.10,null,7],[90,"Th","Thorium","an",1.30,null,7],[91,"Pa","Protactinium","an",1.50,null,7],
+[92,"U","Uranium","an",1.38,null,7],[93,"Np","Neptunium","an",1.36,null,7],[94,"Pu","Plutonium","an",1.28,null,7],
+[95,"Am","Americium","an",1.13,null,7],[96,"Cm","Curium","an",1.28,null,7],[97,"Bk","Berkelium","an",1.30,null,7],
+[98,"Cf","Californium","an",1.30,null,7],[99,"Es","Einsteinium","an",1.30,null,7],[100,"Fm","Fermium","an",1.30,null,7],
+[101,"Md","Mendelevium","an",1.30,null,7],[102,"No","Nobelium","an",1.30,null,7],[103,"Lr","Lawrencium","an",1.30,null,7],
+[104,"Rf","Rutherfordium","tm",null,4,7],[105,"Db","Dubnium","tm",null,5,7],[106,"Sg","Seaborgium","tm",null,6,7],
+[107,"Bh","Bohrium","tm",null,7,7],[108,"Hs","Hassium","tm",null,8,7],[109,"Mt","Meitnerium","tm",null,9,7],
+[110,"Ds","Darmstadtium","tm",null,10,7],[111,"Rg","Roentgenium","tm",null,11,7],[112,"Cn","Copernicium","tm",null,12,7],
+[113,"Nh","Nihonium","ptm",null,13,7],[114,"Fl","Flerovium","ptm",null,14,7],[115,"Mc","Moscovium","ptm",null,15,7],
+[116,"Lv","Livermorium","ptm",null,16,7],[117,"Ts","Tennessine","hl",null,17,7],[118,"Og","Oganesson","ng",null,18,7]
+].map(([z,sym,name,cat,en,g,p])=>({z,sym,name,cat,en,g,p,family:CAT[cat][1]}));
+
+const GAS = new Set(["H","He","N","O","F","Ne","Cl","Ar","Kr","Xe","Rn","Og"]);
+const LIQ = new Set(["Br","Hg"]);
+const MASS = {1:1,2:4,3:7,4:9,5:11,6:12,7:14,8:16,9:19,10:20,11:23,12:24,13:27,14:28,15:31,16:32,17:35,18:40,19:39,20:40};
+
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+
+/* ---------- Part 1: atom builder ---------- */
+function shellsFor(z){
+  const caps=[2,8,8,2], out=[]; let left=z;
+  for(const c of caps){ if(left<=0) break; out.push(Math.min(c,left)); left-=c; }
+  return out;
+}
+function drawAtom(z){
+  const el = E[z-1], sh = shellsFor(z);
+  const A = MASS[z], n = A - z;
+  $("#z-label").textContent = z;
+  $("#r-name").textContent = el.name; $("#r-sym").textContent = el.sym;
+  $("#r-p").textContent = z; $("#r-n").textContent = n;
+  $("#r-e").textContent = z; $("#r-a").textContent = A;
+  $("#r-shells").textContent = sh.length;
+  const val = sh[sh.length-1];
+  $("#r-val").textContent = val;
+  const full = (sh.length===1 && val===2) || (sh.length>1 && val===8);
+  $("#r-note").textContent = full
+    ? el.name + " already has a full outer shell, so it has no reason to bond. That is why the noble gases are unreactive."
+    : el.name + " has " + val + " outer electron" + (val===1?"":"s") + ". It is in group " + (el.g||"—") +
+      ", and every element in that group has the same number — which is why they behave alike.";
+
+  const cx=200, cy=200, svg=$("#atom-svg");
+  let out = `<circle cx="${cx}" cy="${cy}" r="26" fill="#e66a4e" stroke="#18251f" stroke-width="2"/>
+    <text x="${cx}" y="${cy-2}" text-anchor="middle" font-size="13" font-weight="700" fill="#fff">${z}p</text>
+    <text x="${cx}" y="${cy+13}" text-anchor="middle" font-size="13" font-weight="700" fill="#fff">${n}n</text>`;
+  sh.forEach((count,i)=>{
+    const r = 56 + i*42;
+    out += `<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="#647069" stroke-width="1.2" stroke-dasharray="3 4"/>`;
+    for(let k=0;k<count;k++){
+      const ang = (k/count)*2*Math.PI - Math.PI/2;
+      const x = cx + r*Math.cos(ang), y = cy + r*Math.sin(ang);
+      const outer = (i===sh.length-1);
+      out += `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="7"
+        fill="${outer?"#e6b954":"#315c47"}" stroke="#18251f" stroke-width="1.5"/>`;
+    }
+  });
+  out += `<text x="${cx}" y="384" text-anchor="middle" font-size="13" fill="#647069">
+    ${sh.join(", ")} — gold = outer shell</text>`;
+  svg.innerHTML = `<title id="atom-t">Shell diagram of ${esc(el.name)}</title>
+    <desc id="atom-d">${esc(el.name)}: ${z} protons, ${n} neutrons, electrons arranged ${sh.join(", ")}.
+    The outer shell holds ${val}.</desc>` + out;
+}
+$("#z-slider").addEventListener("input", e => drawAtom(Number(e.target.value)));
+drawAtom(1);
+
+/* ---------- Part 2: periodic table ---------- */
+const enVals = E.map(e=>e.en).filter(v=>v!=null);
+const EN_MIN = Math.min(...enVals), EN_MAX = Math.max(...enVals);
+let mode = "family", selected = null;
+
+function colourFor(el){
+  if(mode==="family") return FAMILY_COLOUR[el.family];
+  if(mode==="category") return CAT[el.cat][2];
+  if(mode==="en"){
+    if(el.en==null) return "#d8d2c4";
+    const t=(el.en-EN_MIN)/(EN_MAX-EN_MIN);
+    const r=Math.round(74+(200-74)*t), g=Math.round(140-(140-70)*t), b=Math.round(90-(90-60)*t);
+    return `rgb(${r},${g},${b})`;
+  }
+  if(mode==="state") return GAS.has(el.sym)?"#7c9cc4":(LIQ.has(el.sym)?"#c98a3f":"#6f8f6a");
+  return "#ccc";
+}
+function textOn(bg){
+  const m=bg.match(/\d+/g);
+  if(!m) return "#18251f";
+  const [r,g,b]=m.map(Number);
+  return (0.299*r+0.587*g+0.114*b)>150 ? "#18251f" : "#fff";
+}
+function buildTable(){
+  const wrap=$("#ptable"); wrap.innerHTML="";
+  const main = E.filter(e=>e.g!==null);
+  const cells = {};
+  main.forEach(e=>{ cells[`${e.p}-${e.g}`]=e; });
+  for(let p=1;p<=7;p++){
+    for(let g=1;g<=18;g++){
+      const e=cells[`${p}-${g}`];
+      if(e){ wrap.appendChild(tile(e)); }
+      else if((p===6||p===7)&&g===3){
+        const ph=document.createElement("div");
+        ph.className="el"; ph.style.background="#e0dacb"; ph.style.cursor="default";
+        ph.innerHTML=`<span class="z" style="font-size:.46rem">${p===6?"57–71":"89–103"}</span>`;
+        wrap.appendChild(ph);
+      } else {
+        const sp=document.createElement("div"); sp.className="spacer"; wrap.appendChild(sp);
+      }
+    }
+  }
+  [["ln",6],["an",7]].forEach(([cat])=>{
+    const row=document.createElement("div"); row.className="frow";
+    E.filter(e=>e.cat===cat).forEach(e=>row.appendChild(tile(e)));
+    wrap.appendChild(row);
+  });
+  paint();
+}
+function tile(e){
+  const d=document.createElement("button");
+  d.className="el"; d.type="button"; d.dataset.z=e.z;
+  d.setAttribute("aria-label",`${e.name}, atomic number ${e.z}`);
+  d.innerHTML=`<span class="z">${e.z}</span><span class="sym">${e.sym}</span>`;
+  d.addEventListener("click",()=>select(e.z));
+  return d;
+}
+function paint(){
+  document.querySelectorAll(".el[data-z]").forEach(node=>{
+    const e=E[Number(node.dataset.z)-1];
+    const bg=colourFor(e);
+    node.style.background=bg; node.style.color=textOn(bg);
+    node.classList.toggle("sel", selected===e.z);
+  });
+  const L=$("#legend");
+  if(mode==="family"){
+    L.innerHTML=Object.entries(FAMILY_COLOUR).map(([k,v])=>
+      `<span><i style="background:${v}"></i>${k==="nonmetal"?"Non-metal":k[0].toUpperCase()+k.slice(1)}</span>`).join("");
+  } else if(mode==="category"){
+    L.innerHTML=Object.entries(CAT).map(([k,v])=>`<span><i style="background:${v[2]}"></i>${v[0]}</span>`).join("");
+  } else if(mode==="en"){
+    L.innerHTML=`<span><i style="background:rgb(74,140,90)"></i>Low (${EN_MIN})</span>
+      <span><i style="background:rgb(137,105,75)"></i>Middle</span>
+      <span><i style="background:rgb(200,70,60)"></i>High (${EN_MAX})</span>
+      <span><i style="background:#d8d2c4"></i>No accepted value</span>`;
+  } else {
+    L.innerHTML=`<span><i style="background:#6f8f6a"></i>Solid</span>
+      <span><i style="background:#c98a3f"></i>Liquid</span>
+      <span><i style="background:#7c9cc4"></i>Gas</span>`;
+  }
+}
+function select(z){
+  selected=z; paint();
+  const e=E[z-1], bg=CAT[e.cat][2];
+  const state = GAS.has(e.sym)?"Gas":(LIQ.has(e.sym)?"Liquid":"Solid");
+  const behaviour = e.family==="metal"
+    ? "Loses electrons to form a positive ion. Bonds ionically with non-metals, metallically with other metals."
+    : e.family==="nonmetal"
+      ? (e.cat==="ng" ? "Full outer shell already, so it normally forms no bonds at all."
+         : "Gains or shares electrons. Bonds ionically with metals, covalently with other non-metals.")
+      : "In between — tends to share rather than transfer, and usually forms giant covalent networks.";
+  $("#el-detail").innerHTML = `<div class="card"><div class="detail-grid">
+    <div class="detail-tile" style="background:${bg}"><div><b>${e.sym}</b><span>${e.z}</span></div></div>
+    <div>
+      <h4 style="margin:0 0 6px">${esc(e.name)}</h4>
+      <p style="margin:0 0 8px;font-size:.92rem">
+        <strong>${CAT[e.cat][0]}</strong> · ${e.family==="nonmetal"?"non-metal":e.family} ·
+        ${e.g?"group "+e.g+", ":""}period ${e.p} · ${state.toLowerCase()} at room temperature</p>
+      <p style="margin:0 0 8px;font-size:.92rem">Electronegativity:
+        <strong>${e.en==null?"no accepted value":e.en.toFixed(2)}</strong></p>
+      <p style="margin:0;font-size:.92rem;color:#465149">${behaviour}</p>
+    </div></div></div>`;
+}
+document.querySelectorAll(".mode-btn").forEach(b=>{
+  b.addEventListener("click",()=>{
+    mode=b.dataset.mode;
+    document.querySelectorAll(".mode-btn").forEach(x=>x.setAttribute("aria-pressed",String(x===b)));
+    paint();
+  });
+});
+buildTable();
+select(11);
+
+/* ---------- Part 5: bond predictor ---------- */
+const bondable = E.filter(e=>e.en!=null);
+function fillSelect(sel,defZ){
+  sel.innerHTML = bondable.map(e=>
+    `<option value="${e.z}"${e.z===defZ?" selected":""}>${e.sym} — ${e.name} (${e.en.toFixed(2)})</option>`).join("");
+}
+fillSelect($("#el-a"),11); fillSelect($("#el-b"),17);
+
+function predict(){
+  const a=E[Number($("#el-a").value)-1], b=E[Number($("#el-b").value)-1];
+  const dEN=Math.abs(a.en-b.en);
+  const fams=[a.family,b.family].sort().join("+");
+  let type, why, colour;
+
+  if(a.family==="metal" && b.family==="metal"){
+    type="Metallic bond"; colour="#3f7ea6";
+    why=`Both ${esc(a.name)} and ${esc(b.name)} are metals, so both hold their outer electrons loosely. Neither can take from the other. Instead both release electrons into a shared pool — a lattice of positive ions in a sea of delocalised electrons. ΔEN is irrelevant here; what decides it is that both are metals.`;
+  } else if(a.family==="nonmetal" && b.family==="nonmetal"){
+    if(dEN<0.4){ type="Non-polar covalent bond"; colour="#5f8f4e";
+      why=`Two non-metals, so electrons are shared rather than transferred. ΔEN of ${dEN.toFixed(2)} is under 0.4, so the two atoms pull almost equally and the shared pair sits roughly midway. No significant charge separation.`;
+    } else { type="Polar covalent bond"; colour="#7d8f3f";
+      why=`Two non-metals, so the electrons are shared. But ΔEN of ${dEN.toFixed(2)} means ${esc(dEN&&a.en>b.en?a.name:b.name)} pulls harder, so the shared pair sits closer to it. That end becomes slightly negative (δ−) and the other slightly positive (δ+).`
+        + (dEN>=1.7 ? ` <strong>Note:</strong> ΔEN is above 1.7, which the cut-off table would call ionic — but two non-metals cannot form an ionic bond. This is exactly the HF case from the box above: the element types override the number.` : "");
+    }
+  } else if(fams.includes("metalloid")){
+    type = dEN>=1.7 ? "Mostly ionic (metalloid involved)" : "Covalent — often a giant network";
+    colour="#b07d3a";
+    why=`One of these is a metalloid, which sits on the boundary and behaves like both. ΔEN is ${dEN.toFixed(2)}. `
+      + (dEN>=1.7
+        ? `That is a large difference, so the bonding has strong ionic character.`
+        : `That is a moderate difference, so electrons are shared rather than transferred — and metalloids typically build giant covalent networks rather than small molecules. Silicon dioxide is the everyday example: sand, quartz and glass.`);
+  } else {
+    const metal = a.family==="metal"?a:b, other = a.family==="metal"?b:a;
+    if(dEN>=1.7){ type="Ionic bond"; colour="#b5563c";
+      why=`${esc(metal.name)} is a metal and ${esc(other.name)} is a non-metal, and ΔEN of ${dEN.toFixed(2)} is at or above 1.7. The pull is so uneven that ${esc(metal.name)} loses its outer electron(s) altogether. You get ${esc(metal.sym)}<sup>+</sup> and ${esc(other.sym)}<sup>−</sup>, and the bond is the attraction between those opposite charges.`;
+    } else { type="Polar covalent — with ionic character"; colour="#c9a13f";
+      why=`A metal with a non-metal usually gives an ionic bond, but ΔEN here is only ${dEN.toFixed(2)} — below 1.7. The metal does not fully give up its electron, so the bonding is better described as polar covalent with significant ionic character. This is where the simple rule gets genuinely blurry, and real chemists talk about a spectrum rather than two boxes.`;
+    }
+  }
+
+  const noble = [a,b].filter(x=>x.cat==="ng");
+  const nobleNote = noble.length
+    ? `<p style="margin:12px 0 0;font-size:.9rem;color:#465149"><strong>In practice:</strong> ${esc(noble.map(x=>x.name).join(" and "))} already ${noble.length>1?"have":"has"} a full outer shell, so in reality this combination does not readily form a bond at all. A handful of xenon and krypton compounds exist under extreme conditions, but they are the exception.</p>`
+    : "";
+
+  $("#bond-result").innerHTML =
+    `<p class="verdict" style="color:${colour}">${type}</p>
+     <p style="margin:0 0 10px"><span class="delta">ΔEN = |${a.en.toFixed(2)} − ${b.en.toFixed(2)}| = ${dEN.toFixed(2)}</span>
+       &nbsp;·&nbsp; <span style="font-size:.9rem;color:var(--muted)">${esc(a.name)} (${a.family==="nonmetal"?"non-metal":a.family}) + ${esc(b.name)} (${b.family==="nonmetal"?"non-metal":b.family})</span></p>
+     <p style="margin:0;font-size:.95rem">${why}</p>${nobleNote}`;
+
+  $("#scale-marker").style.left = Math.min(100,(dEN/3.2)*100).toFixed(1)+"%";
+}
+$("#el-a").addEventListener("change",predict);
+$("#el-b").addEventListener("change",predict);
+predict();
+
+/* ---------- Part 6: quiz ---------- */
+const QUIZ = [
+  {q:"An atom has 12 protons, 12 neutrons and 12 electrons. Name it, give its mass number, and say whether it is an ion.",
+   a:"Magnesium (12 protons = Mg). Mass number A = 12 + 12 = 24. Electrons equal protons, so it is neutral — not an ion."},
+  {q:"Why do all the elements in group 1 behave so similarly?",
+   a:"They all have exactly one electron in their outer shell. Chemistry is decided by valence electrons, and every group 1 element has the same number, so they react the same way — losing that one electron."},
+  {q:"Fluorine is the most electronegative element. Does that make it the most reactive element?",
+   a:"No. Electronegativity is how strongly an atom pulls on electrons in a bond. Fluorine is the most electronegative and it is the most reactive non-metal — but caesium and francium are more reactive overall, because they give electrons away extremely readily. High electronegativity and high reactivity are different things."},
+  {q:"Going left to right across period 3 (Na to Ar), does the atomic radius get bigger or smaller? Explain using protons and shielding.",
+   a:"Smaller. Each step adds a proton, but the extra electron goes into the same shell, so shielding barely changes. The stronger nuclear charge pulls the whole electron cloud in tighter."},
+  {q:"Potassium (EN 0.82) and bromine (EN 2.96). What is ΔEN, what bond forms, and what ions result?",
+   a:"ΔEN = 2.96 − 0.82 = 2.14, which is above 1.7 — and it is a metal with a non-metal. Ionic bond. Potassium loses one electron to become K⁺; bromine gains it to become Br⁻. The compound is KBr."},
+  {q:"Both hydrogen and fluorine are non-metals, but ΔEN for HF is 1.78 — above the ionic cut-off. So is HF ionic?",
+   a:"No. HF is polar covalent. Two non-metals cannot form an ionic bond regardless of ΔEN, because neither will fully surrender an electron. This is the standard example of the cut-off rule failing: always check the element types as well as the number."},
+  {q:"Why can a metal be hammered into a sheet, while an ionic solid like salt shatters?",
+   a:"In a metal the positive ions sit in a sea of delocalised electrons, so when a layer slides the electron sea flows with it and the bonding survives. In an ionic solid, sliding a layer brings like charges next to each other; they repel violently and the crystal splits along that plane."},
+  {q:"Silicon is a metalloid. Give one metal-like property and one non-metal-like property, and say why that combination is useful.",
+   a:"Metal-like: it has a shiny, lustrous appearance and conducts electricity to a degree. Non-metal-like: it is brittle and shatters rather than bending. That partial, controllable conductivity is what makes it a semiconductor — the basis of every computer chip."},
+  {q:"Air and water are both clear and colourless. One is a mixture and one is a compound. Which is which, and what is the test?",
+   a:"Air is a mixture — nitrogen, oxygen and argon are simply together, in no fixed ratio, and can be separated physically. Water is a compound — hydrogen and oxygen are chemically bonded in a fixed 2:1 ratio, and separating them takes a chemical reaction. The test is whether there is a chemical bond."}
+];
+$("#quiz").innerHTML = QUIZ.map((item,i)=>`
+  <div class="q">
+    <p>${i+1}. ${item.q}</p>
+    <button class="reveal" type="button" aria-expanded="false" data-i="${i}">Show answer</button>
+    <div class="answer" id="ans-${i}" hidden>${item.a}</div>
+  </div>`).join("");
+document.querySelectorAll(".reveal").forEach(b=>{
+  b.addEventListener("click",()=>{
+    const box=$("#ans-"+b.dataset.i), open=!box.hidden;
+    box.hidden=open;
+    b.setAttribute("aria-expanded",String(!open));
+    b.textContent = open ? "Show answer" : "Hide answer";
+  });
+});
+</script>
+<p class="aula-pie"><a href="../">Herramientas de aula</a> · Benjamín Moreira-Grez · Santiago, Chile</p>
+</body>
+</html>
