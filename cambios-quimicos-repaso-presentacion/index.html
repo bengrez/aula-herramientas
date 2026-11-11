@@ -198,15 +198,33 @@
 <aside class="nota-presentador"><p data-p="0"><b>Activación (8 min).</b> Pregunta antes de revelar: «¿Qué hicimos con los legos la clase pasada?». Si tienes legos, arma una molécula y muéstrala.</p><p data-p="1"><b>Paso 1:</b> separa las moléculas sin desarmarlas: hielo → agua → vapor. Nada se desarma.</p><p data-p="2"><b>Paso 2:</b> desarma y vuelve a armar con otras parejas: eso es una reacción.</p><p data-p="3"><b>Paso 3:</b> este es el mensaje de la unidad. Que lo digan en voz alta.</p></aside>
 </section>
 
-<section class="lamina" data-titulo="¿Físico o químico?" aria-label="Lámina 3">
+<section class="lamina" data-titulo="Simulación: hielo, agua y vapor" aria-label="Lámina 3">
+<p class="rotulo">Simulación · mueve el control · cambio físico</p>
+<h2>¿Qué pasa con el <span class="acento">espacio entre moléculas</span>?</h2>
+<div class="sim" style="display:flex;gap:44px;align-items:stretch">
+  <canvas id="sim-cv" width="780" height="600" style="width:780px;height:600px;background:#fff;border:3px solid #CBD8DD;border-radius:22px" aria-label="Moléculas de agua que se separan al calentar"></canvas>
+  <div style="flex:1;display:flex;flex-direction:column;gap:22px">
+    <div class="panel" style="align-items:center"><p id="sim-est" style="font-size:66px;font-weight:800;line-height:1">🧊 Hielo</p><p id="sim-temp" class="grande suave">−10 °C</p></div>
+    <div class="panel"><p id="sim-desc" style="font-size:30px">Moléculas muy juntas y ordenadas: solo vibran en su lugar.</p></div>
+    <div class="panel sim-ctl" style="gap:10px">
+      <input id="sim-rng" type="range" min="0" max="100" value="0" step="1" aria-label="Temperatura: de hielo a vapor" style="width:100%;height:60px;accent-color:#0E7490">
+      <div style="display:flex;justify-content:space-between;font-size:28px;font-weight:700"><span>🧊 Hielo</span><span>💧 Agua</span><span>♨️ Vapor</span></div>
+    </div>
+    <p class="construye" data-paso="1" style="font-size:30px;background:#ECF6F8;border:2px solid #0E7490;border-radius:18px;padding:18px 22px">Las moléculas son <b>siempre las mismas</b> (H₂O). Solo cambia el espacio entre ellas: <b>cambio físico</b>.</p>
+  </div>
+</div>
+<aside class="nota-presentador"><p data-p="0"><b>Simulación (5 min).</b> Arrastra el control lento de izquierda a derecha. Pregunta en cada estado: «¿cambiaron las moléculas o el espacio entre ellas?». Cuenta: siempre hay 36.</p><p data-p="1"><b>Paso 1:</b> la conclusión. Vuelve al hielo arrastrando hacia la izquierda: el cambio físico se puede revertir.</p></aside>
+</section>
+
+<section class="lamina" data-titulo="¿Físico o químico?" aria-label="Lámina 4">
 <p class="rotulo">Ronda rápida</p>
 <h2>¿Físico o químico?</h2>
-<div class="fila" style="gap:24px"><div class="panel" style="align-items:center;text-align:center"><p style="font-size:84px">🧊</p><p class="grande"><b>Hielo que se derrite</b></p><p class="construye" data-paso="1" style="font-size:32px;color:#0E7490"><b>Físico</b>: solo se separan las moléculas de agua</p></div><div class="panel" style="align-items:center;text-align:center"><p style="font-size:84px">🔥</p><p class="grande"><b>Papel que se quema</b></p><p class="construye" data-paso="2" style="font-size:32px;color:#B45309"><b>Químico</b>: humo, ceniza, calor y luz</p></div><div class="panel" style="align-items:center;text-align:center"><p style="font-size:84px">🥤</p><p class="grande"><b>Azúcar en agua</b></p><p class="construye" data-paso="3" style="font-size:32px;color:#0E7490"><b>Físico</b>: el azúcar sigue ahí, repartida</p></div><div class="panel" style="align-items:center;text-align:center"><p style="font-size:84px">🔩</p><p class="grande"><b>Clavo que se oxida</b></p><p class="construye" data-paso="4" style="font-size:32px;color:#B45309"><b>Químico</b>: cambia de color, aparece óxido</p></div></div>
+<div class="fila" style="gap:24px"><div class="panel" style="align-items:center;text-align:center"><p style="font-size:84px">🧊</p><p class="grande"><b>Hielo que se derrite</b></p><p class="construye" data-paso="1" style="font-size:30px;color:#0E7490"><b>Físico</b>: solo se separan las moléculas de agua</p></div><div class="panel" style="align-items:center;text-align:center"><p style="font-size:84px">🔥</p><p class="grande"><b>Papel que se quema</b></p><p class="construye" data-paso="2" style="font-size:32px;color:#B45309"><b>Químico</b>: humo, ceniza, calor y luz</p></div><div class="panel" style="align-items:center;text-align:center"><p style="font-size:84px">🥤</p><p class="grande"><b>Azúcar en agua</b></p><p class="construye" data-paso="3" style="font-size:32px;color:#0E7490"><b>Físico</b>: el azúcar sigue ahí, repartida</p></div><div class="panel" style="align-items:center;text-align:center"><p style="font-size:84px">🔩</p><p class="grande"><b>Clavo que se oxida</b></p><p class="construye" data-paso="4" style="font-size:32px;color:#B45309"><b>Químico</b>: cambia de color, aparece óxido</p></div></div>
 <div class="panel construye" data-paso="5"><p><b>Pistas de un cambio químico (evidencias):</b></p><div style="display:flex;font-size:32px;font-weight:700"><span style="flex:1;text-align:center"><span style="font-size:56px">🎨</span><br>Cambio de color</span><span style="flex:1;text-align:center"><span style="font-size:56px">🫧</span><br>Sale un gas</span><span style="flex:1;text-align:center"><span style="font-size:56px">🧂</span><br>Aparece un sólido</span><span style="flex:1;text-align:center"><span style="font-size:56px">🌡️</span><br>Calor, frío o luz</span></div></div>
 <aside class="nota-presentador"><p data-p="0"><b>8 min.</b> Antes de cada paso, votan con la mano: arriba físico, abajo químico.</p><p data-p="1"><b>Paso 1:</b> hielo: las moléculas de agua siguen siendo agua (los legos no se desarman).</p><p data-p="2"><b>Paso 2:</b> papel: piezas reorganizadas; las evidencias son humo, ceniza, calor y luz.</p><p data-p="3"><b>Paso 3:</b> disolver no es reaccionar: si evaporas el agua, el azúcar vuelve.</p><p data-p="4"><b>Paso 4:</b> oxidación: el color cambia porque hay una sustancia nueva.</p><p data-p="5"><b>Paso 5:</b> las 4 evidencias. Una sola evidencia es una pista, no una prueba (por ejemplo, hervir agua también saca burbujas).</p></aside>
 </section>
 
-<section class="lamina" data-titulo="📓 Resumen 1: físico y químico" aria-label="Lámina 4">
+<section class="lamina" data-titulo="📓 Resumen 1: físico y químico" aria-label="Lámina 5">
 <p class="rotulo">📓 Copia en tu cuaderno</p>
 <h2>Resumen 1 · Cambio físico y cambio químico</h2>
 <div style="display:flex;gap:56px;align-items:flex-start">
@@ -220,7 +238,7 @@
 <aside class="nota-presentador"><p data-p="0"><b>Copia (5 min sugeridos).</b> Que agreguen un dibujo con legos al lado de cada definición si les sobra tiempo.</p></aside>
 </section>
 
-<section class="lamina" data-titulo="Reactivos, productos y masa" aria-label="Lámina 5">
+<section class="lamina" data-titulo="Reactivos, productos y masa" aria-label="Lámina 6">
 <p class="rotulo">Conservación de la masa</p>
 <h2>Las piezas <span class="acento">no se pierden</span>: se reorganizan</h2>
 <div style="display:flex;align-items:center;gap:40px;justify-content:center">
@@ -235,7 +253,7 @@
 <aside class="nota-presentador"><p data-p="1"><b>Paso 1:</b> cuenten las piezas: 6. Los reactivos son lo que hay al principio.</p><p data-p="2"><b>Paso 2:</b> desarma y arma otras combinaciones con las mismas piezas: los productos.</p><p data-p="3"><b>Paso 3:</b> ninguna pieza aparece ni desaparece: la masa se conserva (Lavoisier, si quieres nombrarlo).</p><p data-p="4"><b>Paso 4:</b> la trampa típica de la prueba: el gas también tiene masa.</p></aside>
 </section>
 
-<section class="lamina" data-titulo="Rapidez: choques y 4 factores" aria-label="Lámina 6">
+<section class="lamina" data-titulo="Rapidez: choques y 4 factores" aria-label="Lámina 7">
 <p class="rotulo">Rapidez de reacción</p>
 <h2>Para reaccionar, las piezas <span class="acento">tienen que chocar</span></h2>
 <p class="grande construye" data-paso="1">Más choques (y más fuertes) = reacción <b>más rápida</b>. Cuatro cosas lo cambian:</p>
@@ -243,7 +261,7 @@
 <aside class="nota-presentador"><p data-p="1"><b>Paso 1:</b> con legos: dos piezas no se unen si no se encuentran.</p><p data-p="2"><b>Paso 2:</b> recuerda las tabletas en agua fría y caliente.</p><p data-p="3"><b>Paso 3:</b> más concentrado = más piezas en la caja.</p><p data-p="4"><b>Paso 4:</b> la tableta molida contra la entera.</p><p data-p="5"><b>Paso 5:</b> ejemplo: las enzimas de la saliva con el pan.</p></aside>
 </section>
 
-<section class="lamina" data-titulo="📓 Resumen 2: masa y rapidez" aria-label="Lámina 7">
+<section class="lamina" data-titulo="📓 Resumen 2: masa y rapidez" aria-label="Lámina 8">
 <p class="rotulo">📓 Copia en tu cuaderno</p>
 <h2>Resumen 2 · La masa y la rapidez</h2>
 <div style="display:flex;gap:56px;align-items:flex-start">
@@ -257,14 +275,14 @@
 <aside class="nota-presentador"><p data-p="0"><b>Copia (5 min sugeridos).</b></p></aside>
 </section>
 
-<section class="lamina" data-titulo="Tres errores típicos" aria-label="Lámina 8">
+<section class="lamina" data-titulo="Tres errores típicos" aria-label="Lámina 9">
 <p class="rotulo">Para quien parte de cero</p>
 <h2>Tres <span class="acento">errores típicos</span> (que no te pasen en la prueba)</h2>
 <div class="fila" style="gap:30px"><div class="panel construye" data-paso="1"><p style="font-size:64px">🧊</p><p class="grande" style="color:#B45309"><b>«Derretir hielo es químico porque cambia»</b></p><p>No: el hielo y el agua son la misma sustancia (H₂O). Solo cambia el espacio entre las moléculas.</p></div><div class="panel construye" data-paso="2"><p style="font-size:64px">🎈</p><p class="grande" style="color:#B45309"><b>«Si sale un gas, se pierde masa»</b></p><p>No: el gas también es materia. Si lo atrapas en un globo, la masa total es la misma.</p></div><div class="panel construye" data-paso="3"><p style="font-size:64px">⚙️</p><p class="grande" style="color:#B45309"><b>«El catalizador se gasta en la reacción»</b></p><p>No: ayuda y queda igual al final. Por eso basta un poquito.</p></div></div>
 <aside class="nota-presentador"><p data-p="0"><b>Nivelación (5 min).</b> Lee el error entre comillas y pregunta: «¿Verdadero o falso?» antes de revelar.</p><p data-p="1"><b>Paso 1:</b> vuelve a los legos: las moléculas no se desarmaron.</p><p data-p="2"><b>Paso 2:</b> el experimento del globo sobre la botella con vinagre y bicarbonato.</p><p data-p="3"><b>Paso 3:</b> el catalizador no aparece entre los productos.</p></aside>
 </section>
 
-<section class="lamina" data-titulo="Ensayo de prueba" aria-label="Lámina 9">
+<section class="lamina" data-titulo="Ensayo de prueba" aria-label="Lámina 10">
 <p class="rotulo">Ensayo · en tu cuaderno · individual</p>
 <h2>Ensayo de prueba</h2>
 <div style="display:flex;gap:44px;align-items:flex-start">
@@ -275,14 +293,14 @@
 <aside class="nota-presentador"><p data-p="0"><b>12 min sugeridos.</b> Responden en el cuaderno: el número y la letra; la 7, con un dibujo y una frase. Sin nota: lo corrigen ellos en la lámina siguiente.</p></aside>
 </section>
 
-<section class="lamina" data-titulo="Corrección del ensayo" aria-label="Lámina 10">
+<section class="lamina" data-titulo="Corrección del ensayo" aria-label="Lámina 11">
 <p class="rotulo">Corrección · con otro color</p>
 <h2>Corrijamos juntos</h2>
 <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px 40px"><p class="construye" data-paso="1" style="font-size:40px"><b class="acento">1. a</b> Físico: siguen siendo moléculas de agua.</p><p class="construye" data-paso="2" style="font-size:40px"><b class="acento">2. b</b> Gas y cambio de color son evidencias.</p><p class="construye" data-paso="3" style="font-size:40px"><b class="acento">3. b</b> Los átomos se reorganizan.</p><p class="construye" data-paso="4" style="font-size:40px"><b class="acento">4. b</b> 10 g: la masa se conserva.</p><p class="construye" data-paso="5" style="font-size:40px"><b class="acento">5. a</b> Más superficie → más choques.</p><p class="construye" data-paso="6" style="font-size:40px"><b class="acento">6. b</b> Menos temperatura → menos choques.</p><p class="construye" data-paso="7" style="font-size:40px;grid-column:1 / span 2"><b class="acento">7.</b> Físico: las mismas moléculas, más o menos separadas. Químico: las piezas se desarman y se arman distinto.</p></div>
-<aside class="nota-presentador"><p data-p="0"><b>8 min.</b> Antes de cada respuesta, pregunta qué marcaron. Cada uno anota su puntaje (de 7).</p><p data-p="7"><b>Paso 7:</b> dibuja en la pizarra las dos escenas de legos de la lámina 2.</p></aside>
+<aside class="nota-presentador"><p data-p="0"><b>8 min.</b> Antes de cada respuesta, pregunta qué marcaron. Cada uno anota su puntaje (de 7).</p><p data-p="7"><b>Paso 7:</b> dibuja en la pizarra las dos escenas de legos de la lámina 2 (o vuelve a la simulación de la lámina 3).</p></aside>
 </section>
 
-<section class="lamina" data-titulo="Cierre: qué entra en la prueba" aria-label="Lámina 11">
+<section class="lamina" data-titulo="Cierre: qué entra en la prueba" aria-label="Lámina 12">
 <p class="rotulo">Cierre · últimos 5 minutos</p>
 <h2>En la prueba entra…</h2>
 <div class="fila">
@@ -566,6 +584,63 @@
     el.addEventListener('keydown', function (ev) { ev.stopPropagation(); });
     pinta();
   })(ts[k]);
+})();
+</script>
+<script>
+(function () {
+  'use strict';
+  var cv = document.getElementById('sim-cv'); if (!cv) return;
+  var cx = cv.getContext('2d'), W = cv.width, H = cv.height, N = 36, R = 17;
+  var rng = document.getElementById('sim-rng'), est = document.getElementById('sim-est'), tmp = document.getElementById('sim-temp'), desc = document.getElementById('sim-desc');
+  var ctl = cv.parentNode;
+  ['click', 'mousedown', 'touchstart', 'touchend', 'keydown', 'pointerdown'].forEach(function (t) { ctl.addEventListener(t, function (e) { e.stopPropagation(); }, false); });
+  var ps = [], i, cols = 9, sp = 2 * R + 6;
+  var x0 = (W - (cols - 1) * sp) / 2;
+  for (i = 0; i < N; i++) {
+    var c = i % cols, r = Math.floor(i / cols);
+    ps.push({ hx: x0 + c * sp, hy: H - 40 - r * sp, x: x0 + c * sp, y: H - 40 - r * sp, vx: Math.random() - .5, vy: Math.random() - .5, a: Math.random() * 6.28 });
+  }
+  function T() { return Number(rng.value) / 100; }
+  function textos() {
+    var t = T();
+    if (t < .34) { est.textContent = '🧊 Hielo'; desc.textContent = 'Moléculas muy juntas y ordenadas: solo vibran en su lugar.'; }
+    else if (t < .67) { est.textContent = '💧 Agua'; desc.textContent = 'Moléculas juntas pero desordenadas: se deslizan unas sobre otras.'; }
+    else { est.textContent = '♨️ Vapor'; desc.textContent = 'Moléculas muy separadas: se mueven rápido y llenan todo el espacio.'; }
+    tmp.textContent = Math.round(-10 + t * 130) + ' °C';
+  }
+  rng.addEventListener('input', textos);
+  function paso() {
+    var t = T(), hielo = Math.max(0, Math.min(1, (0.34 - t) / 0.12 + 0.5)), gas = Math.max(0, Math.min(1, (t - 0.67) / 0.1 + 0.5));
+    var vel = 0.6 + t * t * 9, techo = H - (H * 0.42) * (1 - gas) - (H - 20) * gas * 0 ;
+    var top = gas > 0 ? 20 + (H * 0.6 - 20) * (1 - gas) : H * 0.6;
+    for (i = 0; i < N; i++) {
+      var p = ps[i];
+      p.vx += (Math.random() - .5) * 0.6; p.vy += (Math.random() - .5) * 0.6 + (1 - gas) * 0.25;
+      var s = Math.sqrt(p.vx * p.vx + p.vy * p.vy) || 1; p.vx = p.vx / s * vel; p.vy = p.vy / s * vel;
+      p.x += p.vx; p.y += p.vy;
+      if (p.x < R + 4) { p.x = R + 4; p.vx = Math.abs(p.vx); } if (p.x > W - R - 4) { p.x = W - R - 4; p.vx = -Math.abs(p.vx); }
+      if (p.y > H - R - 4) { p.y = H - R - 4; p.vy = -Math.abs(p.vy); } if (p.y < top + R) { p.y = top + R; p.vy = Math.abs(p.vy); }
+      if (hielo > 0) { var jx = p.hx + Math.sin(p.a += .3) * 2.5, jy = p.hy + Math.cos(p.a * 1.3) * 2.5; p.x += (jx - p.x) * hielo * 0.25; p.y += (jy - p.y) * hielo * 0.25; }
+    }
+    // separación suave entre moléculas (líquido y gas)
+    for (i = 0; i < N; i++) for (var j = i + 1; j < N; j++) {
+      var a = ps[i], b = ps[j], dx = b.x - a.x, dy = b.y - a.y, d = Math.sqrt(dx * dx + dy * dy), m = 2 * R + 2;
+      if (d > 0 && d < m) { var k = (m - d) / d * 0.5 * (1 - hielo); a.x -= dx * k; a.y -= dy * k; b.x += dx * k; b.y += dy * k; }
+    }
+  }
+  function dibujar() {
+    cx.clearRect(0, 0, W, H);
+    for (i = 0; i < N; i++) {
+      var p = ps[i], w = 34, h = 16;
+      cx.lineWidth = 2.5; cx.strokeStyle = '#0F2A33';
+      cx.fillStyle = '#DC2626'; cx.beginPath(); cx.rect(p.x - w / 2, p.y - h, w, h); cx.fill(); cx.stroke();
+      cx.fillStyle = '#2563EB'; cx.beginPath(); cx.rect(p.x - w / 2, p.y, w, h); cx.fill(); cx.stroke();
+      cx.fillStyle = '#DC2626'; cx.beginPath(); cx.rect(p.x - 10, p.y - h - 5, 7, 5); cx.rect(p.x + 3, p.y - h - 5, 7, 5); cx.fill(); cx.stroke();
+    }
+  }
+  function vivo() { var s = cv.closest('.lamina'); return s && /\bactiva\b/.test(s.className); }
+  function bucle() { if (vivo()) { paso(); dibujar(); } requestAnimationFrame(bucle); }
+  textos(); dibujar(); requestAnimationFrame(bucle);
 })();
 </script>
 </body>
