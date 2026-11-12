@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Pirámides tróficas</title>
+<style>
+  /* Escenario de 1920 × 1080 escalado a la ventana (con barras si la proporción no calza). La fuente es DM Sans si el equipo la tiene; si no, Arial. No se carga nada de la red. */
+  :root { --amb:#B45309; }
+  * { box-sizing:border-box; }
+  html, body { margin:0; height:100%; overflow:hidden; background:#0f172a; }
+  body { display:flex; flex-direction:column; font-family:'DM Sans', Arial, sans-serif; color:#1E293B; }
+  #vista { position:relative; flex:1 1 auto; min-height:0; overflow:hidden; }
+  #escenario { position:absolute; left:0; top:0; width:1920px; height:1080px; transform-origin:0 0; background:#FBFBFA; overflow:hidden; }
+  .lamina { display:none !important; position:absolute; left:0; top:0; width:1920px; height:1080px; overflow:hidden; margin:0; }
+  .lamina.activa { display:flex !important; animation:fundir .4s ease; }
+  @keyframes fundir { from { opacity:0; } to { opacity:1; } }
+  .lamina h1, .lamina h2, .lamina h3, .lamina p, .lamina ul, .lamina ol { margin:0; }
+  .lamina ul, .lamina ol { padding-left:1.2em; }
+  .lamina li { margin:0 0 .15em; }
+  .lamina table { border-collapse:collapse; }
+  .lamina th, .lamina td { text-align:left; padding:8px 16px; border-bottom:1px solid #CBD5E1; }
+  .lamina th { color:#475569; }
+  .elipse { border-radius:50%; }
+  .emb { border:0; display:block; overflow:hidden; pointer-events:none; }
+  .construye { opacity:0; transform:translateY(36px); transition:opacity .5s ease, transform .5s ease; }
+  .construye.visto { opacity:1; transform:none; }
+  #barra { flex:none; display:flex; align-items:center; padding:6px 12px; background:#0f172a; color:#e2e8f0; font-size:18px; min-height:64px; }
+  #barra > * { margin-right:10px; }
+  #barra button { font:inherit; font-weight:700; min-width:52px; min-height:52px; padding:6px 16px; border-radius:8px; border:2px solid #475569; background:#1e293b; color:#fff; cursor:pointer; line-height:1.2; touch-action:manipulation; font-size:20px; }
+  #barra button.principal { background:#2563EB; border-color:#2563EB; }
+  #barra button[aria-disabled="true"] { opacity:.45; }
+  button:focus-visible, a:focus-visible { outline:3px solid #FBBF24; outline-offset:2px; }
+  #cuenta { min-width:76px; text-align:center; font-weight:700; }
+  #pasos { color:#FBBF24; font-weight:700; }
+  #ayuda { margin-left:auto; margin-right:0; color:#94a3b8; font-size:16px; text-align:right; }
+  body.completa #barra { position:absolute; left:0; right:0; bottom:0; opacity:0; transition:opacity .25s; z-index:5; }
+  body.completa #barra:hover, body.completa #barra:focus-within, body.completa.mueve #barra { opacity:1; }
+  #indice { position:fixed; left:0; top:0; right:0; bottom:0; z-index:20; background:rgba(15,23,42,.88); display:flex; align-items:center; justify-content:center; padding:20px; }
+  #indice[hidden] { display:none; }
+  #indice .caja { background:#fff; border-radius:12px; padding:20px 26px; max-width:860px; width:100%; max-height:100%; overflow:auto; }
+  #indice p { margin:0 0 8px; color:#B45309; font-size:20px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; }
+  #indice ol { list-style:none; padding:0; margin:0 0 12px; columns:2; column-gap:20px; }
+  #indice li { margin:0 0 6px; break-inside:avoid; }
+  #indice li a { display:block; min-height:44px; padding:8px 12px; border:2px solid #CBD5E1; border-radius:8px; color:#1E293B; text-decoration:none; font-size:18px; line-height:1.25; }
+  #indice li a.actual { border-color:#2563EB; background:#EFF4FF; font-weight:700; }
+  #indice li a:focus-visible { outline:3px solid #B45309; outline-offset:2px; }
+  #indice button { font:inherit; font-weight:700; min-height:52px; padding:6px 16px; border-radius:8px; border:2px solid #2563EB; background:#fff; color:#2563EB; cursor:pointer; font-size:18px; }
+  .solo-lector { position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; margin:-1px; padding:0; border:0; }
+  @media (prefers-reduced-motion: reduce) { * { animation:none !important; transition:none !important; } }
+  .aparece { opacity:0; transition:opacity .5s ease; }
+  .aparece.visto { opacity:1; }
+  .tarjeta { background:#fff; border:2px solid #CBD5E1; border-radius:16px; padding:28px 32px; display:flex; flex-direction:column; gap:14px; }
+  @media (max-width:700px) { #ayuda { display:none; } #barra { flex-wrap:wrap; } #barra button { padding:6px 10px; font-size:17px; } }
+  #barra button { white-space:nowrap; }
+  #ayuda { font-size:14px !important; }
+  @media (max-width:1150px) { #ayuda { display:none; } }
+  .nota-presentador { display:none !important; }
+  #notas { position:fixed; left:0; right:0; bottom:64px; max-height:40vh; overflow:auto; z-index:6; background:#111827; color:#F8FAFC; border-top:3px solid #FBBF24; padding:12px 20px 16px; font-size:19px; line-height:1.4; }
+  #notas[hidden] { display:none; }
+  #notas h3 { margin:0 0 6px; font-size:16px; color:#FBBF24; letter-spacing:.04em; text-transform:uppercase; }
+  #notas p, #notas li { margin:0 0 6px; }
+  #notas ul { margin:0; padding-left:1.2em; }
+  #notas .ahora { color:#FDE68A; font-weight:700; }
+  body.completa #notas { bottom:0; }
+  .fuente { position:absolute; left:128px; bottom:110px; width:1500px; font-size:26px; color:#475569; }
+
+  /* Tema «laboratorio»: fondo azul petróleo y los colores de modelo molecular (C gris, H blanco, O rojo, N azul) en todo. */
+  :root { --fondo:#FFFFFF; --panel:#F1F6F8; --borde:#CBD8DD; --texto:#0F2A33; --suave:#4B6670; --cian:#0E7490; --ambar:#B45309;
+          --C:#7C8794; --H:#F8FAFC; --O:#EF4444; --N:#3B82F6; }
+  html, body { background:#06161C; }
+  #escenario { background:var(--fondo); }
+  .lamina { color:var(--texto); font-family:'DM Sans', Arial, sans-serif; padding:96px 128px 110px; flex-direction:column; gap:40px;
+            background:radial-gradient(circle at 85% 10%, rgba(14,116,144,.06), transparent 45%), var(--fondo); }
+  .lamina h1 { font-size:104px; line-height:1.05; font-weight:800; }
+  .lamina h2 { font-size:72px; line-height:1.08; font-weight:800; }
+  .lamina h2 .acento, .acento { color:var(--cian); }
+  .lamina p, .lamina li { font-size:38px; line-height:1.3; }
+  .rotulo { font-size:28px !important; font-weight:700; letter-spacing:4px; text-transform:uppercase; color:var(--ambar); }
+  .suave { color:var(--suave); }
+  .grande { font-size:46px !important; }
+  .panel { background:var(--panel); border:2px solid var(--borde); border-radius:22px; padding:30px 34px; display:flex; flex-direction:column; gap:14px; }
+  .fila { display:flex; gap:32px; }
+  .fila > * { flex:1; }
+  .ficha { display:inline-flex; align-items:center; justify-content:center; width:1.6em; height:1.6em; border-radius:50%; font-weight:800; color:#0B2530; margin:0 .08em; }
+  .fC { background:var(--C); color:#fff; } .fH { background:#fff; box-shadow:inset 0 0 0 3px #0F2A33; } .fO { background:var(--O); color:#fff; } .fN { background:var(--N); color:#fff; }
+  .tC { color:#64748B; } .tH { color:#0F2A33; } .tO { color:#DC2626; } .tN { color:#2563EB; }
+  /* Átomos que flotan en la portada */
+  .flota { animation:flotar 6s ease-in-out infinite; transform-box:fill-box; transform-origin:center; }
+  .flota.d2 { animation-delay:-1.5s; } .flota.d3 { animation-delay:-3s; } .flota.d4 { animation-delay:-4.5s; }
+  @keyframes flotar { 0%,100% { transform:translateY(0); } 50% { transform:translateY(-26px); } }
+  /* Barras que crecen al revelarse */
+  .barra-dato { height:74px; border-radius:12px; width:0; transition:width 1.3s cubic-bezier(.2,.8,.2,1); display:flex; align-items:center; padding-left:20px; font-size:36px; font-weight:800; white-space:nowrap; }
+  .visto .barra-dato, .barra-dato.visto { width:var(--w); }
+  /* Enlaces que se dibujan */
+  .enlace { stroke-dasharray:260; stroke-dashoffset:260; transition:stroke-dashoffset .9s ease; }
+  .visto .enlace { stroke-dashoffset:0; }
+  .lamina.activa .enlace.siempre { animation:dibujar 1.2s ease forwards; }
+  @keyframes dibujar { to { stroke-dashoffset:0; } }
+  /* Átomos que aparecen con rebote */
+  .pop { opacity:0; transform:scale(.3); transform-box:fill-box; transform-origin:center; transition:opacity .4s, transform .5s cubic-bezier(.3,1.6,.5,1); }
+  .visto .pop, .pop.visto { opacity:1; transform:none; }
+  .lamina.activa .pop.siempre { animation:rebote .6s cubic-bezier(.3,1.6,.5,1) forwards; }
+  @keyframes rebote { to { opacity:1; transform:none; } }
+  /* Brillo de los bioelementos en la tabla */
+  .lamina.activa .brilla { animation:brillo 2.2s ease-in-out infinite; }
+  @keyframes brillo { 0%,100% { filter:drop-shadow(0 0 0 rgba(34,211,238,0)); } 50% { filter:drop-shadow(0 0 18px rgba(14,116,144,.7)); } }
+  /* Electrón que se escapa (sodio) y capa que gira (neón) */
+  .visto .escapa { animation:escapar 2.4s ease-in infinite; }
+  @keyframes escapar { 0% { transform:translate(0,0); opacity:1; } 70% { opacity:1; } 100% { transform:translate(150px,-90px); opacity:0; } }
+  .lamina.activa .gira { animation:girar 8s linear infinite; transform-box:view-box; transform-origin:120px 120px; }
+  @keyframes girar { to { transform:rotate(360deg); } }
+  /* Huecos que parpadean (electrones que faltan) */
+  .visto .hueco { animation:parpadeo 1s ease-in-out infinite; }
+  @keyframes parpadeo { 50% { opacity:.15; } }
+  /* Relojes */
+  .reloj .prog { stroke-dasharray:597; stroke-dashoffset:0; }
+  .reloj text { font-weight:800; }
+  /* Fichas de conteo */
+  .puntos { display:flex; flex-wrap:wrap; gap:10px; }
+  .puntos span { width:38px; height:38px; border-radius:50%; opacity:0; transform:scale(.2); }
+  .visto .puntos span { animation:rebote .45s cubic-bezier(.3,1.6,.5,1) forwards; }
+  .pC { background:var(--C); } .pH { background:#fff; box-shadow:inset 0 0 0 3px #0F2A33; } .pO { background:var(--O); } .pN { background:var(--N); }
+  .lamina th, .lamina td { border-bottom:1px solid var(--borde); color:var(--texto); }
+  #indice .caja { background:#fff; color:var(--texto); }
+  #indice li a { color:var(--texto); border-color:var(--borde); }
+  #indice li a.actual { background:#ECF6F8; border-color:var(--cian); }
+  #indice p { color:var(--ambar); }
+  #barra button.principal { background:#0891B2; border-color:#0891B2; }
+
+  /* Animaciones de esta presentación: burbujas, precipitado, llama, humo, partículas y choques */
+  .burbuja { animation:subir 2.2s ease-in infinite; transform-box:fill-box; }
+  .burbuja.lenta { animation-duration:4.5s; } .burbuja.rapida { animation-duration:1s; }
+  .b2 { animation-delay:-.4s !important; } .b3 { animation-delay:-.9s !important; } .b4 { animation-delay:-1.3s !important; } .b5 { animation-delay:-1.7s !important; } .b6 { animation-delay:-.2s !important; }
+  @keyframes subir { 0% { transform:translateY(0); opacity:0; } 15% { opacity:1; } 100% { transform:translateY(-150px); opacity:0; } }
+  .disuelve { animation:achica 6s ease-in-out infinite; transform-box:fill-box; transform-origin:center; }
+  @keyframes achica { 0%,10% { transform:scale(1); } 90%,100% { transform:scale(.25); opacity:.4; } }
+  .tine { animation:tenir 4s ease-in-out infinite alternate; }
+  @keyframes tenir { 0%,20% { fill:#3B82F6; } 80%,100% { fill:#DB2777; } }
+  .cae { animation:caer 3s ease-in infinite; transform-box:fill-box; }
+  .c2 { animation-delay:-.6s; } .c3 { animation-delay:-1.2s; } .c4 { animation-delay:-1.8s; } .c5 { animation-delay:-2.4s; }
+  @keyframes caer { 0% { transform:translateY(0); opacity:0; } 15% { opacity:1; } 85% { transform:translateY(100px); opacity:1; } 100% { transform:translateY(100px); opacity:0; } }
+  .llama { animation:titila .5s ease-in-out infinite alternate; transform-box:fill-box; transform-origin:50% 100%; }
+  .llama.l2 { animation-duration:.35s; }
+  @keyframes titila { from { transform:scale(1,1); } to { transform:scale(.92,1.08); } }
+  .humo { animation:humear 3s ease-out infinite; transform-box:fill-box; transform-origin:center; }
+  .humo.h2 { animation-delay:-1s; } .humo.h3 { animation-delay:-2s; }
+  @keyframes humear { 0% { transform:translate(0,0) scale(.6); opacity:.9; } 100% { transform:translate(20px,-230px) scale(1.8); opacity:0; } }
+  .junto { animation:separa 4s ease-in-out infinite alternate; transform-box:fill-box; transform-origin:center; }
+  @keyframes separa { 0%,15% { transform:scale(.8); } 85%,100% { transform:scale(1.18); } }
+  .reordena { animation:va-c 5s ease-in-out infinite; } .llega { animation:va-o 5s ease-in-out infinite; } .nuevo { animation:nace 5s ease-in-out infinite; }
+  @keyframes va-c { 0%,10% { transform:translateX(0); opacity:1; } 45% { transform:translateX(186px); opacity:1; } 55%,100% { transform:translateX(186px); opacity:0; } }
+  @keyframes va-o { 0%,10% { transform:translateX(0); opacity:1; } 45% { transform:translateX(-160px); opacity:1; } 55%,100% { transform:translateX(-160px); opacity:0; } }
+  @keyframes nace { 0%,48% { opacity:0; } 58%,95% { opacity:1; } 100% { opacity:0; } }
+  .vaiven-a { animation:choca-a 2.4s ease-in-out infinite; } .vaiven-b { animation:choca-b 2.4s ease-in-out infinite; } .destello { animation:flash 2.4s ease-in-out infinite; transform-box:fill-box; transform-origin:center; }
+  @keyframes choca-a { 0%,100% { transform:translateX(0); } 50% { transform:translateX(244px); } }
+  @keyframes choca-b { 0%,100% { transform:translateX(0); } 50% { transform:translateX(-232px); } }
+  @keyframes flash { 0%,40%,62%,100% { opacity:0; transform:scale(.6); } 50% { opacity:1; transform:scale(1); } }
+  .pt { transform-box:fill-box; animation:deriva 2s ease-in-out infinite alternate; }
+  .pt.lento { animation-duration:4s; animation-name:deriva-corta; } .pt.rapido { animation-duration:.6s; } .pt.medio { animation-duration:1.6s; }
+  .pt.d2 { animation-name:deriva2; } .pt.d3 { animation-direction:alternate-reverse; } .pt.d4 { animation-name:deriva2; animation-direction:alternate-reverse; }
+  .pt.lento.d2, .pt.lento.d4 { animation-name:deriva-corta; }
+  @keyframes deriva { 0% { transform:translate(0,0); } 33% { transform:translate(40px,-30px); } 66% { transform:translate(-30px,35px); } 100% { transform:translate(35px,25px); } }
+  @keyframes deriva2 { 0% { transform:translate(0,0); } 33% { transform:translate(-40px,25px); } 66% { transform:translate(30px,-35px); } 100% { transform:translate(-25px,-30px); } }
+  @keyframes deriva-corta { 0% { transform:translate(0,0); } 50% { transform:translate(10px,-8px); } 100% { transform:translate(-8px,10px); } }
+  .sube { animation:camino 3s ease-in-out infinite; }
+  @keyframes camino { 0% { transform:translate(0,0); } 40% { transform:translate(230px,-58px); } 80%,100% { transform:translate(580px,0); } }
+  /* Tramas tróficas */
+  .flujo { stroke-dasharray:18 12; animation:fluir 1.2s linear infinite; }
+  @keyframes fluir { to { stroke-dashoffset:-30; } }
+  .sol { animation:rayos 3s ease-in-out infinite; transform-box:fill-box; transform-origin:center; }
+  @keyframes rayos { 0%,100% { opacity:.55; transform:scale(.96); } 50% { opacity:1; transform:scale(1.04); } }
+  .apaga { transition:opacity .5s ease; }
+  .tabla-t th, .tabla-t td { font-size:36px !important; padding:14px 20px !important; }
+  .chip { display:inline-block; border-radius:999px; padding:4px 22px; color:#fff; font-weight:700; }
+</style>
+</head>
+<body>
+<div id="vista">
+<div id="escenario">
+<section class="lamina activa" data-titulo="Portada" aria-label="Lámina 1">
+<p class="rotulo">Biología · Ecología</p>
+<h1 style="width:1500px">¿Cuánto mar necesita <span class="acento">una orca</span>?</h1>
+<p class="suave grande" style="width:1400px">Pirámides tróficas: cómo se reparte la energía entre los niveles.</p>
+<div style="display:flex;align-items:center;gap:14px;margin-top:10px"><div class="panel" style="padding:14px 22px;align-items:center;background:#DCFCE7;border-color:#15803D"><p style="font-size:34px"><b>🦠 Fitoplancton</b></p></div><p style="font-size:50px;color:#334155">→</p><div class="panel" style="padding:14px 22px;align-items:center;background:#FEF3C7;border-color:#B45309"><p style="font-size:34px"><b>🦐 Krill</b></p></div><p style="font-size:50px;color:#334155">→</p><div class="panel" style="padding:14px 22px;align-items:center;background:#FFEDD5;border-color:#C2410C"><p style="font-size:34px"><b>🐟 Anchoveta</b></p></div><p style="font-size:50px;color:#334155">→</p><div class="panel" style="padding:14px 22px;align-items:center;background:#FEE2E2;border-color:#B91C1C"><p style="font-size:34px"><b>🦭 Lobo marino</b></p></div><p style="font-size:50px;color:#334155">→</p><div class="panel" style="padding:14px 22px;align-items:center;background:#EDE9FE;border-color:#6D28D9"><p style="font-size:34px"><b>🐋 Orca</b></p></div></div>
+<div style="display:flex;justify-content:center;width:1660px"><svg viewBox="0 0 900 400" width="900" height="400" role="img" aria-label="Pirámide de la cadena marina" style="max-width:100%"><g><rect x="0" y="318" width="900" height="72" rx="10" fill="#DCFCE7" stroke="#15803D" stroke-width="5"/><text x="450.0" y="370" font-size="44" font-weight="700" fill="#0F2A33" text-anchor="middle">🦠</text></g><g><rect x="171" y="240" width="558" height="72" rx="10" fill="#FEF3C7" stroke="#B45309" stroke-width="5"/><text x="450.0" y="292" font-size="44" font-weight="700" fill="#0F2A33" text-anchor="middle">🦐</text></g><g><rect x="279" y="162" width="342" height="72" rx="10" fill="#FFEDD5" stroke="#C2410C" stroke-width="5"/><text x="450.0" y="214" font-size="44" font-weight="700" fill="#0F2A33" text-anchor="middle">🐟</text></g><g><rect x="360" y="84" width="180" height="72" rx="10" fill="#FEE2E2" stroke="#B91C1C" stroke-width="5"/><text x="450.0" y="136" font-size="44" font-weight="700" fill="#0F2A33" text-anchor="middle">🦭</text></g><g><rect x="410" y="6" width="81" height="72" rx="10" fill="#EDE9FE" stroke="#6D28D9" stroke-width="5"/><text x="450.0" y="58" font-size="44" font-weight="700" fill="#0F2A33" text-anchor="middle">🐋</text></g></svg></div>
+<aside class="nota-presentador"><p data-p="0"><b>Inicio (2 min).</b> Es la misma cadena marina de la clase pasada. Lee la pregunta y no la respondas: la cuenta se hace en la lámina 3.</p><p>Hoy: pirámides de energía, número y biomasa, un simulador, un resumen al cuaderno, la Guía 04 y un ticket. La próxima clase: fotosíntesis y respiración.</p></aside>
+</section>
+
+<section class="lamina" data-titulo="La clase pasada" aria-label="Lámina 2">
+<p class="rotulo">La clase pasada · ¿te acuerdas?</p>
+<h2>Lo que ya sabemos de las <span class="acento">tramas</span></h2>
+<div class="fila">
+  <div class="panel construye" data-paso="1"><p class="grande"><b>➡️ La flecha</b></p><p>Se lee «<b>es comido por</b>» o «<b>le pasa energía a</b>». Siempre parte en un productor.</p></div>
+  <div class="panel construye" data-paso="2"><p class="grande"><b>🔥 El ~90 %</b></p><p>En cada eslabón se pierde cerca del <b>90 %</b> de la energía, como calor. Solo ~10 % pasa al siguiente nivel.</p></div>
+  <div class="panel construye" data-paso="3"><p class="grande"><b>🐭 El degú</b></p><p>Si desaparece, el zorro y el aguilucho comen más conejos: <b>un cambio se propaga por toda la trama</b>.</p></div>
+</div>
+<div class="panel construye" data-paso="4" style="background:#FFF7ED;border-color:#F5C58A"><p class="grande">🐋 Una orca necesita unos <b>100 kg</b> de lobo marino. Con la regla del 10 %, ¿cuántos kg de <b>fitoplancton</b> hacen falta para «fabricar» esa comida?</p></div>
+<div class="construye" data-paso="4" style="position:absolute;right:120px;top:90px"><svg class="reloj" data-seg="120" viewBox="0 0 240 240" width="200" height="200" aria-label="Reloj de 2:00"><circle cx="120" cy="120" r="95" fill="none" stroke="#E2EBEE" stroke-width="22"/><circle class="prog" cx="120" cy="120" r="95" fill="none" stroke="#0E7490" stroke-width="22" stroke-linecap="round" transform="rotate(-90 120 120)"/><text x="120" y="138" font-size="54" fill="#0F2A33" text-anchor="middle">2:00</text></svg></div>
+<aside class="nota-presentador"><p data-p="0"><b>Activación (8 min).</b> Pregunta antes de revelar cada tarjeta: «¿qué significaba la flecha?», «¿cuánta energía pasaba de un nivel al otro?», «¿qué pasaba si desaparecía el degú?». Usa las respuestas del ticket de la clase pasada.</p><p data-p="1"><b>Paso 1:</b> la flecha va en el sentido de la energía.</p><p data-p="2"><b>Paso 2:</b> la regla del 10 % es la herramienta de hoy.</p><p data-p="3"><b>Paso 3:</b> la trama conecta todo; hoy miramos cuánto hay en cada nivel.</p><p data-p="4"><b>Paso 4:</b> 2 minutos en parejas, en el cuaderno. Que anoten su apuesta: casi todos se quedan cortos.</p></aside>
+</section>
+
+<section class="lamina" data-titulo="La cuenta de la orca" aria-label="Lámina 3">
+<p class="rotulo">Haz la cuenta · ×10 en cada eslabón</p>
+<h2>Para <span class="acento">100 kg</span> de orca hacen falta…</h2>
+<div style="display:flex;flex-direction:column;gap:16px"><div class="construye" data-paso="1" style="display:flex;align-items:center;gap:24px"><p style="width:330px;font-size:36px"><b>🐋 Orca</b></p><div class="barra-dato" style="--w:170px;background:#EDE9FE;border:4px solid #6D28D9">100 kg</div></div><div class="construye" data-paso="2" style="display:flex;align-items:center;gap:24px"><p style="width:330px;font-size:36px"><b>🦭 Lobo marino</b></p><div class="barra-dato" style="--w:280px;background:#FEE2E2;border:4px solid #B91C1C">1 000 kg</div></div><div class="construye" data-paso="3" style="display:flex;align-items:center;gap:24px"><p style="width:330px;font-size:36px"><b>🐟 Anchoveta</b></p><div class="barra-dato" style="--w:520px;background:#FFEDD5;border:4px solid #C2410C">10 000 kg</div></div><div class="construye" data-paso="4" style="display:flex;align-items:center;gap:24px"><p style="width:330px;font-size:36px"><b>🦐 Krill</b></p><div class="barra-dato" style="--w:820px;background:#FEF3C7;border:4px solid #B45309">100 000 kg</div></div><div class="construye" data-paso="5" style="display:flex;align-items:center;gap:24px"><p style="width:330px;font-size:36px"><b>🦠 Fitoplancton</b></p><div class="barra-dato" style="--w:1150px;background:#DCFCE7;border:4px solid #15803D">1 000 000 kg</div></div></div>
+<p class="construye grande" data-paso="6" style="color:var(--cian)">¡1 000 toneladas de fitoplancton! Por eso hay <b>muchas algas y pocas orcas</b>.</p>
+<aside class="nota-presentador"><p data-p="0"><b>6 min.</b> Pide las apuestas de la lámina anterior antes de revelar.</p><p data-p="1"><b>Pasos 1 a 5:</b> construye de arriba hacia abajo multiplicando por 10 en voz alta: 100 → 1 000 → 10 000 → 100 000 → 1 000 000 kg.</p><p data-p="6"><b>Paso 6:</b> 1 000 toneladas, como unos 30 camiones llenos. Simplificación: el 10 % es un promedio (5 a 20 %) y aquí se aplica a la masa para que la cuenta sea fácil. Pregunta: «si dibujamos esto con un rectángulo por nivel, ¿qué figura sale?» → una pirámide.</p></aside>
+</section>
+
+<section class="lamina" data-titulo="¿Qué es una pirámide trófica?" aria-label="Lámina 4">
+<p class="rotulo">Definición</p>
+<h2>Una <span class="acento">pirámide trófica</span></h2>
+<div class="fila" style="align-items:center;width:1660px">
+  <div style="flex:0 0 780px"><svg viewBox="-32 0 844 426" width="844" height="426" role="img" aria-label="Pirámide trófica" style="max-width:100%"><g class="construye" data-paso="1"><rect x="0" y="320" width="780" height="96" rx="10" fill="#DCFCE7" stroke="#15803D" stroke-width="5"/><text x="390.0" y="380" font-size="34" font-weight="700" fill="#0F2A33" text-anchor="middle">Productores</text></g><g class="construye" data-paso="1"><rect x="175" y="216" width="429" height="96" rx="10" fill="#FEF3C7" stroke="#B45309" stroke-width="5"/><text x="390.0" y="276" font-size="34" font-weight="700" fill="#0F2A33" text-anchor="middle">Consumidores 1°</text></g><g class="construye" data-paso="1"><rect x="273" y="112" width="234" height="96" rx="10" fill="#FFEDD5" stroke="#C2410C" stroke-width="5"/><text x="521" y="172" font-size="34" font-weight="700" fill="#0F2A33">Consumidores 2°</text></g><g class="construye" data-paso="1"><rect x="339" y="8" width="101" height="96" rx="10" fill="#FEE2E2" stroke="#B91C1C" stroke-width="5"/><text x="455" y="68" font-size="34" font-weight="700" fill="#0F2A33">Consumidores 3°</text></g></svg></div>
+  <div style="display:flex;flex-direction:column;gap:26px">
+    <p class="construye" data-paso="1">Cada nivel trófico es un <b>rectángulo</b>. El ancho muestra <b>cuánto hay</b> en ese nivel.</p>
+    <p class="construye" data-paso="2">Los <b>productores</b> siempre van <b>abajo</b>; arriba, los consumidores en orden.</p>
+    <p class="construye" data-paso="3">Se puede medir tres cosas:</p>
+    <div class="construye" data-paso="3" style="display:flex;gap:14px"><span class="chip" style="background:#0E7490;font-size:32px">⚡ energía</span><span class="chip" style="background:#B45309;font-size:32px">🔢 número</span><span class="chip" style="background:#15803D;font-size:32px">⚖️ biomasa</span></div>
+  </div>
+</div>
+<aside class="nota-presentador"><p data-p="0"><b>4 min.</b></p><p data-p="1"><b>Paso 1:</b> es un gráfico de barras horizontal y centrado.</p><p data-p="2"><b>Paso 2:</b> el orden es el de la cadena: abajo quien recibe la energía del Sol.</p><p data-p="3"><b>Paso 3:</b> según lo que se mida, hay tres pirámides. Biomasa = masa de los seres vivos de ese nivel (sin el agua, en g/m²).</p></aside>
+</section>
+
+<section class="lamina" data-titulo="Pirámide de energía" aria-label="Lámina 5">
+<p class="rotulo">⚡ Pirámide de energía</p>
+<h2>La energía <span class="acento">siempre</span> forma una pirámide</h2>
+<div class="fila" style="align-items:center;width:1660px">
+  <div style="flex:0 0 760px;display:flex;flex-direction:column;gap:10px"><svg viewBox="0 0 760 442" width="760" height="442" role="img" aria-label="Pirámide trófica" style="max-width:100%"><g class="construye" data-paso="1"><rect x="0" y="332" width="760" height="100" rx="10" fill="#DCFCE7" stroke="#15803D" stroke-width="5"/><text x="380.0" y="396" font-size="38" font-weight="700" fill="#0F2A33" text-anchor="middle">20 810</text></g><g class="construye" data-paso="2"><rect x="220" y="224" width="319" height="100" rx="10" fill="#FEF3C7" stroke="#B45309" stroke-width="5"/><text x="380.0" y="288" font-size="38" font-weight="700" fill="#0F2A33" text-anchor="middle">3 368</text></g><g class="construye" data-paso="3"><rect x="312" y="116" width="137" height="100" rx="10" fill="#FFEDD5" stroke="#C2410C" stroke-width="5"/><text x="380.0" y="180" font-size="38" font-weight="700" fill="#0F2A33" text-anchor="middle">383</text></g><g class="construye" data-paso="4"><rect x="350" y="8" width="60" height="100" rx="10" fill="#FEE2E2" stroke="#B91C1C" stroke-width="5"/><text x="424" y="72" font-size="38" font-weight="700" fill="#0F2A33">21</text></g></svg><p class="suave" style="font-size:28px;text-align:center">Río de Silver Springs, Florida (kcal/m²/año)</p></div>
+  <div style="display:flex;flex-direction:column;gap:26px">
+    <p class="construye" data-paso="1">Plantas y algas: <b>20 810</b>.</p>
+    <p class="construye" data-paso="4">Del primer al último nivel llega <b>0,1 %</b> de la energía.</p>
+    <p class="construye" data-paso="5">El resto se fue como <b>calor</b>: respirar, moverse, mantener la temperatura.</p>
+    <p class="construye grande" data-paso="6" style="color:var(--cian)">Nunca puede estar invertida: ningún nivel recibe más energía que la que tenía el anterior.</p>
+  </div>
+</div>
+<aside class="nota-presentador"><p data-p="0"><b>5 min.</b> Datos reales clásicos (Odum, 1957), redondeados.</p><p data-p="1"><b>Pasos 1 a 4:</b> pregunta antes de cada nivel: «¿más o menos que el de abajo?». Que calculen qué porcentaje pasa de productores a herbívoros (≈16 %): la regla del 10 % es aproximada.</p><p data-p="5"><b>Paso 5:</b> conecta con la clase pasada: la energía fluye en una sola dirección y sale como calor.</p><p data-p="6"><b>Paso 6:</b> es la idea clave de la clase. Las otras dos pirámides sí se pueden invertir.</p></aside>
+</section>
+
+<section class="lamina" data-titulo="Pirámide de número" aria-label="Lámina 6">
+<p class="rotulo">🔢 Pirámide de número · cuenta individuos</p>
+<h2>¿Siempre hay <span class="acento">más</span> abajo?</h2>
+<div class="fila" style="align-items:flex-start;width:1660px">
+  <div class="panel construye" data-paso="1" style="align-items:center"><p class="grande"><b>Un prado</b></p><svg viewBox="0 0 600 310" width="600" height="310" role="img" aria-label="Pirámide de números normal de un prado" style="max-width:100%"><g><rect x="0" y="208" width="600" height="92" rx="10" fill="#DCFCE7" stroke="#15803D" stroke-width="5"/><text x="300.0" y="264" font-size="28" font-weight="700" fill="#0F2A33" text-anchor="middle">🌾 1 000 000 pastos</text></g><g><rect x="135" y="108" width="330" height="92" rx="10" fill="#FEF3C7" stroke="#B45309" stroke-width="5"/><text x="300.0" y="164" font-size="28" font-weight="700" fill="#0F2A33" text-anchor="middle">🦗 200 000</text></g><g><rect x="216" y="8" width="168" height="92" rx="10" fill="#FFEDD5" stroke="#C2410C" stroke-width="5"/><text x="398" y="64" font-size="28" font-weight="700" fill="#0F2A33">🐦 90 aves</text></g></svg><p>Muchos pastos pequeños alimentan a 200 000 insectos y a pocas aves.</p></div>
+  <div class="panel construye" data-paso="2" style="align-items:center"><p class="grande"><b>Un árbol</b></p><svg viewBox="0 0 600 310" width="600" height="310" role="img" aria-label="Pirámide de números invertida en un árbol" style="max-width:100%"><g><rect x="210" y="208" width="180" height="92" rx="10" fill="#DCFCE7" stroke="#15803D" stroke-width="5"/><text x="404" y="264" font-size="28" font-weight="700" fill="#0F2A33">🌳 1 árbol</text></g><g><rect x="75" y="108" width="450" height="92" rx="10" fill="#FEF3C7" stroke="#B45309" stroke-width="5"/><text x="300.0" y="164" font-size="28" font-weight="700" fill="#0F2A33" text-anchor="middle">🐛 5 000 orugas</text></g><g><rect x="0" y="8" width="600" height="92" rx="10" fill="#FFEDD5" stroke="#C2410C" stroke-width="5"/><text x="300.0" y="64" font-size="28" font-weight="700" fill="#0F2A33" text-anchor="middle">🦠 40 000 parásitos</text></g></svg><p>Un solo árbol alimenta a miles de orugas: la pirámide se <b>invierte</b>.</p></div>
+</div>
+<p class="construye grande" data-paso="3" style="color:var(--cian)">Contar individuos engaña: un árbol no «vale» lo mismo que una brizna de pasto.</p>
+<aside class="nota-presentador"><p data-p="0"><b>5 min.</b> Pregunta: «en un árbol, ¿quiénes son más: los árboles o los bichos que viven en él?».</p><p data-p="1"><b>Paso 1:</b> el caso habitual. Valores ilustrativos.</p><p data-p="2"><b>Paso 2:</b> invertida porque el productor es enorme. Los parásitos (por ejemplo, avispas parasitoides dentro de las orugas) la invierten aún más.</p><p data-p="3"><b>Paso 3:</b> por eso se inventó la pirámide de biomasa.</p></aside>
+</section>
+
+<section class="lamina" data-titulo="Pirámide de biomasa" aria-label="Lámina 7">
+<p class="rotulo">⚖️ Pirámide de biomasa · pesa la materia viva</p>
+<h2>En el mar, la pirámide <span class="acento">se da vuelta</span></h2>
+<div class="fila" style="align-items:flex-start;width:1660px">
+  <div class="panel construye" data-paso="1" style="align-items:center"><p class="grande"><b>Un bosque</b></p><svg viewBox="0 0 600 310" width="600" height="310" role="img" aria-label="Pirámide de biomasa normal en un bosque" style="max-width:100%"><g><rect x="0" y="208" width="600" height="92" rx="10" fill="#DCFCE7" stroke="#15803D" stroke-width="5"/><text x="300.0" y="263" font-size="26" font-weight="700" fill="#0F2A33" text-anchor="middle">🌲 plantas: 2 000 g/m²</text></g><g><rect x="150" y="108" width="300" height="92" rx="10" fill="#FEF3C7" stroke="#B45309" stroke-width="5"/><text x="300.0" y="163" font-size="26" font-weight="700" fill="#0F2A33" text-anchor="middle">🦌 90 g/m²</text></g><g><rect x="210" y="8" width="180" height="92" rx="10" fill="#FFEDD5" stroke="#C2410C" stroke-width="5"/><text x="300.0" y="63" font-size="26" font-weight="700" fill="#0F2A33" text-anchor="middle">🦊 10 g/m²</text></g></svg></div>
+  <div class="panel construye" data-paso="2" style="align-items:center"><p class="grande"><b>El mar (Canal de la Mancha)</b></p><div style="height:96px"></div><svg viewBox="0 0 600 210" width="600" height="210" role="img" aria-label="Pirámide de biomasa invertida en el mar" style="max-width:100%"><g><rect x="204" y="108" width="192" height="92" rx="10" fill="#DCFCE7" stroke="#15803D" stroke-width="5"/><text x="300.0" y="163" font-size="26" font-weight="700" fill="#0F2A33" text-anchor="middle">🦠 4 g/m²</text></g><g><rect x="0" y="8" width="600" height="92" rx="10" fill="#FEF3C7" stroke="#B45309" stroke-width="5"/><text x="300.0" y="63" font-size="26" font-weight="700" fill="#0F2A33" text-anchor="middle">🦐 zooplancton: 21 g/m²</text></g></svg></div>
+</div>
+<p class="construye" data-paso="3" style="width:1660px">¿Cómo puede haber <b>menos</b> fitoplancton que zooplancton? Porque el fitoplancton se <b>reproduce tan rápido</b> que se renueva cada pocos días: en una foto hay poco, pero en un año produce muchísimo.</p>
+<aside class="nota-presentador"><p data-p="0"><b>5 min.</b></p><p data-p="1"><b>Paso 1:</b> en tierra, la biomasa suele formar pirámide.</p><p data-p="2"><b>Paso 2:</b> datos clásicos de Harvey (1950), redondeados. Pregunta antes del paso 3: «¿cómo se alimenta tanto zooplancton con tan poco fitoplancton?».</p><p data-p="3"><b>Paso 3:</b> analogía: una panadería con pocos panes en la vitrina, pero que hornea todo el día. La biomasa es una foto; la energía es la película. Por eso la de energía nunca se invierte.</p></aside>
+</section>
+
+<section class="lamina" data-titulo="Simulador: la pirámide de energía" aria-label="Lámina 8">
+<p class="rotulo">Simulador · mueve los controles</p>
+<h2>¿Cuántos niveles <span class="acento">alcanzan</span>?</h2>
+<div class="sim" id="pir-sim" style="display:flex;gap:44px;align-items:stretch;width:1660px">
+  <div id="pir-cv" style="flex:0 0 940px;height:640px;background:#fff;border:3px solid #CBD8DD;border-radius:22px;display:flex;flex-direction:column-reverse;align-items:center;justify-content:flex-start;gap:8px;padding:18px 0;position:relative" aria-label="Pirámide de energía que cambia con los controles"></div>
+  <div style="flex:1;display:flex;flex-direction:column;gap:22px">
+    <label style="font-size:32px"><b>☀️ Energía que captan los productores:</b> <span id="pir-e0v"></span><input id="pir-e0" type="range" min="0" max="4" step="1" value="2" style="width:100%;height:40px"></label>
+    <label style="font-size:32px"><b>🔁 Eficiencia de traspaso:</b> <span id="pir-efv"></span><input id="pir-ef" type="range" min="5" max="25" step="1" value="10" style="width:100%;height:40px"></label>
+    <div class="panel" style="padding:18px 24px;gap:8px"><p style="font-size:30px">Una población necesita <b>al menos 10 unidades</b> para sobrevivir. Si no alcanza, el nivel queda en gris.</p></div>
+    <p id="pir-msg" style="font-size:36px;font-weight:800;color:var(--cian)"></p>
+  </div>
+</div>
+<aside class="nota-presentador"><p data-p="0"><b>8 min.</b> Los controles no cambian de lámina. Empieza con 10 000 unidades y 10 %: llegan 4 niveles (10 000, 1 000, 100, 10) y el quinto no alcanza.</p><p>Preguntas: «¿qué pasa si la eficiencia sube a 20 %?» (aparece un nivel más); «¿y si llega menos luz, por ejemplo en un desierto?» (se pierden niveles); «¿por qué no hay depredadores que se coman a las orcas?». Cierra: <b>las cadenas son cortas porque la energía se acaba</b>.</p></aside>
+</section>
+
+<section class="lamina" data-titulo="📓 Resumen" aria-label="Lámina 9">
+<p class="rotulo">📓 Copia en tu cuaderno</p>
+<h2>Resumen · Pirámides tróficas</h2>
+<div style="display:flex;gap:56px;align-items:flex-start">
+  <ol class="panel" style="flex:0 0 1180px;padding-left:80px">
+    <li>Una <b>pirámide trófica</b> muestra cuánto hay en cada nivel trófico; los productores van abajo.</li>
+    <li><b>De energía:</b> nunca se invierte. Solo ~10 % pasa al nivel siguiente; el resto se pierde como calor.</li>
+    <li><b>De número:</b> cuenta individuos. Se invierte si el productor es grande (un árbol).</li>
+    <li><b>De biomasa:</b> masa de los seres vivos. Se invierte en el mar, porque el fitoplancton se renueva muy rápido.</li>
+    <li>Por la pérdida de energía, las cadenas tienen pocos eslabones y hay <b>pocos depredadores tope</b>.</li>
+  </ol>
+</div><div class="construye" data-paso="1" style="position:absolute;right:130px;top:330px"><svg class="reloj" data-seg="300" viewBox="0 0 240 240" width="300" height="300" aria-label="Reloj de 5:00"><circle cx="120" cy="120" r="95" fill="none" stroke="#E2EBEE" stroke-width="22"/><circle class="prog" cx="120" cy="120" r="95" fill="none" stroke="#0E7490" stroke-width="22" stroke-linecap="round" transform="rotate(-90 120 120)"/><text x="120" y="138" font-size="54" fill="#0F2A33" text-anchor="middle">5:00</text></svg></div>
+<aside class="nota-presentador"><p data-p="0"><b>Copia (5 min).</b> Si les sobra tiempo, que dibujen una pirámide normal y una invertida.</p><p data-p="1"><b>Paso 1:</b> corre el reloj.</p></aside>
+</section>
+
+<section class="lamina" data-titulo="Lee la pirámide" aria-label="Lámina 10">
+<p class="rotulo">En parejas</p>
+<h2>¿Qué pirámide <span class="acento">puede ser</span>?</h2>
+<div class="fila" style="width:1660px">
+<div class="panel" style="padding:18px 22px;align-items:center;gap:10px"><svg viewBox="0 0 380 244" width="380" height="244" role="img" aria-label="Pirámide A, normal" style="max-width:100%"><g><rect x="0" y="164" width="380" height="70" rx="10" fill="#DCFCE7" stroke="#15803D" stroke-width="5"/><text x="190.0" y="209" font-size="28" font-weight="700" fill="#0F2A33" text-anchor="middle">A1</text></g><g><rect x="114" y="86" width="152" height="70" rx="10" fill="#FEF3C7" stroke="#B45309" stroke-width="5"/><text x="190.0" y="131" font-size="28" font-weight="700" fill="#0F2A33" text-anchor="middle">A2</text></g><g><rect x="160" y="8" width="60" height="70" rx="10" fill="#FFEDD5" stroke="#C2410C" stroke-width="5"/><text x="234" y="53" font-size="28" font-weight="700" fill="#0F2A33">A3</text></g></svg><p style="font-size:32px;text-align:center">A. ¿Energía, número o biomasa?</p><p class="construye acento" data-paso="1" style="font-size:30px;text-align:center"><b>Cualquiera de las tres.</b></p></div>
+<div class="panel" style="padding:18px 22px;align-items:center;gap:10px"><svg viewBox="0 0 380 244" width="380" height="244" role="img" aria-label="Pirámide B, invertida en la base" style="max-width:100%"><g><rect x="142" y="164" width="95" height="70" rx="10" fill="#DCFCE7" stroke="#15803D" stroke-width="5"/><text x="190.0" y="209" font-size="28" font-weight="700" fill="#0F2A33" text-anchor="middle">B1</text></g><g><rect x="0" y="86" width="380" height="70" rx="10" fill="#FEF3C7" stroke="#B45309" stroke-width="5"/><text x="190.0" y="131" font-size="28" font-weight="700" fill="#0F2A33" text-anchor="middle">B2</text></g><g><rect x="76" y="8" width="228" height="70" rx="10" fill="#FFEDD5" stroke="#C2410C" stroke-width="5"/><text x="190.0" y="53" font-size="28" font-weight="700" fill="#0F2A33" text-anchor="middle">B3</text></g></svg><p style="font-size:32px;text-align:center">B. Un árbol, sus orugas y las aves: ¿de qué tipo es?</p><p class="construye acento" data-paso="2" style="font-size:30px;text-align:center"><b>De número: un solo árbol alimenta a muchas orugas.</b></p></div>
+<div class="panel" style="padding:18px 22px;align-items:center;gap:10px"><svg viewBox="0 0 380 166" width="380" height="166" role="img" aria-label="Pirámide C, invertida" style="max-width:100%"><g><rect x="133" y="86" width="114" height="70" rx="10" fill="#DCFCE7" stroke="#15803D" stroke-width="5"/><text x="190.0" y="131" font-size="28" font-weight="700" fill="#0F2A33" text-anchor="middle">C1</text></g><g><rect x="0" y="8" width="380" height="70" rx="10" fill="#FEF3C7" stroke="#B45309" stroke-width="5"/><text x="190.0" y="53" font-size="28" font-weight="700" fill="#0F2A33" text-anchor="middle">C2</text></g></svg><p style="font-size:32px;text-align:center">C. ¿Puede ser de energía?</p><p class="construye acento" data-paso="3" style="font-size:30px;text-align:center"><b>No: la energía nunca se invierte. Puede ser de biomasa (mar).</b></p></div>
+</div>
+<p class="construye grande" data-paso="4" style="color:var(--cian)">Si una pirámide está invertida, <b>no</b> es de energía.</p>
+<div class="construye" data-paso="1" style="position:absolute;right:120px;top:90px"><svg class="reloj" data-seg="180" viewBox="0 0 240 240" width="200" height="200" aria-label="Reloj de 3:00"><circle cx="120" cy="120" r="95" fill="none" stroke="#E2EBEE" stroke-width="22"/><circle class="prog" cx="120" cy="120" r="95" fill="none" stroke="#D97706" stroke-width="22" stroke-linecap="round" transform="rotate(-90 120 120)"/><text x="120" y="138" font-size="54" fill="#0F2A33" text-anchor="middle">3:00</text></svg></div>
+<aside class="nota-presentador"><p data-p="0"><b>7 min.</b> 3 minutos en parejas en el cuaderno y después revela.</p><p data-p="1"><b>Paso 1:</b> una pirámide normal puede ser de cualquier tipo.</p><p data-p="2"><b>Paso 2:</b> base angosta = un productor grande. Si la pesaran (biomasa), el árbol sería el nivel más ancho.</p><p data-p="3"><b>Paso 3:</b> la regla de oro de la lámina 5.</p></aside>
+</section>
+
+<section class="lamina" data-titulo="¿Y nosotros?" aria-label="Lámina 11">
+<p class="rotulo">Conectar · discusión</p>
+<h2>¿Dónde <span class="acento">comemos</span> en la pirámide?</h2>
+<div class="fila" style="width:1660px;align-items:flex-start">
+  <div class="panel construye" data-paso="1" style="align-items:center"><p class="grande"><b>Comer vacuno</b></p><svg viewBox="-88 0 695 274" width="695" height="274" role="img" aria-label="Trigo, vaca y personas" style="max-width:100%"><g><rect x="0" y="184" width="520" height="80" rx="10" fill="#DCFCE7" stroke="#15803D" stroke-width="5"/><text x="260.0" y="233" font-size="26" font-weight="700" fill="#0F2A33" text-anchor="middle">🌾 trigo: 10 000</text></g><g><rect x="143" y="96" width="234" height="80" rx="10" fill="#FEF3C7" stroke="#B45309" stroke-width="5"/><text x="391" y="145" font-size="26" font-weight="700" fill="#0F2A33">🐄 vaca: 1 000</text></g><g><rect x="195" y="8" width="130" height="80" rx="10" fill="#FFEDD5" stroke="#C2410C" stroke-width="5"/><text x="260.0" y="57" font-size="26" font-weight="700" fill="#0F2A33" text-anchor="middle">🧑 100</text></g></svg><p>Con 10 000 unidades de trigo llegan <b>100</b> a las personas.</p></div>
+  <div class="panel construye" data-paso="2" style="align-items:center"><p class="grande"><b>Comer el trigo</b></p><div style="height:88px"></div><svg viewBox="0 0 520 186" width="520" height="186" role="img" aria-label="Trigo y personas" style="max-width:100%"><g><rect x="0" y="96" width="520" height="80" rx="10" fill="#DCFCE7" stroke="#15803D" stroke-width="5"/><text x="260.0" y="145" font-size="26" font-weight="700" fill="#0F2A33" text-anchor="middle">🌾 trigo: 10 000</text></g><g><rect x="156" y="8" width="208" height="80" rx="10" fill="#FEF3C7" stroke="#B45309" stroke-width="5"/><text x="260.0" y="57" font-size="26" font-weight="700" fill="#0F2A33" text-anchor="middle">🧑 1 000</text></g></svg><p>Con el mismo trigo llegan <b>1 000</b>: diez veces más.</p></div>
+</div>
+<p class="construye grande" data-paso="3" style="color:var(--cian)">¿Por qué un kilo de carne cuesta más que uno de porotos?</p>
+<p class="construye" data-paso="4">Pista para la próxima clase: ¿de dónde sale la energía que entra por la <b>base</b>? → <b>fotosíntesis</b>.</p>
+<aside class="nota-presentador"><p data-p="0"><b>6 min.</b> Discusión abierta, sin juzgar dietas.</p><p data-p="1"><b>Paso 1:</b> cada eslabón extra divide por 10.</p><p data-p="2"><b>Paso 2:</b> comer más abajo en la pirámide alimenta a más personas con la misma tierra.</p><p data-p="3"><b>Paso 3:</b> la carne «carga» la energía de todo el alimento que comió el animal. Acepta otros factores (transporte, agua).</p><p data-p="4"><b>Paso 4:</b> puente al 19-nov (fotosíntesis y respiración).</p></aside>
+</section>
+
+<section class="lamina" data-titulo="Guía 04" aria-label="Lámina 12">
+<p class="rotulo">Trabajo individual</p>
+<h2>Guía 04 · <span class="acento">Pirámides tróficas</span></h2>
+<div class="fila" style="width:1180px">
+  <div class="panel"><p class="grande"><b>A.</b> Calcula con la regla del 10 %.</p></div>
+  <div class="panel"><p class="grande"><b>B.</b> Dibuja y clasifica pirámides.</p></div>
+</div>
+<div class="fila" style="width:1180px">
+  <div class="panel"><p class="grande"><b>C.</b> ¿Normal o invertida? ¿Por qué?</p></div>
+  <div class="panel"><p class="grande"><b>D.</b> Explica con tus palabras.</p></div>
+</div>
+<p class="suave">Puedes usar tu cuaderno. Responde en la guía.</p>
+<div class="construye" data-paso="1" style="position:absolute;right:150px;top:300px"><svg class="reloj" data-seg="1200" viewBox="0 0 240 240" width="380" height="380" aria-label="Reloj de 20:00"><circle cx="120" cy="120" r="95" fill="none" stroke="#E2EBEE" stroke-width="22"/><circle class="prog" cx="120" cy="120" r="95" fill="none" stroke="#0E7490" stroke-width="22" stroke-linecap="round" transform="rotate(-90 120 120)"/><text x="120" y="138" font-size="54" fill="#0F2A33" text-anchor="middle">20:00</text></svg></div>
+<aside class="nota-presentador"><p data-p="0"><b>20 min.</b> Reparte la guía. Recorre la sala: lo que más cuesta es multiplicar o dividir por 10 en el sentido correcto (hacia arriba se divide, hacia abajo se multiplica).</p><p data-p="1"><b>Paso 1:</b> corre el reloj de 20 minutos.</p></aside>
+</section>
+
+<section class="lamina" data-titulo="Corrección y ticket" aria-label="Lámina 13">
+<p class="rotulo">Corrección · últimos minutos</p>
+<h2>Ticket de salida</h2>
+<div style="display:flex;flex-direction:column;gap:30px;width:1180px">
+  <p class="grande construye" data-paso="1"><b class="acento">1.</b> Si los productores tienen 50 000 unidades de energía, ¿cuántas llegan al consumidor secundario?</p>
+  <p class="grande construye" data-paso="1"><b class="acento">2.</b> ¿Por qué la pirámide de energía nunca se invierte?</p>
+  <p class="grande construye" data-paso="1"><b class="acento">3.</b> Da un ejemplo de pirámide invertida y di de qué tipo es.</p>
+</div>
+<div class="construye" data-paso="1" style="position:absolute;right:150px;top:300px"><svg class="reloj" data-seg="300" viewBox="0 0 240 240" width="400" height="400" aria-label="Reloj de 5:00"><circle cx="120" cy="120" r="95" fill="none" stroke="#E2EBEE" stroke-width="22"/><circle class="prog" cx="120" cy="120" r="95" fill="none" stroke="#D97706" stroke-width="22" stroke-linecap="round" transform="rotate(-90 120 120)"/><text x="120" y="138" font-size="54" fill="#0F2A33" text-anchor="middle">5:00</text></svg></div>
+<aside class="nota-presentador"><p data-p="0"><b>8 min.</b> Primero corrige la guía en voz alta (3 min, solucionario), luego el ticket en media hoja, sin apuntes.</p><p data-p="1"><b>Respuestas:</b> 1) 50 000 → 5 000 → <b>500</b>; 2) en cada nivel se pierde energía como calor, así que ningún nivel puede recibir más que el anterior; 3) un árbol con orugas (número) o el plancton del mar (biomasa). Próxima clase (19-nov): fotosíntesis y respiración.</p></aside>
+</section>
+
+
+
+
+</div>
+</div>
+<div id="indice" hidden role="dialog" aria-modal="true" aria-label="Índice de láminas"><div class="caja"><p>Índice de láminas</p><ol id="lista-indice"></ol><button type="button" id="cerrar-indice">Cerrar</button></div></div>
+<div id="barra">
+  <button type="button" id="ant" aria-label="Anterior">◀</button>
+  <span id="cuenta" aria-live="off"></span>
+  <button type="button" id="sig" class="principal" aria-label="Siguiente">▶</button>
+  <span id="pasos" aria-hidden="true"></span>
+  <button type="button" id="btn-indice">Índice</button>
+  <button type="button" id="pant">Pantalla completa</button>
+  <button type="button" id="btn-notas" aria-pressed="false">Notas</button>
+  <span id="ayuda" aria-hidden="true">← → o clic: avanzar · F pantalla completa · I índice · N notas · P ventana de notas</span>
+</div>
+<div id="notas" hidden aria-live="off"></div>
+<p id="anuncio" class="solo-lector" aria-live="polite" aria-atomic="true"></p>
+<script>
+(function () {
+  'use strict';
+  var $ = function (id) { return document.getElementById(id); };
+  var laminas = document.querySelectorAll('.lamina'), n = laminas.length, actual = 0, paso = 0;
+  var esc = $('escenario'), vista = $('vista');
+  var W = 1920, H = 1080;
+  var maxPaso = [], i, j;
+  for (i = 0; i < n; i++) {
+    var cs = laminas[i].querySelectorAll('[data-paso]'), m = 0;
+    for (j = 0; j < cs.length; j++) m = Math.max(m, Number(cs[j].getAttribute('data-paso')));
+    maxPaso.push(m);
+  }
+
+  function ajustar() {
+    var w = vista.clientWidth, h = vista.clientHeight, s = Math.min(w / W, h / H);
+    if (!(s > 0)) s = 1;
+    esc.style.transform = 'scale(' + s + ')';
+    esc.style.left = Math.max(0, (w - W * s) / 2) + 'px';
+    esc.style.top = Math.max(0, (h - H * s) / 2) + 'px';
+  }
+  // Las animaciones (iframes con srcdoc) solo corren en la lámina visible y arrancan de cero cada vez que se entra.
+  function animaciones() {
+    var fr = document.querySelectorAll('iframe.emb'), k, f, activa;
+    for (k = 0; k < fr.length; k++) {
+      f = fr[k]; activa = laminas[actual].contains(f);
+      if (activa && !f.getAttribute('data-vivo')) { f.setAttribute('data-vivo', '1'); f.srcdoc = f.getAttribute('data-srcdoc'); }
+      else if (!activa && f.getAttribute('data-vivo')) { f.removeAttribute('data-vivo'); f.srcdoc = ''; }
+    }
+  }
+  function mostrarPasos() {
+    var cs = laminas[actual].querySelectorAll('[data-paso]'), k;
+    for (k = 0; k < cs.length; k++) { var ha = cs[k].getAttribute('data-hasta'), ve = Number(cs[k].getAttribute('data-paso')) <= paso && (!ha || paso < Number(ha)); cs[k].setAttribute('class', (cs[k].getAttribute('class') || '').replace(/\s*\bvisto\b/, '') + (ve ? ' visto' : '')); }
+    $('pasos').textContent = maxPaso[actual] ? 'Paso ' + paso + ' de ' + maxPaso[actual] : '';
+  }
+  function botones() {
+    $('cuenta').textContent = (actual + 1) + ' / ' + n;
+    $('ant').setAttribute('aria-disabled', actual === 0 && paso === 0 ? 'true' : 'false');
+    $('sig').setAttribute('aria-disabled', actual === n - 1 && paso === maxPaso[actual] ? 'true' : 'false');
+  }
+  // mostrar: dibuja la lámina i con p pasos revelados. ir: además cambia la dirección (#N) para que «Atrás» del navegador funcione.
+  function mostrar(i, p, silencio) {
+    if (i < 0 || i >= n) return;
+    var cambia = i !== actual;
+    if (cambia) { laminas[actual].className = laminas[actual].className.replace(/\s*\bactiva\b/, ''); actual = i; laminas[actual].className += ' activa'; }
+    paso = Math.max(0, Math.min(p, maxPaso[actual]));
+    mostrarPasos(); botones(); animaciones(); notas(); relojes(); contar();
+    if (!silencio) $('anuncio').textContent = cambia ? 'Lámina ' + (actual + 1) + ' de ' + n + ': ' + laminas[actual].getAttribute('data-titulo') : 'Paso ' + paso + ' de ' + maxPaso[actual];
+  }
+  function ir(i, p, silencio) {
+    if (i < 0 || i >= n) return;
+    mostrar(i, p, silencio);
+    try { if (location.hash !== '#' + (i + 1)) location.hash = '#' + (i + 1); } catch (e) { /* sin dirección */ }
+  }
+  function avanzar() {
+    if (paso < maxPaso[actual]) mostrar(actual, paso + 1);
+    else ir(actual + 1, 0);
+  }
+  function retroceder() {
+    if (paso > 0) mostrar(actual, paso - 1);
+    else if (actual > 0) ir(actual - 1, maxPaso[actual - 1]);
+  }
+
+  $('ant').addEventListener('click', retroceder);
+  $('sig').addEventListener('click', avanzar);
+  document.addEventListener('keydown', function (ev) {
+    var k = ev.key, t = ev.target && ev.target.tagName;
+    if (ev.altKey || ev.ctrlKey || ev.metaKey) return;
+    if (!$('indice').hidden) {
+      if (k === 'Escape' || k === 'Esc') { ev.preventDefault(); cerrarIndice(); }
+      else if (k === 'Tab') { // el foco no sale del índice
+        var foc = $('indice').querySelectorAll('a, button'), pr = foc[0], ul = foc[foc.length - 1];
+        if (ev.shiftKey && document.activeElement === pr) { ev.preventDefault(); ul.focus(); }
+        else if (!ev.shiftKey && document.activeElement === ul) { ev.preventDefault(); pr.focus(); }
+        else if (!$('indice').contains(document.activeElement)) { ev.preventDefault(); pr.focus(); }
+      }
+      return;
+    }
+    if (k === 'Escape' || k === 'Esc') return;
+    if (k === 'ArrowRight' || k === 'ArrowDown' || k === 'PageDown' || k === 'Right' || k === 'Down' || (k === ' ' && t !== 'BUTTON')) { ev.preventDefault(); avanzar(); }
+    else if (k === 'ArrowLeft' || k === 'ArrowUp' || k === 'PageUp' || k === 'Left' || k === 'Up') { ev.preventDefault(); retroceder(); }
+    else if (k === 'Home') { ev.preventDefault(); ir(0, 0); }
+    else if (k === 'End') { ev.preventDefault(); ir(n - 1, maxPaso[n - 1]); }
+    else if (k === 'f' || k === 'F') { ev.preventDefault(); pantallaCompleta(); }
+    else if (k === 'i' || k === 'I') { ev.preventDefault(); abrirIndice(); }
+    else if (k === 'n' || k === 'N') { ev.preventDefault(); alternarNotas(); }
+    else if (k === 'p' || k === 'P') { ev.preventDefault(); abrirPresentador(); }
+  });
+  // Clic o toque en la lámina (fuera de botones): el tercio izquierdo retrocede y el resto avanza
+  vista.addEventListener('click', function (ev) {
+    var t = ev.target; while (t && t !== vista) { if (t.tagName === 'BUTTON' || t.tagName === 'A') return; t = t.parentNode; }
+    var r = vista.getBoundingClientRect(), x = ev.clientX - r.left;
+    if (x < r.width / 3) retroceder(); else avanzar();
+  });
+  // Deslizar con el dedo
+  var x0 = null, y0 = null;
+  vista.addEventListener('touchstart', function (ev) { if (ev.touches.length === 1) { x0 = ev.touches[0].clientX; y0 = ev.touches[0].clientY; } else x0 = null; }, { passive: true });
+  vista.addEventListener('touchend', function (ev) {
+    if (x0 === null) return;
+    var t = ev.changedTouches[0], dx = t.clientX - x0, dy = t.clientY - y0; x0 = null;
+    if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.5) { ev.preventDefault(); if (dx < 0) avanzar(); else retroceder(); }
+  }, false);
+  // Pantalla completa: la barra se esconde y reaparece al mover el mouse
+  function pantallaCompleta() {
+    var d = document, e = d.documentElement;
+    if (d.fullscreenElement || d.webkitFullscreenElement) { (d.exitFullscreen || d.webkitExitFullscreen).call(d); return; }
+    var f = e.requestFullscreen || e.webkitRequestFullscreen;
+    if (f) { try { var p = f.call(e); if (p && p.catch) p.catch(function () {}); } catch (x) { /* no disponible */ } }
+  }
+  function cambioCompleta() {
+    var c = !!(document.fullscreenElement || document.webkitFullscreenElement);
+    document.body.className = c ? 'completa' : '';
+    ajustar(); setTimeout(ajustar, 60);
+  }
+  var tm = null;
+  document.addEventListener('mousemove', function () {
+    if (document.body.className.indexOf('completa') < 0) return;
+    document.body.className = 'completa mueve';
+    if (tm) clearTimeout(tm);
+    tm = setTimeout(function () { if (document.body.className.indexOf('completa') === 0) document.body.className = 'completa'; }, 2500);
+  });
+  $('pant').addEventListener('click', pantallaCompleta);
+  if (!(document.documentElement.requestFullscreen || document.documentElement.webkitRequestFullscreen)) $('pant').hidden = true;
+  document.addEventListener('fullscreenchange', cambioCompleta); document.addEventListener('webkitfullscreenchange', cambioCompleta);
+  window.addEventListener('resize', ajustar); window.addEventListener('orientationchange', ajustar);
+  window.addEventListener('hashchange', function () {
+    var m = /^#(\d+)$/.exec(location.hash);
+    if (m && Number(m[1]) >= 1 && Number(m[1]) <= n && Number(m[1]) - 1 !== actual) mostrar(Number(m[1]) - 1, 0, false);
+  });
+  // Índice con enlace directo a cada lámina
+  var li = '', k;
+  for (k = 0; k < n; k++) li += '<li><a href="#' + (k + 1) + '" data-i="' + k + '">' + (k + 1) + '. ' + laminas[k].getAttribute('data-titulo') + '</a></li>';
+  $('lista-indice').innerHTML = li;
+  function abrirIndice() {
+    var as = $('lista-indice').getElementsByTagName('a'), q;
+    for (q = 0; q < as.length; q++) as[q].className = q === actual ? 'actual' : '';
+    $('indice').hidden = false; as[actual].focus();
+  }
+  function cerrarIndice() { $('indice').hidden = true; $('btn-indice').focus(); }
+  $('btn-indice').addEventListener('click', function (ev) { ev.stopPropagation(); abrirIndice(); });
+  $('cerrar-indice').addEventListener('click', cerrarIndice);
+  $('lista-indice').addEventListener('click', function (ev) {
+    var a = ev.target; while (a && a.tagName !== 'A') a = a.parentNode;
+    if (!a) return; ev.preventDefault(); ir(Number(a.getAttribute('data-i')), 0); $('indice').hidden = true; $('btn-indice').focus();
+  });
+  $('indice').addEventListener('click', function (ev) { if (ev.target === $('indice')) cerrarIndice(); });
+
+
+  // Relojes (data-seg) que corren mientras su paso está visible, y números que cuentan (data-contar) al entrar a la lámina.
+  var tic = null;
+  function relojes() {
+    var rs = document.querySelectorAll('.reloj'), k;
+    for (k = 0; k < rs.length; k++) {
+      var r = rs[k], visible = laminas[actual].contains(r) && /\bvisto\b/.test(r.parentNode.getAttribute('class') || '');
+      if (visible && !r.getAttribute('data-t0')) r.setAttribute('data-t0', String(new Date().getTime()));
+      if (!visible) r.removeAttribute('data-t0');
+      pintarReloj(r);
+    }
+    if (!tic) tic = setInterval(function () { var q = document.querySelectorAll('.reloj[data-t0]'), z; for (z = 0; z < q.length; z++) pintarReloj(q[z]); }, 250);
+  }
+  function pintarReloj(r) {
+    var tot = Number(r.getAttribute('data-seg')), t0 = r.getAttribute('data-t0'), pas = t0 ? (new Date().getTime() - Number(t0)) / 1000 : 0;
+    var queda = Math.max(0, tot - pas), seg = Math.ceil(queda);
+    r.querySelector('.prog').style.strokeDashoffset = String(597 * (1 - queda / tot));
+    r.querySelector('text').textContent = Math.floor(seg / 60) + ':' + (seg % 60 < 10 ? '0' : '') + (seg % 60);
+    r.querySelector('.prog').style.stroke = queda <= 0 ? '#EF4444' : '';
+  }
+  var contada = -1;
+  function contar() {
+    if (contada === actual) return; contada = actual;
+    var cs = laminas[actual].querySelectorAll('[data-contar]'), k;
+    for (k = 0; k < cs.length; k++) (function (el) {
+      var fin = Number(el.getAttribute('data-contar')), t0 = new Date().getTime();
+      var iv = setInterval(function () { var f = Math.min(1, (new Date().getTime() - t0) / 1500); el.textContent = String(Math.round(fin * (1 - Math.pow(1 - f, 3)))); if (f >= 1) clearInterval(iv); }, 30);
+    })(cs[k]);
+  }
+
+  // Notas del presentador: panel (N) sobre la barra o ventana aparte (P) que sigue a la lámina y al paso actuales.
+  var pop = null;
+  function htmlNotas() {
+    var a = laminas[actual].querySelector('.nota-presentador'), sig = actual + 1 < n ? laminas[actual + 1].getAttribute('data-titulo') : '(fin)';
+    return '<h3>Lámina ' + (actual + 1) + ' / ' + n + (maxPaso[actual] ? ' · paso ' + paso + ' de ' + maxPaso[actual] : '') + ' · ' + laminas[actual].getAttribute('data-titulo') + '</h3>' +
+      (a ? a.innerHTML.replace('data-p="' + paso + '"', 'data-p="' + paso + '" class="ahora"') : '<p>Sin notas.</p>') + '<p style="color:#94A3B8">Siguiente: ' + sig + '</p>';
+  }
+  function notas() {
+    var h = htmlNotas();
+    if (!$('notas').hidden) $('notas').innerHTML = h;
+    try { if (pop && !pop.closed) pop.document.getElementById('c').innerHTML = h; } catch (e) { pop = null; }
+  }
+  function alternarNotas() {
+    $('notas').hidden = !$('notas').hidden;
+    $('btn-notas').setAttribute('aria-pressed', $('notas').hidden ? 'false' : 'true');
+    notas();
+  }
+  function abrirPresentador() {
+    try { pop = window.open('', 'presentador-troficas', 'width=760,height=640'); } catch (e) { pop = null; }
+    if (!pop) return;
+    pop.document.open();
+    pop.document.write('<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8"><title>Notas del presentador<\/title><style>body{margin:0;padding:20px;background:#111827;color:#F8FAFC;font:22px/1.45 Arial,sans-serif}h3{color:#D97706;font-size:18px;text-transform:uppercase}.ahora{color:#FDE68A;font-weight:700}ul{padding-left:1.2em}<\/style><\/head><body><div id="c"><\/div><p style="color:#94A3B8;font-size:16px">Avanza desde la ventana de las láminas; esta se actualiza sola.<\/p><\/body><\/html>');
+    pop.document.close(); notas();
+  }
+  $('btn-notas').addEventListener('click', function (ev) { ev.stopPropagation(); alternarNotas(); });
+  $('notas').addEventListener('click', function (ev) { ev.stopPropagation(); });
+
+  ajustar();
+  var m0 = /^#(\d+)$/.exec(location.hash || '');
+  mostrar(m0 && Number(m0[1]) >= 1 && Number(m0[1]) <= n ? Number(m0[1]) - 1 : 0, 0, true);
+  setTimeout(ajustar, 50);
+})();
+</script>
+<script>
+(function(){
+  var cv=document.getElementById('pir-cv'); if(!cv) return;
+  var E0=[1000,5000,10000,50000,100000], NV=[['#DCFCE7', '#15803D'], ['#FEF3C7', '#B45309'], ['#FFEDD5', '#C2410C'], ['#FEE2E2', '#B91C1C'], ['#EDE9FE', '#6D28D9'], ['#E0F2FE', '#0369A1']], NOM=['Productores','Consumidores 1°','Consumidores 2°','Consumidores 3°','Consumidores 4°','Consumidores 5°'];
+  var s=document.getElementById('pir-sim');
+  ['click','keydown','touchstart','touchend','mousedown','pointerdown'].forEach(function(t){ s.addEventListener(t,function(e){ e.stopPropagation(); }); });
+  var filas=[];
+  for(var k=0;k<6;k++){ var d=document.createElement('div'); d.style.cssText='position:relative;height:92px;border-radius:12px;border:5px solid;display:flex;align-items:center;justify-content:center;font:700 30px DM Sans,Arial,sans-serif;color:#0F2A33;white-space:nowrap;transition:width .8s cubic-bezier(.2,.8,.2,1),background .5s,border-color .5s;overflow:visible'; cv.appendChild(d); filas.push(d); }
+  function fmt(x){ return x>=10? Math.round(x).toLocaleString('es-CL') : x.toLocaleString('es-CL',{maximumFractionDigits:1}); }
+  function pintar(){
+    var e0=E0[+document.getElementById('pir-e0').value], ef=+document.getElementById('pir-ef').value/100, ok=0;
+    document.getElementById('pir-e0v').textContent=fmt(e0)+' unidades';
+    document.getElementById('pir-efv').textContent=Math.round(ef*100)+' %';
+    var e=e0;
+    for(var k=0;k<6;k++){
+      var d=filas[k], vive=e>=10, w=Math.max(56, 880*Math.pow(e/e0,0.5));
+      d.style.width=w+'px';
+      d.style.background=vive?NV[k][0]:'#F1F5F9'; d.style.borderColor=vive?NV[k][1]:'#CBD5E1'; d.style.color=vive?'#0F2A33':'#94A3B8';
+      var t=(vive?'':'✗ ')+NOM[k]+': '+fmt(e); d.innerHTML=''; var sp=document.createElement('span'); sp.textContent=t; d.appendChild(sp); if(t.length*16+30>w){ sp.style.cssText='position:absolute;left:100%;margin-left:14px;color:'+(vive?'#0F2A33':'#94A3B8'); } 
+      if(vive) ok++; e*=ef;
+    }
+    document.getElementById('pir-msg').textContent='Alcanzan '+ok+' niveles tróficos.';
+  }
+  document.getElementById('pir-e0').addEventListener('input',pintar);
+  document.getElementById('pir-ef').addEventListener('input',pintar);
+  pintar();
+})();
+</script>
+</body>
+</html>
