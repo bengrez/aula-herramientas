@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Simulador de pirámides tróficas</title>
+<style>
+  :root { --marfil:#FBFBFA; --linea:#E5E7EB; --borde:#CBD5E1; --pizarra:#1E293B; --suave:#475569; --cobalto:#2563EB; --cobalto-fondo:#EFF4FF; --ambar:#B45309; --carmesi:#B91C1C; }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body { margin:0; font-family: Inter,"Segoe UI",system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif; font-size:17px; line-height:1.55; color:var(--pizarra); background-color:var(--marfil);
+    background-image: linear-gradient(var(--linea) 1px, transparent 1px), linear-gradient(90deg, var(--linea) 1px, transparent 1px); background-size:28px 28px; }
+  main { width:min(680px, calc(100% - 24px)); margin:0 auto; padding:20px 0 48px; }
+  h1 { font-size:1.85rem; line-height:1.15; margin:0 0 6px; }
+  .eyebrow { color:var(--ambar); font-size:.78rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase; margin:0 0 4px; }
+  section { background:#fff; border:1px solid var(--borde); border-radius:8px; padding:16px 16px 14px; margin-top:14px; scroll-margin-top:8px; }
+  section > :last-child { margin-bottom:0; }
+  .paso { display:inline-block; background:var(--pizarra); color:#fff; border-radius:4px; font-size:.78rem; font-weight:700; padding:1px 8px; margin:0 0 6px; }
+  h2.titulo { font-size:1.25rem; line-height:1.25; margin:0 0 8px; }
+  p { margin:0 0 10px; } ol { margin:0 0 12px; padding-left:22px; } li { margin-bottom:4px; }
+  button { font:inherit; font-weight:700; min-height:48px; padding:6px 10px; border-radius:8px; border:2px solid var(--cobalto); background:#fff; color:var(--cobalto); cursor:pointer; touch-action:manipulation; }
+  button.principal { background:var(--pizarra); border-color:var(--pizarra); color:#fff; width:100%; min-height:52px; }
+  button[aria-pressed="true"] { background:var(--cobalto); color:#fff; }
+  button:focus-visible, a:focus-visible { outline:3px solid var(--ambar); outline-offset:2px; }
+  .grupo { margin:0 0 10px; }
+  .grupo .rot { display:block; font-size:.85rem; font-weight:700; color:var(--suave); margin-bottom:4px; }
+  .botones { display:flex; flex-wrap:wrap; gap:6px; }
+  .botones button { flex:1 1 0; min-width:84px; }
+  nav.indice { display:flex; flex-wrap:wrap; gap:6px; margin-top:12px; }
+  nav.indice a { flex:1 1 40%; min-height:44px; display:flex; align-items:center; justify-content:center; text-align:center; background:#fff; border:1px solid var(--borde); border-radius:8px; color:var(--pizarra); font-weight:700; font-size:.95rem; text-decoration:none; padding:4px 6px; }
+  nav.indice a span { color:var(--ambar); margin-right:6px; }
+  .pir { display:flex; flex-direction:column-reverse; gap:4px; margin:6px 0 10px; }
+  .nivel { display:flex; flex-direction:column; align-items:center; }
+  .barra { height:34px; border-radius:4px; border:2px solid; display:flex; align-items:center; justify-content:center; font-size:.85rem; font-weight:700; white-space:nowrap; min-width:12px; }
+  .etq { font-size:.85rem; color:var(--pizarra); line-height:1.2; text-align:center; }
+  .etq b { font-variant-numeric:tabular-nums; }
+  .n0 { background:#DCFCE7; border-color:#15803D; } .n1 { background:#FEF3C7; border-color:#B45309; }
+  .n2 { background:#FFEDD5; border-color:#C2410C; } .n3 { background:#FEE2E2; border-color:#B91C1C; }
+  .n4 { background:#EDE9FE; border-color:#6D28D9; } .n5 { background:#E0F2FE; border-color:#0369A1; }
+  .n6 { background:#FCE7F3; border-color:#BE185D; } .n7 { background:#F1F5F9; border-color:#334155; }
+  .fuera .barra { background:#F3F4F6; border-color:#9CA3AF; border-style:dashed; color:#4B5563; }
+  .fuera .etq { color:#4B5563; text-decoration:line-through; }
+  .resultado { background:var(--cobalto-fondo); border:1px solid #BFD3FF; border-radius:6px; padding:10px 12px; font-weight:700; margin:0 0 10px; }
+  .guia { background:#FFF7ED; border-left:4px solid var(--ambar); border-radius:4px; padding:8px 12px; font-size:.95rem; margin:0 0 12px; }
+  .grilla { display:flex; flex-wrap:wrap; gap:3px; margin:6px 0 10px; max-width:340px; }
+  .celda { width:28px; height:28px; border-radius:3px; background:#DCFCE7; border:2px solid #15803D; }
+  .personas { font-size:1.6rem; line-height:1.3; letter-spacing:2px; margin:6px 0 10px; word-break:break-all; }
+  .solo-lector { position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; margin:-1px; padding:0; border:0; }
+  footer { color:var(--suave); font-size:.85rem; margin-top:18px; }
+  footer p { margin:0 0 8px; }
+  @media (prefers-reduced-motion: reduce) { * { animation:none !important; transition:none !important; } }
+  .barra { transition:width .3s ease; }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <p class="eyebrow">Ecología · Simulador</p>
+    <h1>Pirámides tróficas</h1>
+    <p>Úsalo para resolver tu guía. <b>Primero responde en la hoja</b>; después comprueba aquí.</p>
+    <nav class="indice" aria-label="Partes del simulador">
+      <a href="#cadena"><span>A</span>Cadena</a>
+      <a href="#tipos"><span>B·C</span>Tres pirámides</a>
+      <a href="#eslabones"><span>D</span>Eslabones</a>
+      <a href="#terreno"><span>D</span>Terreno y campo</a>
+    </nav>
+  </header>
+
+  <section id="cadena">
+    <h2 class="paso">Parte A</h2>
+    <h2 class="titulo">La cadena del pasto al aguilucho</h2>
+    <ol>
+      <li>Calcula en la hoja la energía de cada nivel.</li>
+      <li>Elige la energía del pasto y cuánto pasa a cada nivel.</li>
+      <li>Toca <b>Ver kcal</b> y compara con tu cálculo.</li>
+      <li>Cambia a 5 % y a 20 %. ¿Qué le pasa al aguilucho?</li>
+    </ol>
+    <div class="grupo"><span class="rot" id="r-base">Energía del pasto (kcal)</span>
+      <div class="botones" role="group" aria-labelledby="r-base" id="c-base"></div></div>
+    <div class="grupo"><span class="rot" id="r-ef">Pasa al siguiente nivel</span>
+      <div class="botones" role="group" aria-labelledby="r-ef" id="c-ef"></div></div>
+    <button type="button" class="principal" id="c-ver" aria-pressed="false">Ver kcal</button>
+    <div class="pir" id="c-pir" role="img"></div>
+    <p class="resultado" id="c-res"></p>
+  </section>
+
+  <section id="tipos">
+    <h2 class="paso">Partes B y C</h2>
+    <h2 class="titulo">Tres pirámides</h2>
+    <ol>
+      <li>Elige un tipo de pirámide.</li>
+      <li>Mira sus dos ejemplos. ¿Alguno se invierte?</li>
+      <li>Repite con los otros dos tipos. ¿Cuál <b>nunca</b> se invierte?</li>
+    </ol>
+    <div class="grupo"><span class="rot" id="r-tipo">Tipo de pirámide</span>
+      <div class="botones" role="group" aria-labelledby="r-tipo" id="t-tipo"></div></div>
+    <div class="grupo"><span class="rot" id="r-ej">Ejemplo</span>
+      <div class="botones" role="group" aria-labelledby="r-ej" id="t-ej"></div></div>
+    <p class="resultado" id="t-res"></p>
+    <div class="pir" id="t-pir" role="img"></div>
+    <p class="guia" id="t-nota"></p>
+  </section>
+
+  <section id="eslabones">
+    <h2 class="paso">Parte D · pregunta 9</h2>
+    <h2 class="titulo">¿Cuántos eslabones caben?</h2>
+    <p>En este modelo, un nivel se sostiene si le llegan <b>al menos 10 kcal</b>. Si le llega menos, no alcanza a vivir ahí ningún consumidor.</p>
+    <ol>
+      <li>Elige la energía de los productores.</li>
+      <li>Cuenta cuántos niveles se sostienen.</li>
+      <li>Multiplica la energía por 10. ¿Cuántos niveles ganas?</li>
+    </ol>
+    <div class="grupo"><span class="rot" id="r-e0">Energía de los productores (kcal)</span>
+      <div class="botones" role="group" aria-labelledby="r-e0" id="e-base"></div></div>
+    <div class="grupo"><span class="rot" id="r-eef">Pasa al siguiente nivel</span>
+      <div class="botones" role="group" aria-labelledby="r-eef" id="e-ef"></div></div>
+    <p class="resultado" id="e-res"></p>
+    <div class="pir" id="e-pir" role="img"></div>
+  </section>
+
+  <section id="terreno">
+    <h2 class="paso">Parte D · preguntas 10 y 11</h2>
+    <h2 class="titulo">¿Cuánto terreno? ¿Cuántas personas?</h2>
+    <p><b>Terreno.</b> Cada cuadro es el pasto que necesita un herbívoro, como un guanaco. Compara animales de un tamaño parecido.</p>
+    <div class="grupo"><span class="rot" id="r-an">Animal</span>
+      <div class="botones" role="group" aria-labelledby="r-an" id="d-an"></div></div>
+    <p class="resultado" id="d-res"></p>
+    <div class="grilla" id="d-grilla" role="img"></div>
+    <p><b>Campo.</b> Un campo produce <b>10 000 000 kcal</b> de trigo al año. Una persona necesita unas <b>2 000 kcal al día</b> (730 000 al año). Puede comerse el trigo o dárselo a vacunos y comer su carne.</p>
+    <div class="grupo"><span class="rot" id="r-co">La gente come</span>
+      <div class="botones" role="group" aria-labelledby="r-co" id="f-co"></div></div>
+    <p class="resultado" id="f-res"></p>
+    <div class="personas" id="f-per" role="img"></div>
+  </section>
+
+  <p id="anuncio" class="solo-lector" aria-live="polite" aria-atomic="true"></p>
+
+  <footer>
+    <p><b>Datos.</b> Río Silver Springs (Florida, EE.UU.), energía en kcal/m²/año: Odum, H. T. (1957), <i>Ecological Monographs</i> 27: 55–112. Pradera, número de individuos en una parcela: Odum, E. P. (1959), <i>Fundamentals of Ecology</i>. Canal de la Mancha, biomasa en g/m²: Harvey, H. W. (1950), <i>J. Mar. Biol. Assoc. UK</i> 29: 97–137. Son cifras clásicas de libros de ecología, citadas sin contrastar con el original.</p>
+    <p><b>Modelos.</b> La pradera de energía, el árbol, el bosque, el mínimo de 10 kcal por nivel, el terreno y el campo son ejemplos ilustrativos para practicar la regla del 10 %, no mediciones. En la naturaleza lo que pasa de un nivel a otro varía entre 5 % y 20 %.</p>
+  </footer>
+</main>
+<script>
+(function () {
+  function $(id) { return document.getElementById(id); }
+  function anunciar(t) { $('anuncio').textContent = t; }
+  function fmt(v) {
+    var r = v >= 100 ? Math.round(v) : (v >= 1 ? Math.round(v * 10) / 10 : Math.round(v * 1000) / 1000);
+    var s = String(r).replace('.', ',');
+    var p = s.split(','); p[0] = p[0].replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+    return p.join(',');
+  }
+  function botones(cont, opciones, actual, alElegir) {
+    var el = $(cont); el.innerHTML = '';
+    for (var i = 0; i < opciones.length; i++) {
+      (function (o) {
+        var b = document.createElement('button');
+        b.type = 'button'; b.textContent = o.t;
+        b.setAttribute('aria-pressed', o.v === actual ? 'true' : 'false');
+        b.addEventListener('click', function () {
+          var hs = el.querySelectorAll('button');
+          for (var k = 0; k < hs.length; k++) hs[k].setAttribute('aria-pressed', 'false');
+          b.setAttribute('aria-pressed', 'true');
+          alElegir(o.v);
+        });
+        el.appendChild(b);
+      })(opciones[i]);
+    }
+  }
+  // ancho en escala logarítmica: conserva el orden y permite ver de 1 a millones
+  function ancho(v, max) {
+    if (v <= 0) return 6;
+    var m = Math.log(max + 1), x = Math.log(v + 1);
+    return Math.max(6, Math.round(100 * Math.pow(x / m, 2)));
+  }
+  function dibujar(cont, niveles, max) {
+    var el = $(cont); el.innerHTML = '';
+    for (var i = 0; i < niveles.length; i++) {
+      var n = niveles[i];
+      var d = document.createElement('div');
+      d.className = 'nivel' + (n.fuera ? ' fuera' : '');
+      var b = document.createElement('div');
+      b.className = 'barra n' + (i % 8);
+      b.style.width = ancho(n.v, max) + '%';
+      var e = document.createElement('div');
+      e.className = 'etq';
+      e.innerHTML = n.nombre + (n.txt !== '' ? ' · <b>' + n.txt + '</b>' : '');
+      d.appendChild(b); d.appendChild(e); el.appendChild(d);
+    }
+  }
+
+  // ---------- A: cadena ----------
+  var A = { base: 20000, ef: 10, ver: false };
+  var NOMBRES_A = ['Pasto', 'Saltamontes', 'Lagartija', 'Culebra', 'Aguilucho'];
+  function cadena() {
+    var niv = [], v = A.base;
+    for (var i = 0; i < NOMBRES_A.length; i++) {
+      niv.push({ nombre: NOMBRES_A[i], v: v, txt: A.ver ? fmt(v) + ' kcal' : '?' });
+      v = v * A.ef / 100;
+    }
+    dibujar('c-pir', niv, A.base);
+    var top = niv[4].v, cada = Math.round(A.base / top);
+    var res = A.ver
+      ? 'Al aguilucho le llega ' + fmt(top) + ' kcal: solo 1 de cada ' + fmt(cada) + ' kcal del pasto. Entre el pasto y los saltamontes se pierden ' + fmt(A.base - niv[1].v) + ' kcal.'
+      : 'Calcula en tu hoja y después toca «Ver kcal».';
+    $('c-res').textContent = res;
+    $('c-pir').setAttribute('aria-label', 'Pirámide de energía de la cadena. ' + (A.ver ? niv.map(function (n) { return n.nombre + ' ' + fmt(n.v) + ' kcal'; }).join(', ') : 'Valores ocultos.'));
+    return res;
+  }
+  botones('c-base', [{ t: '20 000', v: 20000 }, { t: '50 000', v: 50000 }, { t: '100 000', v: 100000 }], A.base, function (v) { A.base = v; anunciar(cadena()); });
+  botones('c-ef', [{ t: '5 %', v: 5 }, { t: '10 %', v: 10 }, { t: '20 %', v: 20 }], A.ef, function (v) { A.ef = v; anunciar(cadena()); });
+  $('c-ver').addEventListener('click', function () {
+    A.ver = !A.ver;
+    this.setAttribute('aria-pressed', A.ver ? 'true' : 'false');
+    this.textContent = A.ver ? 'Ocultar kcal' : 'Ver kcal';
+    anunciar(cadena());
+  });
+  cadena();
+
+  // ---------- B y C: tres pirámides ----------
+  var TIPOS = {
+    energia: { t: 'Energía', unidad: 'kcal/m²/año', ejemplos: [
+      { t: 'Río', nombre: 'Río Silver Springs (datos reales)', niv: [['Plantas y algas', 20810], ['Herbívoros', 3368], ['Carnívoros', 383], ['Carnívoros tope', 21]] },
+      { t: 'Pradera', nombre: 'Pradera (modelo del 10 %)', niv: [['Pastos', 10000], ['Herbívoros', 1000], ['Carnívoros', 100], ['Carnívoros tope', 10]] }],
+      nota: 'Mira los dos ejemplos de energía: cada nivel recibe menos que el de abajo, porque la energía se pierde como calor.' },
+    numero: { t: 'Número', unidad: 'individuos', ejemplos: [
+      { t: 'Pradera', nombre: 'Pradera (individuos en una parcela)', niv: [['Pastos', 5842424], ['Herbívoros', 708624], ['Carnívoros', 354904], ['Carnívoros tope', 3]] },
+      { t: 'Árbol', nombre: 'Un árbol (ejemplo)', niv: [['Árbol', 1], ['Orugas', 5000], ['Aves', 40], ['Halcones', 2]] }],
+      nota: 'En número cuenta individuos, no su tamaño. Un solo productor grande puede alimentar a miles de consumidores chicos.' },
+    biomasa: { t: 'Biomasa', unidad: 'g/m²', ejemplos: [
+      { t: 'Bosque', nombre: 'Bosque (ejemplo)', niv: [['Árboles', 30000], ['Herbívoros', 40], ['Carnívoros', 4]] },
+      { t: 'Mar', nombre: 'Canal de la Mancha (datos reales)', niv: [['Fitoplancton', 4], ['Zooplancton', 21]] }],
+      nota: 'La biomasa es la masa que hay en un momento. El fitoplancton pesa poco, pero se reproduce tan rápido que alimenta a una masa mayor de zooplancton.' }
+  };
+  var B = { tipo: 'energia', ej: 0 };
+  function piramide() {
+    var T = TIPOS[B.tipo], E = T.ejemplos[B.ej], niv = [], max = 0, inv = false;
+    for (var i = 0; i < E.niv.length; i++) {
+      var v = E.niv[i][1]; if (v > max) max = v;
+      if (i > 0 && v > E.niv[i - 1][1]) inv = true;
+      niv.push({ nombre: E.niv[i][0], v: v, txt: fmt(v) });
+    }
+    dibujar('t-pir', niv, max);
+    var res = E.nombre + ' · ' + T.unidad + ' · ' + (inv ? '▼ INVERTIDA: un nivel tiene más que el de abajo.' : '▲ NORMAL: cada nivel tiene menos que el de abajo.');
+    $('t-res').textContent = res;
+    $('t-nota').textContent = T.nota;
+    $('t-pir').setAttribute('aria-label', 'Pirámide de ' + T.t.toLowerCase() + ', ' + E.nombre + ': ' + niv.map(function (n) { return n.nombre + ' ' + n.txt; }).join(', '));
+    return res;
+  }
+  function ejemplosB() {
+    var T = TIPOS[B.tipo], ops = [];
+    for (var i = 0; i < T.ejemplos.length; i++) ops.push({ t: T.ejemplos[i].t, v: i });
+    botones('t-ej', ops, B.ej, function (v) { B.ej = v; anunciar(piramide()); });
+  }
+  botones('t-tipo', [{ t: 'Energía', v: 'energia' }, { t: 'Número', v: 'numero' }, { t: 'Biomasa', v: 'biomasa' }], B.tipo, function (v) {
+    B.tipo = v; B.ej = 0; ejemplosB(); anunciar(piramide());
+  });
+  ejemplosB(); piramide();
+
+  // ---------- D: eslabones ----------
+  var E = { base: 10000, ef: 10 };
+  var NOMBRES_E = ['Productores', 'Herbívoros', 'Carnívoros 1', 'Carnívoros 2', 'Carnívoros 3', 'Carnívoros 4', 'Carnívoros 5', 'Carnívoros 6'];
+  function eslabones() {
+    var niv = [], v = E.base, n = 0;
+    for (var i = 0; i < NOMBRES_E.length; i++) {
+      var ok = v >= 10;
+      if (ok) n++;
+      niv.push({ nombre: NOMBRES_E[i], v: v, txt: fmt(v) + ' kcal' + (ok ? '' : ' ✗ no alcanza'), fuera: !ok });
+      if (!ok) break;
+      v = v * E.ef / 100;
+    }
+    dibujar('e-pir', niv, E.base);
+    var res = 'Se sostienen ' + n + ' niveles tróficos.';
+    $('e-res').textContent = res;
+    $('e-pir').setAttribute('aria-label', res + ' ' + niv.map(function (x) { return x.nombre + ' ' + x.txt; }).join(', '));
+    return res;
+  }
+  botones('e-base', [{ t: '1 000', v: 1000 }, { t: '10 000', v: 10000 }, { t: '100 000', v: 100000 }, { t: '1 000 000', v: 1000000 }], E.base, function (v) { E.base = v; anunciar(eslabones()); });
+  botones('e-ef', [{ t: '5 %', v: 5 }, { t: '10 %', v: 10 }, { t: '20 %', v: 20 }], E.ef, function (v) { E.ef = v; anunciar(eslabones()); });
+  eslabones();
+
+  // ---------- D: terreno ----------
+  var ANIMALES = [
+    { t: 'Guanaco', v: 1, txt: 'El guanaco come pasto: necesita 1 cuadro.' },
+    { t: 'Puma', v: 10, txt: 'El puma come herbívoros. Le llega solo el 10 %: necesita los herbívoros de 10 cuadros.' },
+    { t: 'Súper tope', v: 100, txt: 'Un depredador imaginario que come pumas: necesitaría 100 cuadros.' }];
+  function terreno(i) {
+    var a = ANIMALES[i], g = $('d-grilla'); g.innerHTML = '';
+    for (var k = 0; k < a.v; k++) { var c = document.createElement('div'); c.className = 'celda'; g.appendChild(c); }
+    $('d-res').textContent = a.txt;
+    g.setAttribute('aria-label', a.v + ' cuadros de pasto');
+    return a.txt;
+  }
+  botones('d-an', [{ t: 'Guanaco', v: 0 }, { t: 'Puma', v: 1 }, { t: 'Súper tope', v: 2 }], 0, function (v) { anunciar(terreno(v)); });
+  terreno(0);
+
+  // ---------- D: campo ----------
+  var CAMPO = 10000000, PERSONA = 730000;
+  function campo(c) {
+    var kcal = c === 'trigo' ? CAMPO : CAMPO * 0.1;
+    var n = Math.floor(kcal / PERSONA);
+    var txt = c === 'trigo'
+      ? 'Comiendo el trigo llegan ' + fmt(kcal) + ' kcal: alcanza para ' + n + ' personas.'
+      : 'El vacuno guarda el 10 %: llegan ' + fmt(kcal) + ' kcal. Alcanza para ' + n + ' persona.';
+    var s = ''; for (var k = 0; k < n; k++) s += '🧍';
+    $('f-per').textContent = s;
+    $('f-per').setAttribute('aria-label', n + (n === 1 ? ' persona' : ' personas'));
+    $('f-res').textContent = txt;
+    return txt;
+  }
+  botones('f-co', [{ t: 'Trigo', v: 'trigo' }, { t: 'Vacuno', v: 'vacuno' }], 'trigo', function (v) { anunciar(campo(v)); });
+  campo('trigo');
+})();
+</script>
+</body>
+</html>
