@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex, nofollow">
-<title>Simulador de pirámides tróficas</title>
+<title>Simulador de ecología</title>
 <style>
   :root { --marfil:#FBFBFA; --linea:#E5E7EB; --borde:#CBD5E1; --pizarra:#1E293B; --suave:#475569; --cobalto:#2563EB; --cobalto-fondo:#EFF4FF; --ambar:#B45309; --carmesi:#B91C1C; }
   * { box-sizing: border-box; }
@@ -46,6 +46,11 @@
   .grilla { display:flex; flex-wrap:wrap; gap:3px; margin:6px 0 10px; max-width:340px; }
   .celda { width:28px; height:28px; border-radius:3px; background:#DCFCE7; border:2px solid #15803D; }
   .personas { font-size:1.6rem; line-height:1.3; letter-spacing:2px; margin:6px 0 10px; word-break:break-all; }
+  .graf { position:relative; height:180px; display:flex; align-items:flex-end; gap:3px; border-left:2px solid var(--pizarra); border-bottom:2px solid var(--pizarra); padding:0 2px; margin:6px 0 2px; }
+  .col { flex:1 1 0; background:#B45309; border-radius:2px 2px 0 0; min-height:2px; transition:height .3s ease; }
+  .techo { position:absolute; left:0; right:0; border-top:2px dashed #15803D; }
+  .techo span { position:absolute; right:2px; top:-20px; font-size:.78rem; color:#15803D; font-weight:700; background:#fff; padding:0 3px; }
+  .eje { font-size:.8rem; color:var(--suave); text-align:right; margin:0; }
   .solo-lector { position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; margin:-1px; padding:0; border:0; }
   footer { color:var(--suave); font-size:.85rem; margin-top:18px; }
   footer p { margin:0 0 8px; }
@@ -57,18 +62,34 @@
 <main>
   <header>
     <p class="eyebrow">Ecología · Simulador</p>
-    <h1>Pirámides tróficas</h1>
+    <h1>Ecología: poblaciones y energía</h1>
     <p>Úsalo para resolver tu guía. <b>Primero responde en la hoja</b>; después comprueba aquí.</p>
     <nav class="indice" aria-label="Partes del simulador">
-      <a href="#cadena"><span>A</span>Cadena</a>
-      <a href="#tipos"><span>B·C</span>Tres pirámides</a>
-      <a href="#eslabones"><span>D</span>Eslabones</a>
-      <a href="#terreno"><span>D</span>Terreno y campo</a>
+      <a href="#poblacion"><span>1</span>Población</a>
+      <a href="#cadena"><span>2</span>Cadena</a>
+      <a href="#tipos"><span>3</span>Tres pirámides</a>
+      <a href="#eslabones"><span>4</span>Eslabones</a>
+      <a href="#terreno"><span>5</span>Terreno y campo</a>
     </nav>
   </header>
 
+  <section id="poblacion">
+    <h2 class="paso">1 · Población</h2>
+    <h2 class="titulo">¿Qué le pasa a la población de degús?</h2>
+    <ol>
+      <li>Escribe en tu hoja qué crees que pasará en cada caso.</li>
+      <li>Elige un caso y mira cómo cambia la población en 15 años.</li>
+      <li>Compara con «Normal». ¿Qué factor cambió: el alimento y el espacio, o los depredadores?</li>
+    </ol>
+    <div class="grupo"><span class="rot" id="r-pc">Caso</span>
+      <div class="botones" role="group" aria-labelledby="r-pc" id="p-caso"></div></div>
+    <p class="resultado" id="p-res"></p>
+    <div class="graf" id="p-graf" role="img"><div class="techo" id="p-techo"><span>lo que el ambiente alcanza a sostener</span></div></div>
+    <p class="eje">años 1 a 15 →</p>
+  </section>
+
   <section id="cadena">
-    <h2 class="paso">Parte A</h2>
+    <h2 class="paso">2 · Cadena</h2>
     <h2 class="titulo">La cadena del pasto al aguilucho</h2>
     <ol>
       <li>Calcula en la hoja la energía de cada nivel.</li>
@@ -86,7 +107,7 @@
   </section>
 
   <section id="tipos">
-    <h2 class="paso">Partes B y C</h2>
+    <h2 class="paso">3 · Tres pirámides</h2>
     <h2 class="titulo">Tres pirámides</h2>
     <ol>
       <li>Elige un tipo de pirámide.</li>
@@ -103,7 +124,7 @@
   </section>
 
   <section id="eslabones">
-    <h2 class="paso">Parte D · pregunta 9</h2>
+    <h2 class="paso">4 · Eslabones</h2>
     <h2 class="titulo">¿Cuántos eslabones caben?</h2>
     <p>En este modelo, un nivel se sostiene si le llegan <b>al menos 10 kcal</b>. Si le llega menos, no alcanza a vivir ahí ningún consumidor.</p>
     <ol>
@@ -120,7 +141,7 @@
   </section>
 
   <section id="terreno">
-    <h2 class="paso">Parte D · preguntas 10 y 11</h2>
+    <h2 class="paso">5 · Terreno y campo</h2>
     <h2 class="titulo">¿Cuánto terreno? ¿Cuántas personas?</h2>
     <p><b>Terreno.</b> Cada cuadro es el pasto que necesita un herbívoro, como un guanaco. Compara animales de un tamaño parecido.</p>
     <div class="grupo"><span class="rot" id="r-an">Animal</span>
@@ -138,7 +159,7 @@
 
   <footer>
     <p><b>Datos.</b> Río Silver Springs (Florida, EE.UU.), energía en kcal/m²/año: Odum, H. T. (1957), <i>Ecological Monographs</i> 27: 55–112. Pradera, número de individuos en una parcela: Odum, E. P. (1959), <i>Fundamentals of Ecology</i>. Canal de la Mancha, biomasa en g/m²: Harvey, H. W. (1950), <i>J. Mar. Biol. Assoc. UK</i> 29: 97–137. Son cifras clásicas de libros de ecología, citadas sin contrastar con el original.</p>
-    <p><b>Modelos.</b> La pradera de energía, el árbol, el bosque, el mínimo de 10 kcal por nivel, el terreno y el campo son ejemplos ilustrativos para practicar la regla del 10 %, no mediciones. En la naturaleza lo que pasa de un nivel a otro varía entre 5 % y 20 %.</p>
+    <p><b>Modelos.</b> La población de degús sigue un modelo simple (crece hasta lo que el ambiente sostiene y pierde una parte por depredación); los números son ilustrativos. La pradera de energía, el árbol, el bosque, el mínimo de 10 kcal por nivel, el terreno y el campo son ejemplos ilustrativos para practicar la regla del 10 %, no mediciones. En la naturaleza lo que pasa de un nivel a otro varía entre 5 % y 20 %.</p>
   </footer>
 </main>
 <script>
@@ -189,6 +210,32 @@
       d.appendChild(b); d.appendChild(e); el.appendChild(d);
     }
   }
+
+  // ---------- población (modelo logístico con depredación) ----------
+  var CASOS = [
+    { t: 'Normal', K: 200, d: 0.05, txt: 'Hay alimento y pocos depredadores' },
+    { t: 'Sequía', K: 80, d: 0.05, txt: 'Una sequía deja menos pasto y semillas' },
+    { t: 'Más zorros', K: 200, d: 0.25, txt: 'Llegan más zorros que cazan degús' },
+    { t: 'Se corta el matorral', K: 100, d: 0.05, txt: 'Se corta la mitad del matorral donde viven' }];
+  var MAXP = 220;
+  function poblacion(i) {
+    var c = CASOS[i], n = 20, g = $('p-graf'), cols = g.querySelectorAll('.col'), k;
+    for (k = 0; k < cols.length; k++) g.removeChild(cols[k]);
+    for (k = 0; k < 15; k++) {
+      var col = document.createElement('div'); col.className = 'col';
+      col.style.height = Math.round(100 * n / MAXP) + '%'; g.appendChild(col);
+      n = n + 0.5 * n * (1 - n / c.K) - c.d * n;
+      if (n < 0) n = 0;
+    }
+    $('p-techo').style.bottom = Math.round(100 * c.K / MAXP) + '%';
+    var fin = Math.round(n);
+    var res = c.txt + '. Después de 15 años hay unos ' + fin + ' degús.';
+    $('p-res').textContent = res;
+    g.setAttribute('aria-label', 'Gráfico de la población de degús: parte en 20 y llega a unos ' + fin + ' en 15 años. El ambiente alcanza para ' + c.K + '.');
+    return res;
+  }
+  botones('p-caso', [{ t: 'Normal', v: 0 }, { t: 'Sequía', v: 1 }, { t: 'Más zorros', v: 2 }, { t: 'Se corta el matorral', v: 3 }], 0, function (v) { anunciar(poblacion(v)); });
+  poblacion(0);
 
   // ---------- A: cadena ----------
   var A = { base: 20000, ef: 10, ver: false };
