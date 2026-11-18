@@ -17,16 +17,19 @@
   header p { margin:0 0 10px; font-size:.95rem; }
   .atajos { display:flex; flex-wrap:wrap; gap:6px; margin:0 0 4px; }
   .atajos span { flex:1 1 100%; font-size:.85rem; font-weight:700; color:var(--suave); }
-  .atajos button { flex:1 1 40%; min-width:0; min-height:44px; font-size:.9rem; padding:2px 6px; border-width:1px; border-color:var(--borde); color:var(--pizarra); }
+  .atajos button { flex:1 1 40%; min-width:0; min-height:44px; font-size:.9rem; padding:2px 6px; border-width:1px; border-color:#64748B; color:var(--pizarra); }
   .pestanas { position:-webkit-sticky; position:sticky; top:0; z-index:5; display:flex; gap:4px; padding:6px 0; background:var(--marfil); }
-  .pestanas button { flex:1 1 0; min-width:0; min-height:48px; padding:2px; font-size:.86rem; line-height:1.1; }
+  .pestanas button { flex:1 1 0; min-width:0; min-height:52px; padding:2px; font-size:.86rem; line-height:1.1; }
+  .pestanas small { display:block; font-size:.76rem; font-weight:600; margin-top:2px; }
   button { font:inherit; font-weight:700; min-height:52px; padding:6px 8px; border-radius:8px; border:2px solid var(--cobalto); background:#fff; color:var(--cobalto); cursor:pointer; touch-action:manipulation; }
   button[aria-pressed="true"], button[aria-selected="true"] { background:var(--cobalto); color:#fff; }
   button.osc { background:var(--pizarra); border-color:var(--pizarra); color:#fff; }
   button.osc[aria-pressed="true"] { background:#fff; color:var(--pizarra); }
   button:focus-visible { outline:3px solid var(--ambar); outline-offset:2px; }
   #panel { background:#fff; border:1px solid var(--borde); border-radius:8px; padding:10px 12px 12px; scroll-margin-top:62px; }
-  @media (max-width:340px) { #panel { padding:8px 6px 10px; } }
+  @media (max-width:340px) { main { width:calc(100% - 12px); } #panel { padding:8px 6px 10px; } .pestanas button { font-size:.8rem; } .etq, .ptxt { font-size:15px !important; } }
+  .bots, .lente, #e-tarjeta { scroll-margin-top:66px; }
+  details.notas summary { min-height:44px; display:flex; align-items:center; font-weight:700; cursor:pointer; }
   .instr { margin:0 0 8px; padding-left:22px; font-size:.95rem; }
   .instr li { margin-bottom:2px; }
   .bots { display:flex; flex-wrap:wrap; gap:6px; margin:0 0 8px; }
@@ -52,8 +55,10 @@
   /* escena */
   .etq { font:600 14px system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; fill:#1E293B; paint-order:stroke; stroke:#fff; stroke-width:3.5px; stroke-linejoin:round; pointer-events:none; }
   .obj { cursor:pointer; outline:none; transition:opacity .25s; }
+  .obj > :not(.hit), #flechas, #signos, .lupa-q, .casas { pointer-events:none; }
+  #escena.inerte .obj { cursor:default; }
   .obj .hit { fill:transparent; stroke:none; }
-  .obj:focus .hit { stroke:#B45309; stroke-width:3; stroke-dasharray:4 3; }
+  .obj:focus-visible .hit { stroke:#B45309; stroke-width:3; stroke-dasharray:4 3; }
   .apagado { opacity:.2; }
   .resalta { filter:drop-shadow(0 0 4px #F59E0B) drop-shadow(0 0 2px #F59E0B); }
   .marca .hit { stroke:#1D4ED8; stroke-width:2.5; stroke-dasharray:6 4; }
@@ -69,7 +74,7 @@
   #escena.seco .sol-c { fill:#F97316; stroke:#F97316; }
   #escena.zorros .extra { display:inline; }
   #escena.casas .casas { display:inline; }
-  #escena.casas #o-quillay, #escena.casas #o-tenca, #escena.casas #o-piedras, #escena.casas #o-culebra { display:none; }
+  #escena.casas #o-quillay, #escena.casas #o-pulgas, #escena.casas #o-tenca, #escena.casas #o-piedras, #escena.casas #o-culebra { display:none; }
   #escena.quillay .lupa-q { display:inline; }
   .ptxt { font:600 14px system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; fill:#1E293B; }
   .ptxt.n { font-weight:400; fill:#475569; }
@@ -97,10 +102,10 @@
   </nav>
 
   <div class="pestanas" role="tablist" aria-label="Qué mirar en el cerro">
-    <button type="button" role="tab" id="tab-niveles" aria-controls="panel" aria-selected="true">Niveles</button>
-    <button type="button" role="tab" id="tab-inter" aria-controls="panel" aria-selected="false">Interac&shy;ciones</button>
-    <button type="button" role="tab" id="tab-pob" aria-controls="panel" aria-selected="false">Población</button>
-    <button type="button" role="tab" id="tab-energia" aria-controls="panel" aria-selected="false">Energía</button>
+    <button type="button" role="tab" id="tab-niveles" aria-controls="panel" aria-selected="true">Niveles<small>Parte A</small></button>
+    <button type="button" role="tab" id="tab-inter" aria-controls="panel" aria-selected="false">Interac&shy;ciones<small>Parte B</small></button>
+    <button type="button" role="tab" id="tab-pob" aria-controls="panel" aria-selected="false">Población<small>Partes C y E</small></button>
+    <button type="button" role="tab" id="tab-energia" aria-controls="panel" aria-selected="false">Energía<small>Parte D</small></button>
   </div>
 
   <div id="panel" role="tabpanel" aria-labelledby="tab-niveles">
@@ -126,13 +131,13 @@
     <div id="c-pob" class="lente oculto">
       <ol class="instr">
         <li>Escribe tu predicción para cada caso.</li>
-        <li>Toca un caso: verás 3 años de degús en un sector de 3 ha del cerro, mes a mes. El cambio empieza en el mes 6.</li>
+        <li>Toca un caso: verás 3 años de degús en un sector de 3 hectáreas (ha) del cerro, mes a mes. El cambio empieza en el mes 6.</li>
       </ol>
       <div class="bots" role="group" aria-label="Caso" id="p-bots">
         <button type="button" data-v="normal" aria-pressed="true">Normal</button>
         <button type="button" data-v="sequia" aria-pressed="false">Sequía</button>
         <button type="button" data-v="zorros" aria-pressed="false">Llegan más zorros</button>
-        <button type="button" data-v="condominio" aria-pressed="false">Se corta el matorral</button>
+        <button type="button" data-v="condominio" aria-pressed="false">Se corta la mitad del matorral</button>
       </div>
     </div>
     <div id="c-energia" class="lente oculto">
@@ -145,26 +150,26 @@
       <div id="e-c-trama">
         <ol class="instr">
           <li>Dibuja tu trama en la hoja.</li>
-          <li>Toca un ser vivo para ver sus flechas, o mira la trama entera.</li>
+          <li>Toca un ser vivo para ver sus flechas, o toca <b>Comprobar mi trama</b> para verla entera.</li>
         </ol>
-        <div class="bots"><button type="button" class="osc" id="e-toda" aria-pressed="false">Ver toda la trama</button></div>
+        <div class="bots"><button type="button" class="osc" id="e-toda">Comprobar mi trama</button></div>
       </div>
       <div id="e-c-cadena" class="oculto">
         <ol class="instr">
           <li>Calcula en tu hoja cuánta energía llega al degú y al zorro.</li>
           <li>Toca <b>Ver kcal</b> y compara.</li>
         </ol>
-        <div class="bots"><button type="button" class="osc" id="e-ver" aria-pressed="false">Ver kcal</button></div>
+        <div class="bots"><button type="button" class="osc" id="e-ver">Ver kcal</button></div>
       </div>
       <div id="e-c-tres" class="oculto">
         <ol class="instr">
-          <li>Mira la rama del quillay en la lupa.</li>
+          <li>Mira en la lupa una rama del quillay, de cerca.</li>
           <li>Compara sus tres pirámides: ¿cuál se invierte?</li>
         </ol>
       </div>
       <div id="e-c-terreno" class="oculto">
         <ol class="instr">
-          <li>Todo el cerro está dividido en 100 cuadros iguales.</li>
+          <li>Todo el cerro está dividido en cuadros iguales.</li>
           <li>Toca <b>Degús</b> y después <b>Zorros</b>. ¿Cuántos caben?</li>
         </ol>
         <div class="bots" role="group" aria-label="Animal" id="e-ter">
@@ -180,7 +185,7 @@
     <!-- ===== resultados (debajo de la escena) ===== -->
     <div id="r-niveles" class="lente">
       <div class="tarjeta" id="n-tarjeta"><span class="grande" id="n-titulo">Toca qué mirar</span><span id="n-desc">Los botones de arriba encienden una parte del cerro.</span>
-        <button type="button" class="osc oculto" id="n-ver" aria-pressed="false">Ver el nivel</button>
+        <button type="button" class="osc oculto" id="n-ver">Ver el nivel</button>
         <span class="revela oculto" id="n-nivel"></span></div>
       <p class="tarjeta" id="n-bio">Toca cualquier cosa del dibujo y te digo si es un ser vivo (<b>biótico</b>) o algo no vivo (<b>abiótico</b>).</p>
     </div>
@@ -191,8 +196,8 @@
     <div id="r-pob" class="lente oculto">
       <div class="fig" id="p-fig"></div>
       <div class="ind">
-        <div id="p-ind-k">Alimento y espacio (3 ha) alcanzan para<b id="p-k">100 degús</b></div>
-        <div id="p-ind-z">Zorros que cazan aquí<b id="p-z">2</b></div>
+        <div id="p-ind-k">Agua, alimento y refugio del sector alcanzan para<b id="p-k">100 degús</b></div>
+        <div id="p-ind-z">Zorros que cazan aquí (fijos en este modelo)<b id="p-z">1</b></div>
       </div>
       <p class="tarjeta" id="p-res"></p>
     </div>
@@ -201,21 +206,26 @@
       <div id="e-r-cadena" class="oculto">
         <h2 class="sub">Pirámide de energía: pasto → degú → zorro</h2>
         <div class="fig" id="e-fig-e"></div>
+        <p class="tarjeta oculto" id="e-concl"></p>
       </div>
       <div id="e-r-tres" class="oculto">
-        <h2 class="sub">Tres pirámides de una rama del quillay</h2>
+        <h2 class="sub">Tres pirámides de un quillay</h2>
         <div class="fig" id="e-fig-t"></div>
       </div>
       <div id="e-r-terreno" class="oculto">
         <div class="fig" id="e-fig-g"></div>
+        <div class="tarjeta oculto" id="e-ter-porque"><button type="button" class="osc" id="e-porque">¿Por qué caben tan pocos zorros?</button><span id="e-porque-txt" class="oculto"></span></div>
       </div>
+      <p class="tarjeta oculto" id="e-lista"></p>
     </div>
   </div>
   <p id="anuncio" class="solo-lector" aria-live="polite" aria-atomic="true"></p>
 
   <footer>
-    <p><b>Modelo de población.</b> Crece hasta lo que el ambiente sostiene y pierde una parte por los zorros. Cada mes: N + 0,12·N·(1 − N/K) − 0,006·zorros·N, en un sector de 3 ha del cerro. El número de zorros no cambia con los degús, no hay estaciones de cría y el cambio dura hasta el mes 36. Los números (degús, zorros, K) son <b>ilustrativos</b>.</p>
-    <p><b>Energía.</b> La regla del 10 % es aproximada: en la naturaleza pasa entre un 5 % y un 20 % de un nivel al siguiente. Las kcal y los números de las pirámides son <b>ilustrativos</b>. En Tres pirámides los anchos están comprimidos para que quepan (3 000 no es 3 000 veces más ancho que 1). Las masas de la biomasa y los 300 degús y 3 zorros de Terreno también son <b>ilustrativos</b>.</p>
+    <details class="notas"><summary>Notas para el profesor (modelo y cifras)</summary>
+    <p><b>Modelo de población.</b> Crece hasta lo que el ambiente sostiene y pierde una parte por los zorros. Cada mes: N + 0,12·N·(1 − N/K) − 0,012·zorros·N, en un sector de 3 ha del cerro (1 zorro; con «Llegan más zorros», 3). El número de zorros no cambia con los degús, no hay estaciones de cría y el cambio dura hasta el mes 36. Los números (degús, zorros, K) son <b>ilustrativos</b>.</p>
+    <p><b>Energía.</b> La regla del 10 % es aproximada: en la naturaleza pasa entre un 5 % y un 20 % de un nivel al siguiente. Las kcal y los números de las pirámides son <b>ilustrativos</b>. En Tres pirámides, los anchos de número y biomasa están comprimidos para que quepan (3 000 no es 3 000 veces más ancho que 1). Las masas de la biomasa y los 300 degús y 3 zorros de Terreno (unas 10 ha a la densidad de Población) también son <b>ilustrativos</b>.</p>
+    </details>
     <p>Dibujos propios.</p>
   </footer>
 </main>
@@ -293,7 +303,7 @@
     lluvia: function () {
       var s = '<ellipse cx="52" cy="28" rx="30" ry="12" fill="#CBD5E1"/><ellipse cx="40" cy="20" rx="14" ry="11" fill="#CBD5E1"/><ellipse cx="62" cy="18" rx="16" ry="13" fill="#CBD5E1"/>';
       for (var i = 0; i < 5; i++) s += '<path class="gota" d="M' + (34 + i * 10) + ' 44l-4 12" stroke-width="2.2" stroke-linecap="round"/>';
-      return s + etq(86, 44, 'lluvia', 'start', 'con-lluvia') + etq(86, 30, 'sin lluvia', 'start', 'sin-lluvia');
+      return s + etq(86, 44, 'lluvia', 'start', 'con-lluvia') + etq(52, 62, 'sin lluvia', 'middle', 'sin-lluvia');
     },
     temperatura: function () {
       return '<rect x="146" y="14" width="8" height="28" rx="4" fill="#fff" stroke="#334155" stroke-width="1.5"/><rect x="148" y="24" width="4" height="18" fill="#DC2626"/><circle cx="150" cy="45" r="5.5" fill="#DC2626" stroke="#334155" stroke-width="1.5"/>' + etq(150, 70, 'temperatura');
@@ -326,7 +336,7 @@
     pasto: function () {
       var s = '', pp = [[14, 190], [92, 196], [126, 190], [196, 196], [226, 244], [176, 244], [256, 200], [296, 204], [346, 192], [104, 246], [302, 248], [26, 246], [208, 230], [140, 246]];
       for (var i = 0; i < pp.length; i++) s += mata(pp[i][0], pp[i][1]);
-      return s + etq(236, 268, 'pasto');
+      return s + etq(238, 228, 'pasto');
     },
     picaflor: function () {
       return '<g transform="translate(266 128)"><ellipse cx="0" cy="0" rx="7" ry="4" fill="#15803D"/><circle cx="-6" cy="-3" r="3.4" fill="#15803D"/><path d="M-9 -3L-19 0" stroke="#222" stroke-width="1.4"/>' +
@@ -393,7 +403,7 @@
   }
 
   function construirEscena() {
-    var s = '<svg id="escena" viewBox="0 0 360 290" role="img" aria-label="Escena del cerro">' +
+    var s = '<svg id="escena" viewBox="0 0 360 290" role="group" aria-label="Escena del cerro">' +
       '<defs><marker id="pf" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#B45309"/></marker>' +
       '<marker id="pd" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#7C3AED"/></marker></defs>' +
       '<rect class="cielo" width="360" height="290" fill="#E0F2FE"/>' +
@@ -437,8 +447,6 @@
       cls($('c-' + x), 'oculto', x !== l); cls($('r-' + x), 'oculto', x !== l);
     });
     $('panel').setAttribute('aria-labelledby', 'tab-' + l);
-    var activa = (l !== 'pob');
-    for (var id in O) g(id).setAttribute('tabindex', activa ? '0' : '-1');
     pintar();
     if (mover && $('panel').getBoundingClientRect().top < 0) $('panel').scrollIntoView({ block: 'start' });
   }
@@ -450,8 +458,15 @@
       if (j >= 0) { ev.preventDefault(); irA(LENTES[j], false); $('tab-' + LENTES[j]).focus(); }
     });
   });
+  function interactivo() { return lente === 'niveles' || lente === 'inter' || (lente === 'energia' && E.modo === 'trama'); }
+  function marcarInteractivo() {
+    var on = interactivo();
+    for (var id in O) { var e = g(id); e.setAttribute('tabindex', on ? '0' : '-1'); if (on) e.setAttribute('role', 'button'); else e.removeAttribute('role'); }
+  }
   function pintar() {
     limpiarEscena();
+    marcarInteractivo();
+    if (!interactivo()) cls(ESC, 'inerte', true);
     if (lente === 'niveles') pintarNiveles();
     else if (lente === 'inter') pintarInter();
     else if (lente === 'pob') pintarPob();
@@ -460,16 +475,37 @@
 
   /* ---- toques en la escena ---- */
   function tocar(id) {
+    if (!interactivo()) return;
     if (lente === 'niveles') tocarNiveles(id);
     else if (lente === 'inter') tocarInter(id);
     else if (lente === 'energia') tocarEnergia(id);
   }
   for (var oid in O) (function (id) {
     var e = g(id);
-    e.addEventListener('click', function () { tocar(id); });
     e.addEventListener('keydown', function (ev) { if (ev.keyCode === 13 || ev.keyCode === 32) { ev.preventDefault(); tocar(id); } });
   })(oid);
 
+  // un toque en el dibujo va al objeto visible cuyo centro esté más cerca (en proporción a su radio)
+  ESC.addEventListener('click', function (ev) {
+    var t = ev.target;
+    while (t && t !== ESC && !(t.getAttribute && t.getAttribute('data-id'))) t = t.parentNode;
+    if (ev.detail === 0 && t && t !== ESC) { tocar(t.getAttribute('data-id')); return; }   // clic de teclado o lector de pantalla
+    var m = ESC.getScreenCTM(); if (!m) return;
+    var pt = ESC.createSVGPoint(); pt.x = ev.clientX; pt.y = ev.clientY;
+    var q = pt.matrixTransform(m.inverse()), mejor = null, md = 1e9;
+    for (var id in O) {
+      if (g(id).getBoundingClientRect().width === 0) continue;
+      var h = O[id].h, d = Math.sqrt((q.x - h[0]) * (q.x - h[0]) + (q.y - h[1]) * (q.y - h[1]));
+      if (d <= h[2] + 14 && d / h[2] < md) { md = d / h[2]; mejor = id; }
+    }
+    if (mejor) { if (ev.target && ev.target.blur) ev.target.blur(); tocar(mejor); }
+  });
+  // tras elegir algo, deja a la vista los controles, el dibujo y el resultado
+  function mostrar(el) {
+    if (!el) return;
+    var r = el.getBoundingClientRect(), vh = window.innerHeight || 640;
+    if (r.top < 60 || r.top > vh * 0.35) el.scrollIntoView({ block: 'start' });
+  }
   function grupoBotones(cont, alElegir) {
     var bs = $(cont).querySelectorAll('button[data-v]');
     each(bs, function (b) {
@@ -483,12 +519,12 @@
 
   /* ================= LENTE 1: NIVELES ================= */
   var NIV = {
-    uno: { t: 'Un degú', d: 'Un degú junto a su madriguera.', nivel: 'Individuo' },
-    degus: { t: 'Todos los degús del cerro', d: 'Muchos degús, todos de la misma especie, en el mismo cerro.', nivel: 'Población' },
-    vivos: { t: 'Todos los seres vivos del cerro', d: 'Las poblaciones de plantas, animales, hongos y bacterias que viven juntas.', nivel: 'Comunidad' },
-    cerro: { t: 'Todo el cerro', d: 'Los seres vivos y lo no vivo que los rodea (con borde azul punteado).', nivel: 'Ecosistema' }
+    uno: { t: 'Un degú junto a su madriguera', d: 'Mira el degú que brilla.', nivel: 'Individuo', def: 'un solo ser vivo.' },
+    degus: { t: 'Todos los degús del cerro', d: 'Mira los degús que brillan.', nivel: 'Población', def: 'los de una misma especie que viven en el mismo lugar.' },
+    vivos: { t: 'Los degús, quillayes, zorros, picaflores y hongos del cerro', d: 'Brillan todos los seres vivos; lo no vivo se apaga.', nivel: 'Comunidad', def: 'todas las poblaciones que viven juntas.' },
+    cerro: { t: 'El cerro con todos sus seres vivos, el suelo, la lluvia y la luz', d: 'Todo a la vista. Lo no vivo lleva borde azul punteado.', nivel: 'Ecosistema', def: 'la comunidad junto con lo no vivo que la rodea.' }
   };
-  var N = { v: null, ver: false, tocado: null };
+  var N = { v: null, ver: false, tocado: null }, BIO0 = $('n-bio').innerHTML;
   function bioticos() { var a = []; for (var id in O) if (O[id].bio) a.push(id); return a; }
   function pintarNiveles() {
     var v = N.v;
@@ -502,13 +538,12 @@
     $('n-titulo').textContent = v ? NIV[v].t : 'Toca qué mirar';
     $('n-desc').textContent = v ? NIV[v].d : 'Los botones de arriba encienden una parte del cerro.';
     cls($('n-ver'), 'oculto', !v);
-    $('n-ver').setAttribute('aria-pressed', N.ver ? 'true' : 'false');
     $('n-ver').textContent = N.ver ? 'Ocultar el nivel' : 'Ver el nivel';
     cls($('n-nivel'), 'oculto', !(v && N.ver));
-    $('n-nivel').textContent = v ? 'Nivel: ' + NIV[v].nivel : '';
+    $('n-nivel').textContent = v ? 'Nivel: ' + NIV[v].nivel + ', ' + NIV[v].def : '';
     describirEscena(v ? 'Resaltado: ' + NIV[v].t.toLowerCase() + '.' : 'Todo el cerro a la vista.');
   }
-  grupoBotones('n-bots', function (v) { N.v = v; N.ver = false; pintar(); anunciar(NIV[v].t + '. ' + NIV[v].d); });
+  grupoBotones('n-bots', function (v) { N.v = v; N.ver = false; N.tocado = null; $('n-bio').innerHTML = BIO0; pintar(); mostrar($('n-bots')); anunciar(NIV[v].t + '. ' + NIV[v].d); });
   $('n-ver').addEventListener('click', function () { N.ver = !N.ver; pintar(); if (N.ver) anunciar('Nivel: ' + NIV[N.v].nivel); });
   function tocarNiveles(id) {
     N.tocado = id;
@@ -553,7 +588,7 @@
     else t = '<path d="M' + x + ' ' + (y - 14) + 'L' + (x + 14) + ' ' + y + 'L' + x + ' ' + (y + 14) + 'L' + (x - 14) + ' ' + y + 'Z" fill="#475569" stroke="#fff" stroke-width="2"/>';
     return t + '<text x="' + x + '" y="' + (y + 7) + '" text-anchor="middle" style="font:800 20px system-ui,sans-serif;fill:#fff">' + s + '</text>';
   }
-  function posSigno(id) { var h = O[id].h, x = h[0] + h[2] * 0.75, y = h[1] - h[2] * 0.75; return [Math.min(345, Math.max(15, x)), Math.min(275, Math.max(15, y))]; }
+  function posSigno(id) { var h = O[id].h, x = h[0] - h[2] * 0.8, y = h[1] - h[2] * 0.55; return [Math.min(345, Math.max(15, x)), Math.min(275, Math.max(15, y))]; }
   function pintarInter() {
     var s = I.sel;
     if (s.length) { apagarSalvo(s); each(s, function (id) { cls(g(id), 'resalta', true); cls(g(id), 'elegido', true); }); }
@@ -566,7 +601,10 @@
       if (a === 'hongos' || b === 'hongos') {
         var otro = a === 'hongos' ? b : a;
         tit = O[a].n + ' · ' + O[b].n;
-        desc = 'Hongos y bacterias descomponen ' + (otro === 'quillay' || otro === 'espino' || otro === 'pasto' || otro === 'flor' ? 'las hojas caídas y los restos' : 'los restos') + (' de ' + nom(otro)).replace(' de el ', ' del ') + ' cuando muere. No es una de las cinco interacciones: los descomponedores se alimentan de restos, no de seres vivos.';
+        desc = 'Hongos y bacterias descomponen ' + (otro === 'quillay' || otro === 'espino' || otro === 'pasto' || otro === 'flor' ? 'las hojas caídas y los restos' : 'los restos') + (' de ' + nom(otro)).replace(' de el ', ' del ') + (O[otro].a === 'las' || O[otro].a === 'los' ? ' cuando mueren.' : ' cuando muere.') + ' No es una de las cinco interacciones: los descomponedores se alimentan de restos, no de seres vivos.';
+      } else if ((a === 'picaflor' && b === 'espino') || (a === 'espino' && b === 'picaflor')) {
+        tit = O[a].n + ' · ' + O[b].n;
+        desc = 'En el caso, el picaflor toma néctar de la flor roja (la mata de abajo del picaflor), no del espino. Toca la flor.';
       } else if (r) {
         var pa = posSigno(a), pb = posSigno(b);
         $('signos').innerHTML = signoSvg(pa[0], pa[1], r.sa) + signoSvg(pb[0], pb[1], r.sb);
@@ -584,26 +622,25 @@
   function tocarInter(id) {
     var s = I.sel;
     if (!O[id].bio) {
-      $('i-titulo').textContent = O[id].n + ' no es un ser vivo';
-      $('i-desc').textContent = 'Las interacciones son entre seres vivos. Toca otro.';
+      $('i-desc').textContent = O[id].n + ' no es un ser vivo: las interacciones son entre seres vivos. Toca otro.';
       anunciar(O[id].n + ' no es un ser vivo.');
       return;
     }
     if (s.length === 1 && s[0] === id) I.sel = [];
     else if (s.length >= 2) I.sel = [id];
     else I.sel = s.concat([id]);
-    var t = pintarInter();
-    anunciar(t);
+    pintar();
+    anunciar($('i-titulo').textContent + '. ' + $('i-desc').textContent);
   }
   $('i-limpiar').addEventListener('click', function () { I.sel = []; pintar(); anunciar('Elige una nueva pareja.'); });
 
   /* ================= LENTE 3: POBLACIÓN ================= */
-  var R = 0.12, Q = 0.006, K0 = 100, Z0 = 2, MESES = 36, INICIO = 6;
+  var R = 0.12, Q = 0.012, K0 = 100, Z0 = 1, MESES = 36, INICIO = 6;
   var CASOS = {
     normal: { K: K0, Z: Z0, nombre: 'Normal', ev: '' },
     sequia: { K: 56, Z: Z0, nombre: 'Sequía', ev: 'empieza la sequía', seco: true, tras: 'de sequía' },
-    zorros: { K: K0, Z: 6, nombre: 'Llegan más zorros', ev: 'llegan más zorros', zorros: true, tras: 'con más zorros' },
-    condominio: { K: 50, Z: Z0, nombre: 'Se corta el matorral', ev: 'se corta el matorral', casas: true, tras: 'sin la mitad del matorral' }
+    zorros: { K: K0, Z: 3, nombre: 'Llegan más zorros', ev: 'llegan más zorros', zorros: true, tras: 'con más zorros' },
+    condominio: { K: 50, Z: Z0, nombre: 'Se corta la mitad del matorral', ev: 'se corta el matorral', casas: true, tras: 'sin la mitad del matorral' }
   };
   function serie(c) {
     var C = CASOS[c], n = K0 * (1 - Q * Z0 / R), a = [];
@@ -661,9 +698,9 @@
     cls($('p-ind-k'), 'cambia', a[t].K !== K0);
     cls($('p-ind-z'), 'cambia', a[t].Z !== Z0);
     var fin = Math.round(a[t].n), txt;
-    if (P.caso === 'normal') txt = 'En este sector de 3 ha del cerro viven unos ' + fin + ' degús, y sin cambios se mantienen.';
+    if (P.caso === 'normal') txt = 'En este sector de 3 ha del cerro viven unos ' + fin + ' degús, y sin cambios se mantienen. Quedan un poco bajo la línea verde porque el zorro caza algunos.';
     else if (t < MESES) txt = 'Mes ' + t + ' de 36…';
-    else txt = 'En el sector de 3 ha había unos 90 degús. Después de 30 meses ' + C.tras + ' hay unos ' + fin + '.';
+    else txt = 'En el sector de 3 ha había unos 90 degús. Después de 30 meses ' + C.tras + ' hay unos ' + fin + '.' + (P.caso === 'zorros' ? '' : ' En este modelo el número de zorros no cambia. En el cerro real, ¿qué les pasaría a los zorros y aguiluchos? Síguelo en la Trama (Energía).');
     $('p-res').textContent = txt;
     describirEscena(C.nombre + (activo ? (C.seco ? ': pasto seco y sin lluvia.' : C.zorros ? ': hay más zorros.' : ': casas en la mitad del matorral.') : '.') + ' Se ven ' + Math.round(8 * a[t].n / 90) + ' degús.');
     return txt;
@@ -674,15 +711,14 @@
     if (P.t >= MESES) { pararTimer(); anunciar(pintarPob()); }
   }
   function pararTimer() { if (P.timer) { clearInterval(P.timer); P.timer = null; } }
-  function terminarAnim() { if (P.timer) { pararTimer(); P.t = MESES; } }
+  function terminarAnim() { if (P.timer || P.pausa) { pararTimer(); P.pausa = false; P.t = MESES; } }
   function correr(c) {
     pararTimer();
     P.caso = c; P.datos = c === 'normal' ? NORMAL : serie(c);
+    mostrar($('p-bots'));
     if (!MOV || c === 'normal') { P.t = MESES; pintar(); anunciar(pintarPob()); return; }
     P.t = 0; pintar();
     P.timer = setInterval(paso, 95);
-    var f = $('p-fig');
-    if (f.getBoundingClientRect().bottom > (window.innerHeight || 640)) $('marco').scrollIntoView({ block: 'start' });
   }
   grupoBotones('p-bots', correr);
   document.addEventListener('visibilitychange', function () {
@@ -723,10 +759,10 @@
     flor: 'La flor es parte de una planta, un productor: fabrica su alimento con la luz del sol. El picaflor toma su néctar.',
     picaflor: 'El picaflor se alimenta del néctar de la flor. En el caso, nadie lo come.',
     pulgas: 'Las pulgas se alimentan de la sangre del zorro.',
-    quillay: 'El quillay es un productor: fabrica su alimento con la luz del sol. En el caso, nadie lo come. Sus hojas caídas las descomponen hongos y bacterias.',
+    quillay: 'El quillay es un productor: fabrica su alimento con la luz del sol. En la trama del caso nadie lo come (en Tres pirámides verás pulgones que chupan su savia). Sus hojas caídas las descomponen hongos y bacterias.',
     espino: 'El espino es un productor: fabrica su alimento con la luz del sol. En el caso, nadie lo come. Sus hojas caídas las descomponen hongos y bacterias.',
     tenca: 'En el caso no se dice qué come la tenca, así que no tiene flechas.',
-    hongos: 'Hongos y bacterias descomponen las hojas caídas y los animales muertos de todo el cerro (flechas moradas).',
+    hongos: 'Hongos y bacterias descomponen las hojas caídas y los animales muertos de todo el cerro (las flechas moradas muestran algunos ejemplos).',
     sol: 'El sol no está en la trama, pero su luz es la energía que usan las plantas para fabricar su alimento.'
   };
   function textoTrama(id) { return TXT_TRAMA[id] || (O[id].n + ' no es un ser vivo: no está en la trama.'); }
@@ -735,12 +771,15 @@
     each(MODOS, function (m) { cls($('e-c-' + m), 'oculto', E.modo !== m); if (m !== 'trama') cls($('e-r-' + m), 'oculto', E.modo !== m); });
     marcarBoton('e-modo', E.modo);
     var tar = $('e-tarjeta');
+    cls(tar, 'oculto', false);
+    cls($('e-lista'), 'oculto', !(E.modo === 'trama' && E.toda));
+    if (E.modo === 'trama' && E.toda) $('e-lista').innerHTML = '<b>Trama del cerro</b> (cada flecha va hacia quien come):<br>' + ENL.map(function (e) { return O[e[0]].n.toLowerCase() + ' → ' + O[e[1]].n.toLowerCase(); }).join('; ') +
+      '<br>Descomponedores: ' + DESC.map(function (x) { return O[x].n.toLowerCase(); }).join(', ') + ' → hongos y bacterias.';
     if (E.modo === 'trama') {
-      $('e-toda').setAttribute('aria-pressed', E.toda ? 'true' : 'false');
-      $('e-toda').textContent = E.toda ? 'Ocultar la trama' : 'Ver toda la trama';
+      $('e-toda').textContent = E.toda ? 'Ocultar la trama' : 'Comprobar mi trama';
       if (E.toda) {
         dibujarFlechas(ENL, DESC);
-        tar.innerHTML = 'Las flechas apuntan hacia <b>quien come</b>. Las moradas punteadas van a los descomponedores.';
+        tar.innerHTML = 'Las flechas apuntan hacia <b>quien come</b>. Las moradas punteadas van a los descomponedores. La lista está debajo del dibujo.';
         describirEscena('Trama completa: ' + ENL.map(function (e) { return O[e[0]].n + ' → ' + O[e[1]].n; }).join(', ') + '.');
       } else if (E.sel) {
         var id = E.sel, mias = [], lig = [id];
@@ -759,15 +798,16 @@
     } else if (E.modo === 'cadena') {
       apagarSalvo(['pasto', 'degu', 'zorro']);
       dibujarFlechas([['pasto', 'degu'], ['degu', 'zorro']], []);
-      $('e-ver').setAttribute('aria-pressed', E.ver ? 'true' : 'false');
       $('e-ver').textContent = E.ver ? 'Ocultar kcal' : 'Ver kcal';
-      tar.innerHTML = 'La cadena <b>pasto → degú → zorro</b>. El pasto tiene 20 000 kcal.';
-      if (E.ver && E.etapa >= 4) tar.innerHTML += ' Al degú llegan 2 000 kcal y al zorro 200 kcal: en cada paso pasa cerca del 10 %.';
+      cls(tar, 'oculto', true);
+      var fin = E.ver && E.etapa >= 4;
+      cls($('e-concl'), 'oculto', !fin);
+      $('e-concl').textContent = fin ? 'Al degú llegan 2 000 kcal y al zorro 200 kcal: en cada paso pasa cerca del 10 %.' : '';
       piramideE(['Pasto', 'Degú', 'Zorro']);
       describirEscena('Resaltados el pasto, los degús y el zorro, con sus flechas.');
     } else if (E.modo === 'tres') {
       ESC.setAttribute('class', 'quillay'); apagarSalvo(['quillay']);
-      tar.innerHTML = 'En una rama del quillay viven <b>3 000 pulgones</b>, que chupan su savia, y <b>20 chinitas</b>, que se comen a los pulgones.';
+      tar.innerHTML = 'En un quillay viven <b>3 000 pulgones</b>, que chupan su savia, y <b>20 chinitas</b>, que se comen a los pulgones. La lupa muestra una rama de cerca.';
       tresPiramides();
       describirEscena('Lupa en una rama del quillay con pulgones y chinitas.');
     } else {
@@ -795,79 +835,85 @@
     $('e-fig-e').innerHTML = s;
     $('e-svg').setAttribute('aria-label', E.ver ? 'Pirámide de energía: ' + nn[0] + ' 20 000 kcal, ' + nn[1] + ' 2 000 kcal, ' + nn[2] + ' 200 kcal. En cada paso pasa cerca del 10 %; el resto no pasa, sobre todo se pierde como calor.' : 'Pirámide de energía: ' + nn[0] + ' 20 000 kcal; los demás niveles están ocultos hasta tocar Ver kcal.');
   }
-  function barras(titulo, nv, alto) {
+  function barras(titulo, nv, alto, lineal) {
     var col = [['#86EFAC', '#15803D'], ['#FCD34D', '#B45309'], ['#FDBA74', '#C2410C']], max = 0, i;
     for (i = 0; i < 3; i++) max = Math.max(max, nv[i][1]);
     var lm = Math.log(max + 1), s = '<text x="10" y="18" class="ptxt">' + titulo + '</text>';
     for (i = 0; i < 3; i++) {
-      var w = Math.round(24 + 260 * Math.log(nv[i][1] + 1) / lm), y = alto + 28 + 64 - i * 32, x = 180 - w / 2, dentro = w > 190;
+      var w = lineal ? Math.max(6, Math.round(284 * nv[i][1] / max)) : Math.round(24 + 260 * Math.log(nv[i][1] + 1) / lm), y = alto + 28 + 64 - i * 32, x = 180 - w / 2, dentro = w > 190;
       s += '<rect x="' + x + '" y="' + y + '" width="' + w + '" height="26" rx="3" fill="' + col[i][0] + '" stroke="' + col[i][1] + '" stroke-width="2"/>';
       s += '<text x="' + (dentro ? 180 : x + w + 6) + '" y="' + (y + 18) + '" text-anchor="' + (dentro ? 'middle' : 'start') + '" class="ptxt">' + nv[i][0] + ' · ' + nv[i][2] + '</text>';
     }
     return s;
   }
   var TRES = [
-    ['Energía (kcal)', [['Quillay', 20000, '20 000'], ['Pulgones', 2000, '2 000'], ['Chinitas', 200, '200']]],
-    ['Número (individuos)', [['Quillay', 1, '1'], ['Pulgones', 3000, '3 000'], ['Chinitas', 20, '20']]],
-    ['Biomasa (gramos)', [['Quillay', 100000, '100 000'], ['Pulgones', 2, '2'], ['Chinitas', 0.5, '0,5']]]
+    ['Energía (kcal) · a escala', [['Quillay', 20000, '20 000'], ['Pulgones', 2000, '2 000'], ['Chinitas', 200, '200']]],
+    ['Número (individuos) · ancho comprimido', [['Quillay', 1, '1'], ['Pulgones', 3000, '3 000'], ['Chinitas', 20, '20']]],
+    ['Biomasa (gramos) · ancho comprimido', [['Quillay', 100000, '100 000'], ['Pulgones', 2, '2'], ['Chinitas', 0.5, '0,5']]]
   ];
   function tresPiramides() {
     var s = '<svg viewBox="0 0 360 390" role="img" id="t-svg">', txt = [];
     for (var k = 0; k < 3; k++) {
-      s += '<g transform="translate(0 ' + (k * 130) + ')">' + barras(TRES[k][0], TRES[k][1], -4) + '</g>';
+      s += '<g transform="translate(0 ' + (k * 130) + ')">' + barras(TRES[k][0], TRES[k][1], -4, k === 0) + '</g>';
       if (k < 2) s += '<path d="M10 ' + (k * 130 + 126) + 'H350" stroke="#E2E8F0" stroke-width="2"/>';
       txt.push(TRES[k][0] + ': ' + TRES[k][1].map(function (x) { return x[0] + ' ' + x[2]; }).join(', '));
     }
     s += '</svg>';
     $('e-fig-t').innerHTML = s;
-    $('t-svg').setAttribute('aria-label', 'Tres pirámides de una rama del quillay, de abajo hacia arriba. ' + txt.join('. ') + '.');
+    $('t-svg').setAttribute('aria-label', 'Tres pirámides de un quillay, de abajo hacia arriba. ' + txt.join('. ') + '.');
   }
-  var TER = { v: 'degus' };
+  var TER = { v: 'degus', porque: false };
   function terreno() {
-    var z = TER.v === 'zorros', s = '<svg viewBox="0 0 360 300" role="img" id="g-svg">', c = 22, gp = 2, x0 = 60, y0 = 10, i;
-    var terr = [['#FFEDD5', '#C2410C'], ['#EDE9FE', '#6D28D9'], ['#E0F2FE', '#0369A1']];
-    for (i = 0; i < 100; i++) {
-      var col = i % 10, fil = Math.floor(i / 10), x = x0 + col * (c + gp), y = y0 + fil * (c + gp), t = Math.min(2, Math.floor(i / 34));
+    var z = TER.v === 'zorros', s = '<svg viewBox="0 0 360 286" role="img" id="g-svg">', c = 22, gp = 2, x0 = 48, y0 = 10, i, n = 11;
+    var terr = [['#FFEDD5', '#9A3412'], ['#EDE9FE', '#5B21B6'], ['#E0F2FE', '#075985']];
+    for (i = 0; i < 99; i++) {
+      var col = i % n, fil = Math.floor(i / n), x = x0 + col * (c + gp), y = y0 + fil * (c + gp), t = Math.floor(fil / 3);
       var f = z ? terr[t] : ['#DCFCE7', '#15803D'];
       s += '<rect x="' + x + '" y="' + y + '" width="' + c + '" height="' + c + '" rx="2" fill="' + f[0] + '" stroke="' + f[1] + '"/>';
       s += '<circle cx="' + (x + 6) + '" cy="' + (y + 7) + '" r="2.6" fill="#7A5230"/><circle cx="' + (x + 15) + '" cy="' + (y + 9) + '" r="2.6" fill="#7A5230"/><circle cx="' + (x + 10) + '" cy="' + (y + 16) + '" r="2.6" fill="#7A5230"/>';
     }
     if (z) {
-      each([[1.7, '1'], [5, '2'], [8.3, '3']], function (q, k) {
-        var cy = y0 + q[0] * (c + gp);
-        s += '<g transform="translate(180 ' + cy + ') scale(.8)"><circle r="20" fill="#fff" stroke="' + terr[k][1] + '" stroke-width="3"/></g>' + zorroDibMini(180, cy) +
-          '<text x="' + (x0 - 8) + '" y="' + (cy + 6) + '" text-anchor="end" class="ptxt" style="fill:' + terr[k][1] + '">' + q[1] + '</text>';
-      });
+      for (var k = 0; k < 3; k++) {
+        var yt = y0 + k * 3 * (c + gp) - 2, alto = 3 * (c + gp) + 1, cy = yt + alto / 2;
+        s += '<rect x="' + (x0 - 3) + '" y="' + yt + '" width="' + (n * (c + gp) + 3) + '" height="' + alto + '" fill="none" stroke="' + terr[k][1] + '" stroke-width="3.5" rx="4"/>';
+        s += '<circle cx="180" cy="' + cy + '" r="17" fill="#fff" stroke="' + terr[k][1] + '" stroke-width="3"/>' + zorroDibMini(180, cy) +
+          '<text x="' + (x0 - 10) + '" y="' + (cy + 6) + '" text-anchor="end" class="ptxt" style="fill:' + terr[k][1] + '">' + (k + 1) + '</text>';
+      }
     }
-    s += '<text x="180" y="270" text-anchor="middle" class="ptxt n">cada cuadro = una parte del cerro</text>';
-    s += '<text x="180" y="290" text-anchor="middle" class="ptxt n">• = un degú</text></svg>';
+    s += '<text x="180" y="248" text-anchor="middle" class="ptxt n">cada cuadro = una parte del cerro</text>';
+    s += '<text x="180" y="268" text-anchor="middle" class="ptxt n">• = un degú</text></svg>';
     $('e-fig-g').innerHTML = s;
-    var txt = z ? 'Un zorro se alimenta de muchos degús, y de la energía de los degús le llega cerca del 10 %. Cada zorro necesita los degús de unos 33 cuadros: en todo el cerro caben <b>unos pocos zorros</b> (aquí, 3).'
-      : 'El pasto de todo el cerro alimenta a <b>cientos de degús</b>: aquí, unos 3 por cuadro, unos 300.';
+    var txt = z ? 'Cada color es el terreno que necesita un zorro (33 cuadros). ¿Cuántos zorros caben en todo el cerro?'
+      : 'El pasto de todo el cerro alimenta a <b>cientos de degús</b>: unos 3 por cuadro, unos 300.';
     $('e-tarjeta').innerHTML = txt;
-    $('g-svg').setAttribute('aria-label', z ? 'El cerro en 100 cuadros, repartido entre 3 zorros de unos 33 cuadros cada uno.' : 'El cerro en 100 cuadros con 3 degús en cada uno: unos 300 degús.');
+    cls($('e-ter-porque'), 'oculto', !z);
+    cls($('e-porque-txt'), 'oculto', !TER.porque);
+    $('e-porque').textContent = TER.porque ? 'Ocultar' : '¿Por qué caben tan pocos zorros?';
+    $('e-porque-txt').textContent = 'Un zorro necesita la energía de unos 100 degús. El 10 % es de la energía, no del número de animales: de la energía de los degús que come, al zorro le queda cerca del 10 %, y como es mucho más grande que un degú necesita mucha más energía. Por eso en todo el cerro caben unos pocos zorros (aquí, 3).';
+    $('g-svg').setAttribute('aria-label', z ? 'El cerro en 99 cuadros con 3 degús en cada uno, repartido en 3 franjas de 33 cuadros: una por zorro.' : 'El cerro en 99 cuadros con 3 degús en cada uno: unos 300 degús.');
     marcarBoton('e-ter', TER.v);
     return txt.replace(/<[^>]+>/g, '');
   }
-  function zorroDibMini(x, y) { return '<g transform="translate(' + (x + 2) + ' ' + (y + 1) + ') scale(.5)">' + zorroDib(0, 0, 1).replace(/^<g transform="[^"]*">/, '<g>') + '</g>'; }
+  function zorroDibMini(x, y) { return '<g transform="translate(' + (x + 2) + ' ' + (y + 1) + ') scale(.42)">' + zorroDib(0, 0, 1).replace(/^<g transform="[^"]*">/, '<g>') + '</g>'; }
   function terminarPir() { each(E.timers, clearTimeout); E.timers = []; if (E.ver) E.etapa = 4; }
   function verKcal() {
     terminarPir();
     E.ver = !E.ver;
+    mostrar($('e-ver').parentNode);
     if (!E.ver) { E.etapa = 0; pintar(); anunciar('Kcal ocultas.'); return; }
     if (!MOV) { E.etapa = 4; pintar(); anunciarPir(); return; }
     E.etapa = 0; pintar();
     each([1, 2, 3, 4], function (k) {
       E.timers.push(setTimeout(function () { E.etapa = k; pintar(); if (k === 4) { E.timers = []; anunciarPir(); } }, 700 * k));
     });
-    var f = $('e-fig-e');
-    if (f.getBoundingClientRect().bottom > (window.innerHeight || 640)) f.scrollIntoView({ block: 'start' });
   }
   function anunciarPir() { anunciar('Pasto 20 000 kcal, degú 2 000, zorro 200. En cada paso pasa cerca del 10 %.'); }
   $('e-ver').addEventListener('click', verKcal);
   function modoEnergia(v) { terminarPir(); E.modo = v; E.sel = null; pintar(); }
-  grupoBotones('e-modo', function (v) { modoEnergia(v); anunciar({ trama: 'Trama', cadena: 'Cadena', tres: 'Tres pirámides', terreno: 'Terreno' }[v]); });
-  grupoBotones('e-ter', function (v) { TER.v = v; pintar(); anunciar(terreno()); });
+  function vistaModo(v) { if (v === 'tres' || v === 'terreno') $('e-tarjeta').scrollIntoView({ block: 'start' }); else mostrar($('e-modo')); }
+  grupoBotones('e-modo', function (v) { modoEnergia(v); vistaModo(v); anunciar({ trama: 'Trama', cadena: 'Cadena', tres: 'Tres pirámides', terreno: 'Terreno' }[v]); });
+  grupoBotones('e-ter', function (v) { TER.v = v; TER.porque = false; pintar(); vistaModo('terreno'); anunciar(terreno()); });
+  $('e-porque').addEventListener('click', function () { TER.porque = !TER.porque; pintar(); if (TER.porque) anunciar($('e-porque-txt').textContent); });
   $('e-toda').addEventListener('click', function () { E.toda = !E.toda; E.sel = null; pintar(); anunciar(E.toda ? 'Trama completa a la vista.' : 'Trama oculta.'); });
   function tocarEnergia(id) {
     if (E.modo !== 'trama') return;
@@ -881,7 +927,9 @@
       var v = b.getAttribute('data-ir');
       if (v === 'pob') { irA('pob', false); }
       else { if (lente !== 'energia') { E.modo = v; irA('energia', false); } else modoEnergia(v); }
-      $('panel').scrollIntoView({ block: 'start' });
+      if (v === 'pob') $('panel').scrollIntoView({ block: 'start' }); else vistaModo(v);
+      var foco = v === 'pob' ? $('tab-pob') : $('e-modo').querySelector('[data-v="' + v + '"]');
+      if (foco && foco.focus) { try { foco.focus({ preventScroll: true }); } catch (e) { foco.focus(); } }
       anunciar(b.textContent);
     });
   });
