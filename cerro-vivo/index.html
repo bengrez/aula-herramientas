@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>El cerro vivo</title>
+<style>
+  :root { --marfil:#FBFBFA; --linea:#E5E7EB; --borde:#CBD5E1; --pizarra:#1E293B; --suave:#475569; --cobalto:#2563EB; --cobalto-fondo:#EFF4FF; --ambar:#B45309; }
+  * { box-sizing:border-box; }
+  html { -webkit-text-size-adjust:100%; }
+  body { margin:0; font-family:Inter,"Segoe UI",system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif; font-size:17px; line-height:1.5; color:var(--pizarra); background-color:var(--marfil);
+    background-image:linear-gradient(var(--linea) 1px, transparent 1px), linear-gradient(90deg, var(--linea) 1px, transparent 1px); background-size:28px 28px; }
+  main { width:min(680px, calc(100% - 24px)); margin:0 auto; padding:14px 0 40px; }
+  h1 { font-size:1.7rem; line-height:1.15; margin:0 0 4px; }
+  .eyebrow { color:var(--ambar); font-size:.78rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase; margin:0 0 2px; }
+  header p { margin:0 0 10px; font-size:.95rem; }
+  .atajos { display:flex; flex-wrap:wrap; gap:6px; margin:0 0 4px; }
+  .atajos span { flex:1 1 100%; font-size:.85rem; font-weight:700; color:var(--suave); }
+  .atajos button { flex:1 1 40%; min-width:0; min-height:44px; font-size:.9rem; padding:2px 6px; border-width:1px; border-color:var(--borde); color:var(--pizarra); }
+  .pestanas { position:-webkit-sticky; position:sticky; top:0; z-index:5; display:flex; gap:4px; padding:6px 0; background:var(--marfil); }
+  .pestanas button { flex:1 1 0; min-width:0; min-height:48px; padding:2px; font-size:.86rem; line-height:1.1; }
+  button { font:inherit; font-weight:700; min-height:52px; padding:6px 8px; border-radius:8px; border:2px solid var(--cobalto); background:#fff; color:var(--cobalto); cursor:pointer; touch-action:manipulation; }
+  button[aria-pressed="true"], button[aria-selected="true"] { background:var(--cobalto); color:#fff; }
+  button.osc { background:var(--pizarra); border-color:var(--pizarra); color:#fff; }
+  button.osc[aria-pressed="true"] { background:#fff; color:var(--pizarra); }
+  button:focus-visible { outline:3px solid var(--ambar); outline-offset:2px; }
+  #panel { background:#fff; border:1px solid var(--borde); border-radius:8px; padding:10px 12px 12px; scroll-margin-top:62px; }
+  @media (max-width:340px) { #panel { padding:8px 6px 10px; } }
+  .instr { margin:0 0 8px; padding-left:22px; font-size:.95rem; }
+  .instr li { margin-bottom:2px; }
+  .bots { display:flex; flex-wrap:wrap; gap:6px; margin:0 0 8px; }
+  .bots button { flex:1 1 40%; min-width:0; font-size:.95rem; line-height:1.15; }
+  .bots.tres button { flex:1 1 28%; }
+  .oculto { display:none !important; }
+  .marco { border:1px solid var(--borde); border-radius:8px; overflow:hidden; background:#E0F2FE; }
+  .marco svg, .fig svg { display:block; width:100%; height:auto; }
+  .tarjeta { background:var(--cobalto-fondo); border:1px solid #BFD3FF; border-radius:6px; padding:8px 10px; margin:8px 0 0; font-size:.98rem; }
+  .tarjeta .grande { display:block; font-size:1.12rem; font-weight:700; }
+  .tarjeta button { margin-top:6px; width:100%; }
+  .revela { display:block; margin-top:6px; font-size:1.1rem; font-weight:700; color:var(--ambar); }
+  .ayuda { color:var(--suave); font-size:.92rem; margin:8px 0 0; }
+  .fig { border:1px solid var(--borde); border-radius:8px; background:#fff; margin-top:8px; scroll-margin-top:62px; }
+  .ind { display:flex; gap:6px; margin-top:8px; }
+  .ind div { flex:1 1 0; background:#fff; border:2px solid var(--borde); border-radius:6px; padding:4px 8px; font-size:.85rem; line-height:1.25; }
+  .ind b { display:block; font-size:1.05rem; }
+  .ind div.cambia { border-color:var(--ambar); background:#FFF7ED; }
+  h2.sub { font-size:1rem; margin:12px 0 0; }
+  .solo-lector { position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; margin:-1px; padding:0; border:0; }
+  footer { color:var(--suave); font-size:.85rem; margin-top:16px; }
+  footer p { margin:0 0 8px; }
+  /* escena */
+  .etq { font:600 14px system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; fill:#1E293B; paint-order:stroke; stroke:#fff; stroke-width:3.5px; stroke-linejoin:round; pointer-events:none; }
+  .obj { cursor:pointer; outline:none; transition:opacity .25s; }
+  .obj .hit { fill:transparent; stroke:none; }
+  .obj:focus .hit { stroke:#B45309; stroke-width:3; stroke-dasharray:4 3; }
+  .apagado { opacity:.2; }
+  .resalta { filter:drop-shadow(0 0 4px #F59E0B) drop-shadow(0 0 2px #F59E0B); }
+  .marca .hit { stroke:#1D4ED8; stroke-width:2.5; stroke-dasharray:6 4; }
+  .elegido .hit { stroke:#1E293B; stroke-width:3; }
+  .gota { stroke:#2563EB; }
+  .hoja { fill:#4D7C0F; }
+  #escena .extra, #escena .casas, #escena .lupa-q, #escena .sin-lluvia { display:none; }
+  #escena.seco .cielo { fill:#FEF3C7; }
+  #escena.seco .ladera { fill:#E9D8A6; }
+  #escena.seco .hoja { fill:#CA8A04; }
+  #escena.seco .gota, #escena.seco .con-lluvia { display:none; }
+  #escena.seco .sin-lluvia { display:inline; }
+  #escena.seco .sol-c { fill:#F97316; stroke:#F97316; }
+  #escena.zorros .extra { display:inline; }
+  #escena.casas .casas { display:inline; }
+  #escena.casas #o-quillay, #escena.casas #o-tenca, #escena.casas #o-piedras, #escena.casas #o-culebra { display:none; }
+  #escena.quillay .lupa-q { display:inline; }
+  .ptxt { font:600 14px system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; fill:#1E293B; }
+  .ptxt.n { font-weight:400; fill:#475569; }
+  .cuad { transition:fill .4s, opacity .4s; }
+  .cuad.calor { fill:url(#rayas); stroke:#C2410C; opacity:.75; }
+  .nivel-e { transition:opacity .4s; }
+  .nivel-e.espera { opacity:0; }
+  @media (prefers-reduced-motion: reduce) { * { animation:none !important; transition:none !important; } }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <p class="eyebrow">Ecología · Simulador</p>
+    <h1>El cerro vivo</h1>
+    <p>Un cerro de la zona central de Chile. <b>Primero responde en tu hoja</b>; después comprueba aquí.</p>
+  </header>
+
+  <nav class="atajos" aria-label="Secciones que nombra la guía">
+    <span>¿La guía te pide una sección?</span>
+    <button type="button" data-ir="pob">1 · Población</button>
+    <button type="button" data-ir="cadena">2 · Cadena</button>
+    <button type="button" data-ir="tres">3 · Tres pirámides</button>
+    <button type="button" data-ir="terreno">5 · Terreno</button>
+  </nav>
+
+  <div class="pestanas" role="tablist" aria-label="Qué mirar en el cerro">
+    <button type="button" role="tab" id="tab-niveles" aria-controls="panel" aria-selected="true">Niveles</button>
+    <button type="button" role="tab" id="tab-inter" aria-controls="panel" aria-selected="false">Interac&shy;ciones</button>
+    <button type="button" role="tab" id="tab-pob" aria-controls="panel" aria-selected="false">Población</button>
+    <button type="button" role="tab" id="tab-energia" aria-controls="panel" aria-selected="false">Energía</button>
+  </div>
+
+  <div id="panel" role="tabpanel" aria-labelledby="tab-niveles">
+    <!-- ===== controles (arriba de la escena) ===== -->
+    <div id="c-niveles" class="lente">
+      <ol class="instr">
+        <li>Escribe el nivel de cada fila en tu hoja.</li>
+        <li>Toca qué mirar. Después toca <b>Ver el nivel</b> y compara.</li>
+      </ol>
+      <div class="bots" role="group" aria-label="Qué mirar" id="n-bots">
+        <button type="button" data-v="uno" aria-pressed="false">Un degú</button>
+        <button type="button" data-v="degus" aria-pressed="false">Todos los degús</button>
+        <button type="button" data-v="vivos" aria-pressed="false">Todos los seres vivos</button>
+        <button type="button" data-v="cerro" aria-pressed="false">Todo el cerro</button>
+      </div>
+    </div>
+    <div id="c-inter" class="lente oculto">
+      <ol class="instr">
+        <li>Escribe en tu hoja la interacción y los signos de cada pareja.</li>
+        <li>Toca en el dibujo los dos seres vivos de una pareja y compara.</li>
+      </ol>
+    </div>
+    <div id="c-pob" class="lente oculto">
+      <ol class="instr">
+        <li>Escribe tu predicción para cada caso.</li>
+        <li>Toca un caso: verás 3 años de degús en un sector de 3 ha del cerro, mes a mes. El cambio empieza en el mes 6.</li>
+      </ol>
+      <div class="bots" role="group" aria-label="Caso" id="p-bots">
+        <button type="button" data-v="normal" aria-pressed="true">Normal</button>
+        <button type="button" data-v="sequia" aria-pressed="false">Sequía</button>
+        <button type="button" data-v="zorros" aria-pressed="false">Llegan más zorros</button>
+        <button type="button" data-v="condominio" aria-pressed="false">Se corta el matorral</button>
+      </div>
+    </div>
+    <div id="c-energia" class="lente oculto">
+      <div class="bots" role="group" aria-label="Qué ver" id="e-modo">
+        <button type="button" data-v="trama" aria-pressed="true">Trama</button>
+        <button type="button" data-v="cadena" aria-pressed="false">Cadena</button>
+        <button type="button" data-v="tres" aria-pressed="false">Tres pirámides</button>
+        <button type="button" data-v="terreno" aria-pressed="false">Terreno</button>
+      </div>
+      <div id="e-c-trama">
+        <ol class="instr">
+          <li>Dibuja tu trama en la hoja.</li>
+          <li>Toca un ser vivo para ver sus flechas, o mira la trama entera.</li>
+        </ol>
+        <div class="bots"><button type="button" class="osc" id="e-toda" aria-pressed="false">Ver toda la trama</button></div>
+      </div>
+      <div id="e-c-cadena" class="oculto">
+        <ol class="instr">
+          <li>Calcula en tu hoja cuánta energía llega al degú y al zorro.</li>
+          <li>Toca <b>Ver kcal</b> y compara.</li>
+        </ol>
+        <div class="bots"><button type="button" class="osc" id="e-ver" aria-pressed="false">Ver kcal</button></div>
+      </div>
+      <div id="e-c-tres" class="oculto">
+        <ol class="instr">
+          <li>Mira la rama del quillay en la lupa.</li>
+          <li>Compara sus tres pirámides: ¿cuál se invierte?</li>
+        </ol>
+      </div>
+      <div id="e-c-terreno" class="oculto">
+        <ol class="instr">
+          <li>Todo el cerro está dividido en 100 cuadros iguales.</li>
+          <li>Toca <b>Degús</b> y después <b>Zorros</b>. ¿Cuántos caben?</li>
+        </ol>
+        <div class="bots" role="group" aria-label="Animal" id="e-ter">
+          <button type="button" data-v="degus" aria-pressed="true">Degús</button>
+          <button type="button" data-v="zorros" aria-pressed="false">Zorros</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== la escena, la misma en las cuatro lentes ===== -->
+    <div class="marco" id="marco"></div>
+
+    <!-- ===== resultados (debajo de la escena) ===== -->
+    <div id="r-niveles" class="lente">
+      <div class="tarjeta" id="n-tarjeta"><span class="grande" id="n-titulo">Toca qué mirar</span><span id="n-desc">Los botones de arriba encienden una parte del cerro.</span>
+        <button type="button" class="osc oculto" id="n-ver" aria-pressed="false">Ver el nivel</button>
+        <span class="revela oculto" id="n-nivel"></span></div>
+      <p class="tarjeta" id="n-bio">Toca cualquier cosa del dibujo y te digo si es un ser vivo (<b>biótico</b>) o algo no vivo (<b>abiótico</b>).</p>
+    </div>
+    <div id="r-inter" class="lente oculto">
+      <div class="tarjeta" id="i-tarjeta"><span class="grande" id="i-titulo">Toca el primer ser vivo</span><span id="i-desc">Las pulgas y los hongos y bacterias están en las lupas.</span></div>
+      <div class="bots" style="margin-top:8px"><button type="button" id="i-limpiar">Elegir otra pareja</button></div>
+    </div>
+    <div id="r-pob" class="lente oculto">
+      <div class="fig" id="p-fig"></div>
+      <div class="ind">
+        <div id="p-ind-k">Alimento y espacio (3 ha) alcanzan para<b id="p-k">100 degús</b></div>
+        <div id="p-ind-z">Zorros que cazan aquí<b id="p-z">2</b></div>
+      </div>
+      <p class="tarjeta" id="p-res"></p>
+    </div>
+    <div id="r-energia" class="lente oculto">
+      <p class="tarjeta" id="e-tarjeta"></p>
+      <div id="e-r-cadena" class="oculto">
+        <h2 class="sub">Pirámide de energía: pasto → degú → zorro</h2>
+        <div class="fig" id="e-fig-e"></div>
+      </div>
+      <div id="e-r-tres" class="oculto">
+        <h2 class="sub">Tres pirámides de una rama del quillay</h2>
+        <div class="fig" id="e-fig-t"></div>
+      </div>
+      <div id="e-r-terreno" class="oculto">
+        <div class="fig" id="e-fig-g"></div>
+      </div>
+    </div>
+  </div>
+  <p id="anuncio" class="solo-lector" aria-live="polite" aria-atomic="true"></p>
+
+  <footer>
+    <p><b>Modelo de población.</b> Crece hasta lo que el ambiente sostiene y pierde una parte por los zorros. Cada mes: N + 0,12·N·(1 − N/K) − 0,006·zorros·N, en un sector de 3 ha del cerro. El número de zorros no cambia con los degús, no hay estaciones de cría y el cambio dura hasta el mes 36. Los números (degús, zorros, K) son <b>ilustrativos</b>.</p>
+    <p><b>Energía.</b> La regla del 10 % es aproximada: en la naturaleza pasa entre un 5 % y un 20 % de un nivel al siguiente. Las kcal y los números de las pirámides son <b>ilustrativos</b>. En Tres pirámides los anchos están comprimidos para que quepan (3 000 no es 3 000 veces más ancho que 1). Las masas de la biomasa y los 300 degús y 3 zorros de Terreno también son <b>ilustrativos</b>.</p>
+    <p>Dibujos propios.</p>
+  </footer>
+</main>
+<script>
+(function () {
+  'use strict';
+  function $(id) { return document.getElementById(id); }
+  function cls(el, c, on) {
+    var a = (el.getAttribute('class') || '').split(/\s+/), i = a.indexOf(c);
+    if (on && i < 0) a.push(c);
+    if (!on && i >= 0) a.splice(i, 1);
+    el.setAttribute('class', a.join(' ').replace(/^\s+|\s+$/g, ''));
+  }
+  function each(list, fn) { for (var i = 0; i < list.length; i++) fn(list[i], i); }
+  function anunciar(t) { $('anuncio').textContent = ''; setTimeout(function () { $('anuncio').textContent = t; }, 30); }
+  var MOV = !(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+  function fmt(v) { return String(Math.round(v)).replace(/\B(?=(\d{3})+(?!\d))/g, ' '); }
+
+  /* ================= OBJETOS DEL CERRO ================= */
+  // id: nombre, artículo, biótico, centro del área de toque (x, y, radio), rótulo
+  var O = {
+    sol:         { n: 'Sol', a: 'el', bio: false, h: [326, 34, 30] },
+    lluvia:      { n: 'Lluvia', a: 'la', bio: false, h: [52, 38, 30] },
+    temperatura: { n: 'Temperatura', a: 'la', bio: false, h: [150, 34, 30] },
+    suelo:       { n: 'Suelo', a: 'el', bio: false, h: [110, 268, 31] },
+    piedras:     { n: 'Piedras', a: 'las', bio: false, h: [24, 198, 30] },
+    quillay:     { n: 'Quillay', a: 'el', bio: true, h: [54, 112, 32] },
+    tenca:       { n: 'Tenca', a: 'la', bio: true, h: [112, 116, 30] },
+    espino:      { n: 'Espino', a: 'el', bio: true, h: [318, 142, 30] },
+    flor:        { n: 'Flor', a: 'la', bio: true, h: [244, 180, 30] },
+    pasto:       { n: 'Pasto', a: 'el', bio: true, h: [214, 236, 30] },
+    picaflor:    { n: 'Picaflor', a: 'el', bio: true, h: [264, 126, 30] },
+    aguilucho:   { n: 'Aguilucho', a: 'el', bio: true, h: [222, 48, 30] },
+    degu:        { n: 'Degú', a: 'el', bio: true, h: [150, 212, 32] },
+    saltamontes: { n: 'Saltamontes', a: 'el', bio: true, h: [328, 202, 30] },
+    lagartija:   { n: 'Lagartija', a: 'la', bio: true, h: [282, 230, 30] },
+    culebra:     { n: 'Culebra', a: 'la', bio: true, h: [62, 238, 30] },
+    zorro:       { n: 'Zorro', a: 'el', bio: true, h: [196, 160, 30] },
+    pulgas:      { n: 'Pulgas', a: 'las', bio: true, h: [140, 152, 30] },
+    hongos:      { n: 'Hongos y bacterias', a: 'los', bio: true, h: [322, 260, 30] }
+  };
+  var ORDEN = ['sol', 'lluvia', 'temperatura', 'suelo', 'piedras', 'quillay', 'espino', 'flor', 'pasto', 'tenca', 'picaflor', 'aguilucho', 'culebra', 'degu', 'lagartija', 'saltamontes', 'zorro', 'pulgas', 'hongos'];
+  function nom(id, mayus) { var o = O[id], t = o.a + ' ' + o.n.toLowerCase(); return mayus ? t.charAt(0).toUpperCase() + t.slice(1) : t; }
+
+  /* ================= DIBUJOS (SVG plano) ================= */
+  function etq(x, y, t, an, extra) { return '<text x="' + x + '" y="' + y + '" text-anchor="' + (an || 'middle') + '" class="etq' + (extra ? ' ' + extra : '') + '">' + t + '</text>'; }
+  function mata(x, y) {
+    return '<path class="hoja" d="M' + (x - 8) + ' ' + y + 'Q' + (x - 6) + ' ' + (y - 14) + ' ' + (x - 2) + ' ' + (y - 18) + 'Q' + (x - 3) + ' ' + (y - 8) + ' ' + x + ' ' + y + 'Q' + (x + 1) + ' ' + (y - 16) + ' ' + (x + 4) + ' ' + (y - 22) +
+      'Q' + (x + 4) + ' ' + (y - 9) + ' ' + (x + 3) + ' ' + y + 'Q' + (x + 7) + ' ' + (y - 12) + ' ' + (x + 10) + ' ' + (y - 15) + 'Q' + (x + 8) + ' ' + (y - 6) + ' ' + (x + 8) + ' ' + y + 'Z"/>';
+  }
+  function degu(x, y, k) {
+    return '<g class="un-degu" data-k="' + k + '" transform="translate(' + x + ' ' + y + ')">' +
+      '<path d="M-9 1Q-18 2 -21 -4" stroke="#57381F" stroke-width="2" fill="none" stroke-linecap="round"/><circle cx="-21" cy="-4" r="2.2" fill="#1F1308"/>' +
+      '<ellipse cx="0" cy="0" rx="11" ry="6.5" fill="#9A6B3F"/><ellipse cx="0" cy="2" rx="7" ry="3.5" fill="#C9A27A"/>' +
+      '<circle cx="9" cy="-3" r="5" fill="#9A6B3F"/><ellipse cx="7" cy="-8" rx="2.4" ry="3" fill="#7A5230"/>' +
+      '<circle cx="11" cy="-4" r="1.2" fill="#111"/><circle cx="14" cy="-2" r="1" fill="#3B2412"/></g>';
+  }
+  function zorroDib(x, y, s) {
+    return '<g transform="translate(' + x + ' ' + y + ') scale(' + s + ')">' +
+      '<path d="M18 -2Q34 -6 38 6Q30 4 22 6Z" fill="#B45309"/><path d="M34 2Q38 4 38 6Q35 6 33 5Z" fill="#F5F5F4"/>' +
+      '<rect x="-14" y="2" width="4" height="14" rx="2" fill="#7C2D12"/><rect x="12" y="2" width="4" height="14" rx="2" fill="#7C2D12"/>' +
+      '<ellipse cx="2" cy="-2" rx="20" ry="9" fill="#C2410C"/><ellipse cx="2" cy="2" rx="13" ry="4.5" fill="#E7C9A9"/>' +
+      '<path d="M-16 -6L-30 -2L-17 4Z" fill="#C2410C"/><path d="M-27 -2L-31 -2L-28 0Z" fill="#111"/>' +
+      '<path d="M-17 -8L-15 -18L-11 -8Z" fill="#9A3412"/><path d="M-12 -8L-8 -17L-6 -7Z" fill="#9A3412"/><circle cx="-19" cy="-4" r="1.3" fill="#111"/></g>';
+  }
+  function lupa(cx, cy, r, dentro) { return '<circle cx="' + cx + '" cy="' + cy + '" r="' + r + '" fill="#FFFBEB" stroke="#334155" stroke-width="2.5"/>' + dentro; }
+  function piedra(x, y, w) { return '<path d="M' + (x - w) + ' ' + y + 'Q' + (x - w * 0.8) + ' ' + (y - w * 0.9) + ' ' + x + ' ' + (y - w) + 'Q' + (x + w * 0.9) + ' ' + (y - w * 0.8) + ' ' + (x + w) + ' ' + y + 'Z" fill="#A8A29E" stroke="#78716C" stroke-width="1.5"/>'; }
+
+  var DIB = {
+    sol: function () {
+      var s = '<circle class="sol-c" cx="326" cy="34" r="15" fill="#FBBF24"/>';
+      for (var i = 0; i < 8; i++) { var a = i * Math.PI / 4; s += '<path class="sol-c" d="M' + (326 + 19 * Math.cos(a)).toFixed(1) + ' ' + (34 + 19 * Math.sin(a)).toFixed(1) + 'L' + (326 + 26 * Math.cos(a)).toFixed(1) + ' ' + (34 + 26 * Math.sin(a)).toFixed(1) + '" stroke="#FBBF24" stroke-width="3" stroke-linecap="round"/>'; }
+      return s + etq(326, 76, 'sol');
+    },
+    lluvia: function () {
+      var s = '<ellipse cx="52" cy="28" rx="30" ry="12" fill="#CBD5E1"/><ellipse cx="40" cy="20" rx="14" ry="11" fill="#CBD5E1"/><ellipse cx="62" cy="18" rx="16" ry="13" fill="#CBD5E1"/>';
+      for (var i = 0; i < 5; i++) s += '<path class="gota" d="M' + (34 + i * 10) + ' 44l-4 12" stroke-width="2.2" stroke-linecap="round"/>';
+      return s + etq(86, 44, 'lluvia', 'start', 'con-lluvia') + etq(86, 30, 'sin lluvia', 'start', 'sin-lluvia');
+    },
+    temperatura: function () {
+      return '<rect x="146" y="14" width="8" height="28" rx="4" fill="#fff" stroke="#334155" stroke-width="1.5"/><rect x="148" y="24" width="4" height="18" fill="#DC2626"/><circle cx="150" cy="45" r="5.5" fill="#DC2626" stroke="#334155" stroke-width="1.5"/>' + etq(150, 70, 'temperatura');
+    },
+    suelo: function () { return '<rect x="0" y="250" width="360" height="40" fill="#8B5E3C"/><path d="M0 250H360" stroke="#6B4423" stroke-width="2"/>' + etq(14, 280, 'suelo', 'start'); },
+    piedras: function () { return piedra(24, 206, 13) + piedra(282, 238, 17); },
+    quillay: function () {
+      return '<rect x="50" y="122" width="11" height="70" rx="3" fill="#6B4423"/><path d="M56 140L36 124M57 134L104 122" stroke="#6B4423" stroke-width="5" stroke-linecap="round"/>' +
+        '<ellipse cx="54" cy="104" rx="46" ry="30" fill="#2F6B3A"/><ellipse cx="32" cy="96" rx="24" ry="18" fill="#3D8148"/><ellipse cx="74" cy="94" rx="22" ry="17" fill="#3D8148"/><ellipse cx="54" cy="84" rx="22" ry="14" fill="#4B9255"/>' +
+        etq(14, 162, 'quillay', 'start');
+    },
+    tenca: function () {
+      return '<path d="M98 122Q108 130 120 122Q116 130 108 131Q100 130 98 122Z" fill="#8B6A3E"/><path d="M99 123Q109 127 119 123" stroke="#5B4426" stroke-width="1.5" fill="none"/>' +
+        '<ellipse cx="109" cy="114" rx="9" ry="5.5" fill="#8A8F98"/><circle cx="117" cy="110" r="4" fill="#8A8F98"/><path d="M120 110L126 111L120 112Z" fill="#333"/>' +
+        '<path d="M101 113L92 108L94 116Z" fill="#6B7079"/><circle cx="118" cy="109" r="1" fill="#111"/>' + etq(130, 120, 'tenca', 'start');
+    },
+    espino: function () {
+      var s = '<path d="M318 190V152M318 162L302 148M318 158L336 144" stroke="#5B3A1E" stroke-width="4" stroke-linecap="round"/>' +
+        '<ellipse cx="318" cy="140" rx="34" ry="20" fill="#65A30D"/><ellipse cx="300" cy="134" rx="16" ry="12" fill="#77B51E"/><ellipse cx="336" cy="132" rx="15" ry="11" fill="#77B51E"/>';
+      var f = [[302, 130], [316, 126], [330, 130], [340, 140], [308, 144], [324, 142], [294, 140], [332, 150]];
+      for (var i = 0; i < f.length; i++) s += '<circle cx="' + f[i][0] + '" cy="' + f[i][1] + '" r="3.2" fill="#FACC15" stroke="#CA8A04"/>';
+      return s + etq(318, 112, 'espino');
+    },
+    flor: function () {
+      var s = '<path d="M244 200V176M244 184L234 172M244 180L254 168" stroke="#4D7C0F" stroke-width="3" stroke-linecap="round"/><ellipse cx="244" cy="174" rx="15" ry="10" fill="#4D7C0F"/>';
+      var f = [[234, 166], [248, 162], [256, 170], [238, 176]];
+      for (var i = 0; i < f.length; i++) s += '<path d="M' + f[i][0] + ' ' + f[i][1] + 'l3 -9l3 9Z" fill="#DC2626"/>';
+      return s + etq(262, 190, 'flor', 'start');
+    },
+    pasto: function () {
+      var s = '', pp = [[14, 190], [92, 196], [126, 190], [196, 196], [226, 244], [176, 244], [256, 200], [296, 204], [346, 192], [104, 246], [302, 248], [26, 246], [208, 230], [140, 246]];
+      for (var i = 0; i < pp.length; i++) s += mata(pp[i][0], pp[i][1]);
+      return s + etq(236, 268, 'pasto');
+    },
+    picaflor: function () {
+      return '<g transform="translate(266 128)"><ellipse cx="0" cy="0" rx="7" ry="4" fill="#15803D"/><circle cx="-6" cy="-3" r="3.4" fill="#15803D"/><path d="M-9 -3L-19 0" stroke="#222" stroke-width="1.4"/>' +
+        '<path d="M-1 -2Q4 -14 10 -12Q6 -4 2 -1Z" fill="#86EFAC"/><path d="M6 1L14 4L7 3Z" fill="#14532D"/><circle cx="-7" cy="-4" r=".9" fill="#fff"/></g>' + etq(266, 108, 'picaflor');
+    },
+    aguilucho: function () {
+      return '<g transform="translate(222 44)"><path d="M0 0Q-20 -14 -44 -6Q-24 -4 -10 6Z" fill="#475569"/><path d="M0 0Q20 -14 44 -6Q24 -4 10 6Z" fill="#475569"/>' +
+        '<ellipse cx="0" cy="3" rx="7" ry="11" fill="#F1F5F9" stroke="#475569" stroke-width="2"/><circle cx="0" cy="-8" r="5" fill="#334155"/><path d="M-2 -5L0 -1L2 -5Z" fill="#FACC15"/><path d="M-6 13L0 20L6 13Z" fill="#94A3B8"/></g>' +
+        etq(234, 84, 'aguilucho');
+    },
+    culebra: function () {
+      return '<path d="M26 236Q38 226 50 236T74 236T98 236" stroke="#57534E" stroke-width="6" fill="none" stroke-linecap="round"/>' +
+        '<path d="M26 236Q38 226 50 236T74 236T98 236" stroke="#FDE68A" stroke-width="1.6" stroke-dasharray="3 5" fill="none"/>' +
+        '<ellipse cx="102" cy="235" rx="6" ry="4" fill="#57534E"/><circle cx="104" cy="234" r=".9" fill="#fff"/>' + etq(60, 222, 'culebra');
+    },
+    degu: function () {
+      var s = '<ellipse cx="146" cy="226" rx="10" ry="4" fill="#3F2A14"/><ellipse cx="190" cy="228" rx="9" ry="4" fill="#3F2A14"/>';
+      // primero los que quedan a la derecha (se ocultan desde el final)
+      var D = [[210, 218], [188, 212], [168, 204], [176, 226], [150, 214], [134, 224], [120, 206], [104, 216]];
+      for (var i = 0; i < D.length; i++) s += degu(D[i][0], D[i][1], i);
+      return s + etq(164, 245, 'degús', 'start');
+    },
+    lagartija: function () {
+      return '<g transform="translate(282 222)"><path d="M14 0Q26 -1 34 4" stroke="#78716C" stroke-width="3" fill="none" stroke-linecap="round"/><ellipse cx="2" cy="0" rx="13" ry="3.8" fill="#A8A29E"/>' +
+        '<ellipse cx="-12" cy="-1" rx="5" ry="3" fill="#A8A29E"/><path d="M-4 2L-8 7M8 2L12 7M-4 -2L-8 -6M8 -2L12 -6" stroke="#78716C" stroke-width="2"/><circle cx="-14" cy="-2" r=".9" fill="#111"/></g>' +
+        etq(300, 247, 'lagartija');
+    },
+    saltamontes: function () {
+      return '<g transform="translate(330 202)"><ellipse cx="0" cy="0" rx="10" ry="3.6" fill="#65A30D"/><circle cx="-10" cy="-1" r="3" fill="#4D7C0F"/>' +
+        '<path d="M-2 -1L6 -9L12 3" stroke="#3F6212" stroke-width="2" fill="none"/><path d="M-12 -3Q-18 -12 -22 -10" stroke="#3F6212" stroke-width="1.2" fill="none"/></g>' + etq(352, 224, 'saltamontes', 'end');
+    },
+    zorro: function () {
+      return zorroDib(200, 160, 1) + '<g class="extra">' + zorroDib(292, 196, 0.8) + zorroDib(88, 182, 0.75) + '</g>' +
+        etq(226, 148, 'zorro', 'start', 'con-uno') ;
+    },
+    pulgas: function () {
+      return '<path d="M200 152L156 152" stroke="#334155" stroke-width="1.5" stroke-dasharray="3 3"/>' +
+        lupa(140, 152, 16, '<ellipse cx="134" cy="150" rx="4" ry="2.6" fill="#7C2D12"/><ellipse cx="145" cy="147" rx="3.5" ry="2.3" fill="#7C2D12"/><ellipse cx="141" cy="158" rx="3.5" ry="2.3" fill="#7C2D12"/>') +
+        etq(122, 158, 'pulgas', 'end');
+    },
+    hongos: function () {
+      return lupa(322, 268, 16, '<rect x="316" y="268" width="4" height="7" fill="#F5F5F4"/><path d="M311 269Q318 258 325 269Z" fill="#C2410C"/>' +
+        '<circle cx="328" cy="272" r="1.6" fill="#7C3AED"/><circle cx="331" cy="265" r="1.6" fill="#7C3AED"/><circle cx="326" cy="277" r="1.6" fill="#7C3AED"/>') +
+        etq(300, 280, 'hongos y bacterias', 'end');
+    }
+  };
+  function casas() {
+    var s = '<g class="casas"><path d="M0 118Q80 110 158 122V250H0Z" fill="#E7E5E4"/>';
+    var c = [[12, 146], [64, 140], [116, 148], [28, 196], [84, 190], [124, 210]];
+    for (var i = 0; i < c.length; i++) {
+      var x = c[i][0], y = c[i][1];
+      s += '<rect x="' + x + '" y="' + y + '" width="32" height="24" fill="#F8FAFC" stroke="#64748B" stroke-width="1.5"/><path d="M' + (x - 4) + ' ' + y + 'L' + (x + 16) + ' ' + (y - 13) + 'L' + (x + 36) + ' ' + y + 'Z" fill="#B91C1C"/><rect x="' + (x + 12) + '" y="' + (y + 11) + '" width="8" height="13" fill="#64748B"/>';
+    }
+    return s + '<path d="M0 240H158" stroke="#94A3B8" stroke-width="5"/>' + etq(78, 134, 'condominio') + '</g>';
+  }
+  function lupaQuillay() {
+    var s = '<g class="lupa-q"><path d="M80 96L132 78" stroke="#334155" stroke-width="1.5" stroke-dasharray="3 3"/>' + lupa(176, 72, 46, '') +
+      '<path d="M138 84Q170 70 214 60" stroke="#6B4423" stroke-width="6" stroke-linecap="round"/><ellipse cx="158" cy="64" rx="10" ry="5" fill="#3D8148" transform="rotate(-25 158 64)"/><ellipse cx="196" cy="56" rx="10" ry="5" fill="#3D8148" transform="rotate(20 196 56)"/>';
+    var p = [[146, 80], [152, 76], [160, 73], [167, 71], [174, 69], [182, 67], [190, 65], [198, 63], [156, 82], [171, 76], [186, 72], [200, 69]];
+    for (var i = 0; i < p.length; i++) s += '<ellipse cx="' + p[i][0] + '" cy="' + p[i][1] + '" rx="3" ry="2.2" fill="#84CC16" stroke="#3F6212" stroke-width=".8"/>';
+    s += '<circle cx="168" cy="92" r="6" fill="#DC2626"/><circle cx="166" cy="90" r="1.3" fill="#111"/><circle cx="170" cy="94" r="1.3" fill="#111"/><path d="M168 86V98" stroke="#111"/>';
+    s += etq(176, 112, 'pulgones y chinitas') + '</g>';
+    return s;
+  }
+
+  function construirEscena() {
+    var s = '<svg id="escena" viewBox="0 0 360 290" role="img" aria-label="Escena del cerro">' +
+      '<defs><marker id="pf" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#B45309"/></marker>' +
+      '<marker id="pd" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#7C3AED"/></marker></defs>' +
+      '<rect class="cielo" width="360" height="290" fill="#E0F2FE"/>' +
+      '<path class="ladera" d="M0 150Q90 120 190 130Q280 138 360 114V290H0Z" fill="#C7DDA0"/>';
+    for (var i = 0; i < ORDEN.length; i++) {
+      var id = ORDEN[i], o = O[id];
+      if (id === 'pulgas') s += casas();
+      s += '<g class="obj" id="o-' + id + '" data-id="' + id + '" role="button" tabindex="0" aria-label="' + o.n + '">' +
+        '<circle class="hit" cx="' + o.h[0] + '" cy="' + o.h[1] + '" r="' + o.h[2] + '"/>' + DIB[id]() + '</g>';
+    }
+    s += lupaQuillay() + '<g id="flechas"></g><g id="signos"></g></svg>';
+    $('marco').innerHTML = s;
+  }
+  construirEscena();
+  var ESC = $('escena');
+  function g(id) { return $('o-' + id); }
+
+  /* ---- estado visual de la escena ---- */
+  function limpiarEscena() {
+    ESC.setAttribute('class', '');
+    for (var id in O) { var e = g(id); e.setAttribute('class', 'obj'); }
+    each(ESC.querySelectorAll('.un-degu'), function (d) { d.setAttribute('class', 'un-degu'); d.style.display = ''; });
+    $('flechas').innerHTML = ''; $('signos').innerHTML = '';
+  }
+  function apagarSalvo(lista) {
+    for (var id in O) if (lista.indexOf(id) < 0) cls(g(id), 'apagado', true);
+  }
+  function verDegus(n) {
+    each(ESC.querySelectorAll('.un-degu'), function (d) { d.style.display = Number(d.getAttribute('data-k')) < n ? '' : 'none'; });
+  }
+  function describirEscena(t) { ESC.setAttribute('aria-label', 'Escena del cerro. ' + t); }
+
+  /* ================= PESTAÑAS ================= */
+  var LENTES = ['niveles', 'inter', 'pob', 'energia'], lente = 'niveles';
+  function irA(l, mover) {
+    if (lente === 'pob' && l !== 'pob') terminarAnim();
+    if (lente === 'energia' && l !== 'energia') terminarPir();
+    lente = l;
+    each(LENTES, function (x) {
+      var t = $('tab-' + x); t.setAttribute('aria-selected', x === l ? 'true' : 'false'); t.setAttribute('tabindex', x === l ? '0' : '-1');
+      cls($('c-' + x), 'oculto', x !== l); cls($('r-' + x), 'oculto', x !== l);
+    });
+    $('panel').setAttribute('aria-labelledby', 'tab-' + l);
+    var activa = (l !== 'pob');
+    for (var id in O) g(id).setAttribute('tabindex', activa ? '0' : '-1');
+    pintar();
+    if (mover && $('panel').getBoundingClientRect().top < 0) $('panel').scrollIntoView({ block: 'start' });
+  }
+  each(LENTES, function (x, i) {
+    $('tab-' + x).addEventListener('click', function () { irA(x, true); });
+    $('tab-' + x).addEventListener('keydown', function (ev) {
+      var k = ev.keyCode, j = -1;
+      if (k === 39) j = (i + 1) % 4; else if (k === 37) j = (i + 3) % 4;
+      if (j >= 0) { ev.preventDefault(); irA(LENTES[j], false); $('tab-' + LENTES[j]).focus(); }
+    });
+  });
+  function pintar() {
+    limpiarEscena();
+    if (lente === 'niveles') pintarNiveles();
+    else if (lente === 'inter') pintarInter();
+    else if (lente === 'pob') pintarPob();
+    else pintarEnergia();
+  }
+
+  /* ---- toques en la escena ---- */
+  function tocar(id) {
+    if (lente === 'niveles') tocarNiveles(id);
+    else if (lente === 'inter') tocarInter(id);
+    else if (lente === 'energia') tocarEnergia(id);
+  }
+  for (var oid in O) (function (id) {
+    var e = g(id);
+    e.addEventListener('click', function () { tocar(id); });
+    e.addEventListener('keydown', function (ev) { if (ev.keyCode === 13 || ev.keyCode === 32) { ev.preventDefault(); tocar(id); } });
+  })(oid);
+
+  function grupoBotones(cont, alElegir) {
+    var bs = $(cont).querySelectorAll('button[data-v]');
+    each(bs, function (b) {
+      b.addEventListener('click', function () {
+        each(bs, function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
+        alElegir(b.getAttribute('data-v'));
+      });
+    });
+  }
+  function marcarBoton(cont, v) { each($(cont).querySelectorAll('button[data-v]'), function (x) { x.setAttribute('aria-pressed', x.getAttribute('data-v') === v ? 'true' : 'false'); }); }
+
+  /* ================= LENTE 1: NIVELES ================= */
+  var NIV = {
+    uno: { t: 'Un degú', d: 'Un degú junto a su madriguera.', nivel: 'Individuo' },
+    degus: { t: 'Todos los degús del cerro', d: 'Muchos degús, todos de la misma especie, en el mismo cerro.', nivel: 'Población' },
+    vivos: { t: 'Todos los seres vivos del cerro', d: 'Las poblaciones de plantas, animales, hongos y bacterias que viven juntas.', nivel: 'Comunidad' },
+    cerro: { t: 'Todo el cerro', d: 'Los seres vivos y lo no vivo que los rodea (con borde azul punteado).', nivel: 'Ecosistema' }
+  };
+  var N = { v: null, ver: false, tocado: null };
+  function bioticos() { var a = []; for (var id in O) if (O[id].bio) a.push(id); return a; }
+  function pintarNiveles() {
+    var v = N.v;
+    if (v === 'uno') {
+      apagarSalvo(['degu']); cls(g('degu'), 'resalta', true);
+      each(ESC.querySelectorAll('.un-degu'), function (d) { if (d.getAttribute('data-k') !== '0') d.setAttribute('class', 'un-degu apagado'); });
+    } else if (v === 'degus') { apagarSalvo(['degu']); cls(g('degu'), 'resalta', true); }
+    else if (v === 'vivos') { apagarSalvo(bioticos()); }
+    else if (v === 'cerro') { for (var id in O) if (!O[id].bio) cls(g(id), 'marca', true); }
+    if (N.tocado) cls(g(N.tocado), 'elegido', true);
+    $('n-titulo').textContent = v ? NIV[v].t : 'Toca qué mirar';
+    $('n-desc').textContent = v ? NIV[v].d : 'Los botones de arriba encienden una parte del cerro.';
+    cls($('n-ver'), 'oculto', !v);
+    $('n-ver').setAttribute('aria-pressed', N.ver ? 'true' : 'false');
+    $('n-ver').textContent = N.ver ? 'Ocultar el nivel' : 'Ver el nivel';
+    cls($('n-nivel'), 'oculto', !(v && N.ver));
+    $('n-nivel').textContent = v ? 'Nivel: ' + NIV[v].nivel : '';
+    describirEscena(v ? 'Resaltado: ' + NIV[v].t.toLowerCase() + '.' : 'Todo el cerro a la vista.');
+  }
+  grupoBotones('n-bots', function (v) { N.v = v; N.ver = false; pintar(); anunciar(NIV[v].t + '. ' + NIV[v].d); });
+  $('n-ver').addEventListener('click', function () { N.ver = !N.ver; pintar(); if (N.ver) anunciar('Nivel: ' + NIV[N.v].nivel); });
+  function tocarNiveles(id) {
+    N.tocado = id;
+    var o = O[id];
+    $('n-bio').innerHTML = '<b>' + o.n + '</b>: ' + (o.bio ? 'ser vivo (<b>biótico</b>).' : 'no está vivo (<b>abiótico</b>).');
+    if (!o.bio) $('n-bio').innerHTML += ' ¿Cómo afecta a los seres vivos? Mira la sequía en <b>Población</b>.';
+    pintar();
+    anunciar(o.n + ': ' + (o.bio ? 'biótico' : 'abiótico'));
+  }
+
+  /* ================= LENTE 2: INTERACCIONES ================= */
+  // [a, b, tipo, signo a, signo b, explicación]
+  var REL = [
+    ['aguilucho', 'degu', 'Depredación', '+', '−', 'El aguilucho caza al degú y se lo come: gana alimento (+); el degú muere (−).'],
+    ['zorro', 'degu', 'Depredación', '+', '−', 'El zorro caza al degú y se lo come: gana alimento (+); el degú muere (−).'],
+    ['culebra', 'degu', 'Depredación', '+', '−', 'La culebra se come a las crías de degú: gana alimento (+); el degú pierde a sus crías (−).'],
+    ['culebra', 'lagartija', 'Depredación', '+', '−', 'La culebra se come a la lagartija: gana alimento (+); la lagartija muere (−).'],
+    ['lagartija', 'saltamontes', 'Depredación', '+', '−', 'La lagartija se come al saltamontes: gana alimento (+); el saltamontes muere (−).'],
+    ['degu', 'pasto', 'Depredación (herbivoría)', '+', '−', 'El degú come pasto y semillas (+); el pasto pierde hojas y semillas (−). Cuando el alimento es una planta, se llama herbivoría.'],
+    ['saltamontes', 'pasto', 'Depredación (herbivoría)', '+', '−', 'El saltamontes come pasto (+); el pasto pierde hojas (−). Cuando el alimento es una planta, se llama herbivoría.'],
+    ['zorro', 'aguilucho', 'Competencia', '−', '−', 'Los dos cazan degús: lo que caza uno ya no lo puede cazar el otro. Ambos pierden (−/−).'],
+    ['culebra', 'zorro', 'Competencia', '−', '−', 'Los dos comen degús (la culebra, sus crías). Lo que come uno le falta al otro (−/−).'],
+    ['culebra', 'aguilucho', 'Competencia', '−', '−', 'Los dos comen degús (la culebra, sus crías). Lo que come uno le falta al otro (−/−).'],
+    ['degu', 'saltamontes', 'Competencia', '−', '−', 'Los dos comen pasto: lo que come uno le falta al otro (−/−).'],
+    ['picaflor', 'flor', 'Mutualismo', '+', '+', 'El picaflor toma néctar (+) y lleva el polen de flor en flor, y así la planta forma semillas (+).'],
+    ['pulgas', 'zorro', 'Parasitismo', '+', '−', 'Las pulgas viven sobre el zorro y se alimentan de su sangre (+); el zorro se debilita, pero no muere de inmediato (−).'],
+    ['tenca', 'quillay', 'Comensalismo', '+', '0', 'La tenca hace su nido en el quillay (+); al quillay no lo ayuda ni lo daña (0).']
+  ];
+  var I = { sel: [] };
+  function buscarRel(a, b) {
+    for (var i = 0; i < REL.length; i++) {
+      var r = REL[i];
+      if (r[0] === a && r[1] === b) return { tipo: r[2], sa: r[3], sb: r[4], txt: r[5] };
+      if (r[0] === b && r[1] === a) return { tipo: r[2], sa: r[4], sb: r[3], txt: r[5] };
+    }
+    return null;
+  }
+  function signoSvg(x, y, s) {
+    var t;
+    if (s === '+') t = '<circle cx="' + x + '" cy="' + y + '" r="13" fill="#15803D" stroke="#fff" stroke-width="2"/>';
+    else if (s === '−') t = '<rect x="' + (x - 12) + '" y="' + (y - 12) + '" width="24" height="24" rx="3" fill="#B91C1C" stroke="#fff" stroke-width="2"/>';
+    else t = '<path d="M' + x + ' ' + (y - 14) + 'L' + (x + 14) + ' ' + y + 'L' + x + ' ' + (y + 14) + 'L' + (x - 14) + ' ' + y + 'Z" fill="#475569" stroke="#fff" stroke-width="2"/>';
+    return t + '<text x="' + x + '" y="' + (y + 7) + '" text-anchor="middle" style="font:800 20px system-ui,sans-serif;fill:#fff">' + s + '</text>';
+  }
+  function posSigno(id) { var h = O[id].h, x = h[0] + h[2] * 0.75, y = h[1] - h[2] * 0.75; return [Math.min(345, Math.max(15, x)), Math.min(275, Math.max(15, y))]; }
+  function pintarInter() {
+    var s = I.sel;
+    if (s.length) { apagarSalvo(s); each(s, function (id) { cls(g(id), 'resalta', true); cls(g(id), 'elegido', true); }); }
+    var tit, desc;
+    if (s.length === 0) { tit = 'Toca el primer ser vivo'; desc = 'Las pulgas y los hongos y bacterias están en las lupas.'; }
+    else if (s.length === 1) { tit = O[s[0]].n + ' y…'; desc = 'Ahora toca el segundo ser vivo.'; }
+    else {
+      var a = s[0], b = s[1], r = buscarRel(a, b), ha = O[a].h, hb = O[b].h;
+      $('flechas').innerHTML = '<path d="M' + ha[0] + ' ' + ha[1] + 'L' + hb[0] + ' ' + hb[1] + '" stroke="#1E293B" stroke-width="2.5" stroke-dasharray="6 4"/>';
+      if (a === 'hongos' || b === 'hongos') {
+        var otro = a === 'hongos' ? b : a;
+        tit = O[a].n + ' · ' + O[b].n;
+        desc = 'Hongos y bacterias descomponen ' + (otro === 'quillay' || otro === 'espino' || otro === 'pasto' || otro === 'flor' ? 'las hojas caídas y los restos' : 'los restos') + (' de ' + nom(otro)).replace(' de el ', ' del ') + ' cuando muere. No es una de las cinco interacciones: los descomponedores se alimentan de restos, no de seres vivos.';
+      } else if (r) {
+        var pa = posSigno(a), pb = posSigno(b);
+        $('signos').innerHTML = signoSvg(pa[0], pa[1], r.sa) + signoSvg(pb[0], pb[1], r.sb);
+        tit = O[a].n + ' ' + r.sa + ' · ' + O[b].n + ' ' + r.sb;
+        desc = r.tipo + '. ' + r.txt;
+      } else {
+        tit = O[a].n + ' · ' + O[b].n;
+        desc = 'En el caso no se describe una relación directa entre ' + nom(a) + ' y ' + nom(b) + '. Prueba otra pareja.';
+      }
+    }
+    $('i-titulo').textContent = tit; $('i-desc').textContent = desc;
+    describirEscena(s.length ? 'Elegidos: ' + s.map(function (x) { return O[x].n; }).join(' y ') + '.' : 'Nada elegido.');
+    return tit + '. ' + desc;
+  }
+  function tocarInter(id) {
+    var s = I.sel;
+    if (!O[id].bio) {
+      $('i-titulo').textContent = O[id].n + ' no es un ser vivo';
+      $('i-desc').textContent = 'Las interacciones son entre seres vivos. Toca otro.';
+      anunciar(O[id].n + ' no es un ser vivo.');
+      return;
+    }
+    if (s.length === 1 && s[0] === id) I.sel = [];
+    else if (s.length >= 2) I.sel = [id];
+    else I.sel = s.concat([id]);
+    var t = pintarInter();
+    anunciar(t);
+  }
+  $('i-limpiar').addEventListener('click', function () { I.sel = []; pintar(); anunciar('Elige una nueva pareja.'); });
+
+  /* ================= LENTE 3: POBLACIÓN ================= */
+  var R = 0.12, Q = 0.006, K0 = 100, Z0 = 2, MESES = 36, INICIO = 6;
+  var CASOS = {
+    normal: { K: K0, Z: Z0, nombre: 'Normal', ev: '' },
+    sequia: { K: 56, Z: Z0, nombre: 'Sequía', ev: 'empieza la sequía', seco: true, tras: 'de sequía' },
+    zorros: { K: K0, Z: 6, nombre: 'Llegan más zorros', ev: 'llegan más zorros', zorros: true, tras: 'con más zorros' },
+    condominio: { K: 50, Z: Z0, nombre: 'Se corta el matorral', ev: 'se corta el matorral', casas: true, tras: 'sin la mitad del matorral' }
+  };
+  function serie(c) {
+    var C = CASOS[c], n = K0 * (1 - Q * Z0 / R), a = [];
+    for (var t = 0; t <= MESES; t++) {
+      var K = t < INICIO ? K0 : C.K, Z = t < INICIO ? Z0 : C.Z;
+      a.push({ n: n, K: K, Z: Z });
+      n = n + R * n * (1 - n / K) - Q * Z * n; if (n < 0) n = 0;
+    }
+    return a;
+  }
+  var NORMAL = serie('normal');
+  var P = { caso: 'normal', t: MESES, datos: NORMAL, timer: null };
+  var X0 = 40, X1 = 344, Y0 = 150, YMAX = 112;
+  function gx(t) { return X0 + (X1 - X0) * t / MESES; }
+  function gy(n) { return Y0 - (Y0 - 16) * n / YMAX; }
+  function linea(arr, campo, hasta) {
+    var d = '';
+    for (var i = 0; i <= hasta; i++) d += (i ? 'L' : 'M') + gx(i).toFixed(1) + ' ' + gy(arr[i][campo]).toFixed(1);
+    return d;
+  }
+  function graficar() {
+    var C = CASOS[P.caso], a = P.datos, t = P.t, s = '<svg viewBox="0 0 360 232" role="img" id="p-svg">' +
+      '<path d="M' + X0 + ' 12V' + Y0 + 'H' + X1 + '" stroke="#1E293B" stroke-width="2" fill="none"/>';
+    each([0, 50, 100], function (v) { s += '<text x="' + (X0 - 6) + '" y="' + (gy(v) + 5) + '" text-anchor="end" class="ptxt n">' + v + '</text>' + (v ? '<path d="M' + X0 + ' ' + gy(v) + 'H' + X1 + '" stroke="#E2E8F0"/>' : ''); });
+    each([0, 12, 24, 36], function (v) { s += '<text x="' + gx(v) + '" y="' + (Y0 + 18) + '" text-anchor="middle" class="ptxt n">' + v + '</text>'; });
+    s += '<text x="' + X1 + '" y="' + (Y0 + 34) + '" text-anchor="end" class="ptxt n">meses →</text><text x="4" y="12" class="ptxt n">degús</text>';
+    s += '<path d="M14 ' + (Y0 + 56) + 'H44" stroke="#15803D" stroke-width="2.5" stroke-dasharray="9 5"/><text x="50" y="' + (Y0 + 61) + '" class="ptxt" style="fill:#15803D">lo que el ambiente sostiene</text>';
+    s += '<path d="M14 ' + (Y0 + 76) + 'H44" stroke="#7C2D12" stroke-width="3.5"/><text x="50" y="' + (Y0 + 81) + '" class="ptxt" style="fill:#7C2D12">degús</text>';
+    if (P.caso !== 'normal') s += '<path d="M120 ' + (Y0 + 76) + 'H150" stroke="#94A3B8" stroke-width="2.5" stroke-dasharray="1 5" stroke-linecap="round"/><text x="156" y="' + (Y0 + 81) + '" class="ptxt n">sin cambios</text>';
+    if (C.ev) s += '<path d="M' + gx(INICIO) + ' 14V' + Y0 + '" stroke="#B45309" stroke-width="1.5" stroke-dasharray="3 3"/><text x="' + (gx(INICIO) + 5) + '" y="12" class="ptxt" fill="#B45309" style="fill:#B45309">' + C.ev + '</text>';
+    if (P.caso !== 'normal') s += '<path d="' + linea(NORMAL, 'n', MESES) + '" stroke="#94A3B8" stroke-width="2.5" stroke-dasharray="1 5" stroke-linecap="round" fill="none"/>' +
+'';
+    s += '<path d="' + linea(a, 'K', t) + '" stroke="#15803D" stroke-width="2.5" stroke-dasharray="9 5" fill="none"/>';
+    s += '<path d="' + linea(a, 'n', t) + '" stroke="#7C2D12" stroke-width="3.5" fill="none" stroke-linejoin="round"/>';
+    s += '<circle cx="' + gx(t) + '" cy="' + gy(a[t].n) + '" r="4.5" fill="#7C2D12"/>';
+    var kTxtY = a[t].K === K0 ? gy(K0) - 6 : gy(a[t].K) - 6;
+    if (a[t].K !== K0) s += '<text x="' + X1 + '" y="' + kTxtY + '" text-anchor="end" class="ptxt" style="fill:#15803D">sostiene ' + a[t].K + '</text>';
+    s += '<text x="' + Math.min(gx(t) + 4, X1 - 4) + '" y="' + (gy(a[t].n) + 20) + '" text-anchor="' + (t > 26 ? 'end' : 'start') + '" class="ptxt" style="fill:#7C2D12">' + Math.round(a[t].n) + ' degús</text>';
+    s += '</svg>';
+    $('p-fig').innerHTML = s;
+    $('p-svg').setAttribute('aria-label', 'Gráfico de degús, mes ' + t + ' de 36: unos ' + Math.round(a[t].n) + ' degús. El ambiente sostiene ' + a[t].K + '.');
+  }
+  function pintarPob() {
+    var C = CASOS[P.caso], a = P.datos, t = P.t, activo = t >= INICIO && P.caso !== 'normal';
+    var c = [];
+    if (activo && C.seco) c.push('seco');
+    if (activo && C.zorros) c.push('zorros');
+    if (activo && C.casas) c.push('casas');
+    ESC.setAttribute('class', c.join(' '));
+    verDegus(Math.max(1, Math.min(8, Math.round(8 * a[t].n / 90))));
+    each(ESC.querySelectorAll('.con-uno'), function (e) { e.textContent = activo && C.zorros ? 'zorros' : 'zorro'; });
+    graficar();
+    $('p-k').textContent = a[t].K === K0 ? K0 + ' degús' : K0 + ' → ' + a[t].K + ' degús';
+    $('p-z').textContent = a[t].Z === Z0 ? String(Z0) : Z0 + ' → ' + a[t].Z;
+    cls($('p-ind-k'), 'cambia', a[t].K !== K0);
+    cls($('p-ind-z'), 'cambia', a[t].Z !== Z0);
+    var fin = Math.round(a[t].n), txt;
+    if (P.caso === 'normal') txt = 'En este sector de 3 ha del cerro viven unos ' + fin + ' degús, y sin cambios se mantienen.';
+    else if (t < MESES) txt = 'Mes ' + t + ' de 36…';
+    else txt = 'En el sector de 3 ha había unos 90 degús. Después de 30 meses ' + C.tras + ' hay unos ' + fin + '.';
+    $('p-res').textContent = txt;
+    describirEscena(C.nombre + (activo ? (C.seco ? ': pasto seco y sin lluvia.' : C.zorros ? ': hay más zorros.' : ': casas en la mitad del matorral.') : '.') + ' Se ven ' + Math.round(8 * a[t].n / 90) + ' degús.');
+    return txt;
+  }
+  function paso() {
+    if (P.t >= MESES) { pararTimer(); pintar(); anunciar(pintarPob()); return; }
+    P.t++; pintar();
+    if (P.t >= MESES) { pararTimer(); anunciar(pintarPob()); }
+  }
+  function pararTimer() { if (P.timer) { clearInterval(P.timer); P.timer = null; } }
+  function terminarAnim() { if (P.timer) { pararTimer(); P.t = MESES; } }
+  function correr(c) {
+    pararTimer();
+    P.caso = c; P.datos = c === 'normal' ? NORMAL : serie(c);
+    if (!MOV || c === 'normal') { P.t = MESES; pintar(); anunciar(pintarPob()); return; }
+    P.t = 0; pintar();
+    P.timer = setInterval(paso, 95);
+    var f = $('p-fig');
+    if (f.getBoundingClientRect().bottom > (window.innerHeight || 640)) $('marco').scrollIntoView({ block: 'start' });
+  }
+  grupoBotones('p-bots', correr);
+  document.addEventListener('visibilitychange', function () {
+    if (document.hidden && P.timer) { pararTimer(); P.pausa = true; }
+    else if (!document.hidden && P.pausa) { P.pausa = false; if (lente === 'pob' && P.t < MESES) P.timer = setInterval(paso, 95); }
+  });
+
+  /* ================= LENTE 4: ENERGÍA ================= */
+  // flechas: de quien es comido → a quien come
+  var ENL = [
+    ['pasto', 'degu'], ['pasto', 'saltamontes'], ['saltamontes', 'lagartija'], ['lagartija', 'culebra'], ['degu', 'culebra'],
+    ['degu', 'zorro'], ['degu', 'aguilucho'], ['flor', 'picaflor'], ['zorro', 'pulgas']
+  ];
+  var DESC = ['quillay', 'espino', 'pasto', 'degu', 'zorro'];
+  var ANCLA = { pasto: [214, 236], degu: [152, 214], saltamontes: [328, 202], lagartija: [282, 222], culebra: [62, 236], zorro: [200, 158], aguilucho: [222, 50], flor: [244, 176], picaflor: [264, 128], pulgas: [140, 152], quillay: [54, 104], espino: [318, 142], hongos: [322, 268] };
+  var CURVA = { 'pasto>degu': 0.3, 'degu>aguilucho': -0.15, 'lagartija>culebra': 0.25, 'degu>culebra': 0.2 };
+  var E = { modo: 'trama', toda: false, sel: null, ver: false, etapa: 0, timers: [] };
+  function flechaD(a, b, k) {
+    var A = ANCLA[a], B = ANCLA[b], dx = B[0] - A[0], dy = B[1] - A[1], L = Math.sqrt(dx * dx + dy * dy), ux = dx / L, uy = dy / L;
+    var x1 = A[0] + ux * 14, y1 = A[1] + uy * 14, x2 = B[0] - ux * 18, y2 = B[1] - uy * 18;
+    var c = CURVA[a + '>' + b] || 0.18, mx = (x1 + x2) / 2 - uy * L * c, my = (y1 + y2) / 2 + ux * L * c;
+    return 'M' + x1.toFixed(1) + ' ' + y1.toFixed(1) + 'Q' + mx.toFixed(1) + ' ' + my.toFixed(1) + ' ' + x2.toFixed(1) + ' ' + y2.toFixed(1);
+  }
+  function dibujarFlechas(lista, listaDesc) {
+    var s = '';
+    each(listaDesc, function (a) { s += '<path d="' + flechaD(a, 'hongos') + '" stroke="#7C3AED" stroke-width="2.5" stroke-dasharray="5 4" fill="none" marker-end="url(#pd)"/>'; });
+    each(lista, function (e) { s += '<path d="' + flechaD(e[0], e[1]) + '" stroke="#fff" stroke-width="6" fill="none" opacity=".8"/><path d="' + flechaD(e[0], e[1]) + '" stroke="#B45309" stroke-width="3" fill="none" marker-end="url(#pf)"/>'; });
+    $('flechas').innerHTML = s;
+  }
+  var TXT_TRAMA = {
+    pasto: 'El pasto es un productor: fabrica su alimento con la luz del sol. Lo comen el degú y el saltamontes. Sus restos los descomponen hongos y bacterias.',
+    degu: 'El degú come pasto y semillas. Lo comen el zorro, el aguilucho y la culebra (las crías). Sus restos los descomponen hongos y bacterias.',
+    saltamontes: 'El saltamontes come pasto. Lo come la lagartija.',
+    lagartija: 'La lagartija come saltamontes. La come la culebra.',
+    culebra: 'La culebra come lagartijas y crías de degú. En el caso, nadie la come.',
+    zorro: 'El zorro come degús. Las pulgas se alimentan de su sangre. Sus restos los descomponen hongos y bacterias.',
+    aguilucho: 'El aguilucho come degús. En el caso, nadie lo come.',
+    flor: 'La flor es parte de una planta, un productor: fabrica su alimento con la luz del sol. El picaflor toma su néctar.',
+    picaflor: 'El picaflor se alimenta del néctar de la flor. En el caso, nadie lo come.',
+    pulgas: 'Las pulgas se alimentan de la sangre del zorro.',
+    quillay: 'El quillay es un productor: fabrica su alimento con la luz del sol. En el caso, nadie lo come. Sus hojas caídas las descomponen hongos y bacterias.',
+    espino: 'El espino es un productor: fabrica su alimento con la luz del sol. En el caso, nadie lo come. Sus hojas caídas las descomponen hongos y bacterias.',
+    tenca: 'En el caso no se dice qué come la tenca, así que no tiene flechas.',
+    hongos: 'Hongos y bacterias descomponen las hojas caídas y los animales muertos de todo el cerro (flechas moradas).',
+    sol: 'El sol no está en la trama, pero su luz es la energía que usan las plantas para fabricar su alimento.'
+  };
+  function textoTrama(id) { return TXT_TRAMA[id] || (O[id].n + ' no es un ser vivo: no está en la trama.'); }
+  var MODOS = ['trama', 'cadena', 'tres', 'terreno'];
+  function pintarEnergia() {
+    each(MODOS, function (m) { cls($('e-c-' + m), 'oculto', E.modo !== m); if (m !== 'trama') cls($('e-r-' + m), 'oculto', E.modo !== m); });
+    marcarBoton('e-modo', E.modo);
+    var tar = $('e-tarjeta');
+    if (E.modo === 'trama') {
+      $('e-toda').setAttribute('aria-pressed', E.toda ? 'true' : 'false');
+      $('e-toda').textContent = E.toda ? 'Ocultar la trama' : 'Ver toda la trama';
+      if (E.toda) {
+        dibujarFlechas(ENL, DESC);
+        tar.innerHTML = 'Las flechas apuntan hacia <b>quien come</b>. Las moradas punteadas van a los descomponedores.';
+        describirEscena('Trama completa: ' + ENL.map(function (e) { return O[e[0]].n + ' → ' + O[e[1]].n; }).join(', ') + '.');
+      } else if (E.sel) {
+        var id = E.sel, mias = [], lig = [id];
+        each(ENL, function (e) { if (e[0] === id || e[1] === id) { mias.push(e); lig.push(e[0] === id ? e[1] : e[0]); } });
+        var des = DESC.indexOf(id) >= 0 ? [id] : (id === 'hongos' ? DESC : []);
+        if (des.length) lig.push('hongos');
+        if (id === 'hongos') lig = lig.concat(DESC);
+        if (O[id].bio) { apagarSalvo(lig); cls(g(id), 'resalta', true); }
+        dibujarFlechas(mias, des);
+        tar.textContent = textoTrama(id);
+        describirEscena(textoTrama(id));
+      } else {
+        tar.innerHTML = 'Toca un ser vivo del dibujo para ver sus flechas. Las flechas apuntan hacia <b>quien come</b>.';
+        describirEscena('Sin flechas.');
+      }
+    } else if (E.modo === 'cadena') {
+      apagarSalvo(['pasto', 'degu', 'zorro']);
+      dibujarFlechas([['pasto', 'degu'], ['degu', 'zorro']], []);
+      $('e-ver').setAttribute('aria-pressed', E.ver ? 'true' : 'false');
+      $('e-ver').textContent = E.ver ? 'Ocultar kcal' : 'Ver kcal';
+      tar.innerHTML = 'La cadena <b>pasto → degú → zorro</b>. El pasto tiene 20 000 kcal.';
+      if (E.ver && E.etapa >= 4) tar.innerHTML += ' Al degú llegan 2 000 kcal y al zorro 200 kcal: en cada paso pasa cerca del 10 %.';
+      piramideE(['Pasto', 'Degú', 'Zorro']);
+      describirEscena('Resaltados el pasto, los degús y el zorro, con sus flechas.');
+    } else if (E.modo === 'tres') {
+      ESC.setAttribute('class', 'quillay'); apagarSalvo(['quillay']);
+      tar.innerHTML = 'En una rama del quillay viven <b>3 000 pulgones</b>, que chupan su savia, y <b>20 chinitas</b>, que se comen a los pulgones.';
+      tresPiramides();
+      describirEscena('Lupa en una rama del quillay con pulgones y chinitas.');
+    } else {
+      apagarSalvo(['degu', 'zorro', 'pasto']);
+      terreno();
+      describirEscena('Resaltados el pasto, los degús y el zorro.');
+    }
+  }
+  function piramideE(nn) {
+    var et = E.ver ? E.etapa : 0, s = '<svg viewBox="0 0 360 236" role="img" id="e-svg"><defs><pattern id="rayas" width="5" height="5" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="5" height="5" fill="#FED7AA"/><path d="M0 0V5" stroke="#C2410C" stroke-width="2"/></pattern></defs>';
+    var c = 14, gp = 2, x0 = 20, y0 = 124, i;
+    s += '<text x="10" y="18" class="ptxt n">cada cuadrito = 200 kcal</text>';
+    for (i = 0; i < 100; i++) {
+      var col = i % 20, fil = Math.floor(i / 20), calor = et >= 1 && i >= 10;
+      s += '<rect class="cuad' + (calor ? ' calor' : '') + '" x="' + (x0 + col * (c + gp)) + '" y="' + (y0 + fil * (c + gp)) + '" width="' + c + '" height="' + c + '" rx="2" fill="#86EFAC" stroke="#15803D"/>';
+    }
+    s += '<text x="180" y="222" text-anchor="middle" class="ptxt">' + nn[0] + ' · 20 000 kcal</text>';
+    s += '<g class="nivel-e' + (et >= 2 ? '' : ' espera') + '">';
+    for (i = 0; i < 10; i++) { var calor2 = et >= 3 && i >= 1; s += '<rect class="cuad' + (calor2 ? ' calor' : '') + '" x="' + (100 + i * (c + gp)) + '" y="92" width="' + c + '" height="' + c + '" rx="2" fill="#FCD34D" stroke="#B45309"/>'; }
+    s += '<text x="264" y="104" class="ptxt">' + nn[1] + ' · 2 000</text></g>';
+    s += '<g class="nivel-e' + (et >= 4 ? '' : ' espera') + '"><rect class="cuad" x="173" y="62" width="' + c + '" height="' + c + '" rx="2" fill="#FDBA74" stroke="#C2410C"/><text x="194" y="74" class="ptxt">' + nn[2] + ' · 200</text></g>';
+    if (!E.ver) s += '<text x="180" y="84" text-anchor="middle" class="ptxt" style="fill:#B45309">' + nn[1] + ': ¿? kcal · ' + nn[2] + ': ¿? kcal</text>';
+    if (et >= 1) s += '<rect x="10" y="28" width="14" height="14" rx="2" fill="url(#rayas)" stroke="#C2410C"/><text x="30" y="40" class="ptxt n">no pasa al nivel de arriba (sobre todo, calor)</text>';
+    s += '</svg>';
+    $('e-fig-e').innerHTML = s;
+    $('e-svg').setAttribute('aria-label', E.ver ? 'Pirámide de energía: ' + nn[0] + ' 20 000 kcal, ' + nn[1] + ' 2 000 kcal, ' + nn[2] + ' 200 kcal. En cada paso pasa cerca del 10 %; el resto no pasa, sobre todo se pierde como calor.' : 'Pirámide de energía: ' + nn[0] + ' 20 000 kcal; los demás niveles están ocultos hasta tocar Ver kcal.');
+  }
+  function barras(titulo, nv, alto) {
+    var col = [['#86EFAC', '#15803D'], ['#FCD34D', '#B45309'], ['#FDBA74', '#C2410C']], max = 0, i;
+    for (i = 0; i < 3; i++) max = Math.max(max, nv[i][1]);
+    var lm = Math.log(max + 1), s = '<text x="10" y="18" class="ptxt">' + titulo + '</text>';
+    for (i = 0; i < 3; i++) {
+      var w = Math.round(24 + 260 * Math.log(nv[i][1] + 1) / lm), y = alto + 28 + 64 - i * 32, x = 180 - w / 2, dentro = w > 190;
+      s += '<rect x="' + x + '" y="' + y + '" width="' + w + '" height="26" rx="3" fill="' + col[i][0] + '" stroke="' + col[i][1] + '" stroke-width="2"/>';
+      s += '<text x="' + (dentro ? 180 : x + w + 6) + '" y="' + (y + 18) + '" text-anchor="' + (dentro ? 'middle' : 'start') + '" class="ptxt">' + nv[i][0] + ' · ' + nv[i][2] + '</text>';
+    }
+    return s;
+  }
+  var TRES = [
+    ['Energía (kcal)', [['Quillay', 20000, '20 000'], ['Pulgones', 2000, '2 000'], ['Chinitas', 200, '200']]],
+    ['Número (individuos)', [['Quillay', 1, '1'], ['Pulgones', 3000, '3 000'], ['Chinitas', 20, '20']]],
+    ['Biomasa (gramos)', [['Quillay', 100000, '100 000'], ['Pulgones', 2, '2'], ['Chinitas', 0.5, '0,5']]]
+  ];
+  function tresPiramides() {
+    var s = '<svg viewBox="0 0 360 390" role="img" id="t-svg">', txt = [];
+    for (var k = 0; k < 3; k++) {
+      s += '<g transform="translate(0 ' + (k * 130) + ')">' + barras(TRES[k][0], TRES[k][1], -4) + '</g>';
+      if (k < 2) s += '<path d="M10 ' + (k * 130 + 126) + 'H350" stroke="#E2E8F0" stroke-width="2"/>';
+      txt.push(TRES[k][0] + ': ' + TRES[k][1].map(function (x) { return x[0] + ' ' + x[2]; }).join(', '));
+    }
+    s += '</svg>';
+    $('e-fig-t').innerHTML = s;
+    $('t-svg').setAttribute('aria-label', 'Tres pirámides de una rama del quillay, de abajo hacia arriba. ' + txt.join('. ') + '.');
+  }
+  var TER = { v: 'degus' };
+  function terreno() {
+    var z = TER.v === 'zorros', s = '<svg viewBox="0 0 360 300" role="img" id="g-svg">', c = 22, gp = 2, x0 = 60, y0 = 10, i;
+    var terr = [['#FFEDD5', '#C2410C'], ['#EDE9FE', '#6D28D9'], ['#E0F2FE', '#0369A1']];
+    for (i = 0; i < 100; i++) {
+      var col = i % 10, fil = Math.floor(i / 10), x = x0 + col * (c + gp), y = y0 + fil * (c + gp), t = Math.min(2, Math.floor(i / 34));
+      var f = z ? terr[t] : ['#DCFCE7', '#15803D'];
+      s += '<rect x="' + x + '" y="' + y + '" width="' + c + '" height="' + c + '" rx="2" fill="' + f[0] + '" stroke="' + f[1] + '"/>';
+      s += '<circle cx="' + (x + 6) + '" cy="' + (y + 7) + '" r="2.6" fill="#7A5230"/><circle cx="' + (x + 15) + '" cy="' + (y + 9) + '" r="2.6" fill="#7A5230"/><circle cx="' + (x + 10) + '" cy="' + (y + 16) + '" r="2.6" fill="#7A5230"/>';
+    }
+    if (z) {
+      each([[1.7, '1'], [5, '2'], [8.3, '3']], function (q, k) {
+        var cy = y0 + q[0] * (c + gp);
+        s += '<g transform="translate(180 ' + cy + ') scale(.8)"><circle r="20" fill="#fff" stroke="' + terr[k][1] + '" stroke-width="3"/></g>' + zorroDibMini(180, cy) +
+          '<text x="' + (x0 - 8) + '" y="' + (cy + 6) + '" text-anchor="end" class="ptxt" style="fill:' + terr[k][1] + '">' + q[1] + '</text>';
+      });
+    }
+    s += '<text x="180" y="270" text-anchor="middle" class="ptxt n">cada cuadro = una parte del cerro</text>';
+    s += '<text x="180" y="290" text-anchor="middle" class="ptxt n">• = un degú</text></svg>';
+    $('e-fig-g').innerHTML = s;
+    var txt = z ? 'Un zorro se alimenta de muchos degús, y de la energía de los degús le llega cerca del 10 %. Cada zorro necesita los degús de unos 33 cuadros: en todo el cerro caben <b>unos pocos zorros</b> (aquí, 3).'
+      : 'El pasto de todo el cerro alimenta a <b>cientos de degús</b>: aquí, unos 3 por cuadro, unos 300.';
+    $('e-tarjeta').innerHTML = txt;
+    $('g-svg').setAttribute('aria-label', z ? 'El cerro en 100 cuadros, repartido entre 3 zorros de unos 33 cuadros cada uno.' : 'El cerro en 100 cuadros con 3 degús en cada uno: unos 300 degús.');
+    marcarBoton('e-ter', TER.v);
+    return txt.replace(/<[^>]+>/g, '');
+  }
+  function zorroDibMini(x, y) { return '<g transform="translate(' + (x + 2) + ' ' + (y + 1) + ') scale(.5)">' + zorroDib(0, 0, 1).replace(/^<g transform="[^"]*">/, '<g>') + '</g>'; }
+  function terminarPir() { each(E.timers, clearTimeout); E.timers = []; if (E.ver) E.etapa = 4; }
+  function verKcal() {
+    terminarPir();
+    E.ver = !E.ver;
+    if (!E.ver) { E.etapa = 0; pintar(); anunciar('Kcal ocultas.'); return; }
+    if (!MOV) { E.etapa = 4; pintar(); anunciarPir(); return; }
+    E.etapa = 0; pintar();
+    each([1, 2, 3, 4], function (k) {
+      E.timers.push(setTimeout(function () { E.etapa = k; pintar(); if (k === 4) { E.timers = []; anunciarPir(); } }, 700 * k));
+    });
+    var f = $('e-fig-e');
+    if (f.getBoundingClientRect().bottom > (window.innerHeight || 640)) f.scrollIntoView({ block: 'start' });
+  }
+  function anunciarPir() { anunciar('Pasto 20 000 kcal, degú 2 000, zorro 200. En cada paso pasa cerca del 10 %.'); }
+  $('e-ver').addEventListener('click', verKcal);
+  function modoEnergia(v) { terminarPir(); E.modo = v; E.sel = null; pintar(); }
+  grupoBotones('e-modo', function (v) { modoEnergia(v); anunciar({ trama: 'Trama', cadena: 'Cadena', tres: 'Tres pirámides', terreno: 'Terreno' }[v]); });
+  grupoBotones('e-ter', function (v) { TER.v = v; pintar(); anunciar(terreno()); });
+  $('e-toda').addEventListener('click', function () { E.toda = !E.toda; E.sel = null; pintar(); anunciar(E.toda ? 'Trama completa a la vista.' : 'Trama oculta.'); });
+  function tocarEnergia(id) {
+    if (E.modo !== 'trama') return;
+    E.toda = false; E.sel = (E.sel === id) ? null : id; pintar();
+    anunciar(E.sel ? textoTrama(id) : 'Sin flechas.');
+  }
+
+  /* ---- atajos con los nombres de la guía ---- */
+  each(document.querySelectorAll('.atajos button'), function (b) {
+    b.addEventListener('click', function () {
+      var v = b.getAttribute('data-ir');
+      if (v === 'pob') { irA('pob', false); }
+      else { if (lente !== 'energia') { E.modo = v; irA('energia', false); } else modoEnergia(v); }
+      $('panel').scrollIntoView({ block: 'start' });
+      anunciar(b.textContent);
+    });
+  });
+
+  irA('niveles', false);
+})();
+</script>
+</body>
+</html>

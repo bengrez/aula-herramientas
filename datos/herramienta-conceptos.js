@@ -78,6 +78,12 @@ window.HERRAMIENTA_CONCEPTOS = {
   },
 
   /* ¿Quién se come a quién? (presentación, primero medio). Ficha: «niveles tróficos, pérdida de energía por eslabón, tramas». */
+  /* El cerro vivo. Ficha: niveles, interacciones, población de degús, trama, regla del 10 %, pirámides. */
+  cv: {
+    nombre: 'El cerro vivo (simulación)',
+    conceptos: ['tro', 'ene', 'mod']
+  },
+
   tt: {
     nombre: '¿Quién se come a quién? (presentación)',
     conceptos: ['tro', 'fot', 'ene', 'met']

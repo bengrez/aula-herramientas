@@ -51,7 +51,11 @@ Publicado con GitHub Pages: https://bengrez.github.io/aula-herramientas/
 - [`celula-organelos-presentacion/`](celula-organelos-presentacion/) — La célula y sus organelos (8° básico, Biología):
   procarionte y eucarionte, célula animal y vegetal, membrana, núcleo, ribosomas, mitocondria, cloroplasto, pared y vacuola,
   y relación estructura-función. 13 láminas animadas con notas del presentador (N/P), relojes y revelado por pasos.
-- [`piramides-troficas-simulador/`](piramides-troficas-simulador/) — Simulador de ecología para el celular (I° medio, Biología):
+- [`cerro-vivo/`](cerro-vivo/) — El cerro vivo, simulación de ecología para el celular (I° medio, Biología): recurso de la Guía 04.
+  Una escena dibujada de un cerro de la zona central con cuatro lentes: Niveles (individuo a ecosistema, biótico y abiótico),
+  Interacciones (pareja y signos), Población (degús con sequía, más zorros o se corta el matorral, con capacidad de carga) y
+  Energía (trama, cadena con la regla del 10 %, tres pirámides de un quillay y terreno). Cifras ilustrativas. Sin envío de datos.
+- [`piramides-troficas-simulador/`](piramides-troficas-simulador/) — Versión anterior del simulador de ecología (fuera del índice del sitio):
   recurso de la Guía 04. Población de degús (sequía, depredadores, pérdida de hábitat), cadena con la regla del 10 %, pirámides de energía, número y biomasa (Silver Springs, pradera de Odum,
   Canal de la Mancha y ejemplos ilustrativos), eslabones que caben, terreno de un depredador tope y campo de trigo vs vacuno. Sin envío de datos.
 - [`tramas-troficas-presentacion/`](tramas-troficas-presentacion/) — Cadenas y tramas tróficas (I° medio, Biología):
