@@ -55,7 +55,7 @@ Publicado con GitHub Pages: https://bengrez.github.io/aula-herramientas/
   Una escena dibujada de un cerro de la zona central con cuatro lentes: Niveles (individuo a ecosistema, biótico y abiótico),
   Interacciones (pareja y signos), Población (degús con sequía, más zorros o se corta el matorral, con capacidad de carga) y
   Energía (trama, cadena con la regla del 10 %, tres pirámides de un quillay y terreno). Cifras ilustrativas. Sin envío de datos.
-- [`piramides-troficas-simulador/`](piramides-troficas-simulador/) — Versión anterior del simulador de ecología (fuera del índice del sitio):
+- [`piramides-troficas-simulador/`](piramides-troficas-simulador/) — Dirección antigua del simulador de ecología (la del QR de la guía impresa): redirige a `cerro-vivo/`. La versión anterior queda en el historial de git:
   recurso de la Guía 04. Población de degús (sequía, depredadores, pérdida de hábitat), cadena con la regla del 10 %, pirámides de energía, número y biomasa (Silver Springs, pradera de Odum,
   Canal de la Mancha y ejemplos ilustrativos), eslabones que caben, terreno de un depredador tope y campo de trigo vs vacuno. Sin envío de datos.
 - [`tramas-troficas-presentacion/`](tramas-troficas-presentacion/) — Cadenas y tramas tróficas (I° medio, Biología):
